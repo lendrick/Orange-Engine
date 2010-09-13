@@ -42,6 +42,7 @@ MapBox::MapBox(QWidget * parent) :
   mapEditorMode = MapEditorMode::Edit;
   
   //this->setViewport(new QGLWidget(QGLFormat(QGL::SampleBuffers), 0, mainGLWidget));
+  this->setStyleSheet("border-style: none; padding: 0;");
   this->setViewport(new QGLWidget(this, mainGLWidget));
   this->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
   this->setScene(mapScene);

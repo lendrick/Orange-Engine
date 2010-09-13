@@ -58,7 +58,7 @@ protected:
   QList < EntityScript > scripts;
   bool touched, activated, starting;
   int id;
-  QScriptValue thisObject;
+  QScriptValue scriptObject;
 
 public slots:
   virtual Entity * clone() = 0;
@@ -95,6 +95,7 @@ public slots:
   void getScriptBoundingBox(int, int &, int &, int &, int &) const;
   void getRealScriptBoundingBox(int, double &, double &, double &, double &) const;
   void say(QString s);
+  QScriptValue & getScriptObject();
   
   void start();
   void touch();

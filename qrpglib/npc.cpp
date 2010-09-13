@@ -10,8 +10,8 @@ Npc::Npc(QString newName, QObject * parent) : Entity(newName, parent) {
   currentMove = 0;
   defaultSpeed = 64;
   solid = true;
-
-  thisObject = scriptEngine->newQObject(this);
+  cprint("Creating NPC '" + newName + "'");
+  scriptObject = scriptEngine->newQObject(this);
 }
 
 Npc::Npc(const Npc & n) : Entity(n) {
@@ -27,7 +27,7 @@ Npc::Npc(const Npc & n) : Entity(n) {
     moveQueue.append(move);
   }
 
-  thisObject = scriptEngine->newQObject(this);
+  scriptObject = scriptEngine->newQObject(this);
 }
 
 Entity * Npc::clone() {
@@ -87,7 +87,7 @@ void Npc::update() {
     } else if(currentMove->type == ScriptItem) {
       cprint("Evaluating script: " + currentMove->script);
       QScriptContext * context = scriptEngine->pushContext();
-      context->setThisObject(thisObject);
+      context->setThisObject(scriptObject);
       scriptEngine->evaluate(currentMove->script);
       if(scriptEngine->hasUncaughtException()) 
         message(scriptEngine->uncaughtException().toString());
@@ -165,6 +165,11 @@ Npc::MoveQueueItem::MoveQueueItem(const MoveQueueItem & n) {
 QScriptValue npcConstructor(QScriptContext * context, QScriptEngine * engine) {
   QString name = context->argument(0).toString();
   QObject * parent = context->argument(1).toQObject();
-  Npc * object = new Npc(name, parent);
-  return engine->newQObject(object, QScriptEngine::QtOwnership);
+  try {
+    Npc * object = new Npc(name, parent);
+    return engine->newQObject(object, QScriptEngine::QtOwnership);
+  } catch(QString s) {
+    message(s);
+    return QScriptValue(false);
+  }
 }

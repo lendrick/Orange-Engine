@@ -119,6 +119,17 @@ this.pace();
       <entity name='Mr. Chandler' state='0' x='181' y='161' sprite='MrChandler'>
         <scripts>
           <script condition='1'><![CDATA[rpgx.print("Hello Saffron!");]]></script>
+          <script condition='2'><![CDATA[var l = this.getLayer();
+rpgx.print("Adding new sprite to layer " + l);
+
+try {
+  var n = new Npc("New Saffron");
+  n.setSprite("Saffron");
+  n.setPos(50, 50);
+  n.addToMap(l);
+} catch(e) {
+}
+]]></script>
         </scripts>
       </entity>
     </entities>

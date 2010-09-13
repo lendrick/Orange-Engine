@@ -11,6 +11,10 @@
 
 Entity::Entity(QString newname, QObject * parent) : QObject(parent) {
   init();
+  if(entitynames.contains(newname)) {
+    throw("An entity named '" + newname + "' already exists.");
+  }
+
   name = newname;
   id = entities.size();
   entities.push_back(this);
@@ -18,12 +22,12 @@ Entity::Entity(QString newname, QObject * parent) : QObject(parent) {
   thisEntity = new Resource(Resource::Entity, id, name, entityfolder);
   setObjectName(name);
 
-  thisObject = scriptEngine->newQObject(this);
+  scriptObject = scriptEngine->newQObject(this);
 }
 
 Entity::Entity(const Entity & e) {
   init();
-  name = e.name;
+  name = e.name + ".copy";
   state = e.state;
   sprite = e.sprite;
   x = e.x;
@@ -46,27 +50,34 @@ Entity::Entity(const Entity & e) {
   thisEntity = new Resource(Resource::Entity, id, name, entityfolder);
   setObjectName(name);
 
-  thisObject = scriptEngine->newQObject(this);
+  scriptObject = scriptEngine->newQObject(this);
 }
 
 Entity::~Entity() {
-  map->RemoveEntity(this->layer, this);
+  if(map) map->RemoveEntity(this->layer, this);
   if(entitynames.contains(name) && entitynames[name] == id) 
     entitynames.remove(name);
 
-  entities[id] = 0;
-  delete thisEntity;
+  if(id) entities[id] = 0;
+  if(thisEntity) delete thisEntity;
+}
+
+QScriptValue & Entity::getScriptObject() {
+  return scriptObject;
 }
 
 void Entity::init() {
+  map = 0;
   state = 0;
   frame = 0;
   sprite = 0;
   x = y = 0;
   layer = 0;
+  id = 0;
   solid = false;
   touched = activated = false;
   starting = true;
+  thisEntity = 0;
 }
 
 int Entity::getId() {
@@ -120,7 +131,7 @@ void Entity::update() {
       //cprint("execute: " + s->script + "\n");
       QScriptContext * context = scriptEngine->pushContext();
       Npc * n = dynamic_cast< Npc * >(this);
-      context->setThisObject(thisObject);
+      context->setThisObject(scriptObject);
       scriptEngine->evaluate(s->script);
 
       if(scriptEngine->hasUncaughtException()) 

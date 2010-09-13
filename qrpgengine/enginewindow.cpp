@@ -10,7 +10,7 @@ EngineWindow::EngineWindow() : QDialog() {
   QVBoxLayout * layout = new QVBoxLayout;
   layout->setContentsMargins(0, 0, 0, 0);
   setLayout(layout);
-  mapBox->setStyleSheet("border: none;");
+  mapBox->setStyleSheet("border-style: none; padding: 0;");
   layout->addWidget(mapBox);
   
   console = new QRPGConsole;

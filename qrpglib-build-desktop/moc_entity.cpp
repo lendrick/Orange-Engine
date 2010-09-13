@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'entity.h'
 **
-** Created: Mon Sep 13 13:41:34 2010
+** Created: Mon Sep 13 14:58:26 2010
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.0)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_Entity[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-      43,   14, // methods
+      44,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -71,9 +71,10 @@ static const uint qt_meta_data_Entity[] = {
      992,  941,    7,    7, 0x0a,
     1054,  137,    7,    7, 0x0a,
     1067,    7,    7,    7, 0x0a,
-    1075,    7,    7,    7, 0x0a,
-    1083,    7,    7,    7, 0x0a,
-    1094,    7,   24,    7, 0x0a,
+    1085,    7,    7,    7, 0x0a,
+    1093,    7,    7,    7, 0x0a,
+    1101,    7,    7,    7, 0x0a,
+    1112,    7,   24,    7, 0x0a,
 
        0        // eod
 };
@@ -107,8 +108,8 @@ static const char qt_meta_stringdata_Entity[] = {
     "getScriptCondition(int)\0usesDefaultBounds(int)\0"
     ",,,,\0getScriptBoundingBox(int,int&,int&,int&,int&)\0"
     "getRealScriptBoundingBox(int,double&,double&,double&,double&)\0"
-    "say(QString)\0start()\0touch()\0activate()\0"
-    "getLayer()\0"
+    "say(QString)\0getScriptObject()\0start()\0"
+    "touch()\0activate()\0getLayer()\0"
 };
 
 const QMetaObject Entity::staticMetaObject = {
@@ -195,14 +196,15 @@ int Entity::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 36: getScriptBoundingBox((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< int(*)>(_a[4])),(*reinterpret_cast< int(*)>(_a[5]))); break;
         case 37: getRealScriptBoundingBox((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< double(*)>(_a[2])),(*reinterpret_cast< double(*)>(_a[3])),(*reinterpret_cast< double(*)>(_a[4])),(*reinterpret_cast< double(*)>(_a[5]))); break;
         case 38: say((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 39: start(); break;
-        case 40: touch(); break;
-        case 41: activate(); break;
-        case 42: { int _r = getLayer();
+        case 39: getScriptObject(); break;
+        case 40: start(); break;
+        case 41: touch(); break;
+        case 42: activate(); break;
+        case 43: { int _r = getLayer();
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = _r; }  break;
         default: ;
         }
-        _id -= 43;
+        _id -= 44;
     }
     return _id;
 }

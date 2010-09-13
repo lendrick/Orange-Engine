@@ -24,11 +24,5 @@ void ScriptUtils::print(QString s) {
 
 QScriptValue ScriptUtils::getEntity(QString s) {
   Entity * e = entities[mapentitynames[s]];
-  Npc * n = dynamic_cast< Npc * >(e);
-
-  if(n) {
-    return scriptEngine->newQObject(n, QScriptEngine::QtOwnership);
-  } else {
-    return scriptEngine->newQObject(e, QScriptEngine::QtOwnership);
-  }
+  return e->getScriptObject();
 }
