@@ -1,0 +1,16 @@
+<!DOCTYPE xproj>
+<project>
+  <name>Tech Demo</name>
+  <tilesets>
+    <tileset>Grassland.xtile</tileset>
+    <tileset>Saffron.xtile</tileset>
+    <tileset>MrChandler.xtile</tileset>
+  </tilesets>
+  <maps>
+    <map>Grassland Map.xmap</map>
+  </maps>
+  <sprites>
+    <sprite>Saffron.xspr</sprite>
+    <sprite>MrChandler.xspr</sprite>
+  </sprites>
+</project>
