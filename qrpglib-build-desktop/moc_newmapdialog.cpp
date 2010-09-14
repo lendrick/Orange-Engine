@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'newmapdialog.h'
 **
-** Created: Mon Sep 13 12:54:30 2010
+** Created: Mon Sep 13 20:35:59 2010
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.0)
 **
 ** WARNING! All changes made in this file will be lost!
