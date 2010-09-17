@@ -1,5 +1,5 @@
 *.o
 moc_*
 lib*.so*
-qrpgengine
-qrpgedit
+*/qrpgengine
+*/qrpgedit
