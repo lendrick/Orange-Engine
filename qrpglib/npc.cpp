@@ -169,7 +169,6 @@ QScriptValue npcConstructor(QScriptContext * context, QScriptEngine * engine) {
     Npc * object = new Npc(name, parent);
     return engine->newQObject(object, QScriptEngine::QtOwnership);
   } catch(QString s) {
-    message(s);
-    return QScriptValue(false);
+    return context->throwError(s);
   }
 }
