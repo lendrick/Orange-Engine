@@ -1,0 +1,5 @@
+*.o
+moc_*
+lib*.so*
+qrpgengine
+qrpgedit
