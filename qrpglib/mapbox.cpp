@@ -160,9 +160,9 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent * e) {
   } else if(mapBox->map && e->button() == Qt::MidButton) {
     mapBox->mouse_start_x = e->scenePos().x();
     mapBox->mouse_start_y = e->scenePos().y();
-  } else if(mapBox->map && play && player && e->button() == Qt::RightButton) {
-    player->clearQueue();
-    player->queueMoveTo(e->scenePos().x() + mapBox->xo, e->scenePos().y() + mapBox->yo);
+  } else if(mapBox->map && play && playerEntity && e->button() == Qt::RightButton) {
+    playerEntity->clearQueue();
+    playerEntity->queueMoveTo(e->scenePos().x() + mapBox->xo, e->scenePos().y() + mapBox->yo);
 
     Entity * x = mapBox->entityAt(e->scenePos().x() + mapBox->xo, e->scenePos().y() + mapBox->yo);
     if(x) cprint("Entity: " + x->getName());
@@ -413,6 +413,7 @@ void MapBox::SetMap(int map_num) {
     map->GetSize(layer, lw, lh);
     map->GetTileSize(tw, th);
     map->SetViewport(0, 0, w, h);
+    map->setStarting(true);
     
     emit SetXRange(0, tw * lw - w);
     emit SetYRange(0, th * lh - h);
@@ -453,9 +454,9 @@ void MapBox::SaveMap(char * filename) {
   if(map) map->Save(filename);
 }
 
-void MapBox::LoadMap(char * filename) {
+//void MapBox::LoadMap(char * filename) {
   //if(map) map->Load(filename);
-}
+//}
 
 void MapBox::setDrawMode(LayerView::LayerViewMode mode) {
   drawMode = mode;
@@ -507,6 +508,23 @@ Entity * MapBox::entityAt(int x, int y) {
 
 QList < Entity * > MapBox::entitiesAt(int x, int y) {
   QList < Entity *> entities;
+
+  if(map && map->GetLayers() > 0) {
+    double x1, y1, x2, y2;
+    if(play) {
+      // Count down from the top, so we know we'll get the ones on top first.
+      for(int i = map->GetEntities(layer) - 1; i >= 0; i--) {
+        map->GetEntity(layer, i)->getRealSpriteBox(x1, y1, x2, y2);
+        if(x >= x1 && x <= x2 && y >= y1 && y <= y2) entities.append(map->GetEntity(layer, i));
+      }
+    } else {
+      for(int i = map->GetStartEntities(layer) - 1; i >= 0; i--) {
+        map->GetStartEntity(layer, i)->getRealSpriteBox(x1, y1, x2, y2);
+        if(x >= x1 && x <= x2 && y >= y1 && y <= y2) entities.append(map->GetStartEntity(layer, i));
+      }
+    }
+  }
+
   return entities;
 }
 
@@ -538,14 +556,14 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
     if(input->left) mapBox->Move(-1, 0);
     if(input->right) mapBox->Move(1, 0);
     */
-    if(input->action) player->setActivated(true);
+    if(input->action) playerEntity->setActivated(true);
     if(input->console) {
       console->setVisible(!(console->isVisible()));
       input->console = false;
     }
     if(mapBox->map) mapBox->map->Update();
     
-    player->setActivated(false);
+    playerEntity->setActivated(false);
 
     if(mapBox->getCamera()) {
       mapBox->SetX(mapBox->getCamera()->getX() - screen_x / 2);

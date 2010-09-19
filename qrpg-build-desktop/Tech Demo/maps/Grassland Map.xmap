@@ -2,7 +2,9 @@
   <name>Grassland Map</name>
   <layers>2</layers>
   <tileset>Grassland</tileset>
-  <layer>
+  <scripts>    <script condition='0'><![CDATA[rpgx.print("Hello, world!");]]></script>
+    <script condition='0'><![CDATA[rpgx.print("Hello again!");]]></script>
+  </scripts>  <layer>
     <width>40</width>
     <height>40</height>
     <tileset>Grassland</tileset>

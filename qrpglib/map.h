@@ -28,10 +28,12 @@ public:
   void SetTileset(int layer, Bitmap * t);
   Bitmap * GetTileset();
   void Save(QString filename);
-  Resource * ThisMap() { return thisMap; };
+  Resource * ThisMap() { return thisMap; }
   Entity * GetEntity(int layer, int index);
   Entity * GetStartEntity(int layer, int index);
   void Update();
+  QScriptValue scriptObject;
+  QScriptValue getScriptObject();
 
 public slots:
   bool SetName(QString n);
@@ -55,6 +57,7 @@ public slots:
   int GetStartEntities(int layer);
   void Reset();
   void Clear();
+  void setStarting(bool);
 
   void addScript(int, QString);
   void clearScripts();
@@ -100,6 +103,8 @@ private:
 
   Resource * thisMap;
   QList < MapScript > scripts;
+
+  bool starting;
 };
 
 

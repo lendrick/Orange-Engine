@@ -59,6 +59,7 @@ public slots:
   void setY(double);
   void move(double, double);
   void setPos(double, double);
+  void setLayer(int);
   void movePos(double, double);
   void setName(QString);
   QString getName();

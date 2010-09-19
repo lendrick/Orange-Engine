@@ -29,7 +29,7 @@
 MainWindow::MainWindow() :
   QMainWindow() {
   initIcons();
-  appTitle = "RPGX Editor";
+  appTitle = "QRPG Editor";
 
   setWindowTitle(appTitle);
 

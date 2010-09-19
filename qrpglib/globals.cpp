@@ -46,7 +46,7 @@ MainWindow * mainWindow = 0;
 Map * currentMap = 0;
 QGLWidget * mainGLWidget;
 MapBox * mapBox = 0;
-Player * player = 0;
+Player * playerEntity = 0;
 QRPGConsole * console = 0;
 
 QScriptEngine * scriptEngine;

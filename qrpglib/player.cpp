@@ -6,7 +6,7 @@
 
 Player::Player(QObject * parent) : Npc("Player", parent) {
   solid = true;
-  player = this;
+  playerEntity = this;
   defaultSpeed = 100;
   activated = false;
   wasActivated = false;

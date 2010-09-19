@@ -54,12 +54,12 @@ int main(int argc, char *argv[]) {
   mainwindow.mapBox->setDrawMode(LayerView::AllOpaque);
   maps[0]->Reset();
 
-  player = new Player;
-  player->setPos(150, 50);
-  player->setSprite(sprites[0]);
-  player->addToMap(1);
+  playerEntity = new Player;
+  playerEntity->setPos(150, 50);
+  playerEntity->setSprite(sprites[0]);
+  playerEntity->addToMap(1);
   //mainwindow.mapBox->GetMap()->AddEntity(0, p);
-  mainwindow.mapBox->setCamera(player);
+  mainwindow.mapBox->setCamera(playerEntity);
 
 
   /*

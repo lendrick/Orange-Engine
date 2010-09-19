@@ -81,7 +81,7 @@ extern int timeLastFrame;
 extern int timeSinceLastFrame;
 
 extern MapBox * mapBox;
-extern Player * player;
+extern Player * playerEntity;
 extern QRPGConsole * console;
 
 extern bool is_editor;

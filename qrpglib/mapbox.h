@@ -33,7 +33,7 @@ public slots:
   void SetMap(int);
   Map * GetMap();
   bool HasMap();
-  void LoadMap(char *);
+  //void LoadMap(char *);
   void SaveMap(char *);
   LayerView::LayerViewMode getDrawMode();
   void setCamera(Entity *);

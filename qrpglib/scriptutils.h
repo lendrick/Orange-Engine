@@ -4,6 +4,8 @@
 #include <QtCore>
 #include <QtScript>
 
+class Entity;
+
 class ScriptUtils : public QObject, public QScriptable {
   Q_OBJECT
 public:
@@ -12,6 +14,10 @@ public slots:
   void messageBox(QString s);
   void print(QString s);
   QScriptValue getEntity(QString s);
+  QScriptValue getMap();
+  QScriptValue teleport(QString, int, int);
+  QScriptValue player();
+  void setCamera(Entity * e);
 };
 
 #endif

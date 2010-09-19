@@ -104,7 +104,7 @@ void Entity::update() {
     } else if(s->condition == ScriptCondition::Touch || s->condition == ScriptCondition::Activate) {
       double x1, y1, x2, y2;
       double px1, py1, px2, py2;
-      player->getRealBoundingBox(px1, py1, px2, py2);
+      playerEntity->getRealBoundingBox(px1, py1, px2, py2);
       if(s->useDefaultBounds) {
         getRealBoundingBox(x1, y1, x2, y2);
         x1--;
@@ -119,7 +119,7 @@ void Entity::update() {
         s->wasTouching = s->isTouching;
         s->isTouching = CollisionTester::stationaryTest(x1, y1, x2, y2, px1, py1, px2, py2);
         if(s->isTouching && !s->wasTouching) execute = true;
-      } else if(player->isActivated() && s->condition == ScriptCondition::Activate) {
+      } else if(playerEntity->isActivated() && s->condition == ScriptCondition::Activate) {
         execute = CollisionTester::stationaryTest(x1, y1, x2, y2, px1, py1, px2, py2);
       }
     //} else if(activated && scripts[i].condition == ScriptCondition::Activate) {
@@ -131,7 +131,7 @@ void Entity::update() {
     if(execute) {
       //cprint("execute: " + s->script + "\n");
       QScriptContext * context = scriptEngine->pushContext();
-      Npc * n = dynamic_cast< Npc * >(this);
+      //Npc * n = dynamic_cast< Npc * >(this);
       context->setThisObject(scriptObject);
       scriptEngine->evaluate(s->script);
 
@@ -225,9 +225,7 @@ void Entity::move(double dx, double dy) {
 
 void Entity::addToMap(int layer) {
   map = mapBox->GetMap();
-  map->RemoveEntity(this->layer, this);
   map->AddEntity(layer, this);
-  this->layer = layer;
 }
 
 int Entity::getLayer() {
@@ -348,6 +346,9 @@ void Entity::getScriptBoundingBox(int index, int & x1, int & y1, int & x2, int &
   y2 = scripts[index].y2;
 }
 
+void Entity::setLayer(int l) {
+  layer = l;
+}
 
 bool entity_y_order(Entity * a, Entity * b) {
   if(a->getY() < b->getY()) return true;

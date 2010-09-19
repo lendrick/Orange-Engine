@@ -71,6 +71,10 @@ void MapReader::readMap()
       {
         map->SetTileset(bitmaps[bitmapnames[readElementText()]]);
       }
+      else if (name() == "scripts")
+      {
+        readScripts();
+      }
       else
       {
         readUnknownElement();
@@ -125,10 +129,6 @@ void MapReader::readLayer()
       else if (name() == "entities")
       {
         readEntities(entities);
-      }
-      else if (name() == "scripts")
-      {
-        readScripts();
       }
       else
       {

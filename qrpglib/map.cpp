@@ -25,6 +25,7 @@ Map::Map(Bitmap * t, int x, int y, int w, int h, QString mapname) : QObject() {
   view_y = y;
   view_w = w;
   view_h = h;
+  starting = true;
   if(tileset) tileset->GetSize(tile_w, tile_h);
   name = mapname;
 
@@ -35,6 +36,8 @@ Map::Map(Bitmap * t, int x, int y, int w, int h, QString mapname) : QObject() {
 	   maps.size() - 1, 
 	   name,
 	   mapfolder);
+
+  scriptObject = scriptEngine->newQObject(this);
 }
 
 Map::Map()
@@ -42,6 +45,7 @@ Map::Map()
   tileset = 0;
   view_x = view_y = view_w = view_h = 0;
   name = "Unnamed Map";
+  starting = true;
 
   maps.push_back(this);
   mapnames[name] = maps.size() - 1;
@@ -50,6 +54,8 @@ Map::Map()
 	   maps.size() - 1, 
 	   name,
 	   mapfolder);
+
+  scriptObject = scriptEngine->newQObject(this);
 }
 
 bool Map::SetName(QString n)
@@ -103,11 +109,38 @@ Map::~Map() {
 }
     
 void Map::Update() {
+  // Execute scripts.
+  for(int i = 0; i < scripts.size(); i++) {
+    bool execute = false;
+    MapScript * s = &(scripts[i]);
+    if(starting && s->condition == ScriptCondition::Start) {
+      execute = true;
+    } else if(s->condition == ScriptCondition::EveryFrame) {
+      execute = true;
+    }
+
+    //push context
+    if(execute) {
+      //cprint("execute: " + s->script + "\n");
+      QScriptContext * context = scriptEngine->pushContext();
+      context->setThisObject(scriptObject);
+      scriptEngine->evaluate(s->script);
+
+      if(scriptEngine->hasUncaughtException())
+        message(scriptEngine->uncaughtException().toString());
+
+      scriptEngine->popContext();
+    }
+  }
+
+  // update entities
   for(int i = 0; i < layers.size(); i++) {
     for(int j = 0; j < layers[i]->entities.size(); j++) {
       layers[i]->entities[j]->update();
     }
   }
+
+  starting = false;
 }
 
 void Map::GetTileSize(int &w, int &h) {
@@ -182,11 +215,14 @@ void Map::Draw(int layer, int x, int y, float opacity) {
 }
 
 void Map::AddEntity(int layer, Entity * entity) {
+  RemoveEntity(entity->getLayer(), entity);
   if(layer < layers.size()) {
     if(play)
       layers[layer]->entities.push_back(entity);
     else
       layers[layer]->startEntities.push_back(entity);      
+
+    entity->setLayer(layer);
   }
 }
 
@@ -401,6 +437,9 @@ void Map::Clear() {
   }
 }
 
+void Map::setStarting(bool s) {
+  starting = s;
+}
 
 void Map::addScript(int cond, QString scr) {
   scripts.append(MapScript(cond, scr));
@@ -420,6 +459,10 @@ QString Map::getScript(int index) const {
 
 int Map::getScriptCondition(int index) const {
   return scripts[index].condition;
+}
+
+QScriptValue Map::getScriptObject() {
+  return scriptObject;
 }
 
 MapScript::MapScript(int c, QString s) {
