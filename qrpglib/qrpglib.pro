@@ -8,6 +8,7 @@ QT       += opengl script xml
 
 TARGET = qrpglib
 TEMPLATE = lib
+DESTDIR = ../qrpg-build-desktop
 
 DEFINES += QRPGLIB_LIBRARY
 

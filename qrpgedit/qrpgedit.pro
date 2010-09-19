@@ -9,7 +9,8 @@ QT       += core gui script opengl
 TARGET = qrpgedit
 TEMPLATE = app
 INCLUDEPATH = ../qrpglib
-LIBS += -L../qrpglib-build-desktop -lqrpglib
+LIBS += -L../qrpg-build-desktop -lqrpglib
+DESTDIR = ../qrpg-build-desktop
 
 SOURCES +=\
     rpgx_mapedit.cpp \
