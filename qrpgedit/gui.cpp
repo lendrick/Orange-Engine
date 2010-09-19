@@ -22,6 +22,8 @@
 #include "layerpanel.h"
 #include "entitydialog.h"
 #include "entity.h"
+#include "mapscriptdialog.h"
+#include "mapreader.h"
 
 
 MainWindow::MainWindow() :
@@ -235,7 +237,7 @@ MainWindow::MainWindow() :
   connect(this, SIGNAL(UpdateMapStatus(QString)), mapwin, SLOT(updateStatus(QString)));
   connect(mapBox->mapScene, SIGNAL(ShowEntityDialog(Entity *)), this, SLOT(ShowEntityDialog(Entity *)));
 
-  
+  connect(mapBox->mapScene, SIGNAL(ShowMapScriptDialog(Map *)), this, SLOT(ShowMapScriptDialog(Map *)));
   mapEditAction->trigger();
   
   // Create dialogs
@@ -418,6 +420,11 @@ void MainWindow::UpdateProjectTitle(QString projtitle) {
 
 void MainWindow::ShowEntityDialog(Entity * x) {
   EntityDialog d(x);
+  d.exec();
+}
+
+void MainWindow::ShowMapScriptDialog(Map * x) {
+  MapScriptDialog d(x);
   d.exec();
 }
 

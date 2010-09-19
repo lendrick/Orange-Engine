@@ -104,7 +104,11 @@ MapScene::MapScene(MapBox * m)
   newEntityAction = new QAction("New Entity", 0);
   deleteEntityAction = new QAction("Delete Entity", 0);
   editEntityAction = new QAction("Edit Entity", 0);
+
+  editMapScriptsAction = new QAction("Edit Map Scripts", 0);
+
   mapPopupMenu->addAction(newEntityAction);
+  mapPopupMenu->addAction(editMapScriptsAction);
   entityPopupMenu->addAction(newEntityAction);
   entityPopupMenu->addAction(deleteEntityAction);
   entityPopupMenu->addAction(editEntityAction);
@@ -112,6 +116,7 @@ MapScene::MapScene(MapBox * m)
   connect(newEntityAction, SIGNAL(triggered()), this, SLOT(newEntity()));
   connect(editEntityAction, SIGNAL(triggered()), this, SLOT(editEntity()));
   connect(deleteEntityAction, SIGNAL(triggered()), this, SLOT(deleteEntity()));
+  connect(editMapScriptsAction, SIGNAL(triggered()), this, SLOT(editMapScripts()));
 
   mapFont = new QFont("Arial", 6);
 }
@@ -639,6 +644,10 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
 void MapScene::editEntity() {
   Entity * x = mapBox->entityAt(mouseScenePos.x(), mouseScenePos.y());
   if(x) emit ShowEntityDialog(x);
+}
+
+void MapScene::editMapScripts() {
+  emit ShowMapScriptDialog(mapBox->map);
 }
 
 void MapScene::newEntity() {

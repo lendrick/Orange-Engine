@@ -103,4 +103,21 @@ class Resource;
 extern QTreeWidget * maplist;
 //extern TileSelect * tiles;
 
+struct ScriptCondition {
+  enum ScriptConditionEnum {
+    Start,
+    Touch,
+    Activate,
+    EveryFrame
+  };
+
+  static const QStringList conditions() {
+    return QStringList()
+      << "Start"
+      << "Touch"
+      << "Activate"
+      << "Every Frame";
+  };
+};
+
 #endif

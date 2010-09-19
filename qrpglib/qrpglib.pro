@@ -44,7 +44,10 @@ SOURCES += \
     collisiontester.cpp \
     bitmap_qt.cpp \
     resource.cpp \
-    jshighlighter.cpp
+    jshighlighter.cpp \
+    mapscriptdialog.cpp \
+    scripttab.cpp \
+    mapreader.cpp
 
 HEADERS +=\
     tileselect.h \
@@ -79,4 +82,7 @@ HEADERS +=\
     entity.h \
     collisiontester.h \
     bitmap.h \
-    jshighlighter.h
+    jshighlighter.h \
+    mapscriptdialog.h \
+    scripttab.h \
+    mapreader.h

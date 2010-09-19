@@ -8,6 +8,7 @@
 #include "collisiontester.h"
 #include "npc.h"
 #include "talkbox.h"
+#include "scripttab.h"
 
 Entity::Entity(QString newname, QObject * parent) : QObject(parent) {
   init();

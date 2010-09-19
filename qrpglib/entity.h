@@ -6,23 +6,6 @@
 #include "sprite.h"
 #include "resource.h"
 
-struct ScriptCondition {
-  enum ScriptConditionEnum {
-    Start,
-    Touch,
-    Activate,
-    EveryFrame
-  };
-  
-  static const QStringList conditions() {
-    return QStringList() 
-      << "Start" 
-      << "Touch"
-      << "Activate"
-      << "Every Frame";
-  };
-};
-
 struct EntityScript {
   EntityScript(int c, QString s, bool u, int nx1, int ny1, int nx2, int ny2);
   int x1, y1, x2, y2;

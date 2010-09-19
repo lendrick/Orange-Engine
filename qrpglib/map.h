@@ -9,6 +9,12 @@ class Resource;
 class Bitmap;
 class Entity;
 
+struct MapScript {
+  MapScript(int c, QString s);
+  int condition;
+  QString script;
+};
+
 class Map : public QObject {
   Q_OBJECT
 public:
@@ -50,6 +56,12 @@ public slots:
   void Reset();
   void Clear();
 
+  void addScript(int, QString);
+  void clearScripts();
+  int getScriptCount() const;
+  QString getScript(int) const;
+  int getScriptCondition(int) const;
+
   //TODO
   //void SetTileset(QString tileSetName);
   //QString GetTilesetName();
@@ -87,27 +99,9 @@ private:
   Bitmap * tileset;
 
   Resource * thisMap;
+  QList < MapScript > scripts;
 };
 
-class MapReader : public QXmlStreamReader
-{
-public:
-  Map * read(QIODevice * device);
-  Map * read(QString filename);
-
-private:
-  void readMap();
-  void readLayer();
-  void readLayerData(QList<int> & layerData);
-  void readEntities(QList < Entity * > & entities);
-  Entity * readEntity();
-  void readScripts(Entity * e);
-
-  void readUnknownElement();
-  void tokenDebug();
-
-  Map * map;
-};
 
 QScriptValue mapConstructor(QScriptContext * context, QScriptEngine * engine);
 

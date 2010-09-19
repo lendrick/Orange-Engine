@@ -45,6 +45,7 @@ public:
 public slots:
   void ShowNewLayerDialog(int);
   void ShowEntityDialog(Entity *);
+  void ShowMapScriptDialog(Map *);
   void deleteLayer(int);
   void ResourceSelected();
 

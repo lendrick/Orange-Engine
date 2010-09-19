@@ -91,9 +91,12 @@ public:
   QLabel * fpsLabel;
   QMenu * mapPopupMenu;
   QMenu * entityPopupMenu;
+
   QAction * newEntityAction;
   QAction * deleteEntityAction;
   QAction * editEntityAction;
+  QAction * editMapScriptsAction;
+
   Entity * selectedEntity;
   QPoint mouseScreenPos;
   QPointF mouseScenePos;
@@ -103,9 +106,11 @@ public slots:
   void newEntity();
   void deleteEntity();
   void editEntity();
+  void editMapScripts();
   
 signals:
   void ShowEntityDialog(Entity *);
+  void ShowMapScriptDialog(Map *);
   
 private:
   void mousePressEvent(QGraphicsSceneMouseEvent * e);

@@ -4,6 +4,7 @@
 #include "map.h"
 #include "bitmap.h"
 #include "sprite.h"
+#include "mapreader.h"
 
 Project::Project(QString projname) {
   name = projname;
