@@ -23,6 +23,7 @@
 #include "entitydialog.h"
 #include "entity.h"
 #include "mapscriptdialog.h"
+#include "globalscriptdialog.h"
 #include "mapreader.h"
 
 
@@ -226,9 +227,9 @@ MainWindow::MainWindow() :
   connect(this, SIGNAL(setTiles(int)), tiles, SLOT(setTiles(int)));
   connect(layerPanel, SIGNAL(setDrawMode(LayerView::LayerViewMode)),
           mapwin, SIGNAL(setDrawMode(LayerView::LayerViewMode)));
-  connect(tiles->tilebox, SIGNAL(TileChanged(int)), mapwin->mapbox, SLOT(setCurrentTile(int)));
+  connect(tiles->tilebox, SIGNAL(tileChanged(int)), mapwin->mapbox, SLOT(setCurrentTile(int)));
   
-  connect(layerPanel, SIGNAL(selectLayer(int)), mapwin->mapbox, SLOT(SetLayer(int)));
+  connect(layerPanel, SIGNAL(selectLayer(int)), mapwin->mapbox, SLOT(setLayer(int)));
   connect(mapEditAction, SIGNAL(triggered()), mapBox, SLOT(setEditMode()));
   connect(mapEntityAction, SIGNAL(triggered()), mapBox, SLOT(setEntityMode()));
 
@@ -238,6 +239,7 @@ MainWindow::MainWindow() :
   connect(mapBox->mapScene, SIGNAL(showEntityDialog(Entity *)), this, SLOT(showEntityDialog(Entity *)));
 
   connect(mapBox->mapScene, SIGNAL(showMapScriptDialog(Map *)), this, SLOT(showMapScriptDialog(Map *)));
+  connect(mapBox->mapScene, SIGNAL(showGlobalScriptDialog()), this, SLOT(showGlobalScriptDialog()));
   mapEditAction->trigger();
   
   // Create dialogs
@@ -425,6 +427,11 @@ void MainWindow::showEntityDialog(Entity * x) {
 
 void MainWindow::showMapScriptDialog(Map * x) {
   MapScriptDialog d(x);
+  d.exec();
+}
+
+void MainWindow::showGlobalScriptDialog() {
+  GlobalScriptDialog d;
   d.exec();
 }
 

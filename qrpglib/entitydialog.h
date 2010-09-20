@@ -3,25 +3,22 @@
 
 #include <QtGui>
 #include "jshighlighter.h"
+#include "scriptdialog.h"
 
 class Entity;
-class ScriptTab;
 
-class EntityDialog : public QDialog {
+class EntityDialog : public ScriptDialog {
   Q_OBJECT
 public:
   EntityDialog(Entity *);
 public slots:
-  int exec();  
-  void addScript();
-  void delScript();
-  void deleteScript(int);
+  int exec();
   void updateStateSelect();
-private:
+  void addScript();
+protected:
   QComboBox * spriteSelect;
   QComboBox * stateSelect;
   QLineEdit * nameInput;
-  QTabWidget * scriptTabs;
   Entity * entity;
 };
 

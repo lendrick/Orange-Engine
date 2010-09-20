@@ -107,9 +107,12 @@ MapScene::MapScene(MapBox * m)
   editEntityAction = new QAction("Edit Entity", 0);
 
   editMapScriptsAction = new QAction("Edit Map Scripts", 0);
+  editGlobalScriptsAction = new QAction("Edit Global Scripts", 0);
 
   mapPopupMenu->addAction(newEntityAction);
   mapPopupMenu->addAction(editMapScriptsAction);
+  mapPopupMenu->addAction(editGlobalScriptsAction);
+
   entityPopupMenu->addAction(newEntityAction);
   entityPopupMenu->addAction(deleteEntityAction);
   entityPopupMenu->addAction(editEntityAction);
@@ -118,6 +121,7 @@ MapScene::MapScene(MapBox * m)
   connect(editEntityAction, SIGNAL(triggered()), this, SLOT(editEntity()));
   connect(deleteEntityAction, SIGNAL(triggered()), this, SLOT(deleteEntity()));
   connect(editMapScriptsAction, SIGNAL(triggered()), this, SLOT(editMapScripts()));
+  connect(editGlobalScriptsAction, SIGNAL(triggered()), this, SLOT(editGlobalScripts()));
 
   mapFont = new QFont("Arial", 6);
 }
@@ -667,6 +671,10 @@ void MapScene::editEntity() {
 
 void MapScene::editMapScripts() {
   emit showMapScriptDialog(mapBox->map);
+}
+
+void MapScene::editGlobalScripts() {
+  emit showGlobalScriptDialog();
 }
 
 void MapScene::newEntity() {

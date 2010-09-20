@@ -13,6 +13,7 @@ void RPGEngine::init() {
   Uint16 audio_format = AUDIO_S16;
   int audio_channels = 2;
   int audio_buffers = 4096;
+  rpgEngineStarting = true;
 
   SDL_Init(SDL_INIT_AUDIO);
   if(Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers)) {
@@ -44,3 +45,24 @@ Map * RPGEngine::getCurrentMap() {
 Player * RPGEngine::getPlayerEntity() {
   return playerEntity;
 }
+
+void RPGEngine::addScript(int cond, QString scr) {
+  globalScripts.append(RPGScript(cond, scr));
+}
+
+void RPGEngine::clearScripts() {
+  globalScripts.clear();
+}
+
+int RPGEngine::getScriptCount() {
+  return globalScripts.size();
+}
+
+QString RPGEngine::getScript(int index) {
+  return globalScripts[index].script;
+}
+
+int RPGEngine::getScriptCondition(int index) {
+  return globalScripts[index].condition;
+}
+

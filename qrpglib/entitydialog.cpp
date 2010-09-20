@@ -1,52 +1,14 @@
+#include "scriptdialog.h"
 #include "entitydialog.h"
 #include "entity.h"
-#include "scripttab.h"
+#include "entityscripttab.h"
 #include "jshighlighter.h"
 #include <QtGui>
 
-CoordinateWidget::CoordinateWidget(QWidget * parent, int nx, int ny) : QFrame(parent) {
-  QHBoxLayout * layout = new QHBoxLayout;
-  setLayout(layout);
-
-  x = new QSpinBox;
-  y = new QSpinBox;
-
-  setContentsMargins(0, 0, 0, 0);
-  layout->setContentsMargins(0, 0, 0, 0);
-
-  x->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-  y->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-  x->setRange(-1000000, 1000000);
-  y->setRange(-1000000, 1000000);
-  x->setValue(nx);
-  y->setValue(ny);
-
-  QLabel * xLabel = new QLabel("X:");
-  QLabel * yLabel = new QLabel(" Y:");
-  xLabel->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-  yLabel->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-
-  layout->addWidget(xLabel);
-  layout->addWidget(x);
-  layout->addWidget(yLabel);
-  layout->addWidget(y);
-
-  QWidget * spacer = new QWidget;
-  spacer->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Minimum);
-  layout->addWidget(spacer);
-}
-
-
-EntityDialog::EntityDialog(Entity * e) : QDialog(0) {
+EntityDialog::EntityDialog(Entity * e) : ScriptDialog() {
   entity = e;
   
   if(!e) return;
-
-  QVBoxLayout * layout = new QVBoxLayout;
-  setLayout(layout);
-
-  QFormLayout * formLayout = new QFormLayout;
-  layout->addLayout(formLayout);
 
   nameInput = new QLineEdit;
   nameInput->setText(entity->getName());
@@ -65,38 +27,8 @@ EntityDialog::EntityDialog(Entity * e) : QDialog(0) {
   updateStateSelect();
   stateSelect->setCurrentIndex(entity->getState());
 
-  QHBoxLayout * buttonLayout = new QHBoxLayout;
-  layout->addLayout(buttonLayout);
-
-  QPushButton * addScriptButton = new QPushButton("New Script");
-  QPushButton * delScriptButton = new QPushButton("Delete Script");
-  QWidget * spacer = new QWidget();
-  spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
-  
-  connect(addScriptButton, SIGNAL(pressed()), this, SLOT(addScript()));
-  connect(delScriptButton, SIGNAL(pressed()), this, SLOT(delScript()));
   connect(spriteSelect, SIGNAL(currentIndexChanged(int)), this, SLOT(updateStateSelect()));
   
-  addScriptButton->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-  delScriptButton->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-
-  buttonLayout->addWidget(addScriptButton);
-  buttonLayout->addWidget(delScriptButton);
-  buttonLayout->addWidget(spacer);
-
-  scriptTabs = new QTabWidget;
-  scriptTabs->setTabsClosable(true);
-  scriptTabs->setMovable(true);
-  layout->addWidget(scriptTabs);
-  scriptTabs->setMinimumSize(400, 300);
-
-  QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok
-                                      | QDialogButtonBox::Cancel);
-  layout->addWidget(buttonBox);
-  connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
-  connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
-  connect(scriptTabs, SIGNAL(tabCloseRequested(int)), this, SLOT(deleteScript(int)));
-
   setWindowTitle(entity->getName());
 
   for(int i = 0; i < entity->getScriptCount(); i++) {
@@ -108,7 +40,7 @@ EntityDialog::EntityDialog(Entity * e) : QDialog(0) {
       entity->getScriptBoundingBox(i, x1, y1, x2, y2);
 
     //message(QString::number(i) + ": " + entity->getScript(i));
-    ScriptTab * scriptTab = new ScriptTab(entity->getScriptCondition(i), entity->getScript(i), defCoords, x1, y1, x2, y2);
+    EntityScriptTab * scriptTab = new EntityScriptTab(entity->getScriptCondition(i), entity->getScript(i), defCoords, x1, y1, x2, y2);
     scriptTabs->addTab(scriptTab, QString::number(i + 1));    
   }
 }
@@ -120,7 +52,7 @@ int EntityDialog::exec() {
   }
   
   int r = QDialog::exec();
-  
+
   if(r == QDialog::Accepted) {
     // Save changes to entity
     entity->setName(nameInput->text());
@@ -128,7 +60,7 @@ int EntityDialog::exec() {
     entity->setState(stateSelect->currentIndex());
     entity->clearScripts();
     for(int i = 0; i < scriptTabs->count(); i++) {
-      ScriptTab * widget = dynamic_cast<ScriptTab *> (scriptTabs->widget(i));
+      EntityScriptTab * widget = dynamic_cast<EntityScriptTab *> (scriptTabs->widget(i));
       if(widget) {
         int condition = widget->conditionSelect->currentIndex();
         QString script = widget->scriptText->toPlainText();
@@ -152,19 +84,9 @@ int EntityDialog::exec() {
 }
 
 void EntityDialog::addScript() {
-  ScriptTab * newScriptTab = new ScriptTab;
+  EntityScriptTab * newScriptTab = new EntityScriptTab;
   scriptTabs->addTab(newScriptTab, QString::number(scriptTabs->count() + 1));
   scriptTabs->setCurrentIndex(scriptTabs->count() - 1);
-}
-
-void EntityDialog::delScript() {
-  deleteScript(scriptTabs->currentIndex());
-}
-
-void EntityDialog::deleteScript(int index) {
-  if(QMessageBox::warning(this, "Delete this script?", "Really delete this script?", 
-    QMessageBox::Ok|QMessageBox::Cancel, QMessageBox::Cancel) == QMessageBox::Ok) 
-    scriptTabs->removeTab(index);
 }
 
 void EntityDialog::updateStateSelect() {

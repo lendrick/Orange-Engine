@@ -3,17 +3,12 @@
 
 #include "polygon.h"
 #include "bitmap.h"
+#include "rpgscript.h"
 #include <QtCore>
 
 class Resource;
 class Bitmap;
 class Entity;
-
-struct MapScript {
-  MapScript(int c, QString s);
-  int condition;
-  QString script;
-};
 
 class Map : public QObject, public QScriptable {
   Q_OBJECT
@@ -102,7 +97,7 @@ private:
   Bitmap * tileset;
 
   Resource * thisMap;
-  QList < MapScript > scripts;
+  QList < RPGScript > scripts;
 
   bool starting;
 };

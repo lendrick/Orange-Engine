@@ -136,9 +136,9 @@ SpriteDialog::SpriteDialog(QWidget * parent) : QDialog(parent) {
   connect(frameAddAction, SIGNAL(triggered()), this, SLOT(addFrame()));
   connect(frameDelAction, SIGNAL(triggered()), this, SLOT(delFrame()));
 
-  connect(playButton, SIGNAL(triggered()), spriteWidget, SLOT(Play()));
-  connect(pauseButton, SIGNAL(triggered()), spriteWidget, SLOT(Pause()));
-  connect(stopButton, SIGNAL(triggered()), spriteWidget, SLOT(Stop()));
+  connect(playButton, SIGNAL(triggered()), spriteWidget, SLOT(play()));
+  connect(pauseButton, SIGNAL(triggered()), spriteWidget, SLOT(pause()));
+  connect(stopButton, SIGNAL(triggered()), spriteWidget, SLOT(stop()));
 
   connect(frameTable, SIGNAL(currentCellChanged(int, int, int, int)), 
     this, SLOT(frameChanged(int)));
@@ -147,7 +147,7 @@ SpriteDialog::SpriteDialog(QWidget * parent) : QDialog(parent) {
   connect(stateList, SIGNAL(currentRowChanged(int)), 
     this, SLOT(stateChanged(int)));
 
-  connect(tileSelect->tilebox, SIGNAL(TileChanged(int)), this, SLOT(tileChanged(int)));
+  connect(tileSelect->tilebox, SIGNAL(tileChanged(int)), this, SLOT(tileChanged(int)));
 
   connect(spriteWidget, SIGNAL(updateTime(int)), this, SLOT(updateSpriteSliderCurrent(int)));
 

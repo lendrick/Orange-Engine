@@ -9,6 +9,7 @@
 #include "npc.h"
 #include "talkbox.h"
 #include "scripttab.h"
+#include "rpgscript.h"
 
 Entity::Entity(QString newname, QObject * parent) : QObject(parent) {
   init();
@@ -360,9 +361,10 @@ void Entity::say(QString s) {
   TalkBox * t = new TalkBox(s);
 }
 
-EntityScript::EntityScript(int c, QString s, bool u, int nx1, int ny1, int nx2, int ny2) { 
-  condition = c; 
-  script = s; 
+EntityScript::EntityScript(int c, QString s,
+                           bool u, int nx1, int ny1, int nx2, int ny2)
+                             : RPGScript(c, s)
+{
   useDefaultBounds = u;
   x1 = nx1;
   y1 = ny1;

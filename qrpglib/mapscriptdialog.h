@@ -1,23 +1,22 @@
 #ifndef MAPSCRIPTDIALOG_H
 #define MAPSCRIPTDIALOG_H
 
-#include <QtGui>
-#include "jshighlighter.h"
+#include "scriptdialog.h"
 
-class Map;
-
-class MapScriptDialog : public QDialog {
+class MapScriptDialog : public ScriptDialog
+{
   Q_OBJECT
 public:
-  MapScriptDialog(Map * m);
+  explicit MapScriptDialog(Map * m);
+
+signals:
+
 public slots:
   int exec();
-  void addScript();
-  void delScript();
-  void deleteScript(int);
+
 private:
-  QTabWidget * scriptTabs;
   Map * map;
+
 };
 
-#endif
+#endif // MAPSCRIPTDIALOG_H

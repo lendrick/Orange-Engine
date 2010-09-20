@@ -12,6 +12,7 @@
 #include "mapbox.h"
 #include "qrpgconsole.h"
 #include "talkbox.h"
+#include "rpgscript.h"
 
 QTreeWidget * maplist;
 Resource * mapfolder;
@@ -24,6 +25,7 @@ Resource * currentresource = 0;
 TalkBox * talkBoxTest;
 
 bool is_editor = false;
+bool rpgEngineStarting = false;
 
 TileSelect * tiles;
 
@@ -31,6 +33,7 @@ QList < Map * > maps;
 QList < Bitmap * > bitmaps;
 QList < Sprite * > sprites;
 QList < Entity * > entities;
+QList < RPGScript > globalScripts;
 
 QHash < QString, int > mapnames;
 QHash < QString, int > bitmapnames;

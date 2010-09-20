@@ -163,8 +163,8 @@ TileSelect::TileSelect(QWidget *parent)
   HBox->addWidget(scroll);
 
   connect(scroll, SIGNAL(valueChanged(int)), 
-	  tilebox, SLOT(SetScroll(int)));
-  connect(tilebox, SIGNAL(SetRange(int, int)), 
+          tilebox, SLOT(setScroll(int)));
+  connect(tilebox, SIGNAL(setRange(int, int)),
 	  scroll, SLOT(setRange(int, int)));
 }
 

@@ -38,6 +38,7 @@ class Player;
 class QRPGConsole;
 class ImageFrame;
 class TalkBox;
+class RPGScript;
 
 extern TalkBox * talkBoxTest;
 
@@ -52,6 +53,7 @@ extern QList < Map * > maps;
 extern QList < Bitmap * > bitmaps;
 extern QList < Sprite * > sprites;
 extern QList < Entity * > entities;
+extern QList < RPGScript > globalScripts;
 
 extern QHash < QString, int > mapnames;
 extern QHash < QString, int > bitmapnames;
@@ -89,6 +91,8 @@ extern bool is_editor;
 extern bool viewTilePos;
 extern bool viewEntityNames;
 extern bool viewGrid;
+
+extern bool rpgEngineStarting;
 
 extern QPixmap * talkBoxBackground;
 

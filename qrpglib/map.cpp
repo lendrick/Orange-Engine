@@ -6,6 +6,7 @@
 #include "globals.h"
 #include "entity.h"
 #include "npc.h"
+#include "rpgscript.h"
 #include <GL/gl.h>
 #include <stdlib.h>
 #include <iostream>
@@ -109,10 +110,31 @@ Map::~Map() {
 }
     
 void Map::update() {
-  // Execute scripts.
-  for(int i = 0; i < scripts.size(); i++) {
+
+  int i = 0;
+
+  // Global scripts.
+  for(i = 0; i < globalScripts.size(); i++) {
     bool execute = false;
-    MapScript * s = &(scripts[i]);
+    RPGScript * s = &(globalScripts[i]);
+    if(rpgEngineStarting && s->condition == ScriptCondition::Start) {
+      execute = true;
+    } else if(s->condition == ScriptCondition::EveryFrame) {
+      execute = true;
+    }
+
+    if(execute) {
+      scriptEngine->evaluate(s->script);
+
+      if(scriptEngine->hasUncaughtException())
+        message(scriptEngine->uncaughtException().toString());
+    }
+  }
+
+  // Map scripts
+  for(i = 0; i < scripts.size(); i++) {
+    bool execute = false;
+    RPGScript * s = &(scripts[i]);
     if(starting && s->condition == ScriptCondition::Start) {
       execute = true;
     } else if(s->condition == ScriptCondition::EveryFrame) {
@@ -140,7 +162,7 @@ void Map::update() {
     }
   }
 
-  starting = false;
+  starting = rpgEngineStarting = false;
 }
 
 void Map::getTileSize(int &w, int &h) {
@@ -442,7 +464,7 @@ void Map::setStarting(bool s) {
 }
 
 void Map::addScript(int cond, QString scr) {
-  scripts.append(MapScript(cond, scr));
+  scripts.append(RPGScript(cond, scr));
 }
 
 void Map::clearScripts() {
@@ -465,10 +487,6 @@ QScriptValue Map::getScriptObject() {
   return scriptObject;
 }
 
-MapScript::MapScript(int c, QString s) {
-  condition = c;
-  script = s;
-};
 
 QScriptValue mapConstructor(QScriptContext * context, QScriptEngine * engine) {
   QString name = context->argument(0).toString();

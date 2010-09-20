@@ -32,19 +32,19 @@ MapWindow::MapWindow(QWidget *parent)
 
   status = new QStatusBar(this);
 
-  connect(mapbox, SIGNAL(SetXRange(int, int)), 
+  connect(mapbox, SIGNAL(setXRange(int, int)),
 	  HScroll, SLOT(setRange(int, int)));
-  connect(mapbox, SIGNAL(SetYRange(int, int)), 
+  connect(mapbox, SIGNAL(setYRange(int, int)),
 	  VScroll, SLOT(setRange(int, int)));
 
   connect(VScroll, SIGNAL(valueChanged(int)),
-	  mapbox, SLOT(SetY(int)));
+          mapbox, SLOT(setY(int)));
   connect(HScroll, SIGNAL(valueChanged(int)),
-	  mapbox, SLOT(SetX(int)));
+          mapbox, SLOT(setX(int)));
 
-  connect(mapbox, SIGNAL(SetXScroll(int)),
+  connect(mapbox, SIGNAL(setXScroll(int)),
 	  HScroll, SLOT(setValue(int)));
-  connect(mapbox, SIGNAL(SetYScroll(int)),
+  connect(mapbox, SIGNAL(setYScroll(int)),
 	  VScroll, SLOT(setValue(int)));
   
   connect(this, SIGNAL(setDrawMode(LayerView::LayerViewMode)), mapbox, SLOT(setDrawMode(LayerView::LayerViewMode)));

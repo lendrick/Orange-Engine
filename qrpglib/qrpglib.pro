@@ -46,11 +46,15 @@ SOURCES += \
     bitmap_qt.cpp \
     resource.cpp \
     jshighlighter.cpp \
-    mapscriptdialog.cpp \
+    scriptdialog.cpp \
     scripttab.cpp \
     mapreader.cpp \
     rpgengine.cpp \
-    sound.cpp
+    sound.cpp \
+    mapscriptdialog.cpp \
+    entityscripttab.cpp \
+    globalscriptdialog.cpp \
+    rpgscript.cpp
 
 HEADERS +=\
     tileselect.h \
@@ -86,9 +90,13 @@ HEADERS +=\
     collisiontester.h \
     bitmap.h \
     jshighlighter.h \
-    mapscriptdialog.h \
+    scriptdialog.h \
     scripttab.h \
     mapreader.h \
     qrpgengine.h \
     rpgengine.h \
-    sound.h
+    sound.h \
+    mapscriptdialog.h \
+    entityscripttab.h \
+    globalscriptdialog.h \
+    rpgscript.h

@@ -5,27 +5,20 @@
 
 class JsHighlighter;
 
-class CoordinateWidget : public QFrame {
-  Q_OBJECT
-public:
-  CoordinateWidget(QWidget * parent = 0, int nx = 0, int ny = 0);
-  QSpinBox * x;
-  QSpinBox * y;
-};
-
 class ScriptTab : public QFrame {
   Q_OBJECT
-  friend class EntityDialog;
+  friend class ScriptDialog;
   friend class MapScriptDialog;
+  friend class GlobalScriptDialog;
+  friend class EntityDialog;
 public:
-  ScriptTab(int condition = 0, QString script = "", bool defCoords = true, int x1 = 0, int y1 = 0, int x2 = 0, int y2 = 0);
-private:
+  ScriptTab(int condition = 0, QString script = "");
+protected:
   QComboBox * conditionSelect;
-  QCheckBox * useDefaultBoundingBox;
-  CoordinateWidget * c1;
-  CoordinateWidget * c2;
   QTextEdit * scriptText;
   JsHighlighter * highlighter;
+  QVBoxLayout * layout;
+  QFormLayout * formLayout;
 };
 
 #endif // SCRIPTTAB_H

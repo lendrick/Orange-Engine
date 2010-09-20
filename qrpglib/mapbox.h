@@ -96,6 +96,7 @@ public:
   QAction * deleteEntityAction;
   QAction * editEntityAction;
   QAction * editMapScriptsAction;
+  QAction * editGlobalScriptsAction;
 
   Entity * selectedEntity;
   QPoint mouseScreenPos;
@@ -107,10 +108,12 @@ public slots:
   void deleteEntity();
   void editEntity();
   void editMapScripts();
+  void editGlobalScripts();
   
 signals:
   void showEntityDialog(Entity *);
   void showMapScriptDialog(Map *);
+  void showGlobalScriptDialog();
   
 private:
   void mousePressEvent(QGraphicsSceneMouseEvent * e);
