@@ -55,7 +55,7 @@ Entity::Entity(const Entity & e) {
 }
 
 Entity::~Entity() {
-  if(map) map->RemoveEntity(this->layer, this);
+  if(map) map->removeEntity(this->layer, this);
   if(entitynames.contains(name) && entitynames[name] == id) 
     entitynames.remove(name);
 
@@ -225,7 +225,7 @@ void Entity::move(double dx, double dy) {
 
 void Entity::addToMap(int layer) {
   map = mapBox->GetMap();
-  map->AddEntity(layer, this);
+  map->addEntity(layer, this);
 }
 
 int Entity::getLayer() {

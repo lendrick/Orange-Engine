@@ -3,10 +3,11 @@
 #include "npc.h"
 #include "entity.h"
 #include "player.h"
+#include "rpgengine.h"
 
 Player::Player(QObject * parent) : Npc("Player", parent) {
   solid = true;
-  playerEntity = this;
+  RPGEngine::setPlayerEntity(this);
   defaultSpeed = 100;
   activated = false;
   wasActivated = false;

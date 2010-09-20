@@ -5,6 +5,7 @@
 #include "bitmap.h"
 #include "sprite.h"
 #include "mapreader.h"
+#include "rpgengine.h"
 
 Project::Project(QString projname) {
   name = projname;
@@ -14,7 +15,7 @@ Project::Project(QString projname) {
 
 Project::~Project() {
   currentresource = 0;
-  currentMap = 0;
+  RPGEngine::setCurrentMap(0);
   mapfolder->clear();
   spritefolder->clear();
   bitmapfolder->clear();
@@ -78,9 +79,9 @@ void Project::Save(QString filename) {
   QDir::setCurrent("maps");
   for(int i = 0; i < maps.size(); i++) {
     if(maps[i]) {
-      QString fn = maps[i]->GetName();
+      QString fn = maps[i]->getName();
       fn = fn + ".xmap";
-      maps[i]->Save(fn);
+      maps[i]->save(fn);
 
       f << "    <map>";
       f << fn;

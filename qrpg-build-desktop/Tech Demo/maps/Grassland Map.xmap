@@ -2,8 +2,18 @@
   <name>Grassland Map</name>
   <layers>2</layers>
   <tileset>Grassland</tileset>
-  <scripts>    <script condition='0'><![CDATA[rpgx.print("Hello, world!");]]></script>
-    <script condition='0'><![CDATA[rpgx.print("Hello again!");]]></script>
+  <scripts>    <script condition='0'><![CDATA[rpgx.print("Creating player...");
+map.addEntity(1, player);
+player.setPos(300, 300);
+player.setSprite("Saffron");
+player.addToMap(1);
+rpgx.setCamera(player);
+
+bgm = new Sound("sounds/adventure.ogg");
+bgm.setLoop(true);
+bgm.play();
+
+]]></script>
   </scripts>  <layer>
     <width>40</width>
     <height>40</height>

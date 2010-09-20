@@ -19,7 +19,7 @@ bool CollisionTester::test(Entity * entity, double &dx, double &dy, double &mx, 
   mx = my = 0;
 
   int tw, th;
-  entity->getMap()->GetTileSize(tw, th);
+  entity->getMap()->getTileSize(tw, th);
   int x1, y1, x2, y2;
   entity->getBoundingBox(x1, y1, x2, y2);
   double distance = fabs(dx) + fabs(dy) + x2 - x1 + y2 - y1;
@@ -73,8 +73,8 @@ bool CollisionTester::test(Entity * entity, double &dx, double &dy, double &mx, 
     }
   }
 
-  for(int i = 0; i < entity->getMap()->GetEntities(entity->getLayer()); i++) {
-    Entity * b = entity->getMap()->GetEntity(entity->getLayer(), i);
+  for(int i = 0; i < entity->getMap()->getEntities(entity->getLayer()); i++) {
+    Entity * b = entity->getMap()->getEntity(entity->getLayer(), i);
     if(entity == b) continue;
     CollisionData c = entityTest(entity, dx, dy, b);
     if(c.collision && c.distance <= distance) {
@@ -198,7 +198,7 @@ CollisionTester::CollisionData CollisionTester::tileTest(Entity * entity, double
   double x1, y1, x2, y2;
   double tx1, ty1, tx2, ty2;
 
-  if(entity->getMap()->GetTile(entity->getLayer(), tx, ty) == 0) return c;
+  if(entity->getMap()->getTile(entity->getLayer(), tx, ty) == 0) return c;
   entity->getRealBoundingBox(x1, y1, x2, y2);
 
   // get tile coordinates

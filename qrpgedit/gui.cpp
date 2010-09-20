@@ -258,7 +258,7 @@ void MainWindow::ResourceSelected() {
   currentresource = static_cast<Resource *> (maplist->currentItem());
   if(item->Type() == Resource::Map) {
     emit SetMap(item->GetID());
-    tiles->SetTileset(maps[item->GetID()]->GetTileset());
+    tiles->SetTileset(maps[item->GetID()]->getTileset());
   } else if(item->Type() == Resource::Bitmap) {
     emit SetMap(-1);
     emit SetTiles(item->GetID());
@@ -273,7 +273,7 @@ void MainWindow::ResourceSelected() {
 
 void MainWindow::ShowNewLayerDialog(int before) {
   if(newlayerdialog->exec() == QDialog::Accepted ) {
-    mapwin->mapbox->GetMap()->InsertLayerBefore(before, newlayerdialog->xspin->value(),
+    mapwin->mapbox->GetMap()->insertLayerBefore(before, newlayerdialog->xspin->value(),
 			newlayerdialog->yspin->value(),
 			newlayerdialog->wrapcheck->isChecked(),
       tiles->GetTile(),
@@ -351,7 +351,7 @@ void MainWindow::NewMap() {
   if(newmapdialog->exec() == QDialog::Accepted ) {
     tiles->tilebox->makeCurrent();
     Map * m = new Map(bitmaps[newmapdialog->tileset->currentIndex()], 0, 0, 1, 1, newmapdialog->mapname->text());
-    maplist->setCurrentItem(m->ThisMap());
+    maplist->setCurrentItem(m->getThisMap());
     ShowNewLayerDialog(0);
   }
 }
@@ -364,14 +364,14 @@ void MainWindow::LoadMap() {
     ".",
     "Maps (*.xmap)"
   ));
-  maplist->setCurrentItem(m->ThisMap());
+  maplist->setCurrentItem(m->getThisMap());
 }
 
 void MainWindow::SaveMap() {
   Resource * item = static_cast<Resource *> (maplist->currentItem());
 
   if(item && item->Type() == Resource::Map)
-    maps[item->GetID()]->Save( 
+    maps[item->GetID()]->save(
 			       QFileDialog::getSaveFileName(
                this,
                "Choose a file",

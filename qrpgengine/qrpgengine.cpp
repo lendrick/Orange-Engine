@@ -11,6 +11,7 @@
 #include "resource.h"
 #include "player.h"
 #include "npc.h"
+#include "rpgengine.h"
 
 // for testing
 #include <cstdlib>
@@ -23,6 +24,8 @@ int main(int argc, char *argv[]) {
   //QApplication::setGraphicsSystem("opengl");
   QApplication mapedit(argc, argv);
   initScriptEngine();
+
+  RPGEngine::init();
   mainGLWidget = new QGLWidget;
   EngineWindow mainwindow;
   play = true;
@@ -37,7 +40,8 @@ int main(int argc, char *argv[]) {
 
   ProjectReader projectReader;
   Project * loadedProject;
-  int id = QFontDatabase::addApplicationFont("PfennigBold.otf");
+  //int id = QFontDatabase::addApplicationFont("PfennigBold.otf");
+  QFontDatabase::addApplicationFont("PfennigBold.otf");
   talkBoxBackground = new QPixmap("ui.png");
 
   if(!QDir::setCurrent("Tech Demo")) {
@@ -52,15 +56,16 @@ int main(int argc, char *argv[]) {
   mainwindow.mapBox->SetMap(0);
   mainwindow.mapBox->SetLayer(0);
   mainwindow.mapBox->setDrawMode(LayerView::AllOpaque);
-  maps[0]->Reset();
+  maps[0]->reset();
 
-  playerEntity = new Player;
+  RPGEngine::setPlayerEntity(new Player);
+  /*
   playerEntity->setPos(150, 50);
   playerEntity->setSprite(sprites[0]);
   playerEntity->addToMap(1);
   //mainwindow.mapBox->GetMap()->AddEntity(0, p);
   mainwindow.mapBox->setCamera(playerEntity);
-
+  */
 
   /*
   for(int i = 0; i < 500; i++) {

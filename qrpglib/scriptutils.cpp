@@ -7,6 +7,7 @@
 #include "npc.h"
 #include "player.h"
 #include "mapbox.h"
+#include "sound.h"
 
 ScriptUtils::ScriptUtils() {  
   QScriptValue objectValue = scriptEngine->newQObject(this);
@@ -15,6 +16,10 @@ ScriptUtils::ScriptUtils() {
   QScriptValue npcCtor = scriptEngine->newFunction(npcConstructor);
   QScriptValue metaObject = scriptEngine->newQMetaObject(&QObject::staticMetaObject, npcCtor);
   scriptEngine->globalObject().setProperty("Npc", metaObject);
+
+  QScriptValue soundCtor = scriptEngine->newFunction(soundConstructor);
+  metaObject = scriptEngine->newQMetaObject(&QObject::staticMetaObject, soundCtor);
+  scriptEngine->globalObject().setProperty("Sound", metaObject);
 }
 
 void ScriptUtils::messageBox(QString s) {
@@ -30,19 +35,8 @@ QScriptValue ScriptUtils::getEntity(QString s) {
   return e->getScriptObject();
 }
 
-QScriptValue ScriptUtils::getMap() {
-  return currentMap->getScriptObject();
-}
-
 QScriptValue ScriptUtils::teleport(QString map, int x, int y) {
-
-}
-
-QScriptValue ScriptUtils::player() {
-  if(playerEntity)
-    return playerEntity->getScriptObject();
-  else
-    return QScriptValue(QScriptValue::NullValue);
+  return QScriptValue(QScriptValue::NullValue);
 }
 
 void ScriptUtils::setCamera(Entity * e) {

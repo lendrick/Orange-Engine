@@ -168,11 +168,11 @@ void LayerPanel::updateData() {
   layerTable->clearContents();
   layerTable->setRowCount(0);
   if(currentMap) {
-    int layers = currentMap->GetLayers();
+    int layers = currentMap->getLayers();
     layerTable->setRowCount(layers);
     for(int i = 0; i < layers; i++) {
       //QTableWidgetItem * layer = new QTableWidgetItem(QString::number(i));
-      QTableWidgetItem * layerName = new QTableWidgetItem(currentMap->GetLayerName(i));
+      QTableWidgetItem * layerName = new QTableWidgetItem(currentMap->getLayerName(i));
       layerName->setFlags(Qt::ItemIsSelectable|Qt::ItemIsDragEnabled|Qt::ItemIsEditable|Qt::ItemIsEnabled);
       //layerTable->setItem(i, 0, layer);
       layerTable->setItem(i, nameColumn, layerName);
@@ -186,6 +186,9 @@ void LayerPanel::updateData() {
 }
 
 void LayerPanel::cellClicked(int row, int column) {
+  // Stop the unused parameter warning:
+  column = 0;
+
   emit selectLayer(row);
 }
 
@@ -207,7 +210,7 @@ void LayerPanel::renameLayer(int row, int column) {
    // QString::number(column));
   if(column != nameColumn) return;
   //QMessageBox::warning(0, "info", "Setting layer " + QString::number(row) + " name to '" + layerTable->item(row, column)->text() + "'");
-  currentMap->SetLayerName(row, layerTable->item(row, column)->text());
+  currentMap->setLayerName(row, layerTable->item(row, column)->text());
 }
 
 void LayerPanel::setDisabled(bool disabled) {

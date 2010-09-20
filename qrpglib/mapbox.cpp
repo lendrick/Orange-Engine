@@ -22,6 +22,7 @@
 #include "player.h"
 #include "qrpgconsole.h"
 #include "talkbox.h"
+#include "rpgengine.h"
 
 using std::cout;
 
@@ -131,9 +132,9 @@ void MapBox::resizeEvent(QResizeEvent *event) {
   screen_y = h;
 
   if(map) {
-    map->GetSize(layer, lw, lh);
-    map->GetTileSize(tw, th);
-    map->SetViewport(0, 0, w, h);
+    map->getSize(layer, lw, lh);
+    map->getTileSize(tw, th);
+    map->setViewport(0, 0, w, h);
     
     emit SetXRange(0, tw * lw - w);
     emit SetYRange(0, th * lh - h);
@@ -182,7 +183,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent * e) {
 void MapScene::mouseMoveEvent(QGraphicsSceneMouseEvent * e) {
   if(mapBox->map) {
     int tx, ty;
-    mapBox->map->GetTileSize(tx, ty);
+    mapBox->map->getTileSize(tx, ty);
     emit mapBox->mousePos(e->scenePos().x(), e->scenePos().y(), 
       e->scenePos().x() / tx, e->scenePos().y() / ty);
   }
@@ -310,11 +311,11 @@ void MapBox::SetTile(QMouseEvent * e) {
   if(map) {
     int w, h, x, y;
     
-    map->GetTileSize(w, h);
+    map->getTileSize(w, h);
     x = (xo + e->x()) / w;
     y = (yo + e->y()) / h;
     
-    map->SetTile(layer, x, y, currentTile);
+    map->setTile(layer, x, y, currentTile);
     //makeCurrent();
     //updateGL();
     update();
@@ -325,11 +326,11 @@ void MapBox::SetTile(QGraphicsSceneMouseEvent * e) {
   if(map) {
     int w, h, x, y;
     
-    map->GetTileSize(w, h);
+    map->getTileSize(w, h);
     x = (xo + e->scenePos().x()) / w;
     y = (yo + e->scenePos().y()) / h;
     
-    map->SetTile(layer, x, y, currentTile);
+    map->setTile(layer, x, y, currentTile);
     //makeCurrent();
     //updateGL();
     update();
@@ -337,12 +338,12 @@ void MapBox::SetTile(QGraphicsSceneMouseEvent * e) {
 }  
 
 void MapBox::SetLayer(int l) {
-  if(layer >= 0 && layer < map->GetLayers()) {
+  if(layer >= 0 && layer < map->getLayers()) {
     int lw, lh, tw, th;
     layer = l;
 
-    map->GetSize(layer, lw, lh);
-    map->GetTileSize(tw, th);
+    map->getSize(layer, lw, lh);
+    map->getTileSize(tw, th);
     
     emit SetXRange(0, tw * lw - width());
     emit SetYRange(0, th * lh - height());
@@ -359,13 +360,13 @@ void MapBox::SetLayer(int l) {
 void MapBox::AddLayer(int w, int h, bool wrap, QString name) {
   if(map) {
     int filltile = currentTile;
-    map->AddLayer(w, h, wrap, filltile, name);
-    emit SetLayerRange(0, map->GetLayers() - 1);
-    if(map->GetLayers() == 1) {
+    map->addLayer(w, h, wrap, filltile, name);
+    emit SetLayerRange(0, map->getLayers() - 1);
+    if(map->getLayers() == 1) {
       int lw, lh, tw, th;
 
-      map->GetSize(0, lw, lh);
-      map->GetTileSize(tw, th);
+      map->getSize(0, lw, lh);
+      map->getTileSize(tw, th);
     
       emit SetXRange(0, tw * lw - width());
       emit SetYRange(0, th * lh - height());
@@ -377,8 +378,8 @@ void MapBox::AddLayer(int w, int h, bool wrap, QString name) {
 }
 
 void MapBox::DeleteLayer(int layer) {
-  map->DeleteLayer(layer);
-  if(map->GetLayers() < layer) layer = map->GetLayers();
+  map->deleteLayer(layer);
+  if(map->getLayers() < layer) layer = map->getLayers();
   SetLayer(layer);
 }
 
@@ -397,7 +398,7 @@ Map * MapBox::GetMap() {
 void MapBox::SetMap(int map_num) {
   int lw, lh, tw, th, w, h;
   map = 0;
-  currentMap = 0;
+  RPGEngine::setCurrentMap(0);
   if(map_num >= 0) {
     map = maps[map_num];
   }
@@ -410,9 +411,9 @@ void MapBox::SetMap(int map_num) {
     scene()->setSceneRect(QRect(QPoint(0, 0), QPoint(w, h)));
 
   if(map) {
-    map->GetSize(layer, lw, lh);
-    map->GetTileSize(tw, th);
-    map->SetViewport(0, 0, w, h);
+    map->getSize(layer, lw, lh);
+    map->getTileSize(tw, th);
+    map->setViewport(0, 0, w, h);
     map->setStarting(true);
     
     emit SetXRange(0, tw * lw - w);
@@ -421,13 +422,13 @@ void MapBox::SetMap(int map_num) {
     xrange = tw * lw - w;
     yrange = th * lh - h;
 
-    if(map->GetLayers() == 0) {
+    if(map->getLayers() == 0) {
       emit SetLayerRange(0, 0);
     } else {
-      emit SetLayerRange(0, map->GetLayers() - 1);
+      emit SetLayerRange(0, map->getLayers() - 1);
     }
 
-    currentMap = map;
+    RPGEngine::setCurrentMap(map);
 
     QScriptValue objectValue = scriptEngine->newQObject(map);
     scriptEngine->globalObject().setProperty("map", objectValue);
@@ -451,7 +452,7 @@ void MapScene::init(int w, int h)
 }
 
 void MapBox::SaveMap(char * filename) {
-  if(map) map->Save(filename);
+  if(map) map->save(filename);
 }
 
 //void MapBox::LoadMap(char * filename) {
@@ -488,18 +489,18 @@ int MapBox::getMode() {
 }
 
 Entity * MapBox::entityAt(int x, int y) {
-  if(map && map->GetLayers() > 0) {
+  if(map && map->getLayers() > 0) {
     double x1, y1, x2, y2;
     if(play) {
       // Count down from the top, so we know we'll get the ones on top first.
-      for(int i = map->GetEntities(layer) - 1; i >= 0; i--) {
-        map->GetEntity(layer, i)->getRealSpriteBox(x1, y1, x2, y2);
-        if(x >= x1 && x <= x2 && y >= y1 && y <= y2) return map->GetEntity(layer, i);
+      for(int i = map->getEntities(layer) - 1; i >= 0; i--) {
+        map->getEntity(layer, i)->getRealSpriteBox(x1, y1, x2, y2);
+        if(x >= x1 && x <= x2 && y >= y1 && y <= y2) return map->getEntity(layer, i);
       }
     } else {
-      for(int i = map->GetStartEntities(layer) - 1; i >= 0; i--) {
-        map->GetStartEntity(layer, i)->getRealSpriteBox(x1, y1, x2, y2);
-        if(x >= x1 && x <= x2 && y >= y1 && y <= y2) return map->GetStartEntity(layer, i);
+      for(int i = map->getStartEntities(layer) - 1; i >= 0; i--) {
+        map->getStartEntity(layer, i)->getRealSpriteBox(x1, y1, x2, y2);
+        if(x >= x1 && x <= x2 && y >= y1 && y <= y2) return map->getStartEntity(layer, i);
       }
     }
   }
@@ -509,18 +510,18 @@ Entity * MapBox::entityAt(int x, int y) {
 QList < Entity * > MapBox::entitiesAt(int x, int y) {
   QList < Entity *> entities;
 
-  if(map && map->GetLayers() > 0) {
+  if(map && map->getLayers() > 0) {
     double x1, y1, x2, y2;
     if(play) {
       // Count down from the top, so we know we'll get the ones on top first.
-      for(int i = map->GetEntities(layer) - 1; i >= 0; i--) {
-        map->GetEntity(layer, i)->getRealSpriteBox(x1, y1, x2, y2);
-        if(x >= x1 && x <= x2 && y >= y1 && y <= y2) entities.append(map->GetEntity(layer, i));
+      for(int i = map->getEntities(layer) - 1; i >= 0; i--) {
+        map->getEntity(layer, i)->getRealSpriteBox(x1, y1, x2, y2);
+        if(x >= x1 && x <= x2 && y >= y1 && y <= y2) entities.append(map->getEntity(layer, i));
       }
     } else {
-      for(int i = map->GetStartEntities(layer) - 1; i >= 0; i--) {
-        map->GetStartEntity(layer, i)->getRealSpriteBox(x1, y1, x2, y2);
-        if(x >= x1 && x <= x2 && y >= y1 && y <= y2) entities.append(map->GetStartEntity(layer, i));
+      for(int i = map->getStartEntities(layer) - 1; i >= 0; i--) {
+        map->getStartEntity(layer, i)->getRealSpriteBox(x1, y1, x2, y2);
+        if(x >= x1 && x <= x2 && y >= y1 && y <= y2) entities.append(map->getStartEntity(layer, i));
       }
     }
   }
@@ -561,7 +562,7 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
       console->setVisible(!(console->isVisible()));
       input->console = false;
     }
-    if(mapBox->map) mapBox->map->Update();
+    if(mapBox->map) mapBox->map->update();
     
     playerEntity->setActivated(false);
 
@@ -613,16 +614,16 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
     int tw, th;
     int xrange, yrange;
     
-    mapBox->map->GetTileSize(tw, th);
-    mapBox->map->GetSize(mapBox->layer, xrange, yrange);
+    mapBox->map->getTileSize(tw, th);
+    mapBox->map->getSize(mapBox->layer, xrange, yrange);
     xrange = xrange * tw - width();
     yrange = yrange * th - height();
 
     painter->beginNativePainting();
 
-    for(i = 0; i < mapBox->map->GetLayers(); i++) {
+    for(i = 0; i < mapBox->map->getLayers(); i++) {
       if(i == mapBox->layer) {
-        mapBox->map->Draw(i, mapBox->xo, mapBox->yo, 1.0);
+        mapBox->map->draw(i, mapBox->xo, mapBox->yo, 1.0);
       } else if(mapBox->getDrawMode() == LayerView::All || 
                 mapBox->getDrawMode() == LayerView::AllBelow ||
                 mapBox->getDrawMode() == LayerView::AllOpaque ) {
@@ -633,13 +634,13 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
         }
         
         int x, y, lw, lh;
-        mapBox->map->GetSize(i, lw, lh);
+        mapBox->map->getSize(i, lw, lh);
         lw = lw * tw - width();
         lh = lh * th - height();
         
         x = mapBox->xo * lw / xrange;
         y = mapBox->yo * lh / yrange;
-        mapBox->map->Draw(i, x, y, opacity);
+        mapBox->map->draw(i, x, y, opacity);
       }
     }
 
@@ -693,16 +694,16 @@ void MapScene::drawGrid(int layer, QPainter * painter, int tw, int th) {
 
 void MapScene::drawEntityNames(int layer, QPainter * painter) {
   if(play) {
-    for(int i = 0; i < mapBox->map->GetEntities(layer); i++) {
-      Entity * e = mapBox->map->GetEntity(layer, i);
+    for(int i = 0; i < mapBox->map->getEntities(layer); i++) {
+      Entity * e = mapBox->map->getEntity(layer, i);
       QString t = e->getName();
       QRect r = painter->fontMetrics().boundingRect(t);
       r.moveTo(e->getX() - mapBox->xo - r.width() / 2, e->getY() - mapBox->yo);
       painter->drawText(r, Qt::AlignHCenter, t);
     }
   } else {
-    for(int i = 0; i < mapBox->map->GetStartEntities(layer); i++) {
-      Entity * e = mapBox->map->GetStartEntity(layer, i);
+    for(int i = 0; i < mapBox->map->getStartEntities(layer); i++) {
+      Entity * e = mapBox->map->getStartEntity(layer, i);
       QString t = e->getName();
       QRect r = painter->fontMetrics().boundingRect(t);
       r.moveTo(e->getX() - mapBox->xo - r.width() / 2, e->getY() - mapBox->yo);
@@ -715,7 +716,7 @@ void MapScene::drawNumbers(int layer, QPainter * painter, int tw, int th) {
   // Draw the tile x, y position on each tile
   for(int y = mapBox->yo - (mapBox->yo % th); y < mapBox->yo + mapBox->height(); y += th) {
     for(int x = mapBox->xo - (mapBox->xo % tw); x < mapBox->xo + mapBox->width(); x += tw) {
-      QString posText = QString::number(x / tw) + ", " + QString::number(y / th) + "\n" + QString::number(mapBox->map->GetTile(layer, x / tw, y / th));
+      QString posText = QString::number(x / tw) + ", " + QString::number(y / th) + "\n" + QString::number(mapBox->map->getTile(layer, x / tw, y / th));
       painter->drawText(QRectF(x - mapBox->xo + 1, y - mapBox->yo + 1, tw - 1, th - 1), posText);
     }
   }

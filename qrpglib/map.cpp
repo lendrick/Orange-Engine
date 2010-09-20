@@ -58,7 +58,7 @@ Map::Map()
   scriptObject = scriptEngine->newQObject(this);
 }
 
-bool Map::SetName(QString n)
+bool Map::setName(QString n)
 {
   if(mapnames.contains(n)) {
     return false;
@@ -71,16 +71,16 @@ bool Map::SetName(QString n)
   return true;
 }
 
-QString Map::GetName()
+QString Map::getName()
 {
   return name;
 }
 
-QString Map::GetLayerName(int layer) {
+QString Map::getLayerName(int layer) {
   return layers[layer]->name;
 }
 
-void Map::SetLayerName(int layer, QString name) {
+void Map::setLayerName(int layer, QString name) {
   layers[layer]->name = name;
 }
 
@@ -108,7 +108,7 @@ Map::~Map() {
   for(i = 0; i < layers.size(); i++) delete layers[i];
 }
     
-void Map::Update() {
+void Map::update() {
   // Execute scripts.
   for(int i = 0; i < scripts.size(); i++) {
     bool execute = false;
@@ -143,12 +143,12 @@ void Map::Update() {
   starting = false;
 }
 
-void Map::GetTileSize(int &w, int &h) {
+void Map::getTileSize(int &w, int &h) {
   w = tile_w;
   h = tile_h;
 }
 
-void Map::GetSize(int layer, int &w, int &h) {
+void Map::getSize(int layer, int &w, int &h) {
   if(layer < layers.size()) {
     w = layers[layer]->width;
     h = layers[layer]->height;
@@ -158,18 +158,18 @@ void Map::GetSize(int layer, int &w, int &h) {
   }
 }
 
-Bitmap * Map::GetTileset() {
+Bitmap * Map::getTileset() {
   return tileset;
 }
 
-void Map::SetViewport(int x, int y, int w, int h) {
+void Map::setViewport(int x, int y, int w, int h) {
   view_x = x;
   view_y = y;
   view_w = w;
   view_h = h;
 }
 
-void Map::Draw(int layer, int x, int y, float opacity) {
+void Map::draw(int layer, int x, int y, float opacity) {
   if(tileset) {
     int xs, ys, h, w, x_off, y_off;
     int i, j;
@@ -189,7 +189,7 @@ void Map::Draw(int layer, int x, int y, float opacity) {
           int tile_x = (i - xs) * tile_w - x_off + view_x;
           int tile_y = (j - ys) * tile_h - y_off + view_y;
           
-          tileset->Draw(GetTile(layer, i, j), tile_x, tile_y, opacity);
+          tileset->Draw(getTile(layer, i, j), tile_x, tile_y, opacity);
         }
       }
     }
@@ -214,8 +214,8 @@ void Map::Draw(int layer, int x, int y, float opacity) {
   }
 }
 
-void Map::AddEntity(int layer, Entity * entity) {
-  RemoveEntity(entity->getLayer(), entity);
+void Map::addEntity(int layer, Entity * entity) {
+  removeEntity(entity->getLayer(), entity);
   if(layer < layers.size()) {
     if(play)
       layers[layer]->entities.push_back(entity);
@@ -226,11 +226,11 @@ void Map::AddEntity(int layer, Entity * entity) {
   }
 }
 
-void Map::AddStartEntity(int layer, Entity * entity) {
+void Map::addStartEntity(int layer, Entity * entity) {
   layers[layer]->startEntities.push_back(entity);      
 }
 
-void Map::RemoveEntity(int layer, Entity * entity) {
+void Map::removeEntity(int layer, Entity * entity) {
   if(layer < layers.size()) {
     if(play)
       layers[layer]->entities.removeAll(entity);
@@ -239,36 +239,36 @@ void Map::RemoveEntity(int layer, Entity * entity) {
   }
 }
 
-void Map::RemoveStartEntity(int layer, Entity * entity) {
+void Map::removeStartEntity(int layer, Entity * entity) {
   layers[layer]->startEntities.removeAll(entity);  
 }
 
-int Map::GetEntities(int layer) {
+int Map::getEntities(int layer) {
   if(layer < layers.size())
     return layers[layer]->entities.size();
   return 0;
 }
 
-int Map::GetStartEntities(int layer) {
+int Map::getStartEntities(int layer) {
   if(layer < layers.size())
     return layers[layer]->startEntities.size();
   return 0;
 }
 
-Entity * Map::GetEntity(int layer, int index) {
+Entity * Map::getEntity(int layer, int index) {
   if(layer < layers.size() && index < layers[layer]->entities.size())
     return layers[layer]->entities[index];
   return 0;
 }
 
-Entity * Map::GetStartEntity(int layer, int index) {
+Entity * Map::getStartEntity(int layer, int index) {
   if(layer < layers.size() && index < layers[layer]->startEntities.size())
     return layers[layer]->startEntities[index];
   return 0;
 }
 
 
-int Map::GetTile(int layer, int x, int y) {
+int Map::getTile(int layer, int x, int y) {
   if(layer < layers.size() &&
      x >= 0 && x < layers[layer]->width &&
      y >= 0 && y < layers[layer]->height) 
@@ -276,7 +276,7 @@ int Map::GetTile(int layer, int x, int y) {
   return 0;
 }
 
-void Map::SetTile(int layer, 
+void Map::setTile(int layer,
 		  int x, int y, int tile) {
   if(layer < layers.size() &&
      x >= 0 && x < layers[layer]->width &&
@@ -284,21 +284,21 @@ void Map::SetTile(int layer,
     layers[layer]->layerdata[x + y * layers[layer]->width] = tile;
 }
 
-int Map::GetLayers() {
+int Map::getLayers() {
   return layers.size();
 }
 
-void Map::SetTileset(Bitmap * t) {
+void Map::setTileset(Bitmap * t) {
   tileset = t;
   tileset->GetSize(tile_w, tile_h);
 }
 
-void Map::SetTileset(int layer, Bitmap * t) {
+void Map::setTileset(int layer, Bitmap * t) {
   layers[layer]->tileset = t;
   t->GetSize(layers[layer]->tile_w, layers[layer]->tile_h);
 }
 
-int Map::AddLayer(int w, int h, bool wrap, int filltile, QString name) {
+int Map::addLayer(int w, int h, bool wrap, int filltile, QString name) {
   int i;
 
   Layer * l = new Layer;
@@ -319,22 +319,22 @@ void Map::moveLayer(int oldIndex, int newIndex) {
   layers.move(oldIndex, newIndex);
 }
 
-void Map::InsertLayerBefore(int layer, int w, int h, bool wrap, int filltile, QString name) {
-  int l = AddLayer(w, h, wrap, filltile, name);
+void Map::insertLayerBefore(int layer, int w, int h, bool wrap, int filltile, QString name) {
+  int l = addLayer(w, h, wrap, filltile, name);
   moveLayer(l, layer);
 }
 
-void Map::InsertLayerAfter(int layer, int w, int h, bool wrap, int filltile, QString name) {
-  int l = AddLayer(w, h, wrap, filltile, name);
+void Map::insertLayerAfter(int layer, int w, int h, bool wrap, int filltile, QString name) {
+  int l = addLayer(w, h, wrap, filltile, name);
   moveLayer(l, layer + 1);
 }
 
-void Map::DeleteLayer(int layer) {
+void Map::deleteLayer(int layer) {
   Layer * l = layers.takeAt(layer);
   delete l;
 }
 
-void Map::Save(QString filename) {
+void Map::save(QString filename) {
   ofstream file(filename.toAscii());
   int i, x, y;
   int s = layers.size();
@@ -342,7 +342,7 @@ void Map::Save(QString filename) {
   file << "<map>\n";
   file << "  <name>" << name.toAscii().data() << "</name>\n";
   file << "  <layers>" << s << "</layers>\n";
-  file << "  <tileset>" << GetTileset()->GetName().toAscii().data() << "</tileset>\n";
+  file << "  <tileset>" << getTileset()->GetName().toAscii().data() << "</tileset>\n";
 
   file << "  <scripts>";
   for(int y = 0; y < getScriptCount(); y++) {
@@ -360,7 +360,7 @@ void Map::Save(QString filename) {
     file << "  <layer>\n";
     file << "    <width>" << layers[i]->width << "</width>\n";
     file << "    <height>" << layers[i]->height << "</height>\n";
-    file << "    <tileset>" << GetTileset()->GetName().toAscii().data() << "</tileset>\n";
+    file << "    <tileset>" << getTileset()->GetName().toAscii().data() << "</tileset>\n";
     file << "    <name>" << layers[i]->name.toAscii().data() << "</name>\n";
     file << "    <layerdata>\n";
     for(y = 0; y < layers[i]->width; y++) {
@@ -372,8 +372,8 @@ void Map::Save(QString filename) {
     }
     file << "    </layerdata>\n";
     file << "    <entities>\n";
-    for(x = 0; x < GetStartEntities(i); x++) {
-      Entity * e = GetStartEntity(i, x);
+    for(x = 0; x < getStartEntities(i); x++) {
+      Entity * e = getStartEntity(i, x);
       QString name = e->getName();
       int state = e->getState();
       int x = e->getX();
@@ -413,13 +413,13 @@ void Map::Save(QString filename) {
   file.close();
 }
 
-void Map::Reset() {
-  Clear();
+void Map::reset() {
+  clear();
 
   for(int i = 0; i < layers.size(); i++) {
     for(int j = 0; j < layers[i]->startEntities.size(); j++) {
       Entity * e = layers[i]->startEntities[j];
-      Entity * newEntity = e->clone();
+      //Entity * newEntity = e->clone();
 
       //layers[i]->entities.append(newEntity);
       e->addToMap(i);
@@ -428,7 +428,7 @@ void Map::Reset() {
   }
 }
 
-void Map::Clear() {
+void Map::clear() {
   for(int i = 0; i < layers.size(); i++) {
     while(!(layers[i]->entities.isEmpty()))
       delete layers[i]->entities.takeFirst();

@@ -9,6 +9,7 @@ QT       += opengl script xml
 TARGET = qrpglib
 TEMPLATE = lib
 DESTDIR = ../qrpg-build-desktop
+LIBS += -lSDL_mixer
 
 DEFINES += QRPGLIB_LIBRARY
 
@@ -47,7 +48,9 @@ SOURCES += \
     jshighlighter.cpp \
     mapscriptdialog.cpp \
     scripttab.cpp \
-    mapreader.cpp
+    mapreader.cpp \
+    rpgengine.cpp \
+    sound.cpp
 
 HEADERS +=\
     tileselect.h \
@@ -85,4 +88,7 @@ HEADERS +=\
     jshighlighter.h \
     mapscriptdialog.h \
     scripttab.h \
-    mapreader.h
+    mapreader.h \
+    qrpgengine.h \
+    rpgengine.h \
+    sound.h

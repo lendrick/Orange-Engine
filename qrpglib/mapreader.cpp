@@ -60,7 +60,7 @@ void MapReader::readMap()
     if (isStartElement()) {
       if (name() == "name")
       {
-        map->SetName(readElementText());
+        map->setName(readElementText());
         //message("Map name: " + map->GetName());
       }
       else if (name() == "layer")
@@ -69,7 +69,7 @@ void MapReader::readMap()
       }
       else if (name() == "tileset")
       {
-        map->SetTileset(bitmaps[bitmapnames[readElementText()]]);
+        map->setTileset(bitmaps[bitmapnames[readElementText()]]);
       }
       else if (name() == "scripts")
       {
@@ -138,21 +138,21 @@ void MapReader::readLayer()
   }
 
   if(layerName.isEmpty() || layerName.isNull())
-    currentLayer = map->AddLayer(w, h, false, 0, "Layer " + QString::number(map->GetLayers() + 1));
+    currentLayer = map->addLayer(w, h, false, 0, "Layer " + QString::number(map->getLayers() + 1));
   else
-    currentLayer = map->AddLayer(w, h, false, 0, layerName);
+    currentLayer = map->addLayer(w, h, false, 0, layerName);
 
   for(int y = 0; y < h; y++)
   {
     for(int x = 0; x < w; x++)
     {
       int tile = layerData.takeFirst();
-      map->SetTile(currentLayer, x, y, tile);
+      map->setTile(currentLayer, x, y, tile);
     }
   }
 
   while(!(entities.isEmpty()))
-    map->AddStartEntity(currentLayer, entities.takeFirst());
+    map->addStartEntity(currentLayer, entities.takeFirst());
 }
 
 void MapReader::readLayerData(QList<int> & layerData)

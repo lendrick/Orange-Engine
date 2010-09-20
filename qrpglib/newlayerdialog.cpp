@@ -50,7 +50,7 @@ int NewLayerDialog::exec() {
     QMessageBox::critical(this, "Error", "No map is currently selected.  You must select a map to create layers.");
     return QDialog::Rejected;
   }
-  layername->setText("Layer " + QString::number(currentMap->GetLayers() + 1));
+  layername->setText("Layer " + QString::number(currentMap->getLayers() + 1));
 
   return QDialog::exec();
 }
