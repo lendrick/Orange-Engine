@@ -25,6 +25,7 @@
 #include "mapscriptdialog.h"
 #include "globalscriptdialog.h"
 #include "mapreader.h"
+#include "projectreader.h"
 
 
 MainWindow::MainWindow() :
@@ -468,4 +469,8 @@ void MainWindow::setViewEntityNames(bool b) {
 
 void MainWindow::setViewGrid(bool b) {
   viewGrid = b;
+}
+
+void MainWindow::setViewBoundingBoxes(bool b) {
+  viewBoundingBoxes = b;
 }

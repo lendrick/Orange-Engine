@@ -12,6 +12,8 @@
 #include "player.h"
 #include "npc.h"
 #include "rpgengine.h"
+#include "projectreader.h"
+#include "talkbox.h"
 
 // for testing
 #include <cstdlib>
@@ -53,10 +55,13 @@ int main(int argc, char *argv[]) {
 
   mainwindow.resize(640, 480);
   mainwindow.show();
-  mainwindow.mapBox->setMap(0);
-  mainwindow.mapBox->setLayer(0);
-  mainwindow.mapBox->setDrawMode(LayerView::AllOpaque);
+  mapBox->setDrawMode(LayerView::AllOpaque);
+
+  /*
+  mapBox->setMap(0);
+  mapBox->setLayer(0);
   maps[0]->reset();
+  */
 
   RPGEngine::setPlayerEntity(new Player);
   /*
@@ -78,6 +83,8 @@ int main(int argc, char *argv[]) {
     mainwindow.mapBox->GetMap()->AddEntity(3, n);
   }
   */
+
+  TalkBox tb("Hello, world!");
   
   apptime.start();
   fpstime.start();

@@ -91,6 +91,7 @@ extern bool is_editor;
 extern bool viewTilePos;
 extern bool viewEntityNames;
 extern bool viewGrid;
+extern bool viewBoundingBoxes;
 
 extern bool rpgEngineStarting;
 

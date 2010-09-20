@@ -1,6 +1,12 @@
 <!DOCTYPE xproj>
 <project>
   <name>Tech Demo</name>
+  <scripts>    <script condition='0'><![CDATA[rpgx.print("Global script starting.");
+rpgx.setMap("Grassland Map");
+rpgx.setLayer(1);
+map.reset();
+]]></script>
+  </scripts>
   <tilesets>
     <tileset>Grassland.xtile</tileset>
     <tileset>Saffron.xtile</tileset>

@@ -358,7 +358,7 @@ bool entity_y_order(Entity * a, Entity * b) {
 
 void Entity::say(QString s) {
   //cprint("Saying: " + s + "\n");
-  TalkBox * t = new TalkBox(s);
+  //TalkBox * t = new TalkBox(s);
 }
 
 EntityScript::EntityScript(int c, QString s,

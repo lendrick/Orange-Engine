@@ -23,6 +23,7 @@
 #include "qrpgconsole.h"
 #include "talkbox.h"
 #include "rpgengine.h"
+#include "rpgscript.h"
 
 using std::cout;
 
@@ -497,12 +498,12 @@ Entity * MapBox::entityAt(int x, int y) {
     double x1, y1, x2, y2;
     if(play) {
       // Count down from the top, so we know we'll get the ones on top first.
-      for(int i = map->getEntities(layer) - 1; i >= 0; i--) {
+      for(int i = map->getEntityCount(layer) - 1; i >= 0; i--) {
         map->getEntity(layer, i)->getRealSpriteBox(x1, y1, x2, y2);
         if(x >= x1 && x <= x2 && y >= y1 && y <= y2) return map->getEntity(layer, i);
       }
     } else {
-      for(int i = map->getStartEntities(layer) - 1; i >= 0; i--) {
+      for(int i = map->getStartEntityCount(layer) - 1; i >= 0; i--) {
         map->getStartEntity(layer, i)->getRealSpriteBox(x1, y1, x2, y2);
         if(x >= x1 && x <= x2 && y >= y1 && y <= y2) return map->getStartEntity(layer, i);
       }
@@ -518,12 +519,12 @@ QList < Entity * > MapBox::entitiesAt(int x, int y) {
     double x1, y1, x2, y2;
     if(play) {
       // Count down from the top, so we know we'll get the ones on top first.
-      for(int i = map->getEntities(layer) - 1; i >= 0; i--) {
+      for(int i = map->getEntityCount(layer) - 1; i >= 0; i--) {
         map->getEntity(layer, i)->getRealSpriteBox(x1, y1, x2, y2);
         if(x >= x1 && x <= x2 && y >= y1 && y <= y2) entities.append(map->getEntity(layer, i));
       }
     } else {
-      for(int i = map->getStartEntities(layer) - 1; i >= 0; i--) {
+      for(int i = map->getStartEntityCount(layer) - 1; i >= 0; i--) {
         map->getStartEntity(layer, i)->getRealSpriteBox(x1, y1, x2, y2);
         if(x >= x1 && x <= x2 && y >= y1 && y <= y2) entities.append(map->getStartEntity(layer, i));
       }
@@ -566,6 +567,27 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
       console->setVisible(!(console->isVisible()));
       input->console = false;
     }
+
+    // Global scripts.
+    for(int i = 0; i < globalScripts.size(); i++) {
+      bool execute = false;
+      RPGScript * s = &(globalScripts[i]);
+      if(rpgEngineStarting && s->condition == ScriptCondition::Start) {
+        execute = true;
+      } else if(s->condition == ScriptCondition::EveryFrame) {
+        execute = true;
+      }
+
+      if(execute) {
+        scriptEngine->evaluate(s->script);
+
+        if(scriptEngine->hasUncaughtException())
+          message(scriptEngine->uncaughtException().toString());
+      }
+    }
+
+    rpgEngineStarting = false;
+
     if(mapBox->map) mapBox->map->update();
     
     playerEntity->setActivated(false);
@@ -702,7 +724,7 @@ void MapScene::drawGrid(int layer, QPainter * painter, int tw, int th) {
 
 void MapScene::drawEntityNames(int layer, QPainter * painter) {
   if(play) {
-    for(int i = 0; i < mapBox->map->getEntities(layer); i++) {
+    for(int i = 0; i < mapBox->map->getEntityCount(layer); i++) {
       Entity * e = mapBox->map->getEntity(layer, i);
       QString t = e->getName();
       QRect r = painter->fontMetrics().boundingRect(t);
@@ -710,7 +732,7 @@ void MapScene::drawEntityNames(int layer, QPainter * painter) {
       painter->drawText(r, Qt::AlignHCenter, t);
     }
   } else {
-    for(int i = 0; i < mapBox->map->getStartEntities(layer); i++) {
+    for(int i = 0; i < mapBox->map->getStartEntityCount(layer); i++) {
       Entity * e = mapBox->map->getStartEntity(layer, i);
       QString t = e->getName();
       QRect r = painter->fontMetrics().boundingRect(t);

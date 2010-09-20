@@ -24,8 +24,6 @@ public:
   Bitmap * getTileset();
   void save(QString filename);
   Resource * getThisMap() { return thisMap; }
-  Entity * getEntity(int layer, int index);
-  Entity * getStartEntity(int layer, int index);
   void update();
   QScriptValue scriptObject;
   QScriptValue getScriptObject();
@@ -48,11 +46,13 @@ public slots:
   void addStartEntity(int layer, Entity * entity);
   void removeEntity(int layer, Entity * entity);
   void removeStartEntity(int layer, Entity * entity);
-  int getEntities(int layer);
-  int getStartEntities(int layer);
+  int getEntityCount(int layer);
+  int getStartEntityCount(int layer);
   void reset();
   void clear();
   void setStarting(bool);
+  Entity * getEntity(int layer, int index);
+  Entity * getStartEntity(int layer, int index);
 
   void addScript(int, QString);
   void clearScripts();

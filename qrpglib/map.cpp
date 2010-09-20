@@ -113,24 +113,6 @@ void Map::update() {
 
   int i = 0;
 
-  // Global scripts.
-  for(i = 0; i < globalScripts.size(); i++) {
-    bool execute = false;
-    RPGScript * s = &(globalScripts[i]);
-    if(rpgEngineStarting && s->condition == ScriptCondition::Start) {
-      execute = true;
-    } else if(s->condition == ScriptCondition::EveryFrame) {
-      execute = true;
-    }
-
-    if(execute) {
-      scriptEngine->evaluate(s->script);
-
-      if(scriptEngine->hasUncaughtException())
-        message(scriptEngine->uncaughtException().toString());
-    }
-  }
-
   // Map scripts
   for(i = 0; i < scripts.size(); i++) {
     bool execute = false;
@@ -162,7 +144,7 @@ void Map::update() {
     }
   }
 
-  starting = rpgEngineStarting = false;
+  starting = false;
 }
 
 void Map::getTileSize(int &w, int &h) {
@@ -265,13 +247,13 @@ void Map::removeStartEntity(int layer, Entity * entity) {
   layers[layer]->startEntities.removeAll(entity);  
 }
 
-int Map::getEntities(int layer) {
+int Map::getEntityCount(int layer) {
   if(layer < layers.size())
     return layers[layer]->entities.size();
   return 0;
 }
 
-int Map::getStartEntities(int layer) {
+int Map::getStartEntityCount(int layer) {
   if(layer < layers.size())
     return layers[layer]->startEntities.size();
   return 0;
@@ -368,14 +350,10 @@ void Map::save(QString filename) {
 
   file << "  <scripts>";
   for(int y = 0; y < getScriptCount(); y++) {
-    int cond = getScriptCondition(y);
-    file << "    <script condition='" << cond << "'";
-    file << "><![CDATA[";
-    QString s = getScript(y);
-    escapeCData(s);
-    file << s.toAscii().data();
-    file << "]]></script>\n";
+    QString xml = scripts[y].toXml(4);
+    file << xml.toAscii().data();
   }
+
   file << "  </scripts>";
 
   for(i = 0; i < layers.size(); i++) {
@@ -394,7 +372,7 @@ void Map::save(QString filename) {
     }
     file << "    </layerdata>\n";
     file << "    <entities>\n";
-    for(x = 0; x < getStartEntities(i); x++) {
+    for(x = 0; x < getStartEntityCount(i); x++) {
       Entity * e = getStartEntity(i, x);
       QString name = e->getName();
       int state = e->getState();
@@ -486,7 +464,6 @@ int Map::getScriptCondition(int index) const {
 QScriptValue Map::getScriptObject() {
   return scriptObject;
 }
-
 
 QScriptValue mapConstructor(QScriptContext * context, QScriptEngine * engine) {
   QString name = context->argument(0).toString();

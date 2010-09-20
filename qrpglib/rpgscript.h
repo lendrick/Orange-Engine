@@ -6,7 +6,7 @@
 struct RPGScript
 {
     RPGScript(int c, QString s);
-
+    QString toXml(int indent = 0);
     int condition;
     QString script;
 };

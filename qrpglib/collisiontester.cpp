@@ -73,7 +73,7 @@ bool CollisionTester::test(Entity * entity, double &dx, double &dy, double &mx, 
     }
   }
 
-  for(int i = 0; i < entity->getMap()->getEntities(entity->getLayer()); i++) {
+  for(int i = 0; i < entity->getMap()->getEntityCount(entity->getLayer()); i++) {
     Entity * b = entity->getMap()->getEntity(entity->getLayer(), i);
     if(entity == b) continue;
     CollisionData c = entityTest(entity, dx, dy, b);

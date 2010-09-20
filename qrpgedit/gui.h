@@ -2,12 +2,7 @@
 #define GUI_H 1
 
 #include <QGLWidget>
-#include <qdialog.h>
-#include <qspinbox.h>
-#include <qcheckbox.h>
-#include <qlineedit.h>
-#include <qpushbutton.h>
-#include <qtoolbutton.h>
+#include <QtCore>
 
 #include "filebrowser.h"
 #include "map.h"
@@ -79,6 +74,7 @@ public slots:
   void setViewTilePos(bool);
   void setViewEntityNames(bool);
   void setViewGrid(bool);
+  void setViewBoundingBoxes(bool);
 
 signals:
   void setMap(int);
@@ -134,6 +130,7 @@ private:
   QAction * viewTilePosAction;
   QAction * viewGridAction;
   QAction * viewEntityNamesAction;
+  QAction * viewBoundingBoxesAction;
 
   // Other stuff
   QString appTitle;

@@ -17,23 +17,4 @@ signals:
   void UpdateName(QString);
 };
 
-class ProjectReader : public QXmlStreamReader {
-public:
-  Project * read(QIODevice * device);
-  Project * read(QString filename);
-
-private:
-  void readProject();
-  void readMaps();
-  void readSprites();
-  void readTilesets();
-  void readUnknownElement();
-
-  Project * project;
-  QList < QString > maplist;
-  QList < QString > spritelist;
-  QList < QString > tilesetlist;
-  QFileInfo fileinfo;
-};
-
 #endif

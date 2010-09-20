@@ -20,6 +20,8 @@ public slots:
   QScriptValue getEntity(QString s);
   QScriptValue teleport(QString, int, int);
   void setCamera(Entity * e);
+  void setMap(QString m);
+  void setLayer(int l);
 };
 
 #endif

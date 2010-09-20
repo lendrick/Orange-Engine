@@ -54,7 +54,8 @@ SOURCES += \
     mapscriptdialog.cpp \
     entityscripttab.cpp \
     globalscriptdialog.cpp \
-    rpgscript.cpp
+    rpgscript.cpp \
+    projectreader.cpp
 
 HEADERS +=\
     tileselect.h \
@@ -99,4 +100,5 @@ HEADERS +=\
     mapscriptdialog.h \
     entityscripttab.h \
     globalscriptdialog.h \
-    rpgscript.h
+    rpgscript.h \
+    projectreader.h
