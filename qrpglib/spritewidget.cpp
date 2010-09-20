@@ -35,11 +35,11 @@ SpriteWidget::SpriteWidget(QWidget * parent) :
   timer->stop();
 }
 
-void SpriteWidget::SetSprite(Sprite * s) {
+void SpriteWidget::setSprite(Sprite * s) {
   sprite = s;
   spriteTime.restart();
-  if(sprite && sprite->GetTileset())
-    sprite->GetTileset()->GetSize(sw, sh);
+  if(sprite && sprite->getTileset())
+    sprite->getTileset()->getSize(sw, sh);
   updateGL();
 }
 
@@ -64,9 +64,9 @@ void SpriteWidget::paintGL() {
 
   if(sprite) {
     if(mode == FRAME) {
-      sprite->DrawFrame(state, frame, x, y);
+      sprite->drawFrame(state, frame, x, y);
     } else {
-      sprite->Draw(state, spriteTime.elapsed(), x, y);
+      sprite->draw(state, spriteTime.elapsed(), x, y);
       if(duration)
         updateTime(spriteTime.elapsed() % duration);
       else
@@ -76,32 +76,32 @@ void SpriteWidget::paintGL() {
   glFlush();
 }
 
-void SpriteWidget::Play() {
+void SpriteWidget::play() {
   mode = PLAY;
   timer->start(1000 / 30);
   spriteTime.restart();
 }
 
-void SpriteWidget::Stop() {
+void SpriteWidget::stop() {
   mode = FRAME;
   timer->stop();
   updateGL();
 }
 
-void SpriteWidget::Pause() {
+void SpriteWidget::pause() {
   mode = PAUSE;
   timer->stop();
   updateGL();
 }
 
-void SpriteWidget::SetState(int s) {
+void SpriteWidget::setState(int s) {
   state = s;
   frame = 0;
   spriteTime.restart();
   updateGL();
 }
 
-void SpriteWidget::SetFrame(int f) {
+void SpriteWidget::setFrame(int f) {
   frame = f;
   updateGL();
 }

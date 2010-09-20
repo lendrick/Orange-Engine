@@ -26,7 +26,7 @@ Map::Map(Bitmap * t, int x, int y, int w, int h, QString mapname) : QObject() {
   view_w = w;
   view_h = h;
   starting = true;
-  if(tileset) tileset->GetSize(tile_w, tile_h);
+  if(tileset) tileset->getSize(tile_w, tile_h);
   name = mapname;
 
   maps.push_back(this);
@@ -189,7 +189,7 @@ void Map::draw(int layer, int x, int y, float opacity) {
           int tile_x = (i - xs) * tile_w - x_off + view_x;
           int tile_y = (j - ys) * tile_h - y_off + view_y;
           
-          tileset->Draw(getTile(layer, i, j), tile_x, tile_y, opacity);
+          tileset->draw(getTile(layer, i, j), tile_x, tile_y, opacity);
         }
       }
     }
@@ -290,12 +290,12 @@ int Map::getLayers() {
 
 void Map::setTileset(Bitmap * t) {
   tileset = t;
-  tileset->GetSize(tile_w, tile_h);
+  tileset->getSize(tile_w, tile_h);
 }
 
 void Map::setTileset(int layer, Bitmap * t) {
   layers[layer]->tileset = t;
-  t->GetSize(layers[layer]->tile_w, layers[layer]->tile_h);
+  t->getSize(layers[layer]->tile_w, layers[layer]->tile_h);
 }
 
 int Map::addLayer(int w, int h, bool wrap, int filltile, QString name) {
@@ -342,7 +342,7 @@ void Map::save(QString filename) {
   file << "<map>\n";
   file << "  <name>" << name.toAscii().data() << "</name>\n";
   file << "  <layers>" << s << "</layers>\n";
-  file << "  <tileset>" << getTileset()->GetName().toAscii().data() << "</tileset>\n";
+  file << "  <tileset>" << getTileset()->getName().toAscii().data() << "</tileset>\n";
 
   file << "  <scripts>";
   for(int y = 0; y < getScriptCount(); y++) {
@@ -360,7 +360,7 @@ void Map::save(QString filename) {
     file << "  <layer>\n";
     file << "    <width>" << layers[i]->width << "</width>\n";
     file << "    <height>" << layers[i]->height << "</height>\n";
-    file << "    <tileset>" << getTileset()->GetName().toAscii().data() << "</tileset>\n";
+    file << "    <tileset>" << getTileset()->getName().toAscii().data() << "</tileset>\n";
     file << "    <name>" << layers[i]->name.toAscii().data() << "</name>\n";
     file << "    <layerdata>\n";
     for(y = 0; y < layers[i]->width; y++) {
@@ -378,7 +378,7 @@ void Map::save(QString filename) {
       int state = e->getState();
       int x = e->getX();
       int y = e->getY();
-      QString sprite = e->getSprite()->GetName();
+      QString sprite = e->getSprite()->getName();
       file << "      <entity name='" << name.toAscii().data() << "' state='" <<
         state << "' x='" << x << "' y='" << y <<
         "' sprite='" << sprite.toAscii().data() << "'>\n";

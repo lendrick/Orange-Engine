@@ -171,10 +171,10 @@ void SpriteDialog::durationChanged(QTableWidgetItem * item) {
   int state = stateList->currentRow();
   int frame = frameTable->currentRow();
   if(state >= 0 && frame >= 0) {
-    int old_duration = sprite->GetDuration(state, frame);
+    int old_duration = sprite->getDuration(state, frame);
     int d = duration.toInt();
     if(d) {
-      sprite->SetDuration(state, frame, d);
+      sprite->setDuration(state, frame, d);
       updateFrames();
     } else {
       item->setText(QString::number(old_duration));
@@ -190,7 +190,7 @@ void SpriteDialog::updateTilesets() {
 
   for(i = 0; i < bitmaps.size(); i++) {
     if(bitmaps[i]) {
-      tilesetNames.push_back(bitmaps[i]->GetName());
+      tilesetNames.push_back(bitmaps[i]->getName());
     }
   }
   tilesetNames.sort();
@@ -208,28 +208,28 @@ void SpriteDialog::updateWidgets() {
     spriteTileset->setCurrentIndex(0);
     frameTable->clearContents();
     stateList->clear();
-    spriteWidget->SetSprite(0);
-    tileSelect->SetTileset(0);
+    spriteWidget->setSprite(0);
+    tileSelect->setTileset(0);
   } else {
-    spriteName->setText(sprite->GetName());
-    if(sprite->GetTileset()) { 
-      setTileset(sprite->GetTileset()->GetName());
-      tileSelect->SetTileset(sprite->GetTileset());
+    spriteName->setText(sprite->getName());
+    if(sprite->getTileset()) { 
+      setTileset(sprite->getTileset()->getName());
+      tileSelect->setTileset(sprite->getTileset());
     }
     updateStates();
     updateFrames();
-    spriteWidget->SetSprite(sprite);
-    spriteWidget->SetState(0);
-    spriteWidget->SetFrame(0);
+    spriteWidget->setSprite(sprite);
+    spriteWidget->setState(0);
+    spriteWidget->setFrame(0);
   }
 }
 
 void SpriteDialog::updateStates() {
   stateList->clear();
   if(sprite) {
-    int states = sprite->GetStates();
+    int states = sprite->getStateCount();
     for(int i = 0; i < states; i++)
-      stateList->addItem(sprite->GetStateName(i));
+      stateList->addItem(sprite->getStateName(i));
   }
 }
 
@@ -239,11 +239,11 @@ void SpriteDialog::updateFrames() {
   frameTable->setRowCount(0);
   if(sprite) {
     if(stateList->currentRow() > -1) {
-      int frames = sprite->GetFrames(stateList->currentRow());
+      int frames = sprite->getFrameCount(stateList->currentRow());
       for(int i = 0; i < frames; i++) {
         frameTable->insertRow(i);
-        totalDuration += sprite->GetDuration(stateList->currentRow(), i);
-        QString duration = QString::number(sprite->GetDuration(stateList->currentRow(), i));
+        totalDuration += sprite->getDuration(stateList->currentRow(), i);
+        QString duration = QString::number(sprite->getDuration(stateList->currentRow(), i));
         QTableWidgetItem * frame = 
           new QTableWidgetItem(duration);
         frameTable->setItem(i, 0, frame);
@@ -267,8 +267,8 @@ void SpriteDialog::spriteChanged(QString name) {
 void SpriteDialog::tilesetChanged(QString name) {
   if(sprite == 0) return;
   if((!name.isEmpty() && !name.isNull()) && bitmapnames.contains(name)) {
-    sprite->SetTileset(bitmaps[bitmapnames[name]]);
-    tileSelect->SetTileset(bitmaps[bitmapnames[name]]);
+    sprite->setTileset(bitmaps[bitmapnames[name]]);
+    tileSelect->setTileset(bitmaps[bitmapnames[name]]);
   }
 
   updateWidgets();
@@ -276,20 +276,20 @@ void SpriteDialog::tilesetChanged(QString name) {
 
 void SpriteDialog::stateChanged(int state) {
   updateFrames();
-  spriteWidget->SetState(state);
-  spriteWidget->SetFrame(0);
-  tileSelect->tilebox->SetSelected(
-    sprite->GetBitmap(stateList->currentRow(), frameTable->currentRow()));
+  spriteWidget->setState(state);
+  spriteWidget->setFrame(0);
+  tileSelect->tilebox->setSelected(
+    sprite->getBitmap(stateList->currentRow(), frameTable->currentRow()));
 }
 
 void SpriteDialog::frameChanged(int frame) {
-  spriteWidget->SetFrame(frame);
-  tileSelect->tilebox->SetSelected(
-    sprite->GetBitmap(stateList->currentRow(), frameTable->currentRow()));
+  spriteWidget->setFrame(frame);
+  tileSelect->tilebox->setSelected(
+    sprite->getBitmap(stateList->currentRow(), frameTable->currentRow()));
 }
 
 void SpriteDialog::tileChanged(int tile) {
-  sprite->SetBitmap(stateList->currentRow(), frameTable->currentRow(), tile);
+  sprite->setBitmap(stateList->currentRow(), frameTable->currentRow(), tile);
   spriteWidget->updateGL();
 }
 
@@ -299,7 +299,7 @@ void SpriteDialog::updateSpritePulldown() {
 
   for(i = 0; i < sprites.size(); i++) {
     if(sprites[i]) {
-      spriteNames.push_back(sprites[i]->GetName());
+      spriteNames.push_back(sprites[i]->getName());
     }
   }
   spriteNames.sort();
@@ -355,7 +355,7 @@ void SpriteDialog::renameSprite(QString name) {
   if(!name.isEmpty() && !name.isNull()) {
     disconnect(currentSpriteBox, SIGNAL(currentIndexChanged(QString)), 
       this, SLOT(spriteChanged(QString)));
-    sprite->SetName(name);
+    sprite->setName(name);
     updateSpritePulldown();
     setCurrentSprite(name);
     connect(currentSpriteBox, SIGNAL(currentIndexChanged(QString)), 
@@ -368,7 +368,7 @@ void SpriteDialog::renameSprite(QString name) {
 void SpriteDialog::addState() {
   if(sprite) {
     QString name = AddStateDialog::name();
-    sprite->AddState(name);
+    sprite->addState(name);
     updateStates();
     stateList->setCurrentRow(stateList->count()-1);
     updateFrames();
@@ -379,7 +379,7 @@ void SpriteDialog::addFrame() {
   int state = stateList->currentRow();
   if(sprite && state > -1) {
     int duration = 250;
-    sprite->AddFrame(state, duration, 0);
+    sprite->addFrame(state, duration, 0);
     updateFrames();
   }
 }
@@ -387,7 +387,7 @@ void SpriteDialog::addFrame() {
 void SpriteDialog::delState() {
   int state = stateList->currentRow();
   if(sprite && state > -1) {
-    sprite->DelState(state);
+    sprite->delState(state);
     updateStates();
     updateFrames();
   }
@@ -397,7 +397,7 @@ void SpriteDialog::delFrame() {
   int state = stateList->currentRow();
   int frame = frameTable->currentRow();
   if(sprite && state >= 0 && frame >= 0) {
-    sprite->DelFrame(state, frame);
+    sprite->delFrame(state, frame);
     updateFrames();
   }
 }

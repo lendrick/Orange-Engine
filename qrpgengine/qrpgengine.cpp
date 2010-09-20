@@ -53,8 +53,8 @@ int main(int argc, char *argv[]) {
 
   mainwindow.resize(640, 480);
   mainwindow.show();
-  mainwindow.mapBox->SetMap(0);
-  mainwindow.mapBox->SetLayer(0);
+  mainwindow.mapBox->setMap(0);
+  mainwindow.mapBox->setLayer(0);
   mainwindow.mapBox->setDrawMode(LayerView::AllOpaque);
   maps[0]->reset();
 

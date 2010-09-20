@@ -16,11 +16,11 @@ Resource::Resource(ResType t, int i, QString name, QTreeWidgetItem * parent) :
   setText(0, name);
 }
 
-int Resource::GetID() {
+int Resource::getID() {
   return id;
 }
 
-Resource::ResType Resource::Type() {
+Resource::ResType Resource::type() {
   return restype;
 }
 

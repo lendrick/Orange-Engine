@@ -34,51 +34,51 @@ MainWindow::MainWindow() :
   setWindowTitle(appTitle);
 
   // Create the main menu
-  FileMenu = menuBar()->addMenu("&File");
-  ResourceMenu = menuBar()->addMenu("&Resources");
-  MapMenu = ResourceMenu->addMenu("&Maps");
-  MapMenu->setDisabled(true);
-  TilesetMenu = ResourceMenu->addMenu("&Tilesets");
-  TilesetMenu->setDisabled(true);
-  SpriteMenu = ResourceMenu->addMenu("&Sprites");
-  SpriteMenu->setDisabled(true);
-  ViewMenu = menuBar()->addMenu("&View");
-  HelpMenu = menuBar()->addMenu("&Help");
+  fileMenu = menuBar()->addMenu("&File");
+  resourceMenu = menuBar()->addMenu("&Resources");
+  mapMenu = resourceMenu->addMenu("&Maps");
+  mapMenu->setDisabled(true);
+  tilesetMenu = resourceMenu->addMenu("&Tilesets");
+  tilesetMenu->setDisabled(true);
+  spriteMenu = resourceMenu->addMenu("&Sprites");
+  spriteMenu->setDisabled(true);
+  viewMenu = menuBar()->addMenu("&View");
+  helpMenu = menuBar()->addMenu("&Help");
 
   //////////////////////////////////////////////////////////////
   // Create the toolbar
-  MapToolBar = addToolBar("MapToolBar");
-  MapToolBar->setIconSize(QSize(32, 32));
+  mapToolBar = addToolBar("MapToolBar");
+  mapToolBar->setIconSize(QSize(32, 32));
 
   // iconsets
 
   aboutQtAction = new QAction("About &Qt", 0);
-  HelpMenu->addAction(aboutQtAction);
-  connect(aboutQtAction, SIGNAL(triggered()), this, SLOT(AboutQt()));
+  helpMenu->addAction(aboutQtAction);
+  connect(aboutQtAction, SIGNAL(triggered()), this, SLOT(aboutQt()));
 
   //setUsesBigPixmaps(true);
   
   newprojectAction = new QAction(*newprojectIcon, "&New Project...", 0);
-  connect(newprojectAction, SIGNAL(triggered()), this, SLOT(NewProject()));
-  MapToolBar->addAction(newprojectAction);
-  FileMenu->addAction(newprojectAction);
+  connect(newprojectAction, SIGNAL(triggered()), this, SLOT(newProject()));
+  mapToolBar->addAction(newprojectAction);
+  fileMenu->addAction(newprojectAction);
 
   openprojectAction = new QAction(*openprojectIcon, "&Open Project...", 0);
-  connect(openprojectAction, SIGNAL(triggered()), this, SLOT(LoadProject()));
-  MapToolBar->addAction(openprojectAction);
-  FileMenu->addAction(openprojectAction);
+  connect(openprojectAction, SIGNAL(triggered()), this, SLOT(loadProject()));
+  mapToolBar->addAction(openprojectAction);
+  fileMenu->addAction(openprojectAction);
 
   saveprojectAction = new QAction(*saveprojectIcon, "&Save Project...", 0);
-  connect(saveprojectAction, SIGNAL(triggered()), this, SLOT(SaveProject()));
-  MapToolBar->addAction(saveprojectAction);
-  FileMenu->addAction(saveprojectAction);
+  connect(saveprojectAction, SIGNAL(triggered()), this, SLOT(saveProject()));
+  mapToolBar->addAction(saveprojectAction);
+  fileMenu->addAction(saveprojectAction);
 
-  FileMenu->addSeparator();
+  fileMenu->addSeparator();
   quitAction = new QAction("Exit", 0);
   connect(quitAction, SIGNAL(triggered()), this, SLOT(close()));
-  FileMenu->addAction(quitAction);
+  fileMenu->addAction(quitAction);
 
-  MapToolBar->addSeparator();
+  mapToolBar->addSeparator();
 
   // Map operation buttons
 
@@ -90,21 +90,21 @@ MainWindow::MainWindow() :
   */
 
   newmapAction = new QAction(*newmapIcon, "New &Map", 0);
-  connect(newmapAction, SIGNAL(triggered()), this, SLOT(NewMap()));
-  MapToolBar->addAction(newmapAction);
-  MapMenu->addAction(newmapAction);
+  connect(newmapAction, SIGNAL(triggered()), this, SLOT(newMap()));
+  mapToolBar->addAction(newmapAction);
+  mapMenu->addAction(newmapAction);
   newmapAction->setDisabled(true);
 
   openmapAction = new QAction(*openmapIcon, "Import Map", 0);
-  connect(openmapAction, SIGNAL(triggered()), this, SLOT(LoadMap()));
-  MapToolBar->addAction(openmapAction);
-  MapMenu->addAction(openmapAction);
+  connect(openmapAction, SIGNAL(triggered()), this, SLOT(loadMap()));
+  mapToolBar->addAction(openmapAction);
+  mapMenu->addAction(openmapAction);
   openmapAction->setDisabled(true);
 
   savemapAction = new QAction(*savemapIcon, "Export Map", 0);
-  connect(savemapAction, SIGNAL(triggered()), this, SLOT(SaveMap()));
-  MapToolBar->addAction(savemapAction);
-  MapMenu->addAction(savemapAction);
+  connect(savemapAction, SIGNAL(triggered()), this, SLOT(saveMap()));
+  mapToolBar->addAction(savemapAction);
+  mapMenu->addAction(savemapAction);
   savemapAction->setDisabled(true);
 
   /*
@@ -114,62 +114,62 @@ MainWindow::MainWindow() :
   MapMenu->addAction(savemapasAction);
   */
 
-  MapMenu->addSeparator();
+  mapMenu->addSeparator();
 
   // Bitmap buttons
-  MapToolBar->addSeparator();
+  mapToolBar->addSeparator();
   //MapToolBar->addWidget(new QLabel("Bitmaps "));
  
   newbitmapAction = new QAction(*bitmapbuttonIcon, "New &Tileset", 0);
-  connect(newbitmapAction, SIGNAL(triggered()), this, SLOT(NewBitmap()));
-  MapToolBar->addAction(newbitmapAction);
-  TilesetMenu->addAction(newbitmapAction);
+  connect(newbitmapAction, SIGNAL(triggered()), this, SLOT(newBitmap()));
+  mapToolBar->addAction(newbitmapAction);
+  tilesetMenu->addAction(newbitmapAction);
   newbitmapAction->setDisabled(true);
 
-  MapToolBar->addSeparator();
+  mapToolBar->addSeparator();
   
   newspriteAction = new QAction(*spriteIcon, "New &Sprite", 0);
-  connect(newspriteAction, SIGNAL(triggered()), this, SLOT(NewSprite()));
-  MapToolBar->addAction(newspriteAction);
-  SpriteMenu->addAction(newspriteAction);
+  connect(newspriteAction, SIGNAL(triggered()), this, SLOT(newSprite()));
+  mapToolBar->addAction(newspriteAction);
+  spriteMenu->addAction(newspriteAction);
   newspriteAction->setDisabled(true);
 
-  MapToolBar->addSeparator();
+  mapToolBar->addSeparator();
   
   appPlayAction = new QAction(*appPlayIcon, "Start Game", 0);
   connect(appPlayAction, SIGNAL(triggered()), this, SLOT(play()));
-  MapToolBar->addAction(appPlayAction);
-  FileMenu->addAction(appPlayAction);
+  mapToolBar->addAction(appPlayAction);
+  fileMenu->addAction(appPlayAction);
   appPlayAction->setDisabled(true);
     
-  MapToolBar->addSeparator();
+  mapToolBar->addSeparator();
 
   QActionGroup * mapActionGroup = new QActionGroup(0);
   mapEditAction = mapActionGroup->addAction(*mapEditIcon, "Edit Map");
   mapEditAction->setCheckable(true);
-  MapToolBar->addAction(mapEditAction);
+  mapToolBar->addAction(mapEditAction);
 
   mapEntityAction = mapActionGroup->addAction(*mapEntityIcon, "Edit Entities");
   mapEntityAction->setCheckable(true);
-  MapToolBar->addAction(mapEntityAction);
+  mapToolBar->addAction(mapEntityAction);
   
   // View menu
   viewGridAction = new QAction("&Grid", 0);
   viewGridAction->setCheckable(true);
   viewGridAction->setShortcut(QKeySequence("Ctrl+'"));
-  ViewMenu->addAction(viewGridAction);
+  viewMenu->addAction(viewGridAction);
   connect(viewGridAction, SIGNAL(toggled(bool)), this, SLOT(setViewGrid(bool)));
 
   viewTilePosAction = new QAction("Tile &Coordinates", 0);
   viewTilePosAction->setCheckable(true);
   viewTilePosAction->setShortcut(QKeySequence("Ctrl+Shift+'"));
-  ViewMenu->addAction(viewTilePosAction);
+  viewMenu->addAction(viewTilePosAction);
   connect(viewTilePosAction, SIGNAL(toggled(bool)), this, SLOT(setViewTilePos(bool)));
 
   viewEntityNamesAction = new QAction("Entity &Names", 0);
   viewEntityNamesAction->setCheckable(true);
   viewEntityNamesAction->setShortcut(QKeySequence("Ctrl+;"));
-  ViewMenu->addAction(viewEntityNamesAction);
+  viewMenu->addAction(viewEntityNamesAction);
   connect(viewEntityNamesAction, SIGNAL(toggled(bool)), this, SLOT(setViewEntityNames(bool)));
   
   //////////////////////////////////////////////////////////////  
@@ -201,15 +201,15 @@ MainWindow::MainWindow() :
   entityfolder = new Resource(Resource::Folder, 0, "Entities", maplist);
 
   connect(maplist, SIGNAL(itemSelectionChanged()),
-	  this, SLOT(ResourceSelected()));
+	  this, SLOT(resourceSelected()));
 
   layerPanel = new LayerPanel(this);
   this->addDockWidget(Qt::LeftDockWidgetArea, layerPanel, Qt::Vertical);
   layerPanel->setAllowedAreas(Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea);
 
-  connect(layerPanel, SIGNAL(addLayer(int)), this, SLOT(ShowNewLayerDialog(int)));
+  connect(layerPanel, SIGNAL(addLayer(int)), this, SLOT(showNewLayerDialog(int)));
   connect(layerPanel, SIGNAL(delLayer(int)), this, SLOT(deleteLayer(int)));
-  SetLayerButtonsDisabled(true);
+  setLayerButtonsDisabled(true);
   
   ////////////////////////////////////////////////////////////
   // The map window
@@ -219,11 +219,11 @@ MainWindow::MainWindow() :
 
   setCentralWidget(mapwin);
 
-  connect(this, SIGNAL(SetMap(int)), mapwin->mapbox, SLOT(SetMap(int)));
-  connect(this, SIGNAL(SetMap(int)), this, SLOT(SetLayerButtonsForMap(int)));
-  connect(this, SIGNAL(SetMap(int)), layerPanel, SLOT(updateData()));
+  connect(this, SIGNAL(setMap(int)), mapwin->mapbox, SLOT(setMap(int)));
+  connect(this, SIGNAL(setMap(int)), this, SLOT(setLayerButtonsForMap(int)));
+  connect(this, SIGNAL(setMap(int)), layerPanel, SLOT(updateData()));
   connect(this, SIGNAL(updateLayers()), layerPanel, SLOT(updateData()));
-  connect(this, SIGNAL(SetTiles(int)), tiles, SLOT(SetTiles(int)));
+  connect(this, SIGNAL(setTiles(int)), tiles, SLOT(setTiles(int)));
   connect(layerPanel, SIGNAL(setDrawMode(LayerView::LayerViewMode)),
           mapwin, SIGNAL(setDrawMode(LayerView::LayerViewMode)));
   connect(tiles->tilebox, SIGNAL(TileChanged(int)), mapwin->mapbox, SLOT(setCurrentTile(int)));
@@ -233,11 +233,11 @@ MainWindow::MainWindow() :
   connect(mapEntityAction, SIGNAL(triggered()), mapBox, SLOT(setEntityMode()));
 
   connect(mapBox, SIGNAL(mousePos(int, int, int, int)), 
-    this, SLOT(UpdateMousePos(int, int, int, int)));
-  connect(this, SIGNAL(UpdateMapStatus(QString)), mapwin, SLOT(updateStatus(QString)));
-  connect(mapBox->mapScene, SIGNAL(ShowEntityDialog(Entity *)), this, SLOT(ShowEntityDialog(Entity *)));
+    this, SLOT(updateMousePos(int, int, int, int)));
+  connect(this, SIGNAL(updateMapStatus(QString)), mapwin, SLOT(updateStatus(QString)));
+  connect(mapBox->mapScene, SIGNAL(showEntityDialog(Entity *)), this, SLOT(showEntityDialog(Entity *)));
 
-  connect(mapBox->mapScene, SIGNAL(ShowMapScriptDialog(Map *)), this, SLOT(ShowMapScriptDialog(Map *)));
+  connect(mapBox->mapScene, SIGNAL(showMapScriptDialog(Map *)), this, SLOT(showMapScriptDialog(Map *)));
   mapEditAction->trigger();
   
   // Create dialogs
@@ -253,30 +253,30 @@ MainWindow::MainWindow() :
 MainWindow::~MainWindow() {
 }
 
-void MainWindow::ResourceSelected() {
+void MainWindow::resourceSelected() {
   Resource * item = static_cast<Resource *> (maplist->currentItem());
   currentresource = static_cast<Resource *> (maplist->currentItem());
-  if(item->Type() == Resource::Map) {
-    emit SetMap(item->GetID());
-    tiles->SetTileset(maps[item->GetID()]->getTileset());
-  } else if(item->Type() == Resource::Bitmap) {
-    emit SetMap(-1);
-    emit SetTiles(item->GetID());
-  } else if(item->Type() == Resource::Sprite) {
-    emit SetMap(-1);
+  if(item->type() == Resource::Map) {
+    emit setMap(item->getID());
+    tiles->setTileset(maps[item->getID()]->getTileset());
+  } else if(item->type() == Resource::Bitmap) {
+    emit setMap(-1);
+    emit setTiles(item->getID());
+  } else if(item->type() == Resource::Sprite) {
+    emit setMap(-1);
     //emit SetTiles(item->GetID());
-  } else if(item->Type() == Resource::Folder) {
-    emit SetMap(-1);
-    emit SetTiles(-1);
+  } else if(item->type() == Resource::Folder) {
+    emit setMap(-1);
+    emit setTiles(-1);
   }
 }
 
-void MainWindow::ShowNewLayerDialog(int before) {
+void MainWindow::showNewLayerDialog(int before) {
   if(newlayerdialog->exec() == QDialog::Accepted ) {
-    mapwin->mapbox->GetMap()->insertLayerBefore(before, newlayerdialog->xspin->value(),
+    mapwin->mapbox->getMap()->insertLayerBefore(before, newlayerdialog->xspin->value(),
 			newlayerdialog->yspin->value(),
 			newlayerdialog->wrapcheck->isChecked(),
-      tiles->GetTile(),
+      tiles->getTile(),
       newlayerdialog->layername->text()
     );
     emit updateLayers();
@@ -287,50 +287,50 @@ void MainWindow::deleteLayer(int layer) {
   if(QMessageBox::warning(this, "Delete Layer?", 
     "Deleting a layer cannot be undone.  Proceed?",
     QMessageBox::Ok|QMessageBox::Cancel, QMessageBox::Cancel) == QMessageBox::Ok)
-    mapwin->mapbox->DeleteLayer(layer);
+    mapwin->mapbox->deleteLayer(layer);
   emit updateLayers();
 }
 
-void MainWindow::LoadProject() {
+void MainWindow::loadProject() {
   QString currentProjectFilename(QFileDialog::getOpenFileName(
     this,
     "Choose a file",
     ".",
     "Projects (*.xproj)"
   ));
-  LoadProject(currentProjectFilename);
+  loadProject(currentProjectFilename);
 }
 
-void MainWindow::LoadProject(QString currentProjectFilename) {
+void MainWindow::loadProject(QString currentProjectFilename) {
   ProjectReader projectReader;
   Project * loadedProject;
 
   if(!currentProjectFilename.isEmpty() && !currentProjectFilename.isNull()) {
     if(currentProject) delete currentProject;
-    emit SetMap(-1);
-    emit SetTiles(-1);
+    emit setMap(-1);
+    emit setTiles(-1);
     if((loadedProject = projectReader.read(currentProjectFilename))) {
       currentProject = loadedProject;
-      SetMapButtonsDisabled(false);
-      SetTilesetButtonsDisabled(false);
+      setMapButtonsDisabled(false);
+      setTilesetButtonsDisabled(false);
     } else {
       QMessageBox::critical(0, "Error", "Project '" + currentProjectFilename + "' could not be loaded.");
     }
   }
 }
 
-void MainWindow::NewProject() {
+void MainWindow::newProject() {
   if(newprojectdialog->exec() == QDialog::Accepted) {
-    emit SetMap(-1);
-    emit SetTiles(-1);
+    emit setMap(-1);
+    emit setTiles(-1);
     if(currentProject) delete currentProject;
     currentProject = new Project(newprojectdialog->projectname->text());
-    SetMapButtonsDisabled(false);
-    SetTilesetButtonsDisabled(false);
+    setMapButtonsDisabled(false);
+    setTilesetButtonsDisabled(false);
   }
 }
 
-void MainWindow::SaveProject() {
+void MainWindow::saveProject() {
   QString name = QFileDialog::getExistingDirectory(this, 
     tr("Open Directory"),
     ".",
@@ -343,20 +343,20 @@ void MainWindow::SaveProject() {
   }
 }
 
-void MainWindow::NewSprite() {
+void MainWindow::newSprite() {
   spritedialog->show();
 }
 
-void MainWindow::NewMap() {
+void MainWindow::newMap() {
   if(newmapdialog->exec() == QDialog::Accepted ) {
     tiles->tilebox->makeCurrent();
     Map * m = new Map(bitmaps[newmapdialog->tileset->currentIndex()], 0, 0, 1, 1, newmapdialog->mapname->text());
     maplist->setCurrentItem(m->getThisMap());
-    ShowNewLayerDialog(0);
+    showNewLayerDialog(0);
   }
 }
 
-void MainWindow::LoadMap() {
+void MainWindow::loadMap() {
   MapReader mapReader;
   Map * m = mapReader.read(QFileDialog::getOpenFileName(
     this, 
@@ -367,11 +367,11 @@ void MainWindow::LoadMap() {
   maplist->setCurrentItem(m->getThisMap());
 }
 
-void MainWindow::SaveMap() {
+void MainWindow::saveMap() {
   Resource * item = static_cast<Resource *> (maplist->currentItem());
 
-  if(item && item->Type() == Resource::Map)
-    maps[item->GetID()]->save(
+  if(item && item->type() == Resource::Map)
+    maps[item->getID()]->save(
 			       QFileDialog::getSaveFileName(
                this,
                "Choose a file",
@@ -380,7 +380,7 @@ void MainWindow::SaveMap() {
              ));
 }
 
-void MainWindow::NewBitmap() {
+void MainWindow::newBitmap() {
   if(newbitmapdialog->exec() == QDialog::Accepted ) {
     tiles->tilebox->makeCurrent();
     new Bitmap(
@@ -391,39 +391,39 @@ void MainWindow::NewBitmap() {
   }
 }
 
-void MainWindow::SetMapButtonsDisabled(bool disabled) {
+void MainWindow::setMapButtonsDisabled(bool disabled) {
   newmapAction->setDisabled(disabled);
   openmapAction->setDisabled(disabled);
   savemapAction->setDisabled(disabled);
   appPlayAction->setDisabled(disabled);
 }
 
-void MainWindow::SetTilesetButtonsDisabled(bool disabled) {
+void MainWindow::setTilesetButtonsDisabled(bool disabled) {
   newbitmapAction->setDisabled(disabled);
   newspriteAction->setDisabled(disabled);
 }
 
-void MainWindow::SetLayerButtonsDisabled(bool disabled) {
+void MainWindow::setLayerButtonsDisabled(bool disabled) {
   layerPanel->setDisabled(disabled);
   //addlayerAction->setDisabled(disabled);
   //deletelayerAction->setDisabled(disabled);
 }
 
-void MainWindow::SetLayerButtonsForMap(int m) {
-  if(m == -1) SetLayerButtonsDisabled(true);
-  else SetLayerButtonsDisabled(false);
+void MainWindow::setLayerButtonsForMap(int m) {
+  if(m == -1) setLayerButtonsDisabled(true);
+  else setLayerButtonsDisabled(false);
 }
 
-void MainWindow::UpdateProjectTitle(QString projtitle) {
+void MainWindow::updateProjectTitle(QString projtitle) {
   setWindowTitle(projtitle + " - " + appTitle);
 }
 
-void MainWindow::ShowEntityDialog(Entity * x) {
+void MainWindow::showEntityDialog(Entity * x) {
   EntityDialog d(x);
   d.exec();
 }
 
-void MainWindow::ShowMapScriptDialog(Map * x) {
+void MainWindow::showMapScriptDialog(Map * x) {
   MapScriptDialog d(x);
   d.exec();
 }
@@ -441,14 +441,14 @@ void MainWindow::play() {
   scriptEngine->evaluate(script);
 }
 
-void MainWindow::AboutQt() {
+void MainWindow::aboutQt() {
   QMessageBox::aboutQt(0);
 }
 
-void MainWindow::UpdateMousePos(int x, int y, int tx, int ty) {
+void MainWindow::updateMousePos(int x, int y, int tx, int ty) {
   QString s = QString::number(x) + ", " + QString::number(y) + " (" +
     QString::number(tx) + ", " + QString::number(ty) + ")";
-  emit UpdateMapStatus(s);
+  emit updateMapStatus(s);
 }
 
 void MainWindow::setViewTilePos(bool b) {

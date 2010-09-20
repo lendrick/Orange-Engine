@@ -12,7 +12,7 @@ struct Vertex {
     this->y = vy;
   }
   
-  void GetPos(int &vx, int &vy) {
+  void getPos(int &vx, int &vy) {
     vx = this->x;
     vy = this->y;
   }
@@ -27,17 +27,17 @@ public:
   Poly();
   ~Poly();
 
-  void AddVertex(Vertex * v);
-  void AddVertex(int vx, int vy);
-  bool IsColliding(int mx, int my, std::list< Poly * > * polys);
-  bool IsColliding(int mx, int my, Poly * p);
-  void Draw();
-  void Move(int mx, int my);
-  void Move(int mx, int my, std::list< Poly * > * polys);
-  void SetPos(int x, int y);
-  void GetPos(int &x, int &y);
-  void GetSide(unsigned int s, int &x1, int &y1, int &x2, int &y2);
-  bool Inside(int px, int py, int mx, int my);
+  void addVertex(Vertex * v);
+  void addVertex(int vx, int vy);
+  bool isColliding(int mx, int my, std::list< Poly * > * polys);
+  bool isColliding(int mx, int my, Poly * p);
+  void draw();
+  void move(int mx, int my);
+  void move(int mx, int my, std::list< Poly * > * polys);
+  void setPos(int x, int y);
+  void getPos(int &x, int &y);
+  void gGetSide(unsigned int s, int &x1, int &y1, int &x2, int &y2);
+  bool inside(int px, int py, int mx, int my);
 
   std::vector<Vertex *> vertices;
   std::vector<Vertex *>::iterator v;

@@ -18,27 +18,27 @@ public:
   };
 
   SpriteWidget(QWidget * parent=0);
-  void SetSprite(Sprite * s);
+  void setSprite(Sprite * s);
   Sprite * sprite;
 public slots:
-  void Play();
-  void Pause();
-  void Stop();
-  void SetState(int);
-  void SetFrame(int);
+  void play();
+  void pause();
+  void stop();
+  void setState(int);
+  void setFrame(int);
   void updateDuration(int);
 signals:
-  void SetStateRange(int, int);
-  void SetFrameRange(int, int);
-  void SetFrameDuration(int);
-  void SetSelectedTile(int);
+  void setStateRange(int, int);
+  void setFrameRange(int, int);
+  void setFrameDuration(int);
+  void setSelectedTile(int);
   void updateTime(int);
 private:
   void initializeGL();
   void resizeGL(int w, int h);
   void paintGL();
   //void mousePressEvent(QMouseEvent * e);
-  void UpdateSpinners();
+  void updateSpinners();
   
   Mode mode;
   int time_since_start;

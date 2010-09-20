@@ -136,8 +136,8 @@ void MapBox::resizeEvent(QResizeEvent *event) {
     map->getTileSize(tw, th);
     map->setViewport(0, 0, w, h);
     
-    emit SetXRange(0, tw * lw - w);
-    emit SetYRange(0, th * lh - h);
+    emit setXRange(0, tw * lw - w);
+    emit setYRange(0, th * lh - h);
 
     xrange = tw * lw - w;
     yrange = th * lh - h;
@@ -153,7 +153,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent * e) {
   if(e->isAccepted()) return;
 
   if(mapBox->mapEditorMode == MapEditorMode::Edit && mapBox->map && e->button() == Qt::LeftButton) {
-    mapBox->SetTile(e);
+    mapBox->setTile(e);
   } else if(mapBox->mapEditorMode == MapEditorMode::Entity && 
     mapBox->map && e->button() == Qt::LeftButton) {
     mapBox->dragEntity = 
@@ -194,14 +194,14 @@ void MapScene::mouseMoveEvent(QGraphicsSceneMouseEvent * e) {
   if(mapBox->mapEditorMode == MapEditorMode::Edit && mapBox->map && (e->buttons() & Qt::LeftButton) &&
      e->scenePos().x() > 0 && e->scenePos().y() > 0 && 
      e->scenePos().x() < this->width() && e->scenePos().y() < this->height()) {
-    mapBox->SetTile(e);
+    mapBox->setTile(e);
   } else if(mapBox->dragEntity && mapBox->mapEditorMode == MapEditorMode::Entity && mapBox->map && 
     (e->buttons() & Qt::LeftButton)) {
     QPointF move = e->scenePos() - e->lastScenePos();
     mapBox->dragEntity->movePos(move.x(), move.y());
   } else if(mapBox->map && (e->buttons() & Qt::MidButton)) {
-    emit mapBox->SetXScroll(mapBox->xo - e->scenePos().x() + mapBox->mouse_start_x);
-    emit mapBox->SetYScroll(mapBox->yo - e->scenePos().y() + mapBox->mouse_start_y);
+    emit mapBox->setXScroll(mapBox->xo - e->scenePos().x() + mapBox->mouse_start_x);
+    emit mapBox->setYScroll(mapBox->yo - e->scenePos().y() + mapBox->mouse_start_y);
     mapBox->mouse_start_x = e->scenePos().x();
     mapBox->mouse_start_y = e->scenePos().y();
   }
@@ -214,7 +214,7 @@ void MapScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent * e) {
   if(mapBox->mapEditorMode == MapEditorMode::Entity && mapBox->map && e->button() == Qt::LeftButton) {
     Entity * x = mapBox->entityAt(e->scenePos().x() + mapBox->xo, e->scenePos().y() + mapBox->yo);
     if(x) {
-      emit ShowEntityDialog(x);
+      emit showEntityDialog(x);
     }
   }
 }
@@ -274,7 +274,7 @@ void MapScene::keyReleaseEvent(QKeyEvent * event) {
   keyEvent(event->key(), QEvent::KeyRelease);
 }
 
-void MapBox::SetX(int x) {
+void MapBox::setX(int x) {
   //makeCurrent();
   xo = x;
 
@@ -284,7 +284,7 @@ void MapBox::SetX(int x) {
   update();
 }
 
-void MapBox::SetY(int y) {
+void MapBox::setY(int y) {
   //makeCurrent();
   yo = y;
 
@@ -294,20 +294,20 @@ void MapBox::SetY(int y) {
   update();
 }
 
-int MapBox::GetX() {
+int MapBox::getX() {
   return xo;
 }
 
-int MapBox::GetY() {
+int MapBox::getY() {
   return yo;
 }
 
-void MapBox::Move(int dx, int dy) {
-  SetX(xo + dx);
-  SetY(yo + dy);
+void MapBox::move(int dx, int dy) {
+  setX(xo + dx);
+  setY(yo + dy);
 }
 
-void MapBox::SetTile(QMouseEvent * e) {
+void MapBox::setTile(QMouseEvent * e) {
   if(map) {
     int w, h, x, y;
     
@@ -322,7 +322,7 @@ void MapBox::SetTile(QMouseEvent * e) {
   }
 }  
 
-void MapBox::SetTile(QGraphicsSceneMouseEvent * e) {
+void MapBox::setTile(QGraphicsSceneMouseEvent * e) {
   if(map) {
     int w, h, x, y;
     
@@ -337,7 +337,7 @@ void MapBox::SetTile(QGraphicsSceneMouseEvent * e) {
   }
 }  
 
-void MapBox::SetLayer(int l) {
+void MapBox::setLayer(int l) {
   if(layer >= 0 && layer < map->getLayers()) {
     int lw, lh, tw, th;
     layer = l;
@@ -345,8 +345,8 @@ void MapBox::SetLayer(int l) {
     map->getSize(layer, lw, lh);
     map->getTileSize(tw, th);
     
-    emit SetXRange(0, tw * lw - width());
-    emit SetYRange(0, th * lh - height());
+    emit setXRange(0, tw * lw - width());
+    emit setYRange(0, th * lh - height());
 
     xrange = tw * lw - width();
     yrange = th * lh - height();
@@ -357,19 +357,19 @@ void MapBox::SetLayer(int l) {
 }
 	 
 
-void MapBox::AddLayer(int w, int h, bool wrap, QString name) {
+void MapBox::addLayer(int w, int h, bool wrap, QString name) {
   if(map) {
     int filltile = currentTile;
     map->addLayer(w, h, wrap, filltile, name);
-    emit SetLayerRange(0, map->getLayers() - 1);
+    emit setLayerRange(0, map->getLayers() - 1);
     if(map->getLayers() == 1) {
       int lw, lh, tw, th;
 
       map->getSize(0, lw, lh);
       map->getTileSize(tw, th);
     
-      emit SetXRange(0, tw * lw - width());
-      emit SetYRange(0, th * lh - height());
+      emit setXRange(0, tw * lw - width());
+      emit setYRange(0, th * lh - height());
 
       xrange = tw * lw - width();
       yrange = th * lh - height();
@@ -377,13 +377,13 @@ void MapBox::AddLayer(int w, int h, bool wrap, QString name) {
   }  
 }
 
-void MapBox::DeleteLayer(int layer) {
+void MapBox::deleteLayer(int layer) {
   map->deleteLayer(layer);
   if(map->getLayers() < layer) layer = map->getLayers();
-  SetLayer(layer);
+  setLayer(layer);
 }
 
-bool MapBox::HasMap() {
+bool MapBox::hasMap() {
   if(map) {
     return true;
   } else {
@@ -391,11 +391,11 @@ bool MapBox::HasMap() {
   }
 }
 
-Map * MapBox::GetMap() {
+Map * MapBox::getMap() {
   return map;
 }
 
-void MapBox::SetMap(int map_num) {
+void MapBox::setMap(int map_num) {
   int lw, lh, tw, th, w, h;
   map = 0;
   RPGEngine::setCurrentMap(0);
@@ -416,16 +416,16 @@ void MapBox::SetMap(int map_num) {
     map->setViewport(0, 0, w, h);
     map->setStarting(true);
     
-    emit SetXRange(0, tw * lw - w);
-    emit SetYRange(0, th * lh - h);
+    emit setXRange(0, tw * lw - w);
+    emit setYRange(0, th * lh - h);
     
     xrange = tw * lw - w;
     yrange = th * lh - h;
 
     if(map->getLayers() == 0) {
-      emit SetLayerRange(0, 0);
+      emit setLayerRange(0, 0);
     } else {
-      emit SetLayerRange(0, map->getLayers() - 1);
+      emit setLayerRange(0, map->getLayers() - 1);
     }
 
     RPGEngine::setCurrentMap(map);
@@ -451,7 +451,7 @@ void MapScene::init(int w, int h)
   glLoadIdentity();
 }
 
-void MapBox::SaveMap(char * filename) {
+void MapBox::saveMap(char * filename) {
   if(map) map->save(filename);
 }
 
@@ -567,8 +567,8 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
     playerEntity->setActivated(false);
 
     if(mapBox->getCamera()) {
-      mapBox->SetX(mapBox->getCamera()->getX() - screen_x / 2);
-      mapBox->SetY(mapBox->getCamera()->getY() - screen_y / 2);
+      mapBox->setX(mapBox->getCamera()->getX() - screen_x / 2);
+      mapBox->setY(mapBox->getCamera()->getY() - screen_y / 2);
     }
     
     // TODO: make this handle pauses
@@ -662,11 +662,11 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
 
 void MapScene::editEntity() {
   Entity * x = mapBox->entityAt(mouseScenePos.x(), mouseScenePos.y());
-  if(x) emit ShowEntityDialog(x);
+  if(x) emit showEntityDialog(x);
 }
 
 void MapScene::editMapScripts() {
-  emit ShowMapScriptDialog(mapBox->map);
+  emit showMapScriptDialog(mapBox->map);
 }
 
 void MapScene::newEntity() {
@@ -676,7 +676,7 @@ void MapScene::newEntity() {
   }
   e->setPos(mouseScenePos.x(), mouseScenePos.y()); 
   e->addToMap(mapBox->layer);
-  emit ShowEntityDialog(e);
+  emit showEntityDialog(e);
 }
 
 void MapScene::deleteEntity() {

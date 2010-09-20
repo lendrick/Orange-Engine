@@ -19,7 +19,7 @@ Bitmap::Bitmap(QString image, int spr_w, int spr_h,
   this->y_origin = origin_y;
   this->width = spr_w;
   this->height = spr_h;
-  this->stub = true;
+  this->isStub = true;
 
   QFileInfo fileinfo(image);
   this->filePath = fileinfo.absoluteFilePath();
@@ -37,7 +37,7 @@ Bitmap::Bitmap(QString image, int spr_w, int spr_h,
   //cout << "Creating " << width << " " << height << "\n";
 }
 
-bool Bitmap::SetName(QString n)
+bool Bitmap::setName(QString n)
 {
   if(bitmapnames.contains(n)) {
     return false;
@@ -50,7 +50,7 @@ bool Bitmap::SetName(QString n)
   return true;
 }
 
-void Bitmap::Unstub() {
+void Bitmap::unStub() {
   this->gl_texture = load_texture(this->filePath);
 
   int x, y;
@@ -68,33 +68,33 @@ void Bitmap::Unstub() {
 
   //cout << "Disenstubulating.\n" << width << " " << height << "\n";
   
-  stub = false;
+  isStub = false;
   //cout << "Unstub\n";
 }
 
-void Bitmap::Stub() {
+void Bitmap::stub() {
   int i;
   for(i = 0; i < tiles.size(); i++) {
     delete tiles[i];
   }
   tiles.clear();
   glDeleteTextures(1, &gl_texture);
-  stub = true;
+  isStub = true;
   //cout << "Stub\n";
 }
 
 Bitmap::~Bitmap() {
-  Stub();
+  stub();
 }
   
-int Bitmap::Tiles() { 
-  if(stub) Unstub();
+int Bitmap::tileCount() {
+  if(isStub) unStub();
   //cout << "Size " << tiles.size() << "\n";
   return tiles.size();
 }
 
-void Bitmap::Draw(int tile, float x, float y, float opacity, float scale) {
-  if(stub) Unstub();
+void Bitmap::draw(int tile, float x, float y, float opacity, float scale) {
+  if(isStub) unStub();
 
   int w = width * scale;
   int h = height * scale;
@@ -122,7 +122,7 @@ void Bitmap::Draw(int tile, float x, float y, float opacity, float scale) {
   glDisable(GL_TEXTURE_2D);
 }
 
-void Bitmap::DrawBoundingBox(int tile, float x, float y) { 
+void Bitmap::drawBoundingBox(int tile, float x, float y) {
   // don't bother drawing things that aren't on the screen.
   int w = width;
   int h = height;
@@ -182,7 +182,7 @@ GLuint Bitmap::load_texture(QString name) {
   return gltex;
 }
 
-void Bitmap::Save(QString filename)
+void Bitmap::save(QString filename)
 {
   QFile outfile(filename);
   outfile.open(QIODevice::WriteOnly);

@@ -46,7 +46,7 @@ int NewLayerDialog::exec() {
   if(maps.size() == 0) {
     QMessageBox::critical(this, "Error", "You must create a map before you can create layers.");
     return QDialog::Rejected;
-  } else if(!currentresource || currentresource->Type() != Resource::Map) {
+  } else if(!currentresource || currentresource->type() != Resource::Map) {
     QMessageBox::critical(this, "Error", "No map is currently selected.  You must select a map to create layers.");
     return QDialog::Rejected;
   }

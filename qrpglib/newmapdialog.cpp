@@ -45,7 +45,7 @@ int NewMapDialog::exec() {
   mapname->clear();
   tileset->clear();
   for(int i = 0; i < bitmaps.size(); i++) {
-    tileset->addItem(bitmaps[i]->GetName());
+    tileset->addItem(bitmaps[i]->getName());
   }
   return QDialog::exec();
 }

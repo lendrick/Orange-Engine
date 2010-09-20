@@ -56,11 +56,11 @@ Poly::~Poly() {
   for(i = 0; i < vertices.size(); i++) delete vertices[i];
 }
 
-void Poly::AddVertex(Vertex * v) {
+void Poly::addVertex(Vertex * v) {
   vertices.push_back(v);
 }
 
-void Poly::AddVertex(int vx, int vy) {
+void Poly::addVertex(int vx, int vy) {
   Vertex * v = new Vertex(vx, vy);
   vertices.push_back(v);
 
@@ -70,17 +70,17 @@ void Poly::AddVertex(int vx, int vy) {
   if(vy > by2) by2 = vy;
 }
 
-bool Poly::IsColliding(int mx, int my, std::list<Poly *> * polys) {
+bool Poly::isColliding(int mx, int my, std::list<Poly *> * polys) {
   std::list <Poly *>::iterator poly;
 
   for(poly = polys->begin(); poly != polys->end(); poly++) {
-    if(IsColliding(mx, my, (*poly))) return true;
+    if(isColliding(mx, my, (*poly))) return true;
   }
 
   return false;
 }
 
-bool Poly::IsColliding(int mx, int my, Poly * p) {
+bool Poly::isColliding(int mx, int my, Poly * p) {
   // If bounding boxes don't intersect, return false
   if(bx1 + x + mx> p->bx2 + p->x || bx2 + x + mx< p->bx1 + p->x || 
      by1 + y + my> p->by2 + p->y || by2 + y + my< p->by1 + p->y)
@@ -90,9 +90,9 @@ bool Poly::IsColliding(int mx, int my, Poly * p) {
   int x1, y1, x2, y2, X1, Y1, X2, Y2, xi, yi;
   unsigned int i, j;
   for(i = 0; i < vertices.size(); i++) {
-    this->GetSide(i, x1, y1, x2, y2);
+    this->gGetSide(i, x1, y1, x2, y2);
     for(j = 0; j < p->vertices.size(); j++) {
-      p->GetSide(j, X1, Y1, X2, Y2);
+      p->gGetSide(j, X1, Y1, X2, Y2);
       if(line_intersect(x1 + mx, y1 + my, x2 + mx, y2 + my, 
       			X1, Y1, X2, Y2, xi, yi))
       	return true;
@@ -110,7 +110,7 @@ bool Poly::IsColliding(int mx, int my, Poly * p) {
   return false;
 }
 
-void Poly::GetSide(unsigned int s, int &x1, int &y1, int &x2, int &y2) {
+void Poly::gGetSide(unsigned int s, int &x1, int &y1, int &x2, int &y2) {
   x1 = vertices[s]->x + x;
   y1 = vertices[s]->y + y;
   if(s == vertices.size() - 1) {
@@ -122,7 +122,7 @@ void Poly::GetSide(unsigned int s, int &x1, int &y1, int &x2, int &y2) {
   }
 }
 
-void Poly::Draw() {
+void Poly::draw() {
   glShadeModel(GL_FLAT);
   glDisable(GL_TEXTURE_2D);
   glDisable(GL_LIGHTING);
@@ -139,37 +139,37 @@ void Poly::Draw() {
   glEnd();
 }
 
-void Poly::Move(int mx, int my) {
+void Poly::move(int mx, int my) {
   x += mx;
   y += my;
 }
 
-void Poly::Move(int mx, int my, std::list<Poly *> * polys) {
+void Poly::move(int mx, int my, std::list<Poly *> * polys) {
   int l = len(0, 0, mx, my);
   int k = l;
   int ox = mx;
   int oy = my;
 
-  while(k > 0 && IsColliding(mx, my, polys)) {
+  while(k > 0 && isColliding(mx, my, polys)) {
     k--;
     mx = (ox * k) / l;
     my = (oy * k) / l;
   }
 
-  Move(mx, my);
+  move(mx, my);
 }
 
-void Poly::SetPos(int x, int y) {
+void Poly::setPos(int x, int y) {
   this->x = x;
   this->y = y;
 }
 
-void Poly::GetPos(int &x, int &y) {
+void Poly::getPos(int &x, int &y) {
   x = this->x;
   y = this->y;
 }
 
-bool Poly::Inside(int px, int py, int mx, int my) {
+bool Poly::inside(int px, int py, int mx, int my) {
   // Draw a horizontal line from (px, py) out to 
   // (bx1 + x - 1, py).  If this line intersects an odd number
   // of lines, then the point is inside the polygon.
@@ -177,7 +177,7 @@ bool Poly::Inside(int px, int py, int mx, int my) {
   int x1, y1, x2, y2, ix, iy;
   int intersects = 0;
   for(i = 0; i < vertices.size(); i++) {
-    GetSide(i, x1, y1, x2, y2);
+    gGetSide(i, x1, y1, x2, y2);
     if(y2 + my != py && 
        line_intersect(x1 + mx, y1 + my, x2 + mx, y2 + my, px, py, 
 		      bx1 + x - 1, py, ix, iy)) {

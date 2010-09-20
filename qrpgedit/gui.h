@@ -40,38 +40,38 @@ class MainWindow : public QMainWindow {
 public:
   MainWindow();
   ~MainWindow();
-  bool MapSelected();
+  bool mapSelected();
 
 public slots:
-  void ShowNewLayerDialog(int);
-  void ShowEntityDialog(Entity *);
-  void ShowMapScriptDialog(Map *);
+  void showNewLayerDialog(int);
+  void showEntityDialog(Entity *);
+  void showMapScriptDialog(Map *);
   void deleteLayer(int);
-  void ResourceSelected();
+  void resourceSelected();
 
-  void AboutQt();
+  void aboutQt();
   
-  void NewProject();
-  void LoadProject();
-  void LoadProject(QString);
-  void SaveProject();
+  void newProject();
+  void loadProject();
+  void loadProject(QString);
+  void saveProject();
 
-  void NewMap();
-  void LoadMap();
-  void SaveMap();
+  void newMap();
+  void loadMap();
+  void saveMap();
 
-  void NewBitmap();
+  void newBitmap();
   
-  void NewSprite();
+  void newSprite();
 
-  void SetMapButtonsDisabled(bool);
-  void SetTilesetButtonsDisabled(bool);
-  void SetLayerButtonsDisabled(bool);
-  void SetLayerButtonsForMap(int);
+  void setMapButtonsDisabled(bool);
+  void setTilesetButtonsDisabled(bool);
+  void setLayerButtonsDisabled(bool);
+  void setLayerButtonsForMap(int);
 
-  void UpdateMousePos(int, int, int, int);
+  void updateMousePos(int, int, int, int);
 
-  void UpdateProjectTitle(QString);
+  void updateProjectTitle(QString);
 
   void play();
 
@@ -80,10 +80,10 @@ public slots:
   void setViewGrid(bool);
 
 signals:
-  void SetMap(int);
-  void SetTiles(int);
+  void setMap(int);
+  void setTiles(int);
   void updateLayers();
-  void UpdateMapStatus(QString);
+  void updateMapStatus(QString);
 
 private:
   // Map window
@@ -98,16 +98,16 @@ private:
   TileSelect * tiles;
 
   // Menus
-  QMenu * FileMenu;
-  QMenu * ResourceMenu;
-  QMenu * MapMenu;
-  QMenu * TilesetMenu;
-  QMenu * SpriteMenu;
-  QMenu * ViewMenu;
-  QMenu * HelpMenu;
+  QMenu * fileMenu;
+  QMenu * resourceMenu;
+  QMenu * mapMenu;
+  QMenu * tilesetMenu;
+  QMenu * spriteMenu;
+  QMenu * viewMenu;
+  QMenu * helpMenu;
 
   // Toolbars
-  QToolBar * MapToolBar;
+  QToolBar * mapToolBar;
 
   // Dockable dialogs
   QDockWidget * tileDock;

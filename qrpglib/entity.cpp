@@ -91,7 +91,7 @@ void Entity::setName(QString newname) {
 }
 
 void Entity::draw(double x_offset, double y_offset, double opacity) {
-  if(sprite) sprite->Draw(state, apptime.elapsed(), (int) (x - x_offset), (int) (y - y_offset), opacity);
+  if(sprite) sprite->draw(state, apptime.elapsed(), (int) (x - x_offset), (int) (y - y_offset), opacity);
 }
 
 void Entity::update() {
@@ -150,7 +150,7 @@ int Entity::getState() {
 }
 
 QString Entity::getStateName() {
-  return sprite->GetStateName(state);
+  return sprite->getStateName(state);
 }
 
 void Entity::setState(int newState) {
@@ -224,7 +224,7 @@ void Entity::move(double dx, double dy) {
 }
 
 void Entity::addToMap(int layer) {
-  map = mapBox->GetMap();
+  map = mapBox->getMap();
   map->addEntity(layer, this);
 }
 
@@ -238,7 +238,7 @@ Map * Entity::getMap() {
 
 void Entity::getBoundingBox(int & x1, int & y1, int & x2, int & y2) {
   if(sprite) 
-    sprite->GetBoundingBox(x1, y1, x2, y2);
+    sprite->getBoundingBox(x1, y1, x2, y2);
   else
     x1 = y1 = x2 = y2 = 0;
 }
@@ -246,7 +246,7 @@ void Entity::getBoundingBox(int & x1, int & y1, int & x2, int & y2) {
 void Entity::getRealBoundingBox(double & x1, double & y1, double & x2, double & y2) {
   int x1i, y1i, x2i, y2i;
   if(sprite) 
-    sprite->GetBoundingBox(x1i, y1i, x2i, y2i);
+    sprite->getBoundingBox(x1i, y1i, x2i, y2i);
   else
     x1 = y1 = x2 = y2 = 0;
 
@@ -269,10 +269,10 @@ void Entity::getRealScriptBoundingBox(int index, double & x1, double & y1, doubl
 void Entity::getSpriteBox(int & x1, int & y1, int & x2, int & y2) {
   if(sprite) {
     int w, h, xo, yo;
-    Bitmap * b = sprite->GetTileset();
+    Bitmap * b = sprite->getTileset();
     if(b) {
-      b->GetSize(w, h);
-      sprite->GetOrigin(xo, yo);
+      b->getSize(w, h);
+      sprite->getOrigin(xo, yo);
       x1 = -xo;
       y1 = -yo;
       x2 = w - xo;

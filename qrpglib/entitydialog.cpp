@@ -54,10 +54,10 @@ EntityDialog::EntityDialog(Entity * e) : QDialog(0) {
   
   spriteSelect = new QComboBox;
   for(int i = 0; i < sprites.size(); i++) 
-    if(sprites[i]) spriteSelect->addItem(sprites[i]->GetName(), QVariant(i));
+    if(sprites[i]) spriteSelect->addItem(sprites[i]->getName(), QVariant(i));
   formLayout->addRow("Sprite", spriteSelect);
   //message(entity->getSprite()->GetName());
-  spriteSelect->setCurrentIndex(entity->getSprite()->GetId());
+  spriteSelect->setCurrentIndex(entity->getSprite()->getId());
   //message("Sprite row: " + QString::number(entity->getSprite()->GetId()));
 
   stateSelect = new QComboBox;
@@ -171,7 +171,7 @@ void EntityDialog::updateStateSelect() {
   int index = stateSelect->currentIndex();
   stateSelect->clear();
   Sprite * s = sprites[spriteSelect->itemData(spriteSelect->currentIndex()).toInt()];
-  for(int i = 0; i < s->GetStates(); i++)
-    stateSelect->addItem(s->GetStateName(i));
+  for(int i = 0; i < s->getStateCount(); i++)
+    stateSelect->addItem(s->getStateName(i));
   if(stateSelect->count() >= index) stateSelect->setCurrentIndex(index);
 }

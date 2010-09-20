@@ -13,40 +13,40 @@ public:
   Sprite(char * filename, Bitmap * b, QString spritename = "");
   Sprite(QString spritename = "");
   ~Sprite();
-  bool SetName(QString spritename);
-  QString GetName() { return name; };
+  bool setName(QString spritename);
+  QString getName() { return name; }
 
-  Bitmap * GetTileset() { return bitmap; }
-  void SetTileset(Bitmap * b) { bitmap = b; }
+  Bitmap * getTileset() { return bitmap; }
+  void setTileset(Bitmap * b) { bitmap = b; }
 
-  bool Load(char * filename);
-  void Save(QString filename);
-  void Draw(int state, int time, int x, int y, double opacity = 1.0);
-  void DrawFrame(int state, int frame, int x, int y, double opacity = 1.0);
-  void DrawBoundingBox(int x, int y);
-  void AddState(QString name = "New state");
-  void InsertState(int pos, QString name = "New state");
-  void DelState(int pos);
+  bool load(char * filename);
+  void save(QString filename);
+  void draw(int state, int time, int x, int y, double opacity = 1.0);
+  void drawFrame(int state, int frame, int x, int y, double opacity = 1.0);
+  void drawBoundingBox(int x, int y);
+  void addState(QString name = "New state");
+  void insertState(int pos, QString name = "New state");
+  void delState(int pos);
   
-  void AddFrame(int state, int duration, int bitmap);
-  void InsertFrame(int state, int frame, int duration, int bitmap);
-  void DelFrame(int state, int frame);
+  void addFrame(int state, int duration, int bitmap);
+  void insertFrame(int state, int frame, int duration, int bitmap);
+  void delFrame(int state, int frame);
 
-  void SetDuration(int state, int frame, int duration);
-  void SetBitmap(int state, int frame, int bitmap);
+  void setDuration(int state, int frame, int duration);
+  void setBitmap(int state, int frame, int bitmap);
 
-  int GetStates() const;
-  int GetFrames(int state) const;
-  int GetDuration(int state, int frame) const;
-  int GetBitmap(int state, int frame) const;
-  int GetId() const { return id; };
-  QString GetStateName(int state) const { return states[state]->name; };
-  void SetStateName(int state, QString stateName) { states[state]->name = stateName; };
+  int getStateCount() const;
+  int getFrameCount(int state) const;
+  int getDuration(int state, int frame) const;
+  int getBitmap(int state, int frame) const;
+  int getId() const { return id; }
+  QString getStateName(int state) const { return states[state]->name; }
+  void setStateName(int state, QString stateName) { states[state]->name = stateName; }
 
-  void GetBoundingBox(int &, int &, int &, int &);
-  void GetOrigin(int &, int &);
-  void SetOrigin(int, int);
-  void SetBoundingBox(int, int, int, int);
+  void getBoundingBox(int &, int &, int &, int &);
+  void getOrigin(int &, int &);
+  void setOrigin(int, int);
+  void setBoundingBox(int, int, int, int);
 protected:
   int x1, y1, x2, y2;
   int x_origin, y_origin;

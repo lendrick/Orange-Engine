@@ -25,7 +25,7 @@ TileBox::TileBox(QWidget * parent) :
   setMinimumWidth(200);
 }
 
-void TileBox::SetTileset(Bitmap * t) {
+void TileBox::setTileset(Bitmap * t) {
   makeCurrent();
   tileset = t;
   resizeGL(width(), height());
@@ -51,18 +51,18 @@ void TileBox::resizeGL(int w, int h) {
     //gluOrtho2D(0, w, h, 0);
 
     if(tileset) {
-      tileset->GetSize(sw, sh);
+      tileset->getSize(sw, sh);
       cols = (width() - 1) / (sw + 1);
-      rows = tileset->Tiles() / cols + 1;
+      rows = tileset->tileCount() / cols + 1;
       vrows = height() / (sh + 1) + 1;
       
       if(vrows < rows) {
-        emit SetRange(0, rows-vrows+1);
+        emit setRange(0, rows-vrows+1);
       } else {
-        emit SetRange(0, 0);
+        emit setRange(0, 0);
       }
     } else {
-      emit SetRange(0, 0);
+      emit setRange(0, 0);
     }    
     //glPopMatrix();
   }
@@ -79,8 +79,8 @@ void TileBox::paintGL() {
   if(tileset) {
     int w, h;
     int x, y, t, rows, cols, tiles;
-    tileset->GetSize(w, h);
-    tiles = tileset->Tiles();
+    tileset->getSize(w, h);
+    tiles = tileset->tileCount();
     cols = (this->width() - 1) / (w + 1);
     if(cols == 0) cols = 1;
 
@@ -91,7 +91,7 @@ void TileBox::paintGL() {
       for(x = 0; x < cols; x++) {
 	      t = (y + scroll) * cols + x;
 	      //cout << y << " " << x << " " << t << "\n";
-	      if(t < tiles) tileset->Draw(t, x * (w + 1) + 1, y * (h + 1) + 1);
+	      if(t < tiles) tileset->draw(t, x * (w + 1) + 1, y * (h + 1) + 1);
       }
     }
     //cout << "\n";
@@ -115,18 +115,18 @@ void TileBox::paintGL() {
   glPopMatrix();
 }
 
-void TileBox::SetSelected(int s) {
+void TileBox::setSelected(int s) {
   selected = s;
   updateGL();
 }
 
-void TileBox::SetScroll(int s) {
+void TileBox::setScroll(int s) {
   makeCurrent();
   scroll = s;
   updateGL();
 }
 
-int TileBox::GetSelected() {
+int TileBox::getSelected() {
   return selected;
 }
 
@@ -134,18 +134,18 @@ void TileBox::mousePressEvent(QMouseEvent * e) {
   if(tileset) {
     int tx, ty, tile;
     int w, h;
-    tileset->GetSize(w, h);
+    tileset->getSize(w, h);
     
     tx = e->x() / (w + 1);
     ty = e->y() / (h + 1) + scroll;
     
     tile = tx + ty * (this->width() - this->width() % (w + 1))/ (w + 1);
-    if(tile < tileset->Tiles()) selected = tile;
+    if(tile < tileset->tileCount()) selected = tile;
 
     makeCurrent();
     updateGL();
     //cout << "Selected tile " << selected << "\n";
-    emit TileChanged(selected);
+    emit tileChanged(selected);
     //cout << "Selected tile " << selected << "\n";
   }
 }
@@ -168,17 +168,17 @@ TileSelect::TileSelect(QWidget *parent)
 	  scroll, SLOT(setRange(int, int)));
 }
 
-void TileSelect::SetTileset(Bitmap * t) {
-  tilebox->SetTileset(t);
+void TileSelect::setTileset(Bitmap * t) {
+  tilebox->setTileset(t);
 }
 
-int TileSelect::GetTile() {
-  return tilebox->GetSelected();
+int TileSelect::getTile() {
+  return tilebox->getSelected();
 }
 
-void TileSelect::SetTiles(int t) {
+void TileSelect::setTiles(int t) {
   if(t >= 0) 
-    SetTileset(bitmaps[t]);
+    setTileset(bitmaps[t]);
   else
-    SetTileset((Bitmap *) 0);
+    setTileset((Bitmap *) 0);
 }

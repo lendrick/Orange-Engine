@@ -16,15 +16,15 @@ public:
   Bitmap(QString image, int spr_w, int spr_h, 
 	 int origin_x, int origin_y, QString bmpname = "");
   ~Bitmap();
-  bool SetName(QString n);
-  void Draw(int tile, float x, float y, float opacity = 1.0, float scale = 1.0);
-  void DrawBoundingBox(int tile, float x, float y);
-  int Tiles();
-  void GetSize(int &w, int &h) { w = width; h = height; }
-  void Stub();
-  void Unstub();
-  QString GetName() { return name; };
-  void Save(QString filename);
+  bool setName(QString n);
+  void draw(int tile, float x, float y, float opacity = 1.0, float scale = 1.0);
+  void drawBoundingBox(int tile, float x, float y);
+  int tileCount();
+  void getSize(int &w, int &h) { w = width; h = height; }
+  void stub();
+  void unStub();
+  QString getName() { return name; }
+  void save(QString filename);
 private:
   int pow2(int x);
   GLuint load_texture(QString name);
@@ -33,7 +33,7 @@ private:
   int width, height, x_origin, y_origin;
   int tex_w, tex_h;
 
-  bool stub;
+  bool isStub;
   QString name;
   QString image;
   QString filePath;

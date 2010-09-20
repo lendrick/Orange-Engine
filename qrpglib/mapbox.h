@@ -22,19 +22,19 @@ public:
   MapScene * mapScene;
 
 public slots:
-  void SetX(int);
-  void SetY(int);
-  void Move(int, int);
-  int GetX();
-  int GetY();
-  void SetLayer(int);
-  void AddLayer(int, int, bool, QString);
-  void DeleteLayer(int);
-  void SetMap(int);
-  Map * GetMap();
-  bool HasMap();
+  void setX(int);
+  void setY(int);
+  void move(int, int);
+  int getX();
+  int getY();
+  void setLayer(int);
+  void addLayer(int, int, bool, QString);
+  void deleteLayer(int);
+  void setMap(int);
+  Map * getMap();
+  bool hasMap();
   //void LoadMap(char *);
-  void SaveMap(char *);
+  void saveMap(char *);
   LayerView::LayerViewMode getDrawMode();
   void setCamera(Entity *);
   Entity * getCamera();
@@ -51,17 +51,17 @@ public slots:
   void setMode(int mode);
   int getMode();
 signals:
-  void SetXRange(int, int);
-  void SetYRange(int, int);
-  void SetXScroll(int);
-  void SetYScroll(int);
-  void SetLayerRange(int, int);
+  void setXRange(int, int);
+  void setYRange(int, int);
+  void setXScroll(int);
+  void setYScroll(int);
+  void setLayerRange(int, int);
   void modeChanged(int);
   void mousePos(int, int, int, int);
 
 private:
-  void SetTile(QMouseEvent * e);
-  void SetTile(QGraphicsSceneMouseEvent * e);
+  void setTile(QMouseEvent * e);
+  void setTile(QGraphicsSceneMouseEvent * e);
   void resizeEvent(QResizeEvent *event);
   
   Map * map;
@@ -109,8 +109,8 @@ public slots:
   void editMapScripts();
   
 signals:
-  void ShowEntityDialog(Entity *);
-  void ShowMapScriptDialog(Map *);
+  void showEntityDialog(Entity *);
+  void showMapScriptDialog(Map *);
   
 private:
   void mousePressEvent(QGraphicsSceneMouseEvent * e);

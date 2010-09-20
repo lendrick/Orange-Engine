@@ -15,14 +15,14 @@ class TileBox : public QGLWidget {
   Q_OBJECT
 public:
   TileBox(QWidget * parent=0);
-  void SetTileset(Bitmap * t);
-  int GetSelected();
+  void setTileset(Bitmap * t);
+  int getSelected();
 public slots:
-  void SetScroll(int);
-  void SetSelected(int);
+  void setScroll(int);
+  void setSelected(int);
 signals:
-  void SetRange(int, int); 
-  void TileChanged(int);
+  void setRange(int, int);
+  void tileChanged(int);
 private:
   void initializeGL();
   void resizeGL(int w, int h);
@@ -38,11 +38,11 @@ class TileSelect : public QWidget {
   Q_OBJECT
 public:
   TileSelect(QWidget *parent=0);
-  void SetTileset(Bitmap * t);
-  int GetTile();
+  void setTileset(Bitmap * t);
+  int getTile();
   TileBox * tilebox;
 public slots:
-  void SetTiles(int);
+  void setTiles(int);
 
 private:
   QScrollBar * scroll;

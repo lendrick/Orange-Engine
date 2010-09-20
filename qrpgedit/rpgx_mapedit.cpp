@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
   
   if(argc == 2) {
     QString file(argv[1]);
-    mainwindow.LoadProject(file);
+    mainwindow.loadProject(file);
   }
   
   //mapedit.setMainWidget(&mainwindow);

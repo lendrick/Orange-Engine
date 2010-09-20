@@ -62,9 +62,9 @@ void Project::Save(QString filename) {
   QDir::setCurrent("tilesets");
   for(int i = 0; i < bitmaps.size(); i++) {
     if(bitmaps[i]) {
-      QString fn = bitmaps[i]->GetName();
+      QString fn = bitmaps[i]->getName();
       fn = fn + ".xtile";
-      bitmaps[i]->Save(fn);
+      bitmaps[i]->save(fn);
 
       f << "    <tileset>";
       f << fn;
@@ -95,9 +95,9 @@ void Project::Save(QString filename) {
   QDir::setCurrent("sprites");
   for(int i = 0; i < sprites.size(); i++) {
     if(sprites[i]) {
-      QString fn = sprites[i]->GetName();
+      QString fn = sprites[i]->getName();
       fn = fn + ".xspr";
-      sprites[i]->Save(fn);
+      sprites[i]->save(fn);
 
       f << "    <sprite>";
       f << fn;

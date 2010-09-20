@@ -19,8 +19,8 @@ public:
   Resource(ResType t, int i, QString name, QTreeWidgetItem * parent);
   Resource(ResType t, int i, QString name, QTreeWidget * parent);
   void clear();
-  int GetID();
-  ResType Type();
+  int getID();
+  ResType type();
 private:
   int id;
   ResType restype;

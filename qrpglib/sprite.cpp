@@ -16,11 +16,11 @@ Sprite::Sprite(Bitmap * b, QString spritename) {
   //AddState();
   //AddFrame(0, 100, 0);
   name = spritename;
-  if(name.isEmpty()) name = b->GetName();
+  if(name.isEmpty()) name = b->getName();
   sprites.push_back(this);
   spritenames[name] = sprites.size() - 1;
   thisSprite = new Resource(Resource::Sprite, sprites.size()-1, this->name, spritefolder);
-  id = thisSprite->GetID();
+  id = thisSprite->getID();
   x1 = y1 = x2 = y2 = x_origin = y_origin = 0;
 }
 
@@ -30,24 +30,24 @@ Sprite::Sprite(QString spritename) {
   sprites.push_back(this);
   spritenames[name] = sprites.size() - 1;
   thisSprite = new Resource(Resource::Sprite, sprites.size()-1, this->name, spritefolder);
-  id = thisSprite->GetID();
+  id = thisSprite->getID();
   x1 = y1 = x2 = y2 = x_origin = y_origin = 0;
 }
 
 Sprite::Sprite(char * filename, Bitmap * b, QString spritename) {
   bitmap = b;
-  if(!Load(filename)) cprint("Invalid file: " + QString(filename) + "\n");
+  if(!load(filename)) cprint("Invalid file: " + QString(filename) + "\n");
   name = spritename;
-  if(name.isEmpty()) name = b->GetName();
+  if(name.isEmpty()) name = b->getName();
   sprites.push_back(this);
   spritenames[name] = sprites.size() - 1;
   thisSprite = new Resource(Resource::Sprite, sprites.size()-1, this->name, spritefolder);
-  id = thisSprite->GetID();
+  id = thisSprite->getID();
   x1 = y1 = x2 = y2 = x_origin = y_origin = 0;
 }
 
 Sprite::~Sprite() {
-  int id = thisSprite->GetID();
+  int id = thisSprite->getID();
   delete thisSprite;
   while(!states.isEmpty())
     delete states.takeFirst();
@@ -55,7 +55,7 @@ Sprite::~Sprite() {
   spritenames.take(name);
 }
 
-bool Sprite::SetName(QString spritename) {
+bool Sprite::setName(QString spritename) {
   if(spritenames.contains(spritename)) {
     return false;
   }
@@ -67,7 +67,7 @@ bool Sprite::SetName(QString spritename) {
   return true;
 }
   
-bool Sprite::Load(char * filename) {
+bool Sprite::load(char * filename) {
   ifstream file(filename);
   char xspr[5];
   int i, j, state_count, frame_count;
@@ -96,7 +96,7 @@ bool Sprite::Load(char * filename) {
       
       cout << " " << bitmap << " " << duration << "\n";
 
-      AddFrame(i, duration, bitmap);
+      addFrame(i, duration, bitmap);
     }
   }
 
@@ -104,7 +104,7 @@ bool Sprite::Load(char * filename) {
   return true;
 }
 
-void Sprite::Save(QString filename) {
+void Sprite::save(QString filename) {
   QFile outfile(filename);
   outfile.open(QIODevice::WriteOnly);
   QTextStream file(&outfile);
@@ -121,7 +121,7 @@ void Sprite::Save(QString filename) {
 
   s = states.size();
   file << "  <tileset>";
-  file << bitmap->GetName();
+  file << bitmap->getName();
   file << "</tileset>\n";
   file << "  <states>" << s << "</states>\n";
   
@@ -150,7 +150,7 @@ void Sprite::Save(QString filename) {
   outfile.close();
 }
 
-void Sprite::Draw(int state, int time, int x, int y, double opacity) {
+void Sprite::draw(int state, int time, int x, int y, double opacity) {
   // Don't crash on empty sprites!
   if(bitmap == 0 || state < 0) return;
   if(state >= states.size()) return;
@@ -168,7 +168,7 @@ void Sprite::Draw(int state, int time, int x, int y, double opacity) {
     //    cout << time << " " << i << " " <<
     //      states[state]->frames[i]->end_time << "\n";
     if(states[state]->frames[i]->end_time >= time) {
-      bitmap->Draw(states[state]->frames[i]->bitmap, x - x_origin, y - y_origin, opacity);
+      bitmap->draw(states[state]->frames[i]->bitmap, x - x_origin, y - y_origin, opacity);
       //bitmap->DrawBoundingBox(states[state]->frames[i]->bitmap, x, y);
       //DrawBoundingBox(x, y);
       done = true;
@@ -177,12 +177,12 @@ void Sprite::Draw(int state, int time, int x, int y, double opacity) {
   } 
 }
 
-void Sprite::DrawFrame(int state, int frame, int x, int y, double opacity) {
+void Sprite::drawFrame(int state, int frame, int x, int y, double opacity) {
   if(bitmap && state >= 0 && frame >= 0 && states.size() > state && states[state]->frames.size() > frame) 
-    bitmap->Draw(states[state]->frames[frame]->bitmap, x, y, opacity);
+    bitmap->draw(states[state]->frames[frame]->bitmap, x, y, opacity);
 }
 
-void Sprite::DrawBoundingBox(int x, int y) { 
+void Sprite::drawBoundingBox(int x, int y) { 
   // don't bother drawing things that aren't on the screen.
   if(x + x2 < 0 || y + y2 < 0 || x + x1 > screen_x || y + y1 > screen_y) return;
 
@@ -196,14 +196,14 @@ void Sprite::DrawBoundingBox(int x, int y) {
   glEnd();
 }
 
-void Sprite::AddState(QString stateName) {
+void Sprite::addState(QString stateName) {
   State * s = new State;
   s->name = stateName;
   s->max_time = 0;
   states.push_back(s);
 }
 
-void Sprite::InsertState(int pos, QString stateName) 
+void Sprite::insertState(int pos, QString stateName) 
 {
   State * s = new State;
   s->name = stateName;
@@ -212,16 +212,16 @@ void Sprite::InsertState(int pos, QString stateName)
   states.insert(pos, s);
 }
 
-void Sprite::DelState(int pos) 
+void Sprite::delState(int pos) 
 {
   delete states.takeAt(pos);
 }
 
-void Sprite::AddFrame(int state, int duration, int bitmap) {
-  InsertFrame(state, states[state]->frames.size(), duration, bitmap);
+void Sprite::addFrame(int state, int duration, int bitmap) {
+  insertFrame(state, states[state]->frames.size(), duration, bitmap);
 }
 
-void Sprite::InsertFrame(int state, int frame, int duration, int bitmap) {
+void Sprite::insertFrame(int state, int frame, int duration, int bitmap) {
   if(state < states.size()) {
     int end_time = 0;
     if(states[state]->frames.size())
@@ -237,11 +237,11 @@ void Sprite::InsertFrame(int state, int frame, int duration, int bitmap) {
   }
 }
 
-void Sprite::DelFrame(int state, int frame) {
+void Sprite::delFrame(int state, int frame) {
   delete states[state]->frames.takeAt(frame);
 }
 
-void Sprite::SetDuration(int state, int frame, int duration) {
+void Sprite::setDuration(int state, int frame, int duration) {
   if(state < states.size()) {
     if(frame < states[state]->frames.size()) {
       int time_diff = duration - states[state]->frames[frame]->duration;
@@ -257,7 +257,7 @@ void Sprite::SetDuration(int state, int frame, int duration) {
   }   
 }
 
-void Sprite::SetBitmap(int state, int frame, int bitmap) {
+void Sprite::setBitmap(int state, int frame, int bitmap) {
   //cout << "SetBitmap " << state << " " << frame << " " << bitmap << "\n";
   if(state >= 0 && state < states.size()) {
     if(frame >= 0 && frame < states[state]->frames.size()) {
@@ -266,18 +266,18 @@ void Sprite::SetBitmap(int state, int frame, int bitmap) {
   }
 }
 
-int Sprite::GetStates() const {
+int Sprite::getStateCount() const {
   return states.size();
 }
 
-int Sprite::GetFrames(int state) const {
+int Sprite::getFrameCount(int state) const {
   if(state < states.size()) {
     return states[state]->frames.size();
   }
   return 0;
 }
 
-int Sprite::GetDuration(int state, int frame) const {
+int Sprite::getDuration(int state, int frame) const {
   if(state < states.size()) {
     if(frame < states[state]->frames.size()) {
       return states[state]->frames[frame]->duration;
@@ -286,7 +286,7 @@ int Sprite::GetDuration(int state, int frame) const {
   return 0;
 }
 
-int Sprite::GetBitmap(int state, int frame) const {
+int Sprite::getBitmap(int state, int frame) const {
   if(state >= 0 && state < states.size()) {
     if(frame >= 0 && frame < states[state]->frames.size()) {
       return states[state]->frames[frame]->bitmap;
@@ -295,7 +295,7 @@ int Sprite::GetBitmap(int state, int frame) const {
   return 0;
 }
 
-void Sprite::GetBoundingBox(int & x1, int & y1, int & x2, int & y2) {
+void Sprite::getBoundingBox(int & x1, int & y1, int & x2, int & y2) {
 /*
 x1 = y1 = 0;
   if(bitmap) {
@@ -310,19 +310,19 @@ x1 = y1 = 0;
   y2 = this->y2;
 }
 
-void Sprite::SetBoundingBox(int bx1, int by1, int bx2, int by2) {
+void Sprite::setBoundingBox(int bx1, int by1, int bx2, int by2) {
   x1 = bx1;
   y1 = by1;
   x2 = bx2;
   y2 = by2;
 }
 
-void Sprite::GetOrigin(int & xo, int & yo) {
+void Sprite::getOrigin(int & xo, int & yo) {
   xo = x_origin;
   yo = y_origin;
 }
 
-void Sprite::SetOrigin(int xo, int yo) {
+void Sprite::setOrigin(int xo, int yo) {
   x_origin = xo;
   y_origin = yo;
 }
@@ -392,7 +392,7 @@ void SpriteReader::readSprite()
     if (isStartElement()) {
       if (name() == "name")
       {
-        sprite->SetName(readElementText());
+        sprite->setName(readElementText());
       }
       else if (name() == "state")
       {
@@ -400,14 +400,14 @@ void SpriteReader::readSprite()
       }
       else if (name() == "tileset")
       {
-        sprite->SetTileset(bitmaps[bitmapnames[readElementText()]]);
+        sprite->setTileset(bitmaps[bitmapnames[readElementText()]]);
       }
       else if (name() == "origin")
       {
         QXmlStreamAttributes a = attributes();
         int x = a.value("x").toString().toInt();
         int y = a.value("y").toString().toInt();
-        sprite->SetOrigin(x, y);
+        sprite->setOrigin(x, y);
 
         // Advance the parser.
         readElementText();
@@ -419,7 +419,7 @@ void SpriteReader::readSprite()
         int y1 = a.value("y1").toString().toInt();
         int x2 = a.value("x2").toString().toInt();
         int y2 = a.value("y2").toString().toInt();
-        sprite->SetBoundingBox(x1, y1, x2, y2);        
+        sprite->setBoundingBox(x1, y1, x2, y2);        
 
         // Advance the parser.
         readElementText();
@@ -435,8 +435,8 @@ void SpriteReader::readSprite()
 void SpriteReader::readState()
 {
   Q_ASSERT(isStartElement() && name() == "state");
-  sprite->AddState();
-  int currentState = sprite->GetStates() - 1;
+  sprite->addState();
+  int currentState = sprite->getStateCount() - 1;
 
   QString stateName;
   QString loop;
@@ -455,7 +455,7 @@ void SpriteReader::readState()
       else if (name() == "name")
       {
         stateName = readElementText();
-        sprite->SetStateName(currentState, stateName);
+        sprite->setStateName(currentState, stateName);
       }
       else if (name() == "frame")
       {
@@ -498,7 +498,7 @@ void SpriteReader::readFrame(int currentState)
     }
   }
 
-  sprite->AddFrame(currentState, duration.toInt(), bitmap.toInt());
+  sprite->addFrame(currentState, duration.toInt(), bitmap.toInt());
 }
 
 void SpriteReader::readUnknownElement()
