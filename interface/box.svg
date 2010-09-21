@@ -7,6 +7,7 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="200"
@@ -14,9 +15,23 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.47 r22583"
-   sodipodi:docname="New document 1">
+   sodipodi:docname="box.svg"
+   inkscape:export-filename="/home/bart/qrpg/qrpg-build-desktop/interface/box.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
   <defs
      id="defs4">
+    <linearGradient
+       id="linearGradient3619">
+      <stop
+         style="stop-color:#0057ff;stop-opacity:1;"
+         offset="0"
+         id="stop3621" />
+      <stop
+         style="stop-color:#003397;stop-opacity:1;"
+         offset="1"
+         id="stop3623" />
+    </linearGradient>
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="0 : 526.18109 : 1"
@@ -111,13 +126,13 @@
          id="feColorMatrix3642"
          result="bluralpha"
          type="matrix"
-         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.600000 0 " />
+         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 " />
       <feOffset
          id="feOffset3644"
-         in="bluralpha"
          dx="1.000000"
          dy="1.000000"
-         result="offsetBlur" />
+         result="offsetBlur"
+         in="bluralpha" />
       <feMerge
          id="feMerge3646">
         <feMergeNode
@@ -128,6 +143,15 @@
            in="SourceGraphic" />
       </feMerge>
     </filter>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3619"
+       id="linearGradient3625"
+       x1="100"
+       y1="10"
+       x2="100"
+       y2="190"
+       gradientUnits="userSpaceOnUse" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -143,9 +167,9 @@
      inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:window-width="811"
-     inkscape:window-height="706"
-     inkscape:window-x="1604"
-     inkscape:window-y="27"
+     inkscape:window-height="638"
+     inkscape:window-x="1955"
+     inkscape:window-y="201"
      inkscape:window-maximized="0">
     <inkscape:grid
        type="xygrid"
@@ -173,7 +197,7 @@
      id="layer1"
      transform="translate(0,-852.36218)">
     <rect
-       style="fill:#0057ff;fill-opacity:1;stroke:none;"
+       style="fill:url(#linearGradient3625);fill-opacity:1;stroke:none"
        id="rect2820"
        width="180"
        height="180"

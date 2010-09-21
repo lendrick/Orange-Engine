@@ -4,29 +4,38 @@
 #include "globals.h"
 #include "mapbox.h"
 
-TalkBox::TalkBox(QString text, QGraphicsItem * parent) : QTextEdit(0) {
+TalkBoxProxy::TalkBoxProxy(QString text, QGraphicsItem * parent) : QGraphicsProxyWidget(parent) {
+  widget = new TalkBox(text, this);
+  setWidget(widget);
+
+  mapBox->mapScene->addItem(this);
+  //setAttribute(Qt::WA_DeleteOnClose);
+  connect(widget, SIGNAL(destroyed()), this, SLOT(deleteLater()));
+  //deleteLater();
+}
+
+TalkBox::TalkBox(QString text, QGraphicsProxyWidget * p) : QTextEdit(0) {
   setReadOnly(true);
   //setAttribute(Qt::WA_TranslucentBackground);
   //setWindowFlags(Qt::FramelessWindowHint);
-
-  proxy = new QGraphicsProxyWidget(parent);
-  proxy->setWidget(this);
+  proxy = p;
 
   setGeometry(10, 300, 620, 170);
   setText(text);
   setStyle(new QWindowsStyle());
-  setStyleSheet(
+  setStyleSheet( "TalkBox {"
     "background: transparent;"
-    "border-image: url('../pixmaps/box.png') 50 50 50 50 stretch;"
+    "border-image: url(../interface/box.png) 28 28 28 28 stretch stretch;"
     "color: rgba(255, 255, 255, 255);"
-    "font-size: 27px;"
+    "border-width: 28px;"
+    "font-size: 30px;"
     "font-weight: bold;"
     "font-family: Pfennig, Sans;"
-    "margin: 10px;"
+    "margin: 0;}"
   );
-  
-  mapBox->mapScene->addItem(proxy);
-
+  viewport()->unsetCursor();
+  verticalScrollBar()->hide();
+  setAttribute(Qt::WA_DeleteOnClose);
 }
 
 void TalkBox::showEvent(QShowEvent * e) {
@@ -40,4 +49,38 @@ void TalkBox::say(QString s) {
 void TalkBox::next() {
 }
 
+void TalkBox::mousePressEvent(QMouseEvent *e) {
+  pageDown();
+}
 
+void TalkBox::mouseMoveEvent(QMouseEvent *e) {
+}
+
+void TalkBox::mouseDoubleClickEvent(QMouseEvent *e) {
+  pageDown();
+}
+
+void TalkBox::enterEvent(QEvent *e)
+{
+}
+
+void TalkBox::leaveEvent(QEvent *e)
+{
+}
+
+void TalkBox::pageDown() {
+  verticalScrollBar()->setValue(verticalScrollBar()->value() + 108);
+
+  if(verticalScrollBar()->value() == verticalScrollBar()->maximum()) {
+    //proxy->setWidget(0);
+    //proxy->deleteLater();
+    //deleteLater();
+    //message("..");
+    close();
+    //setText("Hello, world!");
+  }
+}
+
+TalkBox::~TalkBox() {
+  message("deleting talkbox");
+}
