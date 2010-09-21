@@ -50,8 +50,9 @@
       0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
     </layerdata>
     <entities>
-      <entity name='Entity 1' state='0' x='328' y='378' sprite='Female Warrior'>
+      <entity name='Entity 1' state='0' x='378' y='200' sprite='Female Warrior'>
         <scripts>
+          <script condition='2'><![CDATA[this.say("Rats have infested the town sewer!");]]></script>
         </scripts>
       </entity>
     </entities>

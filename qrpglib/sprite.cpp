@@ -115,9 +115,9 @@ void Sprite::save(QString filename) {
 
   file << "  <name>" << name << "</name>\n";
 
-  file << "  <origin x='" << x_origin << "' y='" << y_origin << "' />";
+  file << "  <origin x='" << x_origin << "' y='" << y_origin << "' />\n";
   file << "  <boundingbox x1='" << x1 << "' y1='" << y1 
-    << "' x2='" << x2 << "' y2='" << y2 << "' />";
+    << "' x2='" << x2 << "' y2='" << y2 << "' />\n";
 
   s = states.size();
   file << "  <tileset>";

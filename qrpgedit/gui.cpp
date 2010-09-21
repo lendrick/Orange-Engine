@@ -26,6 +26,7 @@
 #include "globalscriptdialog.h"
 #include "mapreader.h"
 #include "projectreader.h"
+#include "mapscene.h"
 
 
 MainWindow::MainWindow() :

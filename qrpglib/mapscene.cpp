@@ -167,8 +167,8 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
     if(fpstime.elapsed() >= 1000) {
       /*fpsLabel->setText(QString("%1 %4 (%2, %3)")
         .arg(framesThisSecond).arg(mapBox->xo).arg(mapBox->yo).arg(mapBox->GetMap()->GetName())); */
-      fpsLabel->setText(QString::number(framesThisSecond) + " / " +
-                        QString::number(mapBox->xo) + ", " + QString::number(mapBox->yo));
+      //fpsLabel->setText(QString::number(framesThisSecond) + " / " +
+      //                  QString::number(mapBox->xo) + ", " + QString::number(mapBox->yo));
       framesThisSecond = 0;
       fpstime.restart();
     }

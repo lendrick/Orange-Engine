@@ -4,7 +4,7 @@
   <scripts>    <script condition='0'><![CDATA[rpgx.setMap("Town");
 rpgx.setLayer(1);
 map.reset();
-player.setSprite("Female Warrior");
+player.setSprite("Male Ranger");
 player.addToMap(1);
 player.setPos(20, 320);
 rpgx.setCamera(player);]]></script>
@@ -21,5 +21,6 @@ rpgx.setCamera(player);]]></script>
   </maps>
   <sprites>
     <sprite>Female Warrior.xspr</sprite>
+    <sprite>Male Ranger.xspr</sprite>
   </sprites>
 </project>
