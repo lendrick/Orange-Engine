@@ -82,5 +82,4 @@ void TalkBox::pageDown() {
 }
 
 TalkBox::~TalkBox() {
-  message("deleting talkbox");
 }
