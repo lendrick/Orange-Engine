@@ -54,14 +54,23 @@ void Bitmap::unStub() {
   this->gl_texture = load_texture(this->filePath);
 
   int x, y;
+  Tile * zero = new Tile;
+  tiles.push_back(zero);
   for(y = tex_h - tex_h % this->height - this->height; 
       y >= 0; y -= this->height) {
     for(x = 0; x < tex_w - tex_w % this->width; x += this->width) {
       Tile * t = new Tile;
+      /*
       t->x1 = (float) x / (float) pow2(tex_w);
       t->x2 = (float) (x + this->width) / (float) pow2(tex_w);
       t->y1 = (float) y / (float) pow2(tex_h);
       t->y2 = (float) (y + this->height) / (float) pow2(tex_h);
+      */
+      t->x1 = (float) x / (float) tex_w;
+      t->x2 = (float) (x + this->width) / (float) tex_w;
+      t->y1 = (float) y / (float) tex_h;
+      t->y2 = (float) (y + this->height) / (float) tex_h;
+
       tiles.push_back(t);
     }
   }
@@ -95,6 +104,7 @@ int Bitmap::tileCount() {
 
 void Bitmap::draw(int tile, float x, float y, float opacity, float scale) {
   if(isStub) unStub();
+  if(tile == 0) return;
 
   int w = width * scale;
   int h = height * scale;

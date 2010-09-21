@@ -3,3 +3,4 @@ moc_*
 lib*.so*
 */qrpgengine
 */qrpgedit
+Makefile

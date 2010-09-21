@@ -1,0 +1,25 @@
+<!DOCTYPE xproj>
+<project>
+  <name>Tech Demo 2</name>
+  <scripts>    <script condition='0'><![CDATA[rpgx.setMap("Town");
+rpgx.setLayer(1);
+map.reset();
+player.setSprite("Female Warrior");
+player.addToMap(1);
+player.setPos(20, 320);
+rpgx.setCamera(player);]]></script>
+  </scripts>
+  <tilesets>
+    <tileset>Town Tileset.xtile</tileset>
+    <tileset>Warrior M.xtile</tileset>
+    <tileset>Warrior F.xtile</tileset>
+    <tileset>Ranger M.xtile</tileset>
+    <tileset>Ranger F.xtile</tileset>
+  </tilesets>
+  <maps>
+    <map>Town.xmap</map>
+  </maps>
+  <sprites>
+    <sprite>Female Warrior.xspr</sprite>
+  </sprites>
+</project>

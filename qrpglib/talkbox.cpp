@@ -36,6 +36,9 @@ TalkBox::TalkBox(QString text, QGraphicsProxyWidget * p) : QTextEdit(0) {
   viewport()->unsetCursor();
   verticalScrollBar()->hide();
   setAttribute(Qt::WA_DeleteOnClose);
+
+  QFontMetrics fontMetrics(font());
+  lineHeight = fontMetrics.lineSpacing();
 }
 
 void TalkBox::showEvent(QShowEvent * e) {
@@ -69,7 +72,7 @@ void TalkBox::leaveEvent(QEvent *e)
 }
 
 void TalkBox::pageDown() {
-  verticalScrollBar()->setValue(verticalScrollBar()->value() + 108);
+  verticalScrollBar()->setValue(verticalScrollBar()->value() + lineHeight * 3);
 
   if(verticalScrollBar()->value() == verticalScrollBar()->maximum()) {
     //proxy->setWidget(0);

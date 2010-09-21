@@ -34,6 +34,8 @@ public slots:
   void next();
 signals:
   void start();
+private:
+  int lineHeight;
 };
 
 #endif
