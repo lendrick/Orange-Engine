@@ -168,7 +168,7 @@ void LayerPanel::updateData() {
   layerTable->clearContents();
   layerTable->setRowCount(0);
   if(currentMap) {
-    int layers = currentMap->getLayers();
+    int layers = currentMap->getLayerCount();
     layerTable->setRowCount(layers);
     for(int i = 0; i < layers; i++) {
       //QTableWidgetItem * layer = new QTableWidgetItem(QString::number(i));

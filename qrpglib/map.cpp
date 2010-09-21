@@ -288,7 +288,7 @@ void Map::setTile(int layer,
     layers[layer]->layerdata[x + y * layers[layer]->width] = tile;
 }
 
-int Map::getLayers() {
+int Map::getLayerCount() {
   return layers.size();
 }
 

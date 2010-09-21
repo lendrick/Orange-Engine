@@ -81,6 +81,9 @@ extern int screen_y;
 
 extern int timeLastFrame;
 extern int timeSinceLastFrame;
+extern int frames;
+extern int framesThisSecond;
+
 
 extern MapBox * mapBox;
 extern Player * playerEntity;

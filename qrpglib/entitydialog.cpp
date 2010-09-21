@@ -28,6 +28,10 @@ EntityDialog::EntityDialog(Entity * e) : ScriptDialog() {
   stateSelect->setCurrentIndex(entity->getState());
 
   connect(spriteSelect, SIGNAL(currentIndexChanged(int)), this, SLOT(updateStateSelect()));
+
+  // Reconnect this signal, because we overloaded the function
+  disconnect(addScriptButton, SIGNAL(pressed()), this, SLOT(addScript()));
+  connect(addScriptButton, SIGNAL(pressed()), this, SLOT(addScript()));
   
   setWindowTitle(entity->getName());
 

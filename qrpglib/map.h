@@ -33,7 +33,7 @@ public slots:
   QString getName();
   void setTile(int layer, int x, int y, int tile);
   int getTile(int layer, int x, int y);
-  int getLayers();
+  int getLayerCount();
   QString getLayerName(int layer);
   void setLayerName(int layer, QString name);
   int addLayer(int w, int h, bool wrap=false, int filltile=0, QString name = "New Layer");

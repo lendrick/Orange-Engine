@@ -138,7 +138,7 @@ void MapReader::readLayer()
   }
 
   if(layerName.isEmpty() || layerName.isNull())
-    currentLayer = map->addLayer(w, h, false, 0, "Layer " + QString::number(map->getLayers() + 1));
+    currentLayer = map->addLayer(w, h, false, 0, "Layer " + QString::number(map->getLayerCount() + 1));
   else
     currentLayer = map->addLayer(w, h, false, 0, layerName);
 

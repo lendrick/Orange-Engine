@@ -59,6 +59,8 @@ ScriptUtils * scriptUtils;
 QPixmap * talkBoxBackground;
 int timeLastFrame = 0;
 int timeSinceLastFrame = 0;
+int frames = 0;
+int framesThisSecond = 0;
 
 int screen_x = 0;
 int screen_y = 0;

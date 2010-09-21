@@ -3,6 +3,7 @@
 #include "outlinestyle.h"
 #include "globals.h"
 #include "mapbox.h"
+#include "mapscene.h"
 
 TalkBoxProxy::TalkBoxProxy(QString text, QGraphicsItem * parent) : QGraphicsProxyWidget(parent) {
   widget = new TalkBox(text, this);

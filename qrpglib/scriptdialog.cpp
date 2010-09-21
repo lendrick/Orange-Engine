@@ -11,9 +11,9 @@ ScriptDialog::ScriptDialog() : QDialog(0) {
   buttonLayout = new QHBoxLayout;
   layout->addLayout(buttonLayout);
 
-  QPushButton * addScriptButton = new QPushButton("New Script");
-  QPushButton * delScriptButton = new QPushButton("Delete Script");
-  QWidget * spacer = new QWidget();
+  addScriptButton = new QPushButton("New Script");
+  delScriptButton = new QPushButton("Delete Script");
+  spacer = new QWidget();
   spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
 
   connect(addScriptButton, SIGNAL(pressed()), this, SLOT(addScript()));
@@ -32,7 +32,7 @@ ScriptDialog::ScriptDialog() : QDialog(0) {
   layout->addWidget(scriptTabs);
   scriptTabs->setMinimumSize(400, 300);
 
-  QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok
+  buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok
                                       | QDialogButtonBox::Cancel);
   layout->addWidget(buttonBox);
   connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));

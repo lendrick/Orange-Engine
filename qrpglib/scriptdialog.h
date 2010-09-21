@@ -20,6 +20,10 @@ protected:
   QVBoxLayout * layout;
   QHBoxLayout * buttonLayout;
   QFormLayout * formLayout;
+  QPushButton * addScriptButton;
+  QPushButton * delScriptButton;
+  QDialogButtonBox * buttonBox;
+  QWidget * spacer;
 };
 
 #endif
