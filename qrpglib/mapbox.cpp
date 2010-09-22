@@ -41,17 +41,20 @@ MapBox::MapBox(QWidget * parent) :
   drawMode = LayerView::All;
   camera = 0;
   mapEditorMode = MapEditorMode::Edit;
-  
-  QGLWidget * viewport = new QGLWidget(this, mainGLWidget);
-  viewport->setStyleSheet("border-style: none; padding: 0; margin: 0;");
-  viewport->setContentsMargins(0, 0, 0, 0);
-  //this->setViewport(new QGLWidget(QGLFormat(QGL::SampleBuffers), 0, mainGLWidget));
+
   this->setFrameStyle(QFrame::NoFrame);
   this->setStyleSheet("border-style: none; padding: 0; margin: 0");
   this->setContentsMargins(0, 0, 0, 0);
+
+  QGLWidget * viewport = new QGLWidget(this, mainGLWidget);
+  viewport->setStyleSheet("border-style: none; padding: 0; margin: 0;");
+  viewport->setContentsMargins(0, 0, 0, 0);
+  this->setViewport(new QGLWidget(QGLFormat(QGL::SampleBuffers), 0, mainGLWidget));
   this->setViewport(viewport);
   this->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
   this->setScene(mapScene);
+  this->setMouseTracking(true);
+  setDragMode(QGraphicsView::RubberBandDrag);
 }
 
 void MapBox::setCurrentTile(int t) {
@@ -351,26 +354,52 @@ QList < Entity * > MapBox::entitiesAt(int x, int y) {
   return entities;
 }
 
+/*
 bool MapBox::viewportEvent(QEvent *event) {
-  qDebug() << "viewportEvent ";
-  RPGEngine::dumpEvent(event);
+  if(event->type() != QEvent::Paint && event->type() != QEvent::UpdateRequest)
+    qDebug() << "MapBox::viewportEvent: " << event;
   return QGraphicsView::viewportEvent(event);
+  //event->accept();
 }
 
-/*
-void MapBox::mouseMoveEvent(QMouseEvent *event) {
-  //qDebug() << "MapBox mouseMoveEvent" << "\n";
+void MapBox::mouseReleaseEvent(QMouseEvent * event) {
+  //releaseMouse();
+  qDebug() << "MapBox::mouseReleaseEvent " << event;
+  //RPGEngine::dumpEvent(event);
+  //event->accept();
+  QGraphicsView::mouseReleaseEvent(event);
 }
+
+void MapBox::mousePressEvent(QMouseEvent * event) {
+  //grabMouse();
+  qDebug() << "\n\nMapBox::mousePressEvent " <<  event << " " << dragMode();
+  //RPGEngine::dumpEvent(event);
+  //event->accept();
+  QGraphicsView::mousePressEvent(event);
+}
+
+
+void MapBox::mouseMoveEvent(QMouseEvent *event) {
+  qDebug() << "MapBox::mouseMoveEvent" << event;
+  QGraphicsView::mouseMoveEvent(event);
+  //event->accept();
+}
+
+bool MapBox::eventFilter(QObject * watched, QEvent * event) {
+  qDebug() << "MapBox::eventFilter: " << RPGEngine::eventName(event);
+  return QGraphicsView::eventFilter(watched, event);
+}
+
 
 bool MapBox::event(QEvent *event)
 {
   if(event->type() != 43) {
-    qDebug() << "MapBox: ";
-    RPGEngine::dumpEvent(event);
+    //qDebug() << "MapBox: " << RPGEngine::eventName(event);
   }
   return QGraphicsView::event(event);
 }
 */
+
 LayerView::LayerViewMode MapBox::getDrawMode() {
   return drawMode;
 }

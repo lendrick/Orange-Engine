@@ -63,10 +63,16 @@ private:
   void setTile(QMouseEvent * e);
   void setTile(QGraphicsSceneMouseEvent * e);
   void resizeEvent(QResizeEvent *event);
+
+  /*
   bool viewportEvent(QEvent *event);
-  //void mouseMoveEvent(QMouseEvent *event);
-  //bool event(QEvent *event);
-  
+  void mousePressEvent(QMouseEvent *event);
+  void mouseReleaseEvent(QMouseEvent *event);
+  void mouseMoveEvent(QMouseEvent *event);
+  bool event(QEvent *event);
+  bool eventFilter(QObject *, QEvent *);
+  */
+
   Map * map;
   int xo, yo;
   int layer;

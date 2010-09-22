@@ -52,12 +52,14 @@ private:
   void mouseReleaseEvent(QGraphicsSceneMouseEvent * e);
   void mouseMoveEvent(QGraphicsSceneMouseEvent * e);
   void mouseDoubleClickEvent(QGraphicsSceneMouseEvent * e);
+  //void dragEnterEvent(QGraphicsSceneDragDropEvent *event);
   //void dragMoveEvent(QGraphicsSceneDragDropEvent *event);
   //void dropEvent(QGraphicsSceneDragDropEvent *event);
   void keyPressEvent(QKeyEvent * event);
   void keyReleaseEvent(QKeyEvent * event);
   void keyEvent(int key, int eventType);
   //bool event(QEvent *event);
+  //bool eventFilter(QObject * watched, QEvent * event);
 };
 
 #endif // MAPSCENE_H

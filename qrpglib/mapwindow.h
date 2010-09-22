@@ -21,6 +21,7 @@ public:
   MapBox * mapbox;
 private:
   QStatusBar * status;
+  //bool event(QEvent *event);
 signals:
   void setDrawMode(LayerView::LayerViewMode);
 public slots:

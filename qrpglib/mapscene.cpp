@@ -357,49 +357,65 @@ void MapScene::drawNumbers(int layer, QPainter * painter, int tw, int th) {
 }
 
 void MapScene::mouseMoveEvent(QGraphicsSceneMouseEvent * e) {
+  //qDebug() << "MapScene::mouseMoveEvent";
+
   if(mapBox->map) {
     int tx, ty;
     mapBox->map->getTileSize(tx, ty);
-    emit mapBox->mousePos(e->scenePos().x(), e->scenePos().y(),
-      e->scenePos().x() / tx, e->scenePos().y() / ty);
+    //emit mapBox->mousePos(e->scenePos().x(), e->scenePos().y(),
+    //  e->scenePos().x() / tx, e->scenePos().y() / ty);
   }
 
 
-  //QGraphicsScene::mouseMoveEvent(e);
-  //if(e->isAccepted()) return;
-  cout << e->buttons() << "\n";
+  QGraphicsScene::mouseMoveEvent(e);
+  if(e->isAccepted()) return;
+  //cout << e->buttons() << "\n";
   if(e->buttons()) {
     if(mapBox->mapEditorMode == MapEditorMode::Edit && mapBox->map && (e->buttons() & Qt::LeftButton) &&
        e->scenePos().x() > 0 && e->scenePos().y() > 0 &&
        e->scenePos().x() < this->width() && e->scenePos().y() < this->height()) {
       mapBox->setTile(e);
+      //qDebug() << "  setTile";
     } else if(mapBox->dragEntity && mapBox->mapEditorMode == MapEditorMode::Entity && mapBox->map &&
               (e->buttons() & Qt::LeftButton)) {
       QPointF move = e->scenePos() - e->lastScenePos();
-      cout << "dragging " << move.x() << " " << move.y() << "\n";
+      //qDebug() << "  dragging " << move.x() << " " << move.y() << "\n";
       mapBox->dragEntity->movePos(move.x(), move.y());
     } else if(mapBox->map && (e->buttons() & Qt::MidButton)) {
       emit mapBox->setXScroll(mapBox->xo - e->scenePos().x() + mapBox->mouse_start_x);
       emit mapBox->setYScroll(mapBox->yo - e->scenePos().y() + mapBox->mouse_start_y);
       mapBox->mouse_start_x = e->scenePos().x();
       mapBox->mouse_start_y = e->scenePos().y();
+      //qDebug() << "  scroll";
     } else {
+      //qDebug() << "  not handled";
       return;
     }
   }
   e->accept();
+  //qDebug() << "  accepted";
 }
 /*
 void MapScene::dragMoveEvent(QGraphicsSceneDragDropEvent *event) {
-  cout << "dragMoveEvent\n";
+  qDebug() << "MapScene::dragMoveEvent";
   //event->accept();
+  QGraphicsScene::dragMoveEvent(event);
+}
+
+
+void MapScene::dragEnterEvent(QGraphicsSceneDragDropEvent *event) {
+  qDebug() << "MapScene::dragEnterEvent";
+  //event->accept();
+  QGraphicsScene::dragEnterEvent(event);
 }
 
 void MapScene::dropEvent(QGraphicsSceneDragDropEvent *event) {
   //event->accept();
-}*/
+}
+*/
 
 void MapScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent * e) {
+  //qDebug() << "MapScene::mouseDoubleClickEvent";
   QGraphicsScene::mouseDoubleClickEvent(e);
   if(e->isAccepted()) return;
 
@@ -413,10 +429,20 @@ void MapScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent * e) {
 }
 
 void MapScene::mouseReleaseEvent(QGraphicsSceneMouseEvent * e) {
-  QGraphicsScene::mouseReleaseEvent(e);
-  if(e->isAccepted()) return;
+  //qDebug() << "MapScene::mouseReleaseEvent";
+  //QGraphicsScene::mouseReleaseEvent(e);
+  //if(e->isAccepted()) return;
 
-  if((e->buttons() & Qt::LeftButton)) mapBox->dragEntity = 0;
+  if((e->buttons() & Qt::LeftButton)) {
+    mapBox->dragEntity = 0;
+    e->accept();
+    //qDebug() << "  left button";
+    return;
+  } else {
+    //qDebug() << "  not accepted";
+  }
+
+  QGraphicsScene::mouseReleaseEvent(e);
 }
 
 void MapScene::keyEvent(int key, int eventType) {
@@ -468,25 +494,45 @@ void MapScene::keyReleaseEvent(QKeyEvent * event) {
 }
 
 void MapScene::mousePressEvent(QGraphicsSceneMouseEvent * e) {
-  QGraphicsScene::mousePressEvent(e);
-  if(e->isAccepted()) return;
-
+  //qDebug() << "MapScene::mousePressEvent";
+  //setFocus(Qt::MouseFocusReason);
+  //QGraphicsScene::mousePressEvent(e);
+  //if(e->isAccepted()) return;
+  //e->accept();
+  /*
+  foreach (QGraphicsItem *item, items()) {
+    QGraphicsProxyWidget * gpw = dynamic_cast< QGraphicsProxyWidget *>(item);
+    qDebug() << "  QGraphicsItem" << item->type();
+    if(gpw) {
+      //qDebug() << "  PROXYWIDGET " << mouseGrabberItem();
+    }
+    if(mouseGrabberItem()) {
+      //qDebug() <<  "  MouseGrabber Item";
+    }
+    if(gpw == mouseGrabberItem()) {
+      //qDebug() << "  ProxyWidget is mouse grabber";
+    }
+  }
+  */
   if(mapBox->mapEditorMode == MapEditorMode::Edit && mapBox->map && e->button() == Qt::LeftButton) {
     mapBox->setTile(e);
+    //qDebug() << "  set tile";
   } else if(mapBox->mapEditorMode == MapEditorMode::Entity &&
     mapBox->map && e->button() == Qt::LeftButton) {
     mapBox->dragEntity =
       mapBox->entityAt(e->scenePos().x() + mapBox->xo, e->scenePos().y() + mapBox->yo);
-    cout << "dragging " << mapBox->dragEntity->getName().toAscii().data() << "\n";
+    //qDebug() << "  starting drag " << mapBox->dragEntity->getName().toAscii().data();
   } else if(mapBox->map && e->button() == Qt::MidButton) {
     mapBox->mouse_start_x = e->scenePos().x();
     mapBox->mouse_start_y = e->scenePos().y();
+    //qDebug() << "  middle button pressed";
   } else if(mapBox->map && play && playerEntity && e->button() == Qt::RightButton) {
     playerEntity->clearQueue();
     playerEntity->queueMoveTo(e->scenePos().x() + mapBox->xo, e->scenePos().y() + mapBox->yo);
 
     Entity * x = mapBox->entityAt(e->scenePos().x() + mapBox->xo, e->scenePos().y() + mapBox->yo);
     if(x) cprint("Entity: " + x->getName());
+    //qDebug() << "  right button pressed in play mode";
   } else if(mapBox->map && e->button() == Qt::RightButton) {
     Entity * x = mapBox->entityAt(e->scenePos().x() + mapBox->xo, e->scenePos().y() + mapBox->yo);
     mouseScreenPos = e->screenPos();
@@ -497,20 +543,26 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent * e) {
     } else {
       mapPopupMenu->exec(e->screenPos());
     }
+    //qDebug() << "  popup menu";
   } else {
-    return;
+    //qDebug() << "  unhandled";
+    //return;
   }
+  //qDebug() << "  accepted";
   e->accept();
 }
-
 
 /*
 bool MapScene::event(QEvent *event)
 {
-  if(event->type() != 43) {
-    qDebug() << "MapScene: ";
-    RPGEngine::dumpEvent(event);
+  if(event->type() != 43 && event->type() != 155) {
+    qDebug() << "MapScene: " << RPGEngine::eventName(event);
   }
   return QGraphicsScene::event(event);
+}
+
+bool MapScene::eventFilter(QObject * watched, QEvent * event) {
+  qDebug() << "MapScene::eventFilter: " << RPGEngine::eventName(event);
+  return QGraphicsScene::eventFilter(watched, event);
 }
 */

@@ -17,6 +17,7 @@
 #include "globals.h"
 #include "scrollbar.h"
 #include "outlinestyle.h"
+#include "rpgengine.h"
 
 using std::cout;
 
@@ -58,3 +59,13 @@ MapWindow::MapWindow(QWidget *parent)
 void MapWindow::updateStatus(QString s) {
   status->showMessage(s);
 }
+
+/*
+bool MapWindow::event(QEvent *event)
+{
+  if(event->type() != 43) {
+    qDebug() << "MapWindow: " << RPGEngine::eventName(event);
+  }
+  return QWidget::event(event);
+}
+*/

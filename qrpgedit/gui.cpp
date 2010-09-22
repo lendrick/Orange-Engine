@@ -479,8 +479,8 @@ void MainWindow::setViewBoundingBoxes(bool b) {
 
 /*
 bool MainWindow::event(QEvent *event) {
-  qDebug() << "MainWindow: ";
-  RPGEngine::dumpEvent(event);
+  //qDebug() << "MainWindow: " << RPGEngine::eventName(event);
   return QMainWindow::event(event);
 }
 */
+

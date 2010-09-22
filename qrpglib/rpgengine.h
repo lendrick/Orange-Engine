@@ -21,6 +21,7 @@ public:
   static QString getScript(int);
   static int getScriptCondition(int);
   static void dumpEvent(QEvent *);
+  static QString eventName(QEvent *);
 };
 
 #endif // RPGENGINE_H

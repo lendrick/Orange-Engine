@@ -74,3 +74,11 @@ void RPGEngine::dumpEvent(QEvent * event)
   if(event->type() != 43)
     qDebug() << "Event: " << enumData.valueToKey(event->type()) << "\n";
 }
+
+QString RPGEngine::eventName(QEvent * event)
+{
+  QMetaObject dataObject = event->staticMetaObject;
+  int index = dataObject.indexOfEnumerator("Type");
+  QMetaEnum enumData = dataObject.enumerator(index);
+  return QString(enumData.valueToKey(event->type()));
+}
