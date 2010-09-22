@@ -369,34 +369,35 @@ void MapScene::mouseMoveEvent(QGraphicsSceneMouseEvent * e) {
   //if(e->isAccepted()) return;
   cout << e->buttons() << "\n";
   if(e->buttons()) {
-  if(mapBox->mapEditorMode == MapEditorMode::Edit && mapBox->map && (e->buttons() & Qt::LeftButton) &&
-     e->scenePos().x() > 0 && e->scenePos().y() > 0 &&
-     e->scenePos().x() < this->width() && e->scenePos().y() < this->height()) {
-    mapBox->setTile(e);
-  } else if(mapBox->dragEntity && mapBox->mapEditorMode == MapEditorMode::Entity && mapBox->map &&
-            (e->buttons() & Qt::LeftButton)) {
-    QPointF move = e->scenePos() - e->lastScenePos();
-    cout << "dragging " << move.x() << " " << move.y() << "\n";
-    mapBox->dragEntity->movePos(move.x(), move.y());
-  } else if(mapBox->map && (e->buttons() & Qt::MidButton)) {
-    emit mapBox->setXScroll(mapBox->xo - e->scenePos().x() + mapBox->mouse_start_x);
-    emit mapBox->setYScroll(mapBox->yo - e->scenePos().y() + mapBox->mouse_start_y);
-    mapBox->mouse_start_x = e->scenePos().x();
-    mapBox->mouse_start_y = e->scenePos().y();
-  } else {
-    return;
-  }
+    if(mapBox->mapEditorMode == MapEditorMode::Edit && mapBox->map && (e->buttons() & Qt::LeftButton) &&
+       e->scenePos().x() > 0 && e->scenePos().y() > 0 &&
+       e->scenePos().x() < this->width() && e->scenePos().y() < this->height()) {
+      mapBox->setTile(e);
+    } else if(mapBox->dragEntity && mapBox->mapEditorMode == MapEditorMode::Entity && mapBox->map &&
+              (e->buttons() & Qt::LeftButton)) {
+      QPointF move = e->scenePos() - e->lastScenePos();
+      cout << "dragging " << move.x() << " " << move.y() << "\n";
+      mapBox->dragEntity->movePos(move.x(), move.y());
+    } else if(mapBox->map && (e->buttons() & Qt::MidButton)) {
+      emit mapBox->setXScroll(mapBox->xo - e->scenePos().x() + mapBox->mouse_start_x);
+      emit mapBox->setYScroll(mapBox->yo - e->scenePos().y() + mapBox->mouse_start_y);
+      mapBox->mouse_start_x = e->scenePos().x();
+      mapBox->mouse_start_y = e->scenePos().y();
+    } else {
+      return;
+    }
   }
   e->accept();
 }
-
+/*
 void MapScene::dragMoveEvent(QGraphicsSceneDragDropEvent *event) {
-  event->accept();
+  cout << "dragMoveEvent\n";
+  //event->accept();
 }
 
 void MapScene::dropEvent(QGraphicsSceneDragDropEvent *event) {
-  event->accept();
-}
+  //event->accept();
+}*/
 
 void MapScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent * e) {
   QGraphicsScene::mouseDoubleClickEvent(e);
@@ -501,3 +502,15 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent * e) {
   }
   e->accept();
 }
+
+
+/*
+bool MapScene::event(QEvent *event)
+{
+  if(event->type() != 43) {
+    qDebug() << "MapScene: ";
+    RPGEngine::dumpEvent(event);
+  }
+  return QGraphicsScene::event(event);
+}
+*/

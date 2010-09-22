@@ -27,6 +27,7 @@
 #include "mapreader.h"
 #include "projectreader.h"
 #include "mapscene.h"
+#include "rpgengine.h"
 
 
 MainWindow::MainWindow() :
@@ -475,3 +476,11 @@ void MainWindow::setViewGrid(bool b) {
 void MainWindow::setViewBoundingBoxes(bool b) {
   viewBoundingBoxes = b;
 }
+
+/*
+bool MainWindow::event(QEvent *event) {
+  qDebug() << "MainWindow: ";
+  RPGEngine::dumpEvent(event);
+  return QMainWindow::event(event);
+}
+*/

@@ -66,3 +66,11 @@ int RPGEngine::getScriptCondition(int index) {
   return globalScripts[index].condition;
 }
 
+void RPGEngine::dumpEvent(QEvent * event)
+{
+  QMetaObject dataObject = event->staticMetaObject;
+  int index = dataObject.indexOfEnumerator("Type");
+  QMetaEnum enumData = dataObject.enumerator(index);
+  if(event->type() != 43)
+    qDebug() << "Event: " << enumData.valueToKey(event->type()) << "\n";
+}

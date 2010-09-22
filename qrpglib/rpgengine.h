@@ -20,6 +20,7 @@ public:
   static int getScriptCount();
   static QString getScript(int);
   static int getScriptCondition(int);
+  static void dumpEvent(QEvent *);
 };
 
 #endif // RPGENGINE_H

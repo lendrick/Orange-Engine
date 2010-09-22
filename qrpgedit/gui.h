@@ -134,6 +134,9 @@ private:
 
   // Other stuff
   QString appTitle;
+
+protected:
+  //bool event(QEvent *event);
 };
 
 #endif

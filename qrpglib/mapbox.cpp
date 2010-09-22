@@ -351,6 +351,26 @@ QList < Entity * > MapBox::entitiesAt(int x, int y) {
   return entities;
 }
 
+bool MapBox::viewportEvent(QEvent *event) {
+  qDebug() << "viewportEvent ";
+  RPGEngine::dumpEvent(event);
+  return QGraphicsView::viewportEvent(event);
+}
+
+/*
+void MapBox::mouseMoveEvent(QMouseEvent *event) {
+  //qDebug() << "MapBox mouseMoveEvent" << "\n";
+}
+
+bool MapBox::event(QEvent *event)
+{
+  if(event->type() != 43) {
+    qDebug() << "MapBox: ";
+    RPGEngine::dumpEvent(event);
+  }
+  return QGraphicsView::event(event);
+}
+*/
 LayerView::LayerViewMode MapBox::getDrawMode() {
   return drawMode;
 }
