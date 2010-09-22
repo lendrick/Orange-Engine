@@ -29,6 +29,8 @@ protected:
   void mouseMoveEvent(QMouseEvent *e);
   void enterEvent(QEvent * e);
   void leaveEvent(QEvent * e);
+  void keyPressEvent(QKeyEvent *e);
+  void focusOutEvent(QFocusEvent *e);
 public slots:
   void pageDown();
   void next();

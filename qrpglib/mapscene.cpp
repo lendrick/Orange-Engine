@@ -364,23 +364,38 @@ void MapScene::mouseMoveEvent(QGraphicsSceneMouseEvent * e) {
       e->scenePos().x() / tx, e->scenePos().y() / ty);
   }
 
-  QGraphicsScene::mouseMoveEvent(e);
-  if(e->isAccepted()) return;
 
+  //QGraphicsScene::mouseMoveEvent(e);
+  //if(e->isAccepted()) return;
+  cout << e->buttons() << "\n";
+  if(e->buttons()) {
   if(mapBox->mapEditorMode == MapEditorMode::Edit && mapBox->map && (e->buttons() & Qt::LeftButton) &&
      e->scenePos().x() > 0 && e->scenePos().y() > 0 &&
      e->scenePos().x() < this->width() && e->scenePos().y() < this->height()) {
     mapBox->setTile(e);
   } else if(mapBox->dragEntity && mapBox->mapEditorMode == MapEditorMode::Entity && mapBox->map &&
-    (e->buttons() & Qt::LeftButton)) {
+            (e->buttons() & Qt::LeftButton)) {
     QPointF move = e->scenePos() - e->lastScenePos();
+    cout << "dragging " << move.x() << " " << move.y() << "\n";
     mapBox->dragEntity->movePos(move.x(), move.y());
   } else if(mapBox->map && (e->buttons() & Qt::MidButton)) {
     emit mapBox->setXScroll(mapBox->xo - e->scenePos().x() + mapBox->mouse_start_x);
     emit mapBox->setYScroll(mapBox->yo - e->scenePos().y() + mapBox->mouse_start_y);
     mapBox->mouse_start_x = e->scenePos().x();
     mapBox->mouse_start_y = e->scenePos().y();
+  } else {
+    return;
   }
+  }
+  e->accept();
+}
+
+void MapScene::dragMoveEvent(QGraphicsSceneDragDropEvent *event) {
+  event->accept();
+}
+
+void MapScene::dropEvent(QGraphicsSceneDragDropEvent *event) {
+  event->accept();
 }
 
 void MapScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent * e) {
@@ -391,6 +406,7 @@ void MapScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent * e) {
     Entity * x = mapBox->entityAt(e->scenePos().x() + mapBox->xo, e->scenePos().y() + mapBox->yo);
     if(x) {
       emit showEntityDialog(x);
+      e->accept();
     }
   }
 }
@@ -460,6 +476,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent * e) {
     mapBox->map && e->button() == Qt::LeftButton) {
     mapBox->dragEntity =
       mapBox->entityAt(e->scenePos().x() + mapBox->xo, e->scenePos().y() + mapBox->yo);
+    cout << "dragging " << mapBox->dragEntity->getName().toAscii().data() << "\n";
   } else if(mapBox->map && e->button() == Qt::MidButton) {
     mapBox->mouse_start_x = e->scenePos().x();
     mapBox->mouse_start_y = e->scenePos().y();
@@ -479,5 +496,8 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent * e) {
     } else {
       mapPopupMenu->exec(e->screenPos());
     }
+  } else {
+    return;
   }
+  e->accept();
 }

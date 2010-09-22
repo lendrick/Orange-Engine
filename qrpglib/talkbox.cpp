@@ -12,6 +12,7 @@ TalkBoxProxy::TalkBoxProxy(QString text, QGraphicsItem * parent) : QGraphicsProx
   mapBox->mapScene->addItem(this);
   //setAttribute(Qt::WA_DeleteOnClose);
   connect(widget, SIGNAL(destroyed()), this, SLOT(deleteLater()));
+
   //deleteLater();
 }
 
@@ -43,7 +44,7 @@ TalkBox::TalkBox(QString text, QGraphicsProxyWidget * p) : QTextEdit(0) {
 }
 
 void TalkBox::showEvent(QShowEvent * e) {
-
+  setFocus(Qt::PopupFocusReason);
 }
 
 void TalkBox::say(QString s) {
@@ -51,6 +52,10 @@ void TalkBox::say(QString s) {
 }
 
 void TalkBox::next() {
+}
+
+void TalkBox::focusOutEvent(QFocusEvent *e) {
+  setFocus(Qt::PopupFocusReason);
 }
 
 void TalkBox::mousePressEvent(QMouseEvent *e) {
@@ -70,6 +75,11 @@ void TalkBox::enterEvent(QEvent *e)
 
 void TalkBox::leaveEvent(QEvent *e)
 {
+}
+
+void TalkBox::keyPressEvent(QKeyEvent *e) {
+  if(e->key() == Qt::Key_Space)
+    pageDown();
 }
 
 void TalkBox::pageDown() {

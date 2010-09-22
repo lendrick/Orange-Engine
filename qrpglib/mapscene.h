@@ -52,6 +52,8 @@ private:
   void mouseReleaseEvent(QGraphicsSceneMouseEvent * e);
   void mouseMoveEvent(QGraphicsSceneMouseEvent * e);
   void mouseDoubleClickEvent(QGraphicsSceneMouseEvent * e);
+  void dragMoveEvent(QGraphicsSceneDragDropEvent *event);
+  void dropEvent(QGraphicsSceneDragDropEvent *event);
   void keyPressEvent(QKeyEvent * event);
   void keyReleaseEvent(QKeyEvent * event);
   void keyEvent(int key, int eventType);
