@@ -57,7 +57,8 @@ SOURCES += \
     rpgscript.cpp \
     projectreader.cpp \
     mapscene.cpp \
-    coordinatewidget.cpp
+    coordinatewidget.cpp \
+    boundswidget.cpp
 
 HEADERS +=\
     tileselect.h \
@@ -105,4 +106,5 @@ HEADERS +=\
     rpgscript.h \
     projectreader.h \
     mapscene.h \
-    coordinatewidget.h
+    coordinatewidget.h \
+    boundswidget.h
