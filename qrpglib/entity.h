@@ -35,12 +35,15 @@ protected:
   Map * map;
   Resource * thisEntity;
   double x, y;
+  int bx1, by1, bx2, by2;
   QString name;
   bool solid;
   QList < EntityScript > scripts;
   bool touched, activated, starting;
   int id;
   QScriptValue scriptObject;
+  bool overrideBoundingBox;
+  bool invisible;
 
 public slots:
   virtual Entity * clone() = 0;

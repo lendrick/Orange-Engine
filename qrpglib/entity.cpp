@@ -74,11 +74,14 @@ void Entity::init() {
   frame = 0;
   sprite = 0;
   x = y = 0;
+  bx1 = by1 = bx2 = by2 = 0;
   layer = 0;
   id = 0;
   solid = false;
   touched = activated = false;
   starting = true;
+  overrideBoundingBox = false;
+  invisible = false;
   thisEntity = 0;
 }
 

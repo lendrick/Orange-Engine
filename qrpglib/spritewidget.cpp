@@ -26,6 +26,8 @@ SpriteWidget::SpriteWidget(QWidget * parent) :
   sw = 0;
   sh = 0;
 
+  drawBoundingBox = true;
+
   mode = FRAME;
 
   spriteTime.start();
@@ -72,6 +74,26 @@ void SpriteWidget::paintGL() {
       else
         updateTime(spriteTime.elapsed());
     }
+
+    if(drawBoundingBox) {
+      int x1, y1, x2, y2;
+      sprite->getBoundingBox(x1, y1, x2, y2);
+
+      glDisable(GL_TEXTURE_2D);
+      glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+      //glColor4f(0.4, 0.4, 0.8, 0.5);
+      glColor3f(0.4, 0.4, 0.8);
+      qDebug() << x1 << " " << y1 << " " << x2 << " " << y2;
+      glBegin(GL_LINE_LOOP);
+      glVertex3f(x1, y1, 0);
+      glVertex3f(x2, y1, 0);
+      glVertex3f(x2, y2, 0);
+      glVertex3f(x1, y2, 0);
+      glEnd();
+      glColor4f(1, 1, 1, 1);
+    }
   }
   glFlush();
 }
@@ -104,6 +126,10 @@ void SpriteWidget::setState(int s) {
 void SpriteWidget::setFrame(int f) {
   frame = f;
   updateGL();
+}
+
+void SpriteWidget::setDrawBoundingBox(bool b) {
+  drawBoundingBox = b;
 }
 
 //void SpriteWidget::mousePressEvent(QMouseEvent * e) {

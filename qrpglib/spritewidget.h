@@ -27,6 +27,7 @@ public slots:
   void setState(int);
   void setFrame(int);
   void updateDuration(int);
+  void setDrawBoundingBox(bool);
 signals:
   void setStateRange(int, int);
   void setFrameRange(int, int);
@@ -50,6 +51,7 @@ private:
   int sw;
   int sh;
 
+  bool drawBoundingBox;
   QTimer * timer;
   QTime spriteTime;
 };

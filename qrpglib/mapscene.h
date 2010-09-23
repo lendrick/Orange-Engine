@@ -20,6 +20,7 @@ public:
   void drawGrid(int layer, QPainter *painter, int tw, int th);
   void drawEntityNames(int layer, QPainter *painter);
   void drawNumbers(int layer, QPainter *painter, int tw, int th);
+  void drawEntityBoundingBoxes(int layer, QPainter *painter);
   QLabel * fpsLabel;
   QMenu * mapPopupMenu;
   QMenu * entityPopupMenu;
@@ -34,6 +35,7 @@ public:
   QPoint mouseScreenPos;
   QPointF mouseScenePos;
   QFont * mapFont;
+  QFont * entityFont;
 
 public slots:
   void newEntity();

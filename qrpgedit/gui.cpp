@@ -176,6 +176,12 @@ MainWindow::MainWindow() :
   viewMenu->addAction(viewEntityNamesAction);
   connect(viewEntityNamesAction, SIGNAL(toggled(bool)), this, SLOT(setViewEntityNames(bool)));
   
+  viewBoundingBoxesAction = new QAction("&Bounding Boxes", 0);
+  viewBoundingBoxesAction->setCheckable(true);
+  viewBoundingBoxesAction->setShortcut(QKeySequence("Ctrl+Shift+;"));
+  viewMenu->addAction(viewBoundingBoxesAction);
+  connect(viewBoundingBoxesAction, SIGNAL(toggled(bool)), this, SLOT(setViewBoundingBoxes(bool)));
+
   //////////////////////////////////////////////////////////////  
   tileDock = new QDockWidget("Tiles");
   this->addDockWidget(Qt::LeftDockWidgetArea, tileDock, Qt::Vertical);

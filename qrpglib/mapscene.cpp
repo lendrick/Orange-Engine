@@ -83,6 +83,7 @@ MapScene::MapScene(MapBox * m)
   connect(editGlobalScriptsAction, SIGNAL(triggered()), this, SLOT(editGlobalScripts()));
 
   mapFont = new QFont("Arial", 6);
+  entityFont = new QFont("Arial", 12);
 
   selectedEntity = 0;
 }
@@ -269,6 +270,7 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
     if(viewGrid) drawGrid(mapBox->layer, painter, tw, th);
     if(viewTilePos) drawNumbers(mapBox->layer, painter, tw, th);
     if(viewEntityNames) drawEntityNames(mapBox->layer, painter);
+    if(viewBoundingBoxes) drawEntityBoundingBoxes(mapBox->layer, painter);
   }
   glFlush();
   glPopMatrix();
@@ -327,23 +329,56 @@ void MapScene::drawGrid(int layer, QPainter * painter, int tw, int th) {
 }
 
 void MapScene::drawEntityNames(int layer, QPainter * painter) {
-  if(play) {
-    for(int i = 0; i < mapBox->map->getEntityCount(layer); i++) {
-      Entity * e = mapBox->map->getEntity(layer, i);
-      QString t = e->getName();
-      QRect r = painter->fontMetrics().boundingRect(t);
-      r.moveTo(e->getX() - mapBox->xo - r.width() / 2, e->getY() - mapBox->yo);
-      painter->drawText(r, Qt::AlignHCenter, t);
-    }
-  } else {
-    for(int i = 0; i < mapBox->map->getStartEntityCount(layer); i++) {
-      Entity * e = mapBox->map->getStartEntity(layer, i);
-      QString t = e->getName();
-      QRect r = painter->fontMetrics().boundingRect(t);
-      r.moveTo(e->getX() - mapBox->xo - r.width() / 2, e->getY() - mapBox->yo);
-      painter->drawText(r, Qt::AlignHCenter, t);
-    }
+  painter->save();
+  painter->setFont(*entityFont);
+
+  int count;
+  if(play)
+    count = mapBox->map->getEntityCount(layer);
+  else
+    count = mapBox->map->getStartEntityCount(layer);
+  Entity * e = 0;
+
+  for(int i = 0; i < count; i++) {
+    if(play)
+      e = mapBox->map->getEntity(layer, i);
+    else
+      e = mapBox->map->getStartEntity(layer, i);
+
+    QString t = e->getName();
+    QRect r = painter->fontMetrics().boundingRect(t);
+    r.setWidth(painter->fontMetrics().width(t));
+    r.moveTo(e->getX() - mapBox->xo - r.width() / 2, e->getY() - mapBox->yo);
+    painter->drawText(r, Qt::AlignHCenter, t);
   }
+  painter->restore();
+}
+
+void MapScene::drawEntityBoundingBoxes(int layer, QPainter * painter) {
+  int x1, y1, x2, y2, x, y;
+  QBrush b(QColor(100, 100, 220, 128));
+  painter->save();
+
+  int count;
+  if(play)
+    count = mapBox->map->getEntityCount(layer);
+  else
+    count = mapBox->map->getStartEntityCount(layer);
+  Entity * e = 0;
+
+  for(int i = 0; i < count; i++) {
+    if(play)
+      e = mapBox->map->getEntity(layer, i);
+    else
+      e = mapBox->map->getStartEntity(layer, i);
+
+    x = e->getX();
+    y = e->getY();
+    e->getBoundingBox(x1, y1, x2, y2);
+    //qDebug() << e->getName() << (x1 + x - mapBox->xo) << " " << (y1 + y - mapBox->yo) << " " << (x2 - x1) << " " << (y2 - y1);
+    painter->fillRect(x1 + x - mapBox->xo, y1 + y - mapBox->yo, x2-x1, y2-y1, b);
+  }
+  painter->restore();
 }
 
 void MapScene::drawNumbers(int layer, QPainter * painter, int tw, int th) {
