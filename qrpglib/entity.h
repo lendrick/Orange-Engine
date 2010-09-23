@@ -24,7 +24,7 @@ public:
   ~Entity();
   void init();
   virtual void update();
-  void draw(double x_offset, double y_offset, double opacity = 1.0);
+  void draw(double x_offset, double y_offset, double opacity = 1.0, bool boundingbox = false);
   friend bool entity_y_order(Entity * a, Entity * b);
 
 protected:
@@ -87,6 +87,7 @@ public slots:
   void setOverrideBoundingBox(bool);
   void setInvisible(bool);
   void setBoundingBox(int, int, int, int);
+  QString toXml();
 
   void start();
   void touch();

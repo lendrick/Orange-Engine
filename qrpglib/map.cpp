@@ -173,7 +173,7 @@ void Map::setViewport(int x, int y, int w, int h) {
   view_h = h;
 }
 
-void Map::draw(int layer, int x, int y, float opacity) {
+void Map::draw(int layer, int x, int y, float opacity, bool boundingboxes) {
   if(tileset) {
     int xs, ys, h, w, x_off, y_off;
     int i, j;
@@ -204,14 +204,14 @@ void Map::draw(int layer, int x, int y, float opacity) {
         qSort(layers[layer]->entities.begin(), layers[layer]->entities.end(), entity_y_order);
       
       for(i = 0; i < layers[layer]->entities.size(); i++) {
-        layers[layer]->entities[i]->draw(x, y);
+        layers[layer]->entities[i]->draw(x, y, 1, boundingboxes);
       }
     } else {
       if(layers[layer]->startEntities.size()) 
         qSort(layers[layer]->startEntities.begin(), layers[layer]->startEntities.end(), entity_y_order);
       
       for(i = 0; i < layers[layer]->startEntities.size(); i++) {
-        layers[layer]->startEntities[i]->draw(x, y, opacity);
+        layers[layer]->startEntities[i]->draw(x, y, opacity, boundingboxes);
       }
     }
 
@@ -374,37 +374,7 @@ void Map::save(QString filename) {
     file << "    <entities>\n";
     for(x = 0; x < getStartEntityCount(i); x++) {
       Entity * e = getStartEntity(i, x);
-      QString name = e->getName();
-      int state = e->getState();
-      int x = e->getX();
-      int y = e->getY();
-      QString sprite = e->getSprite()->getName();
-      file << "      <entity name='" << name.toAscii().data() << "' state='" <<
-        state << "' x='" << x << "' y='" << y <<
-        "' sprite='" << sprite.toAscii().data() << "'>\n";
-      file << "        <scripts>\n";
-      for(int y = 0; y < e->getScriptCount(); y++) {
-        int cond = e->getScriptCondition(y);
-        int x1, y1, x2, y2;
-        x1 = y1 = x2 = y2 = 0;
-        bool defCoords = e->usesDefaultBounds(y);
-        if(!defCoords) {
-          e->getScriptBoundingBox(y, x1, y1, x2, y2);
-        }
-
-        file << "          <script condition='" << cond << "'";
-        if(!defCoords) {
-          file << " x1='" << x1 << "' y1='" << y1 << "'";
-          file << " x2='" << x2 << "' y2='" << y2 << "'";
-        }
-        file << "><![CDATA[";
-        QString s = e->getScript(y);
-        escapeCData(s);
-        file << s.toAscii().data();
-        file << "]]></script>\n";
-      }
-      file << "        </scripts>\n";
-      file << "      </entity>\n";
+      file << e->toXml().toAscii().data();
     }
     file << "    </entities>\n";
     file << "  </layer>\n";

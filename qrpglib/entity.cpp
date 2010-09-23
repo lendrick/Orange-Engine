@@ -94,8 +94,23 @@ void Entity::setName(QString newname) {
   thisEntity->setText(0, name);
 }
 
-void Entity::draw(double x_offset, double y_offset, double opacity) {
-  if(sprite) sprite->draw(state, apptime.elapsed(), (int) (x - x_offset), (int) (y - y_offset), opacity);
+void Entity::draw(double x_offset, double y_offset, double opacity, bool boundingbox) {
+  if(sprite)
+    sprite->draw(state, apptime.elapsed(), (int) (x - x_offset), (int) (y - y_offset), opacity);
+
+  // If we're drawing bounding boxes, or we're in the editor and there's no visible sprite, draw
+  // a bounding box
+  if(boundingbox || (!play && !sprite)) {
+    int x1, y1, x2, y2;
+    getBoundingBox(x1, y1, x2, y2);
+    glColor4f(0.4, 0.4, 0.8, 0.5);
+    glBegin(GL_POLYGON);
+    glVertex3f(x + x1 - x_offset, y + y1 - y_offset, 0);
+    glVertex3f(x + x2 - x_offset, y + y1 - y_offset, 0);
+    glVertex3f(x + x2 - x_offset, y + y2 - y_offset, 0);
+    glVertex3f(x + x1 - x_offset, y + y2 - y_offset, 0);
+    glEnd();
+  }
 }
 
 void Entity::update() {
@@ -241,16 +256,13 @@ Map * Entity::getMap() {
 }
 
 void Entity::getBoundingBox(int & x1, int & y1, int & x2, int & y2) {
-  if(overrideBoundingBox) {
+  if(overrideBoundingBox || !sprite) {
     x1 = bx1;
     y1 = by1;
     x2 = bx2;
     y2 = by2;
   } else {
-    if(sprite)
-      sprite->getBoundingBox(x1, y1, x2, y2);
-    else
-      x1 = y1 = x2 = y2 = 0;
+    sprite->getBoundingBox(x1, y1, x2, y2);
   }
 }
 
@@ -292,10 +304,10 @@ void Entity::getSpriteBox(int & x1, int & y1, int & x2, int & y2) {
       x2 = w - xo;
       y2 = h - yo;
     } else {
-      x1 = y1 = x2 = y2 = 0;
+      getBoundingBox(x1, y1, x2, y2);
     }
   } else {
-    x1 = y1 = x2 = y2 = 0;
+    getBoundingBox(x1, y1, x2, y2);
   }
 }
 
@@ -395,6 +407,57 @@ void Entity::setBoundingBox(int x1, int y1, int x2, int y2) {
   by1 = y1;
   bx2 = x2;
   by2 = y2;
+}
+
+QString Entity::toXml() {
+  QString output;
+
+  QString name = getName();
+  int state = getState();
+  int x = getX();
+  int y = getY();
+  QString sprite = getSprite()->getName();
+
+  output += "      <entity name='" + name + "' state='" +
+            QString::number(state) + "' x='" + QString::number(x) + "' y='" + QString::number(y) +
+            "' sprite='" + sprite + "' bx1='" + QString::number(bx1) +
+            "' by1='" + QString::number(by1) + "' bx2='" + QString::number(bx2) +
+            "' by2='" + QString::number(by2) + "'";
+
+  if(overrideBoundingBox) {
+    output += " overrideboundingbox='1'";
+  }
+
+  if(invisible) {
+    output += " invisible='1'";
+  }
+
+  output += ">\n";
+  output += "        <scripts>\n";
+  for(int y = 0; y < getScriptCount(); y++) {
+    int cond = getScriptCondition(y);
+    int x1, y1, x2, y2;
+    x1 = y1 = x2 = y2 = 0;
+    bool defCoords = usesDefaultBounds(y);
+    if(!defCoords) {
+      getScriptBoundingBox(y, x1, y1, x2, y2);
+    }
+
+    output += "          <script condition='" + QString::number(cond) + "'";
+    if(!defCoords) {
+      output += " x1='" + QString::number(x1) + "' y1='" + QString::number(y1) + "'";
+      output += " x2='" + QString::number(x2) + "' y2='" + QString::number(y2) + "'";
+    }
+    output += "><![CDATA[";
+    QString s = getScript(y);
+    escapeCData(s);
+    output += s;
+    output += "]]></script>\n";
+  }
+  output += "        </scripts>\n";
+  output += "      </entity>\n";
+
+  return output;
 }
 
 EntityScript::EntityScript(int c, QString s,

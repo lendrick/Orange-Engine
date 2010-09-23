@@ -23,6 +23,8 @@ protected:
   QPushButton * addScriptButton;
   QPushButton * delScriptButton;
   QDialogButtonBox * buttonBox;
+  QGroupBox * scriptBox;
+  QVBoxLayout * scriptBoxLayout;
   QWidget * spacer;
 };
 

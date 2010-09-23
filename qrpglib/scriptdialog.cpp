@@ -2,14 +2,20 @@
 #include "scripttab.h"
 
 ScriptDialog::ScriptDialog() : QDialog(0) {
-  layout = new QVBoxLayout;
+  layout = new QVBoxLayout();
   setLayout(layout);
 
-  formLayout = new QFormLayout;
+  formLayout = new QFormLayout();
   layout->addLayout(formLayout);
 
-  buttonLayout = new QHBoxLayout;
-  layout->addLayout(buttonLayout);
+  scriptBox = new QGroupBox("Scripts");
+  layout->addWidget(scriptBox);
+
+  scriptBoxLayout = new QVBoxLayout();
+
+  buttonLayout = new QHBoxLayout();
+  scriptBox->setLayout(scriptBoxLayout);
+  scriptBoxLayout->addLayout(buttonLayout);
 
   addScriptButton = new QPushButton("New Script");
   delScriptButton = new QPushButton("Delete Script");
@@ -29,7 +35,7 @@ ScriptDialog::ScriptDialog() : QDialog(0) {
   scriptTabs = new QTabWidget;
   scriptTabs->setTabsClosable(true);
   scriptTabs->setMovable(true);
-  layout->addWidget(scriptTabs);
+  scriptBoxLayout->addWidget(scriptTabs);
   scriptTabs->setMinimumSize(400, 300);
 
   buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok

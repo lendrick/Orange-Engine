@@ -3,7 +3,7 @@
 #include "entity.h"
 #include "entityscripttab.h"
 #include "jshighlighter.h"
-#include "coordinatewidget.h"
+#include "boundswidget.h"
 #include <QtGui>
 
 EntityDialog::EntityDialog(Entity * e) : ScriptDialog() {
@@ -16,11 +16,16 @@ EntityDialog::EntityDialog(Entity * e) : ScriptDialog() {
   formLayout->addRow("Name", nameInput);
   
   spriteSelect = new QComboBox;
+  spriteSelect->addItem("NONE", QVariant(-1));
   for(int i = 0; i < sprites.size(); i++) 
     if(sprites[i]) spriteSelect->addItem(sprites[i]->getName(), QVariant(i));
   formLayout->addRow("Sprite", spriteSelect);
   //message(entity->getSprite()->GetName());
-  spriteSelect->setCurrentIndex(entity->getSprite()->getId());
+  if(entity->getSprite())
+    spriteSelect->setCurrentIndex(entity->getSprite()->getId() + 1);
+  else
+    spriteSelect->setCurrentIndex(1);
+
   //message("Sprite row: " + QString::number(entity->getSprite()->GetId()));
 
   stateSelect = new QComboBox;
@@ -34,13 +39,15 @@ EntityDialog::EntityDialog(Entity * e) : ScriptDialog() {
   disconnect(addScriptButton, SIGNAL(pressed()), this, SLOT(addScript()));
   connect(addScriptButton, SIGNAL(pressed()), this, SLOT(addScript()));
 
-  useDefaultBoundingBox = new QCheckBox;
-  useDefaultBoundingBox->setCheckState(Qt::Checked);
-  formLayout->addRow("Use sprite bounding box", useDefaultBoundingBox);
+  useDefaultBoundingBox = new QCheckBox("Use default bounding box");
+
+  if(!(e->getOverrideBoundingBox()))
+    useDefaultBoundingBox->setCheckState(Qt::Checked);
+
+  layout->insertWidget(1, useDefaultBoundingBox);
 
   int x1, y1, x2, y2;
   e->getBoundingBox(x1, y1, x2, y2);
-
 
   /*
   c1 = new CoordinateWidget(0, x1, y1);
@@ -49,11 +56,20 @@ EntityDialog::EntityDialog(Entity * e) : ScriptDialog() {
   c2 = new CoordinateWidget(0, x2, y2);
   formLayout->addRow("Lower right bound", c2);
   */
-  bounts = new BoundsWidget(0, x1, y1, x2, y2);
+  bounds = new BoundsWidget(this, x1, y1, x2, y2);
 
   //connect(useDefaultBoundingBox, SIGNAL(toggled(bool)), c1, SLOT(setDisabled(bool)));
   //connect(useDefaultBoundingBox, SIGNAL(toggled(bool)), c2, SLOT(setDisabled(bool)));
   connect(useDefaultBoundingBox, SIGNAL(toggled(bool)), bounds, SLOT(setDisabled(bool)));
+
+  layout->insertWidget(2, bounds);
+  if(!(e->getOverrideBoundingBox())) {
+    useDefaultBoundingBox->setCheckState(Qt::Checked);
+    bounds->setDisabled(true);
+  } else {
+    useDefaultBoundingBox->setCheckState(Qt::Unchecked);
+    bounds->setDisabled(false);
+  }
 
   /*
   if(!(e->getOverrideBoundingBox())) {
@@ -93,10 +109,20 @@ int EntityDialog::exec() {
   int r = QDialog::exec();
 
   if(r == QDialog::Accepted) {
+    int bx1, by1, bx2, by2;
+    bounds->getBounds(bx1, by1, bx2, by2);
+
     // Save changes to entity
     entity->setName(nameInput->text());
-    entity->setSprite(sprites[spriteSelect->itemData(spriteSelect->currentIndex()).toInt()]);
+
+    if(spriteSelect->itemData(spriteSelect->currentIndex()).toInt() == -1)
+      entity->setSprite(0);
+    else
+      entity->setSprite(sprites[spriteSelect->itemData(spriteSelect->currentIndex()).toInt()]);
+
     entity->setState(stateSelect->currentIndex());
+    entity->setBoundingBox(bx1, by1, bx2, by2);
+    entity->setOverrideBoundingBox(!(useDefaultBoundingBox->checkState() == Qt::Checked));
     entity->clearScripts();
     for(int i = 0; i < scriptTabs->count(); i++) {
       EntityScriptTab * widget = dynamic_cast<EntityScriptTab *> (scriptTabs->widget(i));
@@ -131,8 +157,10 @@ void EntityDialog::addScript() {
 void EntityDialog::updateStateSelect() {
   int index = stateSelect->currentIndex();
   stateSelect->clear();
-  Sprite * s = sprites[spriteSelect->itemData(spriteSelect->currentIndex()).toInt()];
-  for(int i = 0; i < s->getStateCount(); i++)
-    stateSelect->addItem(s->getStateName(i));
-  if(stateSelect->count() >= index) stateSelect->setCurrentIndex(index);
+  if(spriteSelect->itemData(spriteSelect->currentIndex()).toInt() >= 0) {
+    Sprite * s = sprites[spriteSelect->itemData(spriteSelect->currentIndex()).toInt()];
+    for(int i = 0; i < s->getStateCount(); i++)
+      stateSelect->addItem(s->getStateName(i));
+    if(stateSelect->count() >= index) stateSelect->setCurrentIndex(index);
+  }
 }

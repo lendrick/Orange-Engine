@@ -1,7 +1,9 @@
 <!DOCTYPE XSPR>
 <sprite>
   <name>Female Warrior</name>
-  <origin x='16' y='32' />  <boundingbox x1='-8' y1='-8' x2='8' y2='4' />  <tileset>Warrior F</tileset>
+  <origin x='16' y='32' />
+  <boundingbox x1='-8' y1='-8' x2='8' y2='4' />
+  <tileset>Warrior F</tileset>
   <states>4</states>
   <state>
     <loop>0</loop>

@@ -230,7 +230,7 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
       //message("drawing layer " + QString::number(i));
       if(i == mapBox->layer) {
         // Draw the current layer
-        mapBox->map->draw(i, xo, yo, 1.0);
+        mapBox->map->draw(i, xo, yo, 1.0, viewBoundingBoxes);
       } else if(mapBox->getDrawMode() == LayerView::All ||
                 mapBox->getDrawMode() == LayerView::AllBelow ||
                 mapBox->getDrawMode() == LayerView::AllOpaque ) {
@@ -270,7 +270,7 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
     if(viewGrid) drawGrid(mapBox->layer, painter, tw, th);
     if(viewTilePos) drawNumbers(mapBox->layer, painter, tw, th);
     if(viewEntityNames) drawEntityNames(mapBox->layer, painter);
-    if(viewBoundingBoxes) drawEntityBoundingBoxes(mapBox->layer, painter);
+    //if(viewBoundingBoxes) drawEntityBoundingBoxes(mapBox->layer, painter);
   }
   glFlush();
   glPopMatrix();
@@ -354,6 +354,7 @@ void MapScene::drawEntityNames(int layer, QPainter * painter) {
   painter->restore();
 }
 
+/*
 void MapScene::drawEntityBoundingBoxes(int layer, QPainter * painter) {
   int x1, y1, x2, y2, x, y;
   QBrush b(QColor(100, 100, 220, 128));
@@ -380,6 +381,7 @@ void MapScene::drawEntityBoundingBoxes(int layer, QPainter * painter) {
   }
   painter->restore();
 }
+*/
 
 void MapScene::drawNumbers(int layer, QPainter * painter, int tw, int th) {
   // Draw the tile x, y position on each tile

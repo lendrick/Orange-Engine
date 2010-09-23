@@ -16,7 +16,7 @@ public:
   Map();
   Map(Bitmap * t, int x, int y, int w, int h, QString mapname = "Unnamed Map");
   ~Map();
-  void draw(int layer, int x, int y, float opacity);
+  void draw(int layer, int x, int y, float opacity, bool boundingboxes = false);
   void getTileSize(int &w, int &h);
   void getSize(int layer, int &w, int &h);
   void setTileset(Bitmap * t);
