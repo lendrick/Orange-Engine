@@ -3,14 +3,7 @@
 
 #include "scripttab.h"
 class EntityDialog;
-
-class CoordinateWidget : public QFrame {
-  Q_OBJECT
-public:
-  CoordinateWidget(QWidget * parent = 0, int nx = 0, int ny = 0);
-  QSpinBox * x;
-  QSpinBox * y;
-};
+class CoordinateWidget;
 
 class EntityScriptTab : public ScriptTab
 {

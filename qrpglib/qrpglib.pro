@@ -56,7 +56,8 @@ SOURCES += \
     globalscriptdialog.cpp \
     rpgscript.cpp \
     projectreader.cpp \
-    mapscene.cpp
+    mapscene.cpp \
+    coordinatewidget.cpp
 
 HEADERS +=\
     tileselect.h \
@@ -103,4 +104,5 @@ HEADERS +=\
     globalscriptdialog.h \
     rpgscript.h \
     projectreader.h \
-    mapscene.h
+    mapscene.h \
+    coordinatewidget.h

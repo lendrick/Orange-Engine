@@ -4,6 +4,7 @@
 #include <QtGui>
 #include "jshighlighter.h"
 #include "scriptdialog.h"
+#include "coordinatewidget.h"
 
 class Entity;
 
@@ -20,6 +21,9 @@ protected:
   QComboBox * stateSelect;
   QLineEdit * nameInput;
   Entity * entity;
+  CoordinateWidget * c1;
+  CoordinateWidget * c2;
+  QCheckBox * useDefaultBoundingBox;
 };
 
 

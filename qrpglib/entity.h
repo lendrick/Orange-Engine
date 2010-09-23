@@ -82,7 +82,12 @@ public slots:
   void getRealScriptBoundingBox(int, double &, double &, double &, double &) const;
   void say(QString s);
   QScriptValue & getScriptObject();
-  
+  bool getOverrideBoundingBox();
+  bool isInvisible();
+  void setOverrideBoundingBox(bool);
+  void setInvisible(bool);
+  void setBoundingBox(int, int, int, int);
+
   void start();
   void touch();
   void activate();

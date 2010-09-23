@@ -63,8 +63,12 @@ void SpriteWidget::paintGL() {
   glClear(GL_COLOR_BUFFER_BIT);
   int x = (width() - sw) / 2;
   int y = (height() - sh) / 2;
+  int xo, yo;
 
   if(sprite) {
+    sprite->getOrigin(xo, yo);
+    x += xo;
+    y += yo;
     if(mode == FRAME) {
       sprite->drawFrame(state, frame, x, y);
     } else {
@@ -83,14 +87,13 @@ void SpriteWidget::paintGL() {
       glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
       glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-      //glColor4f(0.4, 0.4, 0.8, 0.5);
-      glColor3f(0.4, 0.4, 0.8);
-      qDebug() << x1 << " " << y1 << " " << x2 << " " << y2;
-      glBegin(GL_LINE_LOOP);
-      glVertex3f(x1, y1, 0);
-      glVertex3f(x2, y1, 0);
-      glVertex3f(x2, y2, 0);
-      glVertex3f(x1, y2, 0);
+      glColor4f(0.4, 0.4, 0.8, 0.5);
+      //qDebug() << x1 << " " << y1 << " " << x2 << " " << y2;
+      glBegin(GL_POLYGON);
+      glVertex3f(x + x1, y + y1, 0);
+      glVertex3f(x + x2, y + y1, 0);
+      glVertex3f(x + x2, y + y2, 0);
+      glVertex3f(x + x1, y + y2, 0);
       glEnd();
       glColor4f(1, 1, 1, 1);
     }

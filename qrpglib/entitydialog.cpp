@@ -3,6 +3,7 @@
 #include "entity.h"
 #include "entityscripttab.h"
 #include "jshighlighter.h"
+#include "coordinatewidget.h"
 #include <QtGui>
 
 EntityDialog::EntityDialog(Entity * e) : ScriptDialog() {
@@ -32,6 +33,32 @@ EntityDialog::EntityDialog(Entity * e) : ScriptDialog() {
   // Reconnect this signal, because we overloaded the function
   disconnect(addScriptButton, SIGNAL(pressed()), this, SLOT(addScript()));
   connect(addScriptButton, SIGNAL(pressed()), this, SLOT(addScript()));
+
+  useDefaultBoundingBox = new QCheckBox;
+  useDefaultBoundingBox->setCheckState(Qt::Checked);
+  formLayout->addRow("Use sprite bounding box", useDefaultBoundingBox);
+
+  int x1, y1, x2, y2;
+  e->getBoundingBox(x1, y1, x2, y2);
+
+  c1 = new CoordinateWidget(0, x1, y1);
+  formLayout->addRow("Upper left bound", c1);
+
+  c2 = new CoordinateWidget(0, x2, y2);
+  formLayout->addRow("Lower right bound", c2);
+
+  connect(useDefaultBoundingBox, SIGNAL(toggled(bool)), c1, SLOT(setDisabled(bool)));
+  connect(useDefaultBoundingBox, SIGNAL(toggled(bool)), c2, SLOT(setDisabled(bool)));
+
+  if(!(e->getOverrideBoundingBox())) {
+    useDefaultBoundingBox->setCheckState(Qt::Checked);
+    c1->setDisabled(true);
+    c2->setDisabled(true);
+  } else {
+    useDefaultBoundingBox->setCheckState(Qt::Unchecked);
+    c1->setDisabled(false);
+    c2->setDisabled(false);
+  }
   
   setWindowTitle(entity->getName());
 

@@ -179,7 +179,7 @@ void Sprite::draw(int state, int time, int x, int y, double opacity) {
 
 void Sprite::drawFrame(int state, int frame, int x, int y, double opacity) {
   if(bitmap && state >= 0 && frame >= 0 && states.size() > state && states[state]->frames.size() > frame) 
-    bitmap->draw(states[state]->frames[frame]->bitmap, x, y, opacity);
+    bitmap->draw(states[state]->frames[frame]->bitmap, x - x_origin, y - y_origin, opacity);
 }
 
 void Sprite::drawBoundingBox(int x, int y) { 

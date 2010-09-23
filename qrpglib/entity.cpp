@@ -241,18 +241,28 @@ Map * Entity::getMap() {
 }
 
 void Entity::getBoundingBox(int & x1, int & y1, int & x2, int & y2) {
-  if(sprite) 
-    sprite->getBoundingBox(x1, y1, x2, y2);
-  else
-    x1 = y1 = x2 = y2 = 0;
+  if(overrideBoundingBox) {
+    x1 = bx1;
+    y1 = by1;
+    x2 = bx2;
+    y2 = by2;
+  } else {
+    if(sprite)
+      sprite->getBoundingBox(x1, y1, x2, y2);
+    else
+      x1 = y1 = x2 = y2 = 0;
+  }
 }
 
 void Entity::getRealBoundingBox(double & x1, double & y1, double & x2, double & y2) {
   int x1i, y1i, x2i, y2i;
+  /*
   if(sprite) 
     sprite->getBoundingBox(x1i, y1i, x2i, y2i);
   else
     x1 = y1 = x2 = y2 = 0;
+  */
+  getBoundingBox(x1i, y1i, x2i, y2i);
 
   x1 = ((double) x1i) + x;
   y1 = ((double) y1i) + y;
@@ -362,6 +372,29 @@ bool entity_y_order(Entity * a, Entity * b) {
 void Entity::say(QString s) {
   //cprint("Saying: " + s + "\n");
   TalkBoxProxy * t = new TalkBoxProxy(s);
+}
+
+bool Entity::getOverrideBoundingBox() {
+  return overrideBoundingBox;
+}
+
+void Entity::setOverrideBoundingBox(bool b) {
+  overrideBoundingBox = b;
+}
+
+bool Entity::isInvisible() {
+  return invisible;
+}
+
+void Entity::setInvisible(bool i) {
+  invisible = i;
+}
+
+void Entity::setBoundingBox(int x1, int y1, int x2, int y2) {
+  bx1 = x1;
+  by1 = y1;
+  bx2 = x2;
+  by2 = y2;
 }
 
 EntityScript::EntityScript(int c, QString s,
