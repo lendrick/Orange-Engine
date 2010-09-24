@@ -21,7 +21,7 @@ Entity::Entity(QString newname, QObject * parent) : QObject(parent) {
   id = entities.size();
   entities.push_back(this);
   entitynames[name] = id;
-  thisEntity = new Resource(Resource::Entity, id, name, entityfolder);
+  thisEntity = QSharedPointer<Resource<>(new Resource(Resource::Entity, id, name, entityfolder));
   setObjectName(name);
 
   scriptObject = scriptEngine->newQObject(this);
@@ -49,7 +49,7 @@ Entity::Entity(const Entity & e) {
 
   id = entities.size();
   entities.push_back(this);
-  thisEntity = new Resource(Resource::Entity, id, name, entityfolder);
+  thisEntity = QSharedPointer<Resource>(new Resource(Resource::Entity, id, name, entityfolder));
   setObjectName(name);
 
   scriptObject = scriptEngine->newQObject(this);
@@ -61,7 +61,7 @@ Entity::~Entity() {
     entitynames.remove(name);
 
   if(id) entities[id] = 0;
-  if(thisEntity) delete thisEntity;
+  //if(thisEntity) delete thisEntity;
 }
 
 QScriptValue & Entity::getScriptObject() {
@@ -69,10 +69,10 @@ QScriptValue & Entity::getScriptObject() {
 }
 
 void Entity::init() {
-  map = 0;
+  //map = 0;
   state = 0;
   frame = 0;
-  sprite = 0;
+  //sprite = 0;
   x = y = 0;
   bx1 = by1 = bx2 = by2 = 0;
   layer = 0;
@@ -82,7 +82,7 @@ void Entity::init() {
   starting = true;
   overrideBoundingBox = false;
   invisible = false;
-  thisEntity = 0;
+  //thisEntity = 0;
 }
 
 int Entity::getId() {
@@ -176,11 +176,11 @@ void Entity::setState(int newState) {
   state = newState;
 }
 
-Sprite * Entity::getSprite() {
+QSharedPointer<Sprite> Entity::getSprite() {
   return sprite;
 }
 
-void Entity::setSprite(Sprite * newSprite) {
+void Entity::setSprite(QSharedPointer<Sprite> newSprite) {
   sprite = newSprite;
 }
 
@@ -251,7 +251,7 @@ int Entity::getLayer() {
   return layer;
 }
 
-Map * Entity::getMap() {
+QSharedPointer<Map> Entity::getMap() {
   return map;
 }
 

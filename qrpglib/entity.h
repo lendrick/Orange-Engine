@@ -31,9 +31,9 @@ protected:
   int state;
   int frame;
   int layer;
-  Sprite * sprite;
-  Map * map;
-  Resource * thisEntity;
+  QSharedPointer<Sprite> sprite;
+  QSharedPointer<Map> map;
+  QSharedPointer<Resource> thisEntity;
   double x, y;
   int bx1, by1, bx2, by2;
   QString name;
