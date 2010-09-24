@@ -363,9 +363,9 @@ void Map::save(QString filename) {
     file << "    <tileset>" << getTileset()->getName().toAscii().data() << "</tileset>\n";
     file << "    <name>" << layers[i]->name.toAscii().data() << "</name>\n";
     file << "    <layerdata>\n";
-    for(y = 0; y < layers[i]->width; y++) {
+    for(y = 0; y < layers[i]->height; y++) {
       file << "      ";
-      for(x = 0; x < layers[i]->height; x++) {
+      for(x = 0; x < layers[i]->width; x++) {
         file << layers[i]->layerdata[y*layers[i]->width+x] << " ";
       }
       file << "\n";

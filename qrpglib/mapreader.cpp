@@ -210,10 +210,17 @@ Entity * MapReader::readEntity() {
 
   int overrideboundingbox = attributes().value("overrideboundingbox").toString().toInt();
   int invisible = attributes().value("invisible").toString().toInt();
+  int solid = attributes().value("solid").toString().toInt();
 
   Entity * e = new Npc(ename);
 
-  e->setSprite(sprite);
+  if(sprite != "") {
+    e->setSprite(sprite);
+  } else {
+    e->setSprite(0);
+  }
+
+
   e->setPos(x, y);
   e->setState(state);
   e->setBoundingBox(bx1, by1, bx2, by2);
@@ -227,6 +234,11 @@ Entity * MapReader::readEntity() {
     e->setInvisible(true);
   else
     e->setInvisible(false);
+
+  if(solid)
+    e->setSolid(true);
+  else
+    e->setSolid(false);
 
   while (!atEnd()) {
     readNext();

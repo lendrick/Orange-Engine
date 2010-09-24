@@ -40,13 +40,16 @@ QScriptValue ScriptUtils::teleport(QString map, int x, int y) {
 }
 
 void ScriptUtils::setCamera(Entity * e) {
+  cprint("Setting camera");
   mapBox->setCamera(e);
 }
 
 void ScriptUtils::setMap(QString m) {
+  cprint("Setting map to " + m);
   mapBox->setMap(mapnames[m]);
 }
 
 void ScriptUtils::setLayer(int l) {
+  cprint("Setting layer to " + QString::number(l));
   mapBox->setLayer(l);
 }

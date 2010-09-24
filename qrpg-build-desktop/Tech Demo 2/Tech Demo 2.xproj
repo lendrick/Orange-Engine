@@ -2,12 +2,7 @@
 <project>
   <name>Tech Demo 2</name>
   <scripts>    <script condition='0'><![CDATA[rpgx.setMap("Town");
-rpgx.setLayer(1);
-map.reset();
-player.setSprite("Male Ranger");
-player.addToMap(1);
-player.setPos(20, 320);
-rpgx.setCamera(player);]]></script>
+]]></script>
   </scripts>
   <tilesets>
     <tileset>Town Tileset.xtile</tileset>
@@ -18,6 +13,7 @@ rpgx.setCamera(player);]]></script>
   </tilesets>
   <maps>
     <map>Town.xmap</map>
+    <map>Road.xmap</map>
   </maps>
   <sprites>
     <sprite>Female Warrior.xspr</sprite>

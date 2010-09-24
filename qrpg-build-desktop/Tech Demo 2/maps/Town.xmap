@@ -2,7 +2,13 @@
   <name>Town</name>
   <layers>3</layers>
   <tileset>Town Tileset</tileset>
-  <scripts>  </scripts>  <layer>
+  <scripts>    <script condition='0'><![CDATA[map.reset();
+rpgx.setLayer(1);
+player.setSprite("Male Ranger");
+player.addToMap(1);
+player.setPos(50, 320);
+rpgx.setCamera(player);]]></script>
+  </scripts>  <layer>
     <width>15</width>
     <height>15</height>
     <tileset>Town Tileset</tileset>
@@ -50,10 +56,20 @@
       0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
     </layerdata>
     <entities>
-      <entity name='Entity 1' state='0' x='378' y='200' sprite='Female Warrior' bx1='-10' by1='-10' bx2='8' by2='4' overrideboundingbox='1'>
+      <entity name='Entity 1' state='0' x='378' y='200' bx1='-10' by1='-10' bx2='8' by2='4' sprite='Female Warrior' overrideboundingbox='1' solid = '1'>
         <scripts>
           <script condition='2'><![CDATA[this.say("Rats have infested the town sewer!");]]></script>
           <script condition='0'><![CDATA[]]></script>
+        </scripts>
+      </entity>
+      <entity name='Entity 2' state='-1' x='208' y='204' bx1='-16' by1='-16' bx2='16' by2='16' overrideboundingbox='1'>
+        <scripts>
+          <script condition='1'><![CDATA[this.say("You can't go in there.");]]></script>
+        </scripts>
+      </entity>
+      <entity name='Road Warp' state='-1' x='-2' y='301' bx1='-16' by1='-100' bx2='16' by2='100' overrideboundingbox='1'>
+        <scripts>
+          <script condition='1'><![CDATA[rpgx.setMap("Road");]]></script>
         </scripts>
       </entity>
     </entities>

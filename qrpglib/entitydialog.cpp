@@ -24,7 +24,7 @@ EntityDialog::EntityDialog(Entity * e) : ScriptDialog() {
   if(entity->getSprite())
     spriteSelect->setCurrentIndex(entity->getSprite()->getId() + 1);
   else
-    spriteSelect->setCurrentIndex(1);
+    spriteSelect->setCurrentIndex(0);
 
   //message("Sprite row: " + QString::number(entity->getSprite()->GetId()));
 
@@ -46,6 +46,10 @@ EntityDialog::EntityDialog(Entity * e) : ScriptDialog() {
 
   layout->insertWidget(1, useDefaultBoundingBox);
 
+  solid = new QCheckBox("Solid");
+  if(e->isSolid())
+    solid->setCheckState(Qt::Checked);
+  layout->insertWidget(1, solid);
   int x1, y1, x2, y2;
   e->getBoundingBox(x1, y1, x2, y2);
 
@@ -62,7 +66,7 @@ EntityDialog::EntityDialog(Entity * e) : ScriptDialog() {
   //connect(useDefaultBoundingBox, SIGNAL(toggled(bool)), c2, SLOT(setDisabled(bool)));
   connect(useDefaultBoundingBox, SIGNAL(toggled(bool)), bounds, SLOT(setDisabled(bool)));
 
-  layout->insertWidget(2, bounds);
+  layout->insertWidget(3, bounds);
   if(!(e->getOverrideBoundingBox())) {
     useDefaultBoundingBox->setCheckState(Qt::Checked);
     bounds->setDisabled(true);
@@ -123,6 +127,7 @@ int EntityDialog::exec() {
     entity->setState(stateSelect->currentIndex());
     entity->setBoundingBox(bx1, by1, bx2, by2);
     entity->setOverrideBoundingBox(!(useDefaultBoundingBox->checkState() == Qt::Checked));
+    entity->setSolid(solid->checkState() == Qt::Checked);
     entity->clearScripts();
     for(int i = 0; i < scriptTabs->count(); i++) {
       EntityScriptTab * widget = dynamic_cast<EntityScriptTab *> (scriptTabs->widget(i));
@@ -161,6 +166,15 @@ void EntityDialog::updateStateSelect() {
     Sprite * s = sprites[spriteSelect->itemData(spriteSelect->currentIndex()).toInt()];
     for(int i = 0; i < s->getStateCount(); i++)
       stateSelect->addItem(s->getStateName(i));
-    if(stateSelect->count() >= index) stateSelect->setCurrentIndex(index);
+
+    qDebug() << stateSelect->count() << " " << index;
+
+    if(stateSelect->count() >= index) {
+      stateSelect->setCurrentIndex(index);
+    }
+
+    if(stateSelect->count() > 0 && index <= 0) {
+      stateSelect->setCurrentIndex(0);
+    }
   }
 }

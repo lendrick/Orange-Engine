@@ -306,10 +306,26 @@ void MapScene::editGlobalScripts() {
 }
 
 void MapScene::newEntity() {
-  Entity * e = new Npc("Entity " + QString::number(entities.size()));
+  int x = entities.size();
+  while(entitynames.contains("Entity " + QString::number(x))) {
+    x++;
+  }
+
+  Entity * e = 0;
+
+  try {
+    e = new Npc("Entity " + QString::number(x));
+  } catch(QString ex) {
+    message(ex);
+    return;
+  }
+
+  /*
   if(sprites.size() > 0) {
     e->setSprite(sprites[0]);
   }
+  */
+  e->setSprite(0);
   e->setPos(mouseScenePos.x(), mouseScenePos.y());
   e->addToMap(mapBox->layer);
   emit showEntityDialog(e);

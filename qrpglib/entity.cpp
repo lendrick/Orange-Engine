@@ -416,13 +416,21 @@ QString Entity::toXml() {
   int state = getState();
   int x = getX();
   int y = getY();
-  QString sprite = getSprite()->getName();
+
+  QString sprite;
+
+  if(getSprite())
+    sprite = getSprite()->getName();
 
   output += "      <entity name='" + name + "' state='" +
             QString::number(state) + "' x='" + QString::number(x) + "' y='" + QString::number(y) +
-            "' sprite='" + sprite + "' bx1='" + QString::number(bx1) +
+            "' bx1='" + QString::number(bx1) +
             "' by1='" + QString::number(by1) + "' bx2='" + QString::number(bx2) +
             "' by2='" + QString::number(by2) + "'";
+
+  if(sprite != "") {
+    output += " sprite='" + sprite + "'";
+  }
 
   if(overrideBoundingBox) {
     output += " overrideboundingbox='1'";
@@ -430,6 +438,10 @@ QString Entity::toXml() {
 
   if(invisible) {
     output += " invisible='1'";
+  }
+
+  if(solid) {
+    output += " solid = '1'";
   }
 
   output += ">\n";

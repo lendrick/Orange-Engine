@@ -23,6 +23,7 @@ protected:
   Entity * entity;
   BoundsWidget * bounds;
   QCheckBox * useDefaultBoundingBox;
+  QCheckBox * solid;
 };
 
 
