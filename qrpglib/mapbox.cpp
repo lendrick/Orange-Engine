@@ -39,7 +39,7 @@ MapBox::MapBox(QWidget * parent) :
   currentTile = 0;
   mapScene = new MapScene(this);
   drawMode = LayerView::All;
-  camera = 0;
+  //camera = 0;
   mapEditorMode = MapEditorMode::Edit;
 
   this->setFrameStyle(QFrame::NoFrame);
@@ -61,12 +61,12 @@ void MapBox::setCurrentTile(int t) {
   currentTile = t;
 }
 
-void MapBox::setCamera(Entity * c) {
+void MapBox::setCamera(QSharedPointer<Entity> c) {
   camera = c;
   layer = c->getLayer();
 }
 
-Entity * MapBox::getCamera() {
+QSharedPointer<Entity> MapBox::getCamera() {
   return camera;
 }
 
@@ -307,7 +307,7 @@ int MapBox::getMode() {
   return mapEditorMode;
 }
 
-Entity * MapBox::entityAt(int x, int y) {
+QSharedPointer<Entity> MapBox::entityAt(int x, int y) {
   if(map && map->getLayerCount() > 0) {
     double x1, y1, x2, y2;
     if(play) {
@@ -329,11 +329,11 @@ Entity * MapBox::entityAt(int x, int y) {
       }
     }
   }
-  return 0;
+  return QSharedPointer<Entity>();
 }
 
-QList < Entity * > MapBox::entitiesAt(int x, int y) {
-  QList < Entity *> entities;
+QList < QSharedPointer<Entity> > MapBox::entitiesAt(int x, int y) {
+  QList < QSharedPointer<Entity> > entities;
 
   if(map && map->getLayerCount() > 0) {
     double x1, y1, x2, y2;

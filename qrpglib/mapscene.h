@@ -31,7 +31,7 @@ public:
   QAction * editMapScriptsAction;
   QAction * editGlobalScriptsAction;
 
-  Entity * selectedEntity;
+  QSharedPointer<Entity> selectedEntity;
   QPoint mouseScreenPos;
   QPointF mouseScenePos;
   QFont * mapFont;
@@ -45,7 +45,7 @@ public slots:
   void editGlobalScripts();
 
 signals:
-  void showEntityDialog(Entity *);
+  void showEntityDialog(QSharedPointer<Entity>);
   void showMapScriptDialog(Map *);
   void showGlobalScriptDialog();
 

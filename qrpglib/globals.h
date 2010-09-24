@@ -52,7 +52,7 @@ extern Resource * currentresource;
 extern QList < Map * > maps;
 extern QList < Bitmap * > bitmaps;
 extern QList < Sprite * > sprites;
-extern QList < Entity * > entities;
+extern QList < QSharedPointer<Entity> > entities;
 extern QList < RPGScript > globalScripts;
 
 extern QHash < QString, int > mapnames;

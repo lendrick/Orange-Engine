@@ -4,9 +4,10 @@
 #include "entityscripttab.h"
 #include "jshighlighter.h"
 #include "boundswidget.h"
+#include "globals.h"
 #include <QtGui>
 
-EntityDialog::EntityDialog(Entity * e) : ScriptDialog() {
+EntityDialog::EntityDialog(QSharedPointer<Entity> e) : ScriptDialog() {
   entity = e;
   
   if(!e) return;

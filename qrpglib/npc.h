@@ -8,7 +8,7 @@
 class Npc : public Entity {
   Q_OBJECT
 public:
-  Npc(QString newName, QObject * parent = 0);
+  Npc(QString newName);
   Npc(const Npc & n);
   virtual void update();
   QString name;
@@ -18,7 +18,7 @@ public slots:
   void queueWait(int w);
   void queueScript(QString s);
   void clearQueue();
-  Entity * clone();
+  QSharedPointer<Entity> clone();
 protected:
   double defaultSpeed;
   

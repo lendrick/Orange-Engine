@@ -31,7 +31,7 @@ void ScriptUtils::print(QString s) {
 }
 
 QScriptValue ScriptUtils::getEntity(QString s) {
-  Entity * e = entities[mapentitynames[s]];
+  QSharedPointer<Entity> e = entities[mapentitynames[s]];
   return e->getScriptObject();
 }
 
@@ -39,7 +39,7 @@ QScriptValue ScriptUtils::teleport(QString map, int x, int y) {
   return QScriptValue(QScriptValue::NullValue);
 }
 
-void ScriptUtils::setCamera(Entity * e) {
+void ScriptUtils::setCamera(QSharedPointer<Entity> e) {
   cprint("Setting camera");
   mapBox->setCamera(e);
 }

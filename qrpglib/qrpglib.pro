@@ -58,7 +58,8 @@ SOURCES += \
     projectreader.cpp \
     mapscene.cpp \
     coordinatewidget.cpp \
-    boundswidget.cpp
+    boundswidget.cpp \
+    entityscript.cpp
 
 HEADERS +=\
     tileselect.h \
@@ -107,4 +108,5 @@ HEADERS +=\
     projectreader.h \
     mapscene.h \
     coordinatewidget.h \
-    boundswidget.h
+    boundswidget.h \
+    entityscript.h

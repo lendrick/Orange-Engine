@@ -4,8 +4,9 @@
 #include "entity.h"
 #include "player.h"
 #include "rpgengine.h"
+#include "globals.h"
 
-Player::Player(QObject * parent) : Npc("Player", parent) {
+Player::Player() : Npc("Player") {
   solid = true;
   RPGEngine::setPlayerEntity(this);
   defaultSpeed = 100;
@@ -17,8 +18,8 @@ Player::Player(const Player & p) : Npc(p) {
   // nothing to copy here.
 }
 
-Entity * Player::clone() {
-  return new Player(*this);
+QSharedPointer<Entity> Player::clone() {
+  return QSharedPointer<Entity>(new Player(*this));
 }
 
 void Player::update() {

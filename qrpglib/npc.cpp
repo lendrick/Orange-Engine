@@ -6,7 +6,7 @@
 #include "globals.h"
 #include <iostream>
 
-Npc::Npc(QString newName, QObject * parent) : Entity(newName, parent) {
+Npc::Npc(QString newName) : Entity(newName) {
   currentMove = 0;
   defaultSpeed = 64;
   solid = true;
@@ -30,8 +30,8 @@ Npc::Npc(const Npc & n) : Entity(n) {
   scriptObject = scriptEngine->newQObject(this);
 }
 
-Entity * Npc::clone() {
-  return new Npc(*this);
+QSharedPointer<Entity> Npc::clone() {
+  return QSharedPointer<Entity>(new Npc(*this));
 }
 
 void Npc::update() {
@@ -164,10 +164,9 @@ Npc::MoveQueueItem::MoveQueueItem(const MoveQueueItem & n) {
 
 QScriptValue npcConstructor(QScriptContext * context, QScriptEngine * engine) {
   QString name = context->argument(0).toString();
-  QObject * parent = context->argument(1).toQObject();
   try {
-    Npc * object = new Npc(name, parent);
-    return engine->newQObject(object, QScriptEngine::QtOwnership);
+    QSharedPointer<Npc> object = QSharedPointer<Npc>(new Npc(name));
+    return engine->newQObject(object.data(), QScriptEngine::QtOwnership);
   } catch(QString s) {
     return context->throwError(s);
   }

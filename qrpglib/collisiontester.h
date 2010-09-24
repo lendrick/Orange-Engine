@@ -8,7 +8,8 @@ class Entity;
 
 class CollisionTester {
 public:
-  static bool test(Entity * entity, double &dx, double &dy, double & mx, double &my, QList < Entity * > & touching);
+  static bool test(QSharedPointer<Entity> entity, double &dx, double &dy, double & mx, double &my,
+                   QList < QSharedPointer<Entity> > & touching);
 
 
   static bool stationaryTest(
@@ -32,9 +33,9 @@ private:
     double dx, double dy
   );
 
-  static CollisionData entityTest(Entity * a, double dx, double dy, Entity * b);
+  static CollisionData entityTest(QSharedPointer<Entity> a, double dx, double dy, QSharedPointer<Entity> b);
 
-  static CollisionData tileTest(Entity * entity, double dx, double dy, int tx, int ty, int tw, int th);
+  static CollisionData tileTest(QSharedPointer<Entity> entity, double dx, double dy, int tx, int ty, int tw, int th);
   
   static inline void step(double &i, int step, double end);
   static inline double getX(double y, double slope, double x_start, double y_start);

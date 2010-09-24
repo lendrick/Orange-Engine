@@ -5,13 +5,12 @@
 #include "jshighlighter.h"
 #include "scriptdialog.h"
 #include "boundswidget.h"
-
-class Entity;
+#include "entity.h"
 
 class EntityDialog : public ScriptDialog {
   Q_OBJECT
 public:
-  EntityDialog(Entity *);
+  EntityDialog(QSharedPointer<Entity>);
 public slots:
   int exec();
   void updateStateSelect();
@@ -20,7 +19,7 @@ protected:
   QComboBox * spriteSelect;
   QComboBox * stateSelect;
   QLineEdit * nameInput;
-  Entity * entity;
+  QSharedPointer<Entity> entity;
   BoundsWidget * bounds;
   QCheckBox * useDefaultBoundingBox;
   QCheckBox * solid;

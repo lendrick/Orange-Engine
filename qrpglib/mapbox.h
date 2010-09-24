@@ -36,13 +36,13 @@ public slots:
   //void LoadMap(char *);
   void saveMap(char *);
   LayerView::LayerViewMode getDrawMode();
-  void setCamera(Entity *);
-  Entity * getCamera();
+  void setCamera(QSharedPointer<Entity>);
+  QSharedPointer<Entity> getCamera();
   void setDrawMode(LayerView::LayerViewMode);
   void setCurrentTile(int);
   void addWidget(QWidget *);
-  Entity * entityAt(int x, int y);
-  QList < Entity * > entitiesAt(int x, int y);
+  QSharedPointer<Entity> entityAt(int x, int y);
+  QList < QSharedPointer<Entity> > entitiesAt(int x, int y);
   
   void setEditMode();
   void setEntityMode();
@@ -80,8 +80,8 @@ private:
   LayerView::LayerViewMode drawMode;
   int currentTile;
   int xrange, yrange;
-  Entity * camera;
-  Entity * dragEntity;
+  QSharedPointer<Entity> camera;
+  QSharedPointer<Entity> dragEntity;
   int mapEditorMode;
 };
 

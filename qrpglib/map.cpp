@@ -201,14 +201,14 @@ void Map::draw(int layer, int x, int y, float opacity, bool boundingboxes) {
     // Sort in Y direction
     if(play) {
       if(layers[layer]->entities.size()) 
-        qSort(layers[layer]->entities.begin(), layers[layer]->entities.end(), entity_y_order);
+        qSort(layers[layer]->entities.begin(), layers[layer]->entities.end(), Entity::entity_y_order);
       
       for(i = 0; i < layers[layer]->entities.size(); i++) {
         layers[layer]->entities[i]->draw(x, y, 1, boundingboxes);
       }
     } else {
       if(layers[layer]->startEntities.size()) 
-        qSort(layers[layer]->startEntities.begin(), layers[layer]->startEntities.end(), entity_y_order);
+        qSort(layers[layer]->startEntities.begin(), layers[layer]->startEntities.end(), Entity::entity_y_order);
       
       for(i = 0; i < layers[layer]->startEntities.size(); i++) {
         layers[layer]->startEntities[i]->draw(x, y, opacity, boundingboxes);
@@ -218,7 +218,7 @@ void Map::draw(int layer, int x, int y, float opacity, bool boundingboxes) {
   }
 }
 
-void Map::addEntity(int layer, Entity * entity) {
+void Map::addEntity(int layer, QSharedPointer<Entity> entity) {
   removeEntity(entity->getLayer(), entity);
   if(layer < layers.size()) {
     if(play)
@@ -230,11 +230,11 @@ void Map::addEntity(int layer, Entity * entity) {
   }
 }
 
-void Map::addStartEntity(int layer, Entity * entity) {
+void Map::addStartEntity(int layer, QSharedPointer<Entity> entity) {
   layers[layer]->startEntities.push_back(entity);      
 }
 
-void Map::removeEntity(int layer, Entity * entity) {
+void Map::removeEntity(int layer, QSharedPointer<Entity> entity) {
   if(layer < layers.size()) {
     if(play)
       layers[layer]->entities.removeAll(entity);
@@ -243,7 +243,7 @@ void Map::removeEntity(int layer, Entity * entity) {
   }
 }
 
-void Map::removeStartEntity(int layer, Entity * entity) {
+void Map::removeStartEntity(int layer, QSharedPointer<Entity> entity) {
   layers[layer]->startEntities.removeAll(entity);  
 }
 
@@ -259,16 +259,16 @@ int Map::getStartEntityCount(int layer) {
   return 0;
 }
 
-Entity * Map::getEntity(int layer, int index) {
+QSharedPointer<Entity> Map::getEntity(int layer, int index) {
   if(layer < layers.size() && index < layers[layer]->entities.size())
     return layers[layer]->entities[index];
-  return 0;
+  return QSharedPointer<Entity>();
 }
 
-Entity * Map::getStartEntity(int layer, int index) {
+QSharedPointer<Entity> Map::getStartEntity(int layer, int index) {
   if(layer < layers.size() && index < layers[layer]->startEntities.size())
     return layers[layer]->startEntities[index];
-  return 0;
+  return QSharedPointer<Entity>();
 }
 
 
@@ -373,7 +373,7 @@ void Map::save(QString filename) {
     file << "    </layerdata>\n";
     file << "    <entities>\n";
     for(x = 0; x < getStartEntityCount(i); x++) {
-      Entity * e = getStartEntity(i, x);
+      QSharedPointer<Entity> e = getStartEntity(i, x);
       file << e->toXml().toAscii().data();
     }
     file << "    </entities>\n";
@@ -388,10 +388,10 @@ void Map::reset() {
 
   for(int i = 0; i < layers.size(); i++) {
     for(int j = 0; j < layers[i]->startEntities.size(); j++) {
-      Entity * e = layers[i]->startEntities[j];
-      //Entity * newEntity = e->clone();
+      QSharedPointer<Entity> e = layers[i]->startEntities[j];
+      QSharedPointer<Entity> newEntity = e->clone();
 
-      //layers[i]->entities.append(newEntity);
+      layers[i]->entities.append(newEntity);
       e->addToMap(i);
       mapentitynames[e->getName()] = e->getId();
     }
@@ -401,7 +401,7 @@ void Map::reset() {
 void Map::clear() {
   for(int i = 0; i < layers.size(); i++) {
     while(!(layers[i]->entities.isEmpty()))
-      delete layers[i]->entities.takeFirst();
+      layers[i]->entities.takeFirst();
 
     mapentitynames.clear();
   }

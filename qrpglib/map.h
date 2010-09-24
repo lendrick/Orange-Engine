@@ -42,17 +42,17 @@ public slots:
   void insertLayerAfter(int layer, int w, int h, bool wrap=false, int filltile=0, QString name = "New Layer");
   void deleteLayer(int layer);
   void setViewport(int x, int y, int w, int h);
-  void addEntity(int layer, Entity * entity);
-  void addStartEntity(int layer, Entity * entity);
-  void removeEntity(int layer, Entity * entity);
-  void removeStartEntity(int layer, Entity * entity);
+  void addEntity(int layer, QSharedPointer<Entity> entity);
+  void addStartEntity(int layer, QSharedPointer<Entity> entity);
+  void removeEntity(int layer, QSharedPointer<Entity> entity);
+  void removeStartEntity(int layer, QSharedPointer<Entity> entity);
   int getEntityCount(int layer);
   int getStartEntityCount(int layer);
   void reset();
   void clear();
   void setStarting(bool);
-  Entity * getEntity(int layer, int index);
-  Entity * getStartEntity(int layer, int index);
+  QSharedPointer<Entity> getEntity(int layer, int index);
+  QSharedPointer<Entity> getStartEntity(int layer, int index);
 
   void addScript(int, QString);
   void clearScripts();
@@ -86,8 +86,8 @@ private:
     int * layerdata;
     bool wrap;
     QList < Poly * > border;
-    QList < Entity * > entities;
-    QList < Entity * > startEntities;
+    QList < QSharedPointer<Entity> > entities;
+    QList < QSharedPointer<Entity> > startEntities;
     Bitmap * tileset;
     int tile_w, tile_h;
   };

@@ -8,11 +8,11 @@
 class Player : public Npc {
   Q_OBJECT
 public:
-  Player(QObject * parent = 0);
+  Player();
   Player(const Player & p);
   virtual void update();
 public slots:
-  Entity * clone();
+  QSharedPointer<Entity> clone();
   bool isActivated();
   void setActivated(bool);
 private:

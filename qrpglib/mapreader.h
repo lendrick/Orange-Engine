@@ -16,9 +16,9 @@ private:
   void readMap();
   void readLayer();
   void readLayerData(QList<int> & layerData);
-  void readEntities(QList < Entity * > & entities);
-  Entity * readEntity();
-  void readEntityScripts(Entity * e);
+  void readEntities(QList < QSharedPointer<Entity> > & entities);
+  QSharedPointer<Entity> readEntity();
+  void readEntityScripts(QSharedPointer<Entity> e);
   void readScripts();
 
   void readUnknownElement();

@@ -20,7 +20,7 @@ Project::~Project() {
   bitmapfolder->clear();
 
   while (!maps.isEmpty())
-    delete maps.takeFirst();
+    maps.takeFirst()->deleteLater();
   while (!bitmaps.isEmpty())
     delete bitmaps.takeFirst();
   while (!sprites.isEmpty())

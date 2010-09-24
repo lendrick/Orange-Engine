@@ -3,37 +3,29 @@
 
 #include <QtCore>
 #include <QtScript>
+#include "entityscript.h"
 #include "sprite.h"
+#include "map.h"
 #include "resource.h"
-#include "rpgscript.h"
-
-struct EntityScript : public RPGScript {
-  EntityScript(int c, QString s, bool u, int nx1, int ny1, int nx2, int ny2);
-  int x1, y1, x2, y2;
-  bool useDefaultBounds;
-  bool wasTouching, isTouching;
-};
-
-bool entity_y_order(Entity * a, Entity * b);
 
 class Entity : public QObject, public QScriptable {
   Q_OBJECT
 public:
-  Entity(QString newName = "", QObject * parent = 0);
+  Entity(QString newName);
   Entity(const Entity & e);
   ~Entity();
   void init();
   virtual void update();
   void draw(double x_offset, double y_offset, double opacity = 1.0, bool boundingbox = false);
-  friend bool entity_y_order(Entity * a, Entity * b);
+  static bool entity_y_order(QSharedPointer<Entity> a, QSharedPointer<Entity> b);
 
 protected:
   int state;
   int frame;
   int layer;
-  QSharedPointer<Sprite> sprite;
-  QSharedPointer<Map> map;
-  QSharedPointer<Resource> thisEntity;
+  Sprite * sprite;
+  Map * map;
+  Resource * thisEntity;
   double x, y;
   int bx1, by1, bx2, by2;
   QString name;
@@ -46,7 +38,7 @@ protected:
   bool invisible;
 
 public slots:
-  virtual Entity * clone() = 0;
+  virtual QSharedPointer<Entity> clone() = 0;
   int getState();
   int getId();
   QString getStateName();
@@ -87,6 +79,7 @@ public slots:
   void setOverrideBoundingBox(bool);
   void setInvisible(bool);
   void setBoundingBox(int, int, int, int);
+  void destroy();
   QString toXml();
 
   void start();

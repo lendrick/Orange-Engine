@@ -39,7 +39,7 @@ public:
 
 public slots:
   void showNewLayerDialog(int);
-  void showEntityDialog(Entity *);
+  void showEntityDialog(QSharedPointer<Entity>);
   void showMapScriptDialog(Map *);
   void showGlobalScriptDialog();
   void deleteLayer(int);
