@@ -2,7 +2,7 @@
   <name>Road</name>
   <layers>3</layers>
   <tileset>Town Tileset</tileset>
-  <scripts>    <script condition='0'><![CDATA[map.reset();
+  <scripts>    <script condition='0'><![CDATA[//map.reset();
 rpgx.setLayer(1);
 player.addToMap(1);
 player.setPos(600, 320);

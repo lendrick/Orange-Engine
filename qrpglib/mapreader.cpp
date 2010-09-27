@@ -3,6 +3,7 @@
 #include "npc.h"
 #include "player.h"
 #include "entity.h"
+#include <QtCore>
 
 void MapReader::tokenDebug()
 {
@@ -212,7 +213,8 @@ QSharedPointer<Entity> MapReader::readEntity() {
   int invisible = attributes().value("invisible").toString().toInt();
   int solid = attributes().value("solid").toString().toInt();
 
-  QSharedPointer<Entity> e = QSharedPointer<Entity>(new Npc(ename));
+  qDebug() << "loading NPC " + ename;
+  QSharedPointer<Entity> e(new Npc(ename));
 
   if(sprite != "") {
     e->setSprite(sprite);
@@ -258,6 +260,8 @@ QSharedPointer<Entity> MapReader::readEntity() {
       }
     }
   }
+
+  qDebug() << "return entity";
 
   return e;
 }
