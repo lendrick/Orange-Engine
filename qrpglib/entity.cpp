@@ -11,16 +11,22 @@
 #include "scripttab.h"
 #include "rpgscript.h"
 
-Entity::Entity(QString newname) : QObject() {
+Entity::Entity(QString newname, bool dynamic) : QObject() {
   init();
-  if(entitynames.contains(newname)) {
+  if(dynamic && entityNames.contains(newname)) {
+    throw("An entity named '" + newname + "' already exists.");
+  } else if(!dynamic && staticEntityNames.contains(newname)) {
     throw("An entity named '" + newname + "' already exists.");
   }
 
   name = newname;
   id = entities.size();
-  entities.push_back(QSharedPointer<Entity>(this));
-  entitynames[name] = id;
+  sharedPointer = EntityPointer(this);
+  entities.push_back(sharedPointer);
+  if(dynamic)
+    entityNames[name] = id;
+  else
+    staticEntityNames[name] = id;
   thisEntity = new Resource(Resource::Entity, id, name, entityfolder);
   setObjectName(name);
 
@@ -29,7 +35,11 @@ Entity::Entity(QString newname) : QObject() {
 
 Entity::Entity(const Entity & e) : QObject(), QScriptable() {
   init();
-  name = e.name + ".copy";
+  name = e.name;
+  while(entityNames.contains(name))
+    name += ".copy";
+
+  dynamic = true;
   state = e.state;
   sprite = e.sprite;
   x = e.x;
@@ -48,7 +58,8 @@ Entity::Entity(const Entity & e) : QObject(), QScriptable() {
   }
 
   id = entities.size();
-  entities.push_back(QSharedPointer<Entity>(this));
+  sharedPointer = EntityPointer(this);
+  entities.push_back(sharedPointer);
   thisEntity = new Resource(Resource::Entity, id, name, entityfolder);
   setObjectName(name);
 
@@ -56,11 +67,11 @@ Entity::Entity(const Entity & e) : QObject(), QScriptable() {
 }
 
 void Entity::destroy() {
-  if(map) map->removeEntity(this->layer, QSharedPointer<Entity>(this));
-  if(entitynames.contains(name) && entitynames[name] == id)
-    entitynames.remove(name);
+  if(map) map->removeEntity(this->layer, sharedPointer);
+  if(entityNames.contains(name) && entityNames[name] == id)
+    entityNames.remove(name);
 
-  if(id) entities[id] = QSharedPointer<Entity>();
+  if(id) entities[id] = EntityPointer();
   //if(thisEntity) delete thisEntity;
 
 }
@@ -226,10 +237,10 @@ QString Entity::getName() {
 void Entity::move(double dx, double dy) {
   double mx, my;
   mx = my = 0;
-  QList < QSharedPointer<Entity> > touching;
+  QList < EntityPointer > touching;
   //cprint("Move: " + QString::number(dx) + ", " + QString::number(dy));
   if(solid) {
-    CollisionTester::test(QSharedPointer<Entity>(this), dx, dy, mx, my, touching);
+    CollisionTester::test(sharedPointer, dx, dy, mx, my, touching);
   }
 
   for(int i = 0; i < touching.size(); i++) {
@@ -249,7 +260,7 @@ void Entity::move(double dx, double dy) {
 
 void Entity::addToMap(int layer) {
   map = mapBox->getMap();
-  map->addEntity(layer, QSharedPointer<Entity>(this));
+  map->addEntity(layer, sharedPointer);
 }
 
 int Entity::getLayer() {
@@ -381,7 +392,7 @@ void Entity::setLayer(int l) {
   layer = l;
 }
 
-bool Entity::entity_y_order(QSharedPointer<Entity> a, QSharedPointer<Entity> b) {
+bool Entity::entity_y_order(EntityPointer a, EntityPointer b) {
   if(a->getY() < b->getY()) return true;
   return false;
 }
@@ -412,6 +423,10 @@ void Entity::setBoundingBox(int x1, int y1, int x2, int y2) {
   by1 = y1;
   bx2 = x2;
   by2 = y2;
+}
+
+EntityPointer Entity::getSharedPointer() {
+  return sharedPointer;
 }
 
 QString Entity::toXml() {
@@ -477,3 +492,17 @@ QString Entity::toXml() {
   return output;
 }
 
+QList < EntityPointer > entities;
+
+QScriptValue entityPointerToScriptValue(QScriptEngine * engine, const EntityPointer &p) {
+  return p->getScriptObject();
+}
+
+void entityPointerFromScriptValue(const QScriptValue &obj, EntityPointer &p) {
+  Entity * e = dynamic_cast<Entity *>(obj.toQObject());
+  if(e) {
+    p = e->getSharedPointer();
+  } else {
+    p = EntityPointer();
+  }
+}

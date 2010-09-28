@@ -18,7 +18,7 @@ public slots:
   void queueWait(int w);
   void queueScript(QString s);
   void clearQueue();
-  QSharedPointer<Entity> clone();
+  EntityPointer clone();
 protected:
   double defaultSpeed;
   

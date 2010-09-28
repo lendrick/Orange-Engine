@@ -7,7 +7,7 @@
 #include "globals.h"
 #include <QtGui>
 
-EntityDialog::EntityDialog(QSharedPointer<Entity> e) : ScriptDialog() {
+EntityDialog::EntityDialog(EntityPointer e) : ScriptDialog() {
   entity = e;
   
   if(!e) return;

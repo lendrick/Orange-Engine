@@ -10,7 +10,7 @@ Npc::Npc(QString newName) : Entity(newName) {
   currentMove = 0;
   defaultSpeed = 64;
   solid = true;
-  cprint("Creating NPC '" + newName + "'");
+  qDebug() << "Creating NPC '" + newName + "'";
   scriptObject = scriptEngine->newQObject(this);
 }
 
@@ -30,8 +30,8 @@ Npc::Npc(const Npc & n) : Entity(n) {
   scriptObject = scriptEngine->newQObject(this);
 }
 
-QSharedPointer<Entity> Npc::clone() {
-  return QSharedPointer<Entity>(new Npc(*this));
+EntityPointer Npc::clone() {
+  return EntityPointer(new Npc(*this));
 }
 
 void Npc::update() {

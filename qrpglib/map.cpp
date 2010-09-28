@@ -218,7 +218,7 @@ void Map::draw(int layer, int x, int y, float opacity, bool boundingboxes) {
   }
 }
 
-void Map::addEntity(int layer, QSharedPointer<Entity> entity) {
+void Map::addEntity(int layer, EntityPointer entity) {
   removeEntity(entity->getLayer(), entity);
   if(layer < layers.size()) {
     if(play)
@@ -230,11 +230,11 @@ void Map::addEntity(int layer, QSharedPointer<Entity> entity) {
   }
 }
 
-void Map::addStartEntity(int layer, QSharedPointer<Entity> entity) {
+void Map::addStartEntity(int layer, EntityPointer entity) {
   layers[layer]->startEntities.push_back(entity);      
 }
 
-void Map::removeEntity(int layer, QSharedPointer<Entity> entity) {
+void Map::removeEntity(int layer, EntityPointer entity) {
   if(layer < layers.size()) {
     if(play)
       layers[layer]->entities.removeAll(entity);
@@ -243,7 +243,7 @@ void Map::removeEntity(int layer, QSharedPointer<Entity> entity) {
   }
 }
 
-void Map::removeStartEntity(int layer, QSharedPointer<Entity> entity) {
+void Map::removeStartEntity(int layer, EntityPointer entity) {
   layers[layer]->startEntities.removeAll(entity);  
 }
 
@@ -259,16 +259,16 @@ int Map::getStartEntityCount(int layer) {
   return 0;
 }
 
-QSharedPointer<Entity> Map::getEntity(int layer, int index) {
+EntityPointer Map::getEntity(int layer, int index) {
   if(layer < layers.size() && index < layers[layer]->entities.size())
     return layers[layer]->entities[index];
-  return QSharedPointer<Entity>();
+  return EntityPointer();
 }
 
-QSharedPointer<Entity> Map::getStartEntity(int layer, int index) {
+EntityPointer Map::getStartEntity(int layer, int index) {
   if(layer < layers.size() && index < layers[layer]->startEntities.size())
     return layers[layer]->startEntities[index];
-  return QSharedPointer<Entity>();
+  return EntityPointer();
 }
 
 
@@ -373,7 +373,7 @@ void Map::save(QString filename) {
     file << "    </layerdata>\n";
     file << "    <entities>\n";
     for(x = 0; x < getStartEntityCount(i); x++) {
-      QSharedPointer<Entity> e = getStartEntity(i, x);
+      EntityPointer e = getStartEntity(i, x);
       file << e->toXml().toAscii().data();
     }
     file << "    </entities>\n";
@@ -385,11 +385,14 @@ void Map::save(QString filename) {
 
 void Map::reset() {
   clear();
+  qDebug() << "resetting " << this->getName();
 
   for(int i = 0; i < layers.size(); i++) {
     for(int j = 0; j < layers[i]->startEntities.size(); j++) {
-      QSharedPointer<Entity> e = layers[i]->startEntities[j];
-      QSharedPointer<Entity> newEntity = e->clone();
+      EntityPointer e = layers[i]->startEntities[j];
+      EntityPointer newEntity = e->clone();
+
+      qDebug() << "adding dynamic entity to map: " << e->getName();
 
       layers[i]->entities.append(newEntity);
       e->addToMap(i);

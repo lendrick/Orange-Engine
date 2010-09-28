@@ -52,13 +52,13 @@ extern Resource * currentresource;
 extern QList < Map * > maps;
 extern QList < Bitmap * > bitmaps;
 extern QList < Sprite * > sprites;
-extern QList < QSharedPointer<Entity> > entities;
 extern QList < RPGScript > globalScripts;
 
 extern QHash < QString, int > mapnames;
 extern QHash < QString, int > bitmapnames;
 extern QHash < QString, int > spritenames;
-extern QHash < QString, int > entitynames;
+extern QHash < QString, int > entityNames;
+extern QHash < QString, int > staticEntityNames;
 extern QHash < QString, int > mapentitynames;
 
 extern QTime apptime;

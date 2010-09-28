@@ -5,6 +5,7 @@
 #include <qgl.h>
 #include "map.h"
 #include "globals.h"
+#include "entity.h"
 
 class mapBox;
 
@@ -31,7 +32,7 @@ public:
   QAction * editMapScriptsAction;
   QAction * editGlobalScriptsAction;
 
-  QSharedPointer<Entity> selectedEntity;
+  EntityPointer selectedEntity;
   QPoint mouseScreenPos;
   QPointF mouseScenePos;
   QFont * mapFont;
@@ -45,7 +46,7 @@ public slots:
   void editGlobalScripts();
 
 signals:
-  void showEntityDialog(QSharedPointer<Entity>);
+  void showEntityDialog(EntityPointer);
   void showMapScriptDialog(Map *);
   void showGlobalScriptDialog();
 

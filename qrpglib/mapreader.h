@@ -6,6 +6,8 @@
 class Map;
 class Entity;
 
+typedef QSharedPointer<Entity> EntityPointer;
+
 class MapReader : public QXmlStreamReader
 {
 public:
@@ -16,9 +18,9 @@ private:
   void readMap();
   void readLayer();
   void readLayerData(QList<int> & layerData);
-  void readEntities(QList < QSharedPointer<Entity> > & entities);
-  QSharedPointer<Entity> readEntity();
-  void readEntityScripts(QSharedPointer<Entity> e);
+  void readEntities(QList < EntityPointer > & entities);
+  EntityPointer readEntity();
+  void readEntityScripts(EntityPointer e);
   void readScripts();
 
   void readUnknownElement();

@@ -10,7 +10,7 @@
 class EntityDialog : public ScriptDialog {
   Q_OBJECT
 public:
-  EntityDialog(QSharedPointer<Entity>);
+  EntityDialog(EntityPointer);
 public slots:
   int exec();
   void updateStateSelect();
@@ -19,7 +19,7 @@ protected:
   QComboBox * spriteSelect;
   QComboBox * stateSelect;
   QLineEdit * nameInput;
-  QSharedPointer<Entity> entity;
+  EntityPointer entity;
   BoundsWidget * bounds;
   QCheckBox * useDefaultBoundingBox;
   QCheckBox * solid;

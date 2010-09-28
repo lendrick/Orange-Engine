@@ -9,8 +9,8 @@
 using std::max;
 using std::min;
 
-bool CollisionTester::test(QSharedPointer<Entity> entity, double &dx, double &dy, double &mx, double &my,
-                           QList < QSharedPointer<Entity> > & touching) {
+bool CollisionTester::test(EntityPointer entity, double &dx, double &dy, double &mx, double &my,
+                           QList < EntityPointer > & touching) {
   double x = entity->getX();
   double y = entity->getY();
   bool collision = false;
@@ -74,7 +74,7 @@ bool CollisionTester::test(QSharedPointer<Entity> entity, double &dx, double &dy
   }
 
   for(int i = 0; i < entity->getMap()->getEntityCount(entity->getLayer()); i++) {
-    QSharedPointer<Entity> b = entity->getMap()->getEntity(entity->getLayer(), i);
+    EntityPointer b = entity->getMap()->getEntity(entity->getLayer(), i);
     if(entity == b || !(b->isSolid()) ) continue;
     CollisionData c = entityTest(entity, dx, dy, b);
     if(c.collision && c.distance <= distance) {
@@ -181,7 +181,7 @@ CollisionTester::CollisionData CollisionTester::boxTest(
 }
 
 CollisionTester::CollisionData CollisionTester::entityTest(
-  QSharedPointer<Entity> a, double dx, double dy, QSharedPointer<Entity> b)
+  EntityPointer a, double dx, double dy, EntityPointer b)
 {
   double x1, y1, x2, y2;
   double tx1, ty1, tx2, ty2;
@@ -192,7 +192,7 @@ CollisionTester::CollisionData CollisionTester::entityTest(
   return boxTest(x1, y1, x2, y2, tx1, ty1, tx2, ty2, dx, dy);
 }
 
-CollisionTester::CollisionData CollisionTester::tileTest(QSharedPointer<Entity> entity, double dx, double dy, int tx, int ty, int tw, int th) {
+CollisionTester::CollisionData CollisionTester::tileTest(EntityPointer entity, double dx, double dy, int tx, int ty, int tw, int th) {
   CollisionData c;
 
   double x1, y1, x2, y2;

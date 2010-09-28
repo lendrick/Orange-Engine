@@ -18,8 +18,8 @@ Player::Player(const Player & p) : Npc(p) {
   // nothing to copy here.
 }
 
-QSharedPointer<Entity> Player::clone() {
-  return QSharedPointer<Entity>(new Player(*this));
+EntityPointer Player::clone() {
+  return EntityPointer(new Player(*this));
 }
 
 void Player::update() {

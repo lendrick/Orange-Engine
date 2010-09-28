@@ -94,7 +94,7 @@ void MapReader::readLayer()
   int w = 0;
   QList<int> layerData;
   int currentLayer = 0;
-  QList< QSharedPointer<Entity> > entities;
+  QList< EntityPointer > entities;
 
   while (!atEnd()) {
     readNext();
@@ -173,7 +173,7 @@ void MapReader::readLayerData(QList<int> & layerData)
   }
 }
 
-void MapReader::readEntities(QList < QSharedPointer<Entity> > & entities) {
+void MapReader::readEntities(QList < EntityPointer > & entities) {
   while (!atEnd()) {
     readNext();
     //message("readLayer: Token (" + tokenString() + "): " + name().toString());
@@ -185,7 +185,7 @@ void MapReader::readEntities(QList < QSharedPointer<Entity> > & entities) {
     if (isStartElement()) {
       if (name() == "entity")
       {
-        QSharedPointer<Entity> e = readEntity();
+        EntityPointer e = readEntity();
 
         entities.append(e);
       }
@@ -197,7 +197,7 @@ void MapReader::readEntities(QList < QSharedPointer<Entity> > & entities) {
   }
 }
 
-QSharedPointer<Entity> MapReader::readEntity() {
+EntityPointer MapReader::readEntity() {
   QString ename = attributes().value("name").toString();
   QString sprite = attributes().value("sprite").toString();
   int x = attributes().value("x").toString().toInt();
@@ -214,7 +214,8 @@ QSharedPointer<Entity> MapReader::readEntity() {
   int solid = attributes().value("solid").toString().toInt();
 
   qDebug() << "loading NPC " + ename;
-  QSharedPointer<Entity> e(new Npc(ename));
+  Entity * ePtr = new Npc(ename);
+  EntityPointer e = ePtr->getSharedPointer();
 
   if(sprite != "") {
     e->setSprite(sprite);
@@ -266,7 +267,7 @@ QSharedPointer<Entity> MapReader::readEntity() {
   return e;
 }
 
-void MapReader::readEntityScripts(QSharedPointer<Entity> e) {
+void MapReader::readEntityScripts(EntityPointer e) {
   while (!atEnd()) {
     readNext();
     tokenDebug();

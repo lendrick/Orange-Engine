@@ -13,6 +13,8 @@ EngineWindow::EngineWindow() : QDialog() {
   mapBox->setStyleSheet("border-style: none; padding: 0;");
   layout->addWidget(mapBox);
   
+  qDebug() << "creating console widget";
+
   console = new QRPGConsole;
   mapBox->addWidget(console);
   console->hide();

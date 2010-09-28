@@ -8,6 +8,7 @@
 #include <qgl.h>
 #include "map.h"
 #include "globals.h"
+#include "entity.h"
 
 class MapScene;
 class Map;
@@ -36,13 +37,13 @@ public slots:
   //void LoadMap(char *);
   void saveMap(char *);
   LayerView::LayerViewMode getDrawMode();
-  void setCamera(QSharedPointer<Entity>);
-  QSharedPointer<Entity> getCamera();
+  void setCamera(EntityPointer);
+  EntityPointer getCamera();
   void setDrawMode(LayerView::LayerViewMode);
   void setCurrentTile(int);
   void addWidget(QWidget *);
-  QSharedPointer<Entity> entityAt(int x, int y);
-  QList < QSharedPointer<Entity> > entitiesAt(int x, int y);
+  EntityPointer entityAt(int x, int y);
+  QList < EntityPointer > entitiesAt(int x, int y);
   
   void setEditMode();
   void setEntityMode();
@@ -80,8 +81,8 @@ private:
   LayerView::LayerViewMode drawMode;
   int currentTile;
   int xrange, yrange;
-  QSharedPointer<Entity> camera;
-  QSharedPointer<Entity> dragEntity;
+  EntityPointer camera;
+  EntityPointer dragEntity;
   int mapEditorMode;
 };
 

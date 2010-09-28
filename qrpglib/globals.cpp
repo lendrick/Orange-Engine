@@ -32,13 +32,13 @@ TileSelect * tiles;
 QList < Map * > maps;
 QList < Bitmap * > bitmaps;
 QList < Sprite * > sprites;
-QList < QSharedPointer<Entity> > entities;
 QList < RPGScript > globalScripts;
 
 QHash < QString, int > mapnames;
 QHash < QString, int > bitmapnames;
 QHash < QString, int > spritenames;
-QHash < QString, int > entitynames;
+QHash < QString, int > entityNames;
+QHash < QString, int > staticEntityNames;
 QHash < QString, int > mapentitynames;
 
 QTime apptime;

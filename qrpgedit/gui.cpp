@@ -245,7 +245,7 @@ MainWindow::MainWindow() :
   connect(mapBox, SIGNAL(mousePos(int, int, int, int)), 
     this, SLOT(updateMousePos(int, int, int, int)));
   connect(this, SIGNAL(updateMapStatus(QString)), mapwin, SLOT(updateStatus(QString)));
-  connect(mapBox->mapScene, SIGNAL(showEntityDialog(QSharedPointer<Entity>)), this, SLOT(showEntityDialog(QSharedPointer<Entity>)));
+  connect(mapBox->mapScene, SIGNAL(showEntityDialog(EntityPointer)), this, SLOT(showEntityDialog(EntityPointer)));
 
   connect(mapBox->mapScene, SIGNAL(showMapScriptDialog(Map *)), this, SLOT(showMapScriptDialog(Map *)));
   connect(mapBox->mapScene, SIGNAL(showGlobalScriptDialog()), this, SLOT(showGlobalScriptDialog()));
@@ -429,7 +429,7 @@ void MainWindow::updateProjectTitle(QString projtitle) {
   setWindowTitle(projtitle + " - " + appTitle);
 }
 
-void MainWindow::showEntityDialog(QSharedPointer<Entity> x) {
+void MainWindow::showEntityDialog(EntityPointer x) {
   EntityDialog d(x);
   d.exec();
 }

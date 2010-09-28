@@ -19,7 +19,7 @@ public slots:
   void print(QString s);
   QScriptValue getEntity(QString s);
   QScriptValue teleport(QString, int, int);
-  void setCamera(QSharedPointer<Entity> e);
+  void setCamera(EntityPointer e);
   void setMap(QString m);
   void setLayer(int l);
 };

@@ -9,6 +9,7 @@
 class Resource;
 class Bitmap;
 class Entity;
+typedef QSharedPointer<Entity> EntityPointer;
 
 class Map : public QObject, public QScriptable {
   Q_OBJECT
@@ -42,17 +43,17 @@ public slots:
   void insertLayerAfter(int layer, int w, int h, bool wrap=false, int filltile=0, QString name = "New Layer");
   void deleteLayer(int layer);
   void setViewport(int x, int y, int w, int h);
-  void addEntity(int layer, QSharedPointer<Entity> entity);
-  void addStartEntity(int layer, QSharedPointer<Entity> entity);
-  void removeEntity(int layer, QSharedPointer<Entity> entity);
-  void removeStartEntity(int layer, QSharedPointer<Entity> entity);
+  void addEntity(int layer, EntityPointer entity);
+  void addStartEntity(int layer, EntityPointer entity);
+  void removeEntity(int layer, EntityPointer entity);
+  void removeStartEntity(int layer, EntityPointer entity);
   int getEntityCount(int layer);
   int getStartEntityCount(int layer);
   void reset();
   void clear();
   void setStarting(bool);
-  QSharedPointer<Entity> getEntity(int layer, int index);
-  QSharedPointer<Entity> getStartEntity(int layer, int index);
+  EntityPointer getEntity(int layer, int index);
+  EntityPointer getStartEntity(int layer, int index);
 
   void addScript(int, QString);
   void clearScripts();
@@ -86,8 +87,8 @@ private:
     int * layerdata;
     bool wrap;
     QList < Poly * > border;
-    QList < QSharedPointer<Entity> > entities;
-    QList < QSharedPointer<Entity> > startEntities;
+    QList < EntityPointer > entities;
+    QList < EntityPointer > startEntities;
     Bitmap * tileset;
     int tile_w, tile_h;
   };

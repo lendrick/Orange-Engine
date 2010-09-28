@@ -85,7 +85,7 @@ MapScene::MapScene(MapBox * m)
   mapFont = new QFont("Arial", 6);
   entityFont = new QFont("Arial", 12);
 
-  selectedEntity = QSharedPointer<Entity>();
+  selectedEntity = EntityPointer();
 }
 
 void MapScene::init(int w, int h)
@@ -307,14 +307,14 @@ void MapScene::editGlobalScripts() {
 
 void MapScene::newEntity() {
   int x = entities.size();
-  while(entitynames.contains("Entity " + QString::number(x))) {
+  while(entityNames.contains("Entity " + QString::number(x))) {
     x++;
   }
 
-  QSharedPointer<Entity> e;
+  EntityPointer e;
 
   try {
-    e = QSharedPointer<Entity>(new Npc("Entity " + QString::number(x)));
+    e = EntityPointer(new Npc("Entity " + QString::number(x)));
   } catch(QString ex) {
     message(ex);
     return;
@@ -353,7 +353,7 @@ void MapScene::drawEntityNames(int layer, QPainter * painter) {
     count = mapBox->map->getEntityCount(layer);
   else
     count = mapBox->map->getStartEntityCount(layer);
-  QSharedPointer<Entity> e = QSharedPointer<Entity>();
+  EntityPointer e = EntityPointer();
 
   for(int i = 0; i < count; i++) {
     if(play)
@@ -473,7 +473,7 @@ void MapScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent * e) {
   if(e->isAccepted()) return;
 
   if(mapBox->mapEditorMode == MapEditorMode::Entity && mapBox->map && e->button() == Qt::LeftButton) {
-    QSharedPointer<Entity> x = mapBox->entityAt(e->scenePos().x() + mapBox->xo, e->scenePos().y() + mapBox->yo);
+    EntityPointer x = mapBox->entityAt(e->scenePos().x() + mapBox->xo, e->scenePos().y() + mapBox->yo);
     if(x) {
       emit showEntityDialog(x);
       e->accept();
@@ -487,7 +487,7 @@ void MapScene::mouseReleaseEvent(QGraphicsSceneMouseEvent * e) {
   //if(e->isAccepted()) return;
 
   if((e->buttons() & Qt::LeftButton)) {
-    mapBox->dragEntity = QSharedPointer<Entity>();
+    mapBox->dragEntity = EntityPointer();
     e->accept();
     //qDebug() << "  left button";
     return;
@@ -583,11 +583,11 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent * e) {
     playerEntity->clearQueue();
     playerEntity->queueMoveTo(e->scenePos().x() + mapBox->xo, e->scenePos().y() + mapBox->yo);
 
-    QSharedPointer<Entity> x = mapBox->entityAt(e->scenePos().x() + mapBox->xo, e->scenePos().y() + mapBox->yo);
+    EntityPointer x = mapBox->entityAt(e->scenePos().x() + mapBox->xo, e->scenePos().y() + mapBox->yo);
     if(x) cprint("Entity: " + x->getName());
     //qDebug() << "  right button pressed in play mode";
   } else if(mapBox->map && e->button() == Qt::RightButton) {
-    QSharedPointer<Entity> x = mapBox->entityAt(e->scenePos().x() + mapBox->xo, e->scenePos().y() + mapBox->yo);
+    EntityPointer x = mapBox->entityAt(e->scenePos().x() + mapBox->xo, e->scenePos().y() + mapBox->yo);
     mouseScreenPos = e->screenPos();
     mouseScenePos = e->scenePos();
     if(x) {

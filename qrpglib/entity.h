@@ -8,16 +8,20 @@
 #include "map.h"
 #include "resource.h"
 
+typedef QSharedPointer<Entity> EntityPointer;
+
+Q_DECLARE_METATYPE(EntityPointer);
+
 class Entity : public QObject, public QScriptable {
   Q_OBJECT
 public:
-  Entity(QString newName);
+  Entity(QString newName, bool dynamic = false);
   Entity(const Entity & e);
   ~Entity();
   void init();
   virtual void update();
   void draw(double x_offset, double y_offset, double opacity = 1.0, bool boundingbox = false);
-  static bool entity_y_order(QSharedPointer<Entity> a, QSharedPointer<Entity> b);
+  static bool entity_y_order(EntityPointer a, EntityPointer b);
 
 protected:
   int state;
@@ -34,11 +38,13 @@ protected:
   bool touched, activated, starting;
   int id;
   QScriptValue scriptObject;
+  EntityPointer sharedPointer;
   bool overrideBoundingBox;
   bool invisible;
+  bool dynamic;
 
 public slots:
-  virtual QSharedPointer<Entity> clone() = 0;
+  virtual EntityPointer clone() = 0;
   int getState();
   int getId();
   QString getStateName();
@@ -80,6 +86,7 @@ public slots:
   void setInvisible(bool);
   void setBoundingBox(int, int, int, int);
   void destroy();
+  EntityPointer getSharedPointer();
   QString toXml();
 
   void start();
@@ -88,5 +95,11 @@ public slots:
 
   int getLayer();
 };
+
+extern QList < EntityPointer > entities;
+
+QScriptValue entityPointerToScriptValue(QScriptEngine * engine, const EntityPointer &p);
+void entityPointerFromScriptValue(const QScriptValue &obj, EntityPointer &p);
+
 
 #endif

@@ -6,10 +6,12 @@
 class Map;
 class Entity;
 
+typedef QSharedPointer<Entity> EntityPointer;
+
 class CollisionTester {
 public:
-  static bool test(QSharedPointer<Entity> entity, double &dx, double &dy, double & mx, double &my,
-                   QList < QSharedPointer<Entity> > & touching);
+  static bool test(EntityPointer entity, double &dx, double &dy, double & mx, double &my,
+                   QList < EntityPointer > & touching);
 
 
   static bool stationaryTest(
@@ -33,9 +35,9 @@ private:
     double dx, double dy
   );
 
-  static CollisionData entityTest(QSharedPointer<Entity> a, double dx, double dy, QSharedPointer<Entity> b);
+  static CollisionData entityTest(EntityPointer a, double dx, double dy, EntityPointer b);
 
-  static CollisionData tileTest(QSharedPointer<Entity> entity, double dx, double dy, int tx, int ty, int tw, int th);
+  static CollisionData tileTest(EntityPointer entity, double dx, double dy, int tx, int ty, int tw, int th);
   
   static inline void step(double &i, int step, double end);
   static inline double getX(double y, double slope, double x_start, double y_start);

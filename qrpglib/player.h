@@ -12,7 +12,7 @@ public:
   Player(const Player & p);
   virtual void update();
 public slots:
-  QSharedPointer<Entity> clone();
+  EntityPointer clone();
   bool isActivated();
   void setActivated(bool);
 private:
