@@ -1,1 +1,0 @@
-../qrpglib-build-desktop/*.h
