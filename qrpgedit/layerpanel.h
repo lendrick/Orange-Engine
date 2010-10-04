@@ -1,0 +1,1 @@
+../qrpglib/layerpanel.h

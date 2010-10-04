@@ -1,0 +1,1 @@
+../qrpglib/bitmap_qt.cpp

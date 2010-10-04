@@ -31,7 +31,9 @@ Npc::Npc(const Npc & n) : Entity(n) {
 }
 
 EntityPointer Npc::clone() {
-  return EntityPointer(new Npc(*this));
+  //return EntityPointer(new Npc(*this));
+  Entity * e = new Npc(*this);
+  return e->getSharedPointer();
 }
 
 void Npc::update() {
