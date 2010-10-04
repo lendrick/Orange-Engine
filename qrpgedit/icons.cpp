@@ -1,1 +1,0 @@
-../qrpglib/icons.cpp

@@ -1,1 +1,0 @@
-../qrpglib/mapreader.h

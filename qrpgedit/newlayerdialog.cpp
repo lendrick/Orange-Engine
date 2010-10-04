@@ -1,1 +1,0 @@
-../qrpglib/newlayerdialog.cpp

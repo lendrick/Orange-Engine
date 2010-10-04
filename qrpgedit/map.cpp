@@ -1,1 +1,0 @@
-../qrpglib/map.cpp
