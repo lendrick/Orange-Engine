@@ -64,6 +64,7 @@ MapScene::MapScene(MapBox * m)
   newEntityAction = new QAction("New Entity", 0);
   deleteEntityAction = new QAction("Delete Entity", 0);
   editEntityAction = new QAction("Edit Entity", 0);
+  editPropertiesAction = new QAction("Properties", 0);
 
   editMapScriptsAction = new QAction("Edit Map Scripts", 0);
   editGlobalScriptsAction = new QAction("Edit Global Scripts", 0);
@@ -75,12 +76,14 @@ MapScene::MapScene(MapBox * m)
   entityPopupMenu->addAction(newEntityAction);
   entityPopupMenu->addAction(deleteEntityAction);
   entityPopupMenu->addAction(editEntityAction);
+  entityPopupMenu->addAction(editPropertiesAction);
 
   connect(newEntityAction, SIGNAL(triggered()), this, SLOT(newEntity()));
   connect(editEntityAction, SIGNAL(triggered()), this, SLOT(editEntity()));
   connect(deleteEntityAction, SIGNAL(triggered()), this, SLOT(deleteEntity()));
   connect(editMapScriptsAction, SIGNAL(triggered()), this, SLOT(editMapScripts()));
   connect(editGlobalScriptsAction, SIGNAL(triggered()), this, SLOT(editGlobalScripts()));
+  connect(editPropertiesAction, SIGNAL(triggered()), this, SLOT(editProperties()));
 
   mapFont = new QFont("Arial", 6);
   entityFont = new QFont("Arial", 12);
@@ -295,6 +298,12 @@ void MapScene::editEntity() {
     emit showEntityDialog(selectedEntity);
   else
     message("No entity selected.");
+}
+
+void MapScene::editProperties() {
+  if(selectedEntity) {
+    emit showPropertyEditor(selectedEntity);
+  }
 }
 
 void MapScene::editMapScripts() {

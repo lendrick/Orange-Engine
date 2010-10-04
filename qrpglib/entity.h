@@ -9,6 +9,7 @@
 #include "resource.h"
 
 typedef QSharedPointer<Entity> EntityPointer;
+typedef QSharedPointer<QObject> ObjectPointer;
 
 Q_DECLARE_METATYPE(EntityPointer);
 

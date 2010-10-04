@@ -31,6 +31,7 @@ public:
   QAction * editEntityAction;
   QAction * editMapScriptsAction;
   QAction * editGlobalScriptsAction;
+  QAction * editPropertiesAction;
 
   EntityPointer selectedEntity;
   QPoint mouseScreenPos;
@@ -44,8 +45,10 @@ public slots:
   void editEntity();
   void editMapScripts();
   void editGlobalScripts();
+  void editProperties();
 
 signals:
+  void showPropertyEditor(ObjectPointer);
   void showEntityDialog(EntityPointer);
   void showMapScriptDialog(Map *);
   void showGlobalScriptDialog();

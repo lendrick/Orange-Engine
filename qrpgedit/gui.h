@@ -40,6 +40,7 @@ public:
 public slots:
   void showNewLayerDialog(int);
   void showEntityDialog(EntityPointer);
+  void showPropertyEditor(ObjectPointer);
   void showMapScriptDialog(Map *);
   void showGlobalScriptDialog();
   void deleteLayer(int);

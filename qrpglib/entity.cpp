@@ -48,6 +48,11 @@ Entity::Entity(const Entity & e) : QObject(), QScriptable() {
   solid = e.solid;
   map = e.map;
 
+  foreach(const QByteArray & p, e.dynamicPropertyNames()) {
+    this->setProperty(p, e.property(p));
+  }
+
+
   for(int i = 0; i < e.getScriptCount(); i++) {
     int x1, y1, x2, y2;
     x1 = y1 = x2 = y2 = 0;

@@ -1,7 +1,9 @@
 <!DOCTYPE xproj>
 <project>
   <name>Tech Demo 2</name>
-  <scripts>    <script condition='0'><![CDATA[rpgx.setMap("Town");
+  <scripts>    <script condition='0'><![CDATA[var townTheme = new Sound("sounds/town.ogg");
+var adventureTheme = new Sound("sounds/adventure.ogg");
+rpgx.setMap("Town");
 ]]></script>
   </scripts>
   <tilesets>

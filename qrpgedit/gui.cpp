@@ -28,7 +28,7 @@
 #include "projectreader.h"
 #include "mapscene.h"
 #include "rpgengine.h"
-
+#include "propertyeditor.h"
 
 MainWindow::MainWindow() :
   QMainWindow() {
@@ -246,6 +246,7 @@ MainWindow::MainWindow() :
     this, SLOT(updateMousePos(int, int, int, int)));
   connect(this, SIGNAL(updateMapStatus(QString)), mapwin, SLOT(updateStatus(QString)));
   connect(mapBox->mapScene, SIGNAL(showEntityDialog(EntityPointer)), this, SLOT(showEntityDialog(EntityPointer)));
+  connect(mapBox->mapScene, SIGNAL(showPropertyEditor(ObjectPointer)), this, SLOT(showPropertyEditor(ObjectPointer)));
 
   connect(mapBox->mapScene, SIGNAL(showMapScriptDialog(Map *)), this, SLOT(showMapScriptDialog(Map *)));
   connect(mapBox->mapScene, SIGNAL(showGlobalScriptDialog()), this, SLOT(showGlobalScriptDialog()));
@@ -436,6 +437,11 @@ void MainWindow::showEntityDialog(EntityPointer x) {
 
 void MainWindow::showMapScriptDialog(Map * x) {
   MapScriptDialog d(x);
+  d.exec();
+}
+
+void MainWindow::showPropertyEditor(ObjectPointer x) {
+  PropertyEditor d(x);
   d.exec();
 }
 
