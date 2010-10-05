@@ -29,6 +29,29 @@ public:
   QScriptValue scriptObject;
   QScriptValue getScriptObject();
 
+  struct Tile {
+    int bitmap;
+    bool solid;
+    QList < Poly * > border;
+    ~Tile();
+  };
+
+  struct Layer {
+    Layer();
+    Layer(int w, int h, int fill = 0);
+    ~Layer();
+    resize(int w, int h, int fill = 0);
+    int height, width;
+    QString name;
+    int * layerdata;
+    bool wrap;
+    QList < Poly * > border;
+    QList < EntityPointer > entities;
+    QList < EntityPointer > startEntities;
+    Bitmap * tileset;
+    int tile_w, tile_h;
+  };
+
 public slots:
   bool setName(QString n);
   QString getName();
@@ -70,29 +93,7 @@ private:
   int tile_h, tile_w;
   QString name;
 
-  struct Tile {
-    int bitmap;
-    bool solid;
-    QList < Poly * > border;
-    ~Tile();
-  };
-
   QList < Tile * > tiles;
-
-  struct Layer {
-    Layer();
-    ~Layer();
-    int height, width;
-    QString name;
-    int * layerdata;
-    bool wrap;
-    QList < Poly * > border;
-    QList < EntityPointer > entities;
-    QList < EntityPointer > startEntities;
-    Bitmap * tileset;
-    int tile_w, tile_h;
-  };
-
   QList < Layer * > layers;
 
   Bitmap * tileset;

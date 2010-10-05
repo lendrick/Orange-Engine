@@ -93,7 +93,7 @@ Map::Tile::~Tile() {
 Map::Layer::~Layer() {
   int i;
   for(i = 0; i < border.size(); i++) delete border[i];
-  if(layerdata) delete layerdata; //free(layerdata);
+  if(layerdata) delete layerdata;
 }
 
 Map::Layer::Layer() {
@@ -101,6 +101,30 @@ Map::Layer::Layer() {
   tileset = 0;
 }
   
+Map::Layer::Layer(int h, int w, int fill) {
+  width = w;
+  height = h;
+  layerdata = new int[h*w];
+  wrap = false;
+
+  for(int i = 0; i < h * w; i++) layerdata[i] = fill;
+}
+
+Map::Layer::resize(int w, int h, int fill) {
+  int * newdata = new int[h*w];
+  for(int i = 0; i < h * w; i++) newdata[i] = fill;
+
+  for(int x = 0; x < width; x++) {
+    for(int y = 0; y < height; y++) {
+      if(x < w && y < h) {
+        newdata[x + y * w] = layerdata[x + y * width];
+      }
+    }
+  }
+
+  delete layerdata;
+  layerdata = newdata;
+}
 
 Map::~Map() {
   int i;
