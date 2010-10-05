@@ -77,6 +77,11 @@ public slots:
   void setViewGrid(bool);
   void setViewBoundingBoxes(bool);
 
+  void setPaintModeDraw();
+  void setPaintModeBrush();
+  void setPaintModeFill();
+  void setPaintModeSelectBox();
+
 signals:
   void setMap(int);
   void setTiles(int);
@@ -106,6 +111,7 @@ private:
 
   // Toolbars
   QToolBar * mapToolBar;
+  QToolBar * paintToolBar;
 
   // Dockable dialogs
   QDockWidget * tileDock;
@@ -132,6 +138,11 @@ private:
   QAction * viewGridAction;
   QAction * viewEntityNamesAction;
   QAction * viewBoundingBoxesAction;
+
+  QAction * paintDrawAction;
+  QAction * paintBrushAction;
+  QAction * paintFillAction;
+  QAction * paintSelectBoxAction;
 
   // Other stuff
   QString appTitle;

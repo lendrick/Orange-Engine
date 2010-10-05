@@ -54,6 +54,10 @@ MainWindow::MainWindow() :
   mapToolBar = addToolBar("MapToolBar");
   mapToolBar->setIconSize(QSize(32, 32));
 
+  paintToolBar = new QToolBar("PaintToolBar");
+  addToolBar(Qt::LeftToolBarArea, paintToolBar);
+  paintToolBar->setIconSize(QSize(32, 32));
+
   // iconsets
 
   aboutQtAction = new QAction("About &Qt", 0);
@@ -194,6 +198,27 @@ MainWindow::MainWindow() :
   TileTab->addTab(tiles, "Tiles");
 
   ////////////////////////////////////////////////////////////
+  // The paint toolbar
+
+  QActionGroup * paintActionGroup = new QActionGroup(0);
+
+  paintDrawAction = paintActionGroup->addAction(*paintPencilIcon, "Draw");
+  paintDrawAction->setCheckable(true);
+  paintToolBar->addAction(paintDrawAction);
+
+  paintBrushAction = paintActionGroup->addAction(*paintBrushIcon, "Brushes");
+  paintBrushAction->setCheckable(true);
+  paintToolBar->addAction(paintBrushAction);
+
+  paintFillAction = paintActionGroup->addAction(*paintCanIcon, "Fill");
+  paintFillAction->setCheckable(true);
+  paintToolBar->addAction(paintFillAction);
+
+  paintSelectBoxAction = paintActionGroup->addAction(*paintBoxIcon, "Select Box");
+  paintSelectBoxAction->setCheckable(true);
+  paintToolBar->addAction(paintSelectBoxAction);
+
+  ////////////////////////////////////////////////////////////
   // The resource list;
 
   mapDock = new QDockWidget("Resources");
@@ -241,6 +266,12 @@ MainWindow::MainWindow() :
   connect(layerPanel, SIGNAL(selectLayer(int)), mapwin->mapbox, SLOT(setLayer(int)));
   connect(mapEditAction, SIGNAL(triggered()), mapBox, SLOT(setEditMode()));
   connect(mapEntityAction, SIGNAL(triggered()), mapBox, SLOT(setEntityMode()));
+
+  connect(paintDrawAction, SIGNAL(triggered()), this, SLOT(setPaintModeDraw()));
+  connect(paintFillAction, SIGNAL(triggered()), this, SLOT(setPaintModeFill()));
+  connect(paintSelectBoxAction, SIGNAL(triggered()), this, SLOT(setPaintModeSelectBox()));
+  connect(paintBrushAction, SIGNAL(triggered()), this, SLOT(setPaintModeBrush()));
+
 
   connect(mapBox, SIGNAL(mousePos(int, int, int, int)), 
     this, SLOT(updateMousePos(int, int, int, int)));
@@ -487,6 +518,22 @@ void MainWindow::setViewGrid(bool b) {
 
 void MainWindow::setViewBoundingBoxes(bool b) {
   viewBoundingBoxes = b;
+}
+
+void MainWindow::setPaintModeBrush() {
+  paintMode = PaintMode::Brush;
+}
+
+void MainWindow::setPaintModeDraw() {
+  paintMode = PaintMode::Draw;
+}
+
+void MainWindow::setPaintModeSelectBox() {
+  paintMode = PaintMode::SelectBox;
+}
+
+void MainWindow::setPaintModeFill() {
+  paintMode = PaintMode::Fill;
 }
 
 /*

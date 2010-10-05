@@ -37,6 +37,11 @@ QIcon * appPlayIcon;
 QIcon * mapEditIcon;
 QIcon * mapEntityIcon;
 
+QIcon * paintPencilIcon;
+QIcon * paintBrushIcon;
+QIcon * paintCanIcon;
+QIcon * paintBoxIcon;
+
 void initIcons() {
   newprojectIcon = new QIcon("pixmaps/project_new.png");
   openprojectIcon = new QIcon("pixmaps/project_open.png");
@@ -73,4 +78,9 @@ void initIcons() {
   
   mapEditIcon = new QIcon("pixmaps/map_edit.png");
   mapEntityIcon = new QIcon("pixmaps/flag_red.png");
+
+  paintPencilIcon = new QIcon("pixmaps/pencil.png");
+  paintBrushIcon = new QIcon("pixmaps/paintbrush.png");
+  paintCanIcon = new QIcon("pixmaps/paintcan.png");
+  paintBoxIcon = new QIcon("pixmaps/selectbox.png");
 }

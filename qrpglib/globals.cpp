@@ -51,6 +51,7 @@ QGLWidget * mainGLWidget;
 MapBox * mapBox = 0;
 Player * playerEntity = 0;
 QRPGConsole * console = 0;
+int paintMode = PaintMode::Draw;
 
 QScriptEngine * scriptEngine;
 //QScriptEngineDebugger * scriptDebugger;

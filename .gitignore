@@ -4,3 +4,4 @@ lib*.so*
 */qrpgengine
 */qrpgedit
 Makefile
+*.pro.user

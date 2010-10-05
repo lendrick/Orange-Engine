@@ -39,6 +39,11 @@ extern QIcon * appPlayIcon;
 extern QIcon * mapEditIcon;
 extern QIcon * mapEntityIcon;
 
+extern QIcon * paintPencilIcon;
+extern QIcon * paintBrushIcon;
+extern QIcon * paintCanIcon;
+extern QIcon * paintBoxIcon;
+
 void initIcons();
 
 #endif

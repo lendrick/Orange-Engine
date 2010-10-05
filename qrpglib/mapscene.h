@@ -21,6 +21,8 @@ public:
   void drawGrid(int layer, QPainter *painter, int tw, int th);
   void drawEntityNames(int layer, QPainter *painter);
   void drawNumbers(int layer, QPainter *painter, int tw, int th);
+  void drawSelectBox(int layer, QPainter *painter, int tw, int th);
+
   //void drawEntityBoundingBoxes(int layer, QPainter *painter);
   QLabel * fpsLabel;
   QMenu * mapPopupMenu;
@@ -39,6 +41,8 @@ public:
   QFont * mapFont;
   QFont * entityFont;
 
+  QRect selectBox;
+
 public slots:
   void newEntity();
   void deleteEntity();
@@ -46,6 +50,7 @@ public slots:
   void editMapScripts();
   void editGlobalScripts();
   void editProperties();
+  void fill(int layer, int x, int y, int tile, int firstTile = -1);
 
 signals:
   void showPropertyEditor(ObjectPointer);

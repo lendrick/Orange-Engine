@@ -25,6 +25,15 @@ struct MapEditorMode {
   };
 };
 
+struct PaintMode {
+  enum PaintModeEnum {
+    Draw,
+    Brush,
+    SelectBox,
+    Fill
+  };
+};
+
 class Map;
 class MapBox;
 class Bitmap;
@@ -97,6 +106,8 @@ extern bool viewGrid;
 extern bool viewBoundingBoxes;
 
 extern bool rpgEngineStarting;
+
+extern int paintMode;
 
 extern QPixmap * talkBoxBackground;
 

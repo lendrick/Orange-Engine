@@ -140,7 +140,9 @@
     <value key="ProjectExplorer.CustomExecutableRunConfiguration.BaseEnvironmentBase" type="int">2</value>
     <value key="ProjectExplorer.CustomExecutableRunConfiguration.Executable" type="QString">/home/bart/qrpg/qrpg-build-desktop/qrpgengine</value>
     <value key="ProjectExplorer.CustomExecutableRunConfiguration.UseTerminal" type="bool">true</value>
-    <valuelist key="ProjectExplorer.CustomExecutableRunConfiguration.UserEnvironmentChanges" type="QVariantList"/>
+    <valuelist key="ProjectExplorer.CustomExecutableRunConfiguration.UserEnvironmentChanges" type="QVariantList">
+     <value type="QString">LD_LIBRARY_PATH=.</value>
+    </valuelist>
     <value key="ProjectExplorer.CustomExecutableRunConfiguration.UserName" type="QString">qrpgengine</value>
     <value key="ProjectExplorer.CustomExecutableRunConfiguration.UserSetName" type="bool">true</value>
     <value key="ProjectExplorer.CustomExecutableRunConfiguration.WorkingDirectory" type="QString">/home/bart/qrpg/qrpg-build-desktop</value>

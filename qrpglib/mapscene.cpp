@@ -273,6 +273,10 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
     if(viewGrid) drawGrid(mapBox->layer, painter, tw, th);
     if(viewTilePos) drawNumbers(mapBox->layer, painter, tw, th);
     if(viewEntityNames) drawEntityNames(mapBox->layer, painter);
+
+    if(selectBox.width() != 0 || selectBox.height() != 0) {
+      drawSelectBox(mapBox->layer, painter, tw, th);
+    }
     //if(viewBoundingBoxes) drawEntityBoundingBoxes(mapBox->layer, painter);
   }
   glFlush();
@@ -351,6 +355,23 @@ void MapScene::drawGrid(int layer, QPainter * painter, int tw, int th) {
   for(int x = mapBox->xo + tw - (mapBox->xo % tw); x < mapBox->xo + mapBox->width(); x += tw) {
     painter->drawLine(x - mapBox->xo, 0, x - mapBox->xo, mapBox->height());
   }
+}
+
+void MapScene::drawSelectBox(int layer, QPainter * painter, int tw, int th) {
+  int x, y, w, h;
+  painter->save();
+
+  QPen selectPen(Qt::DashLine);
+  selectPen.setColor(Qt::white);
+  selectPen.setWidth(2);
+
+  x = selectBox.x() * tw - mapBox->xo;
+  y = selectBox.y() * th - mapBox->yo;
+  w = selectBox.width() * tw;
+  h = selectBox.height() * th;
+  painter->setPen(selectPen);
+  painter->drawRect(x, y, w, h);
+  painter->restore();
 }
 
 void MapScene::drawEntityNames(int layer, QPainter * painter) {
@@ -436,7 +457,30 @@ void MapScene::mouseMoveEvent(QGraphicsSceneMouseEvent * e) {
     if(mapBox->mapEditorMode == MapEditorMode::Edit && mapBox->map && (e->buttons() & Qt::LeftButton) &&
        e->scenePos().x() > 0 && e->scenePos().y() > 0 &&
        e->scenePos().x() < this->width() && e->scenePos().y() < this->height()) {
-      mapBox->setTile(e);
+      if(paintMode == PaintMode::Draw) {
+        mapBox->setTile(e);
+      } else if(paintMode == PaintMode::SelectBox) {
+        //qDebug() << "MouseMove: " << e;
+        int w, h, x, y;
+
+        mapBox->map->getTileSize(w, h);
+        x = (mapBox->xo + e->scenePos().x()) / w;
+        y = (mapBox->yo + e->scenePos().y()) / h;
+
+        int width, height;
+        width = x - selectBox.x();
+        height = y - selectBox.y();
+
+        if(width >= 0) width++;
+        if(height >= 0) height++;
+        selectBox.setWidth(width);
+        selectBox.setHeight(height);
+      } else if(paintMode == PaintMode::Brush) {
+
+      } else if(paintMode == PaintMode::Fill) {
+        // Don't actually do anything if the mouse is dragged in fill mode
+      }
+
       //qDebug() << "  setTile";
     } else if(mapBox->dragEntity && mapBox->mapEditorMode == MapEditorMode::Entity && mapBox->map &&
               (e->buttons() & Qt::LeftButton)) {
@@ -577,7 +621,34 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent * e) {
   }
   */
   if(mapBox->mapEditorMode == MapEditorMode::Edit && mapBox->map && e->button() == Qt::LeftButton) {
-    mapBox->setTile(e);
+    if(paintMode == PaintMode::Draw) {
+      mapBox->setTile(e);
+    } else if(paintMode == PaintMode::SelectBox) {
+      //qDebug() << "MouseClick: " << e;
+      selectBox = QRect();
+
+      int w, h, x, y;
+
+      mapBox->map->getTileSize(w, h);
+      x = (mapBox->xo + e->scenePos().x()) / w;
+      y = (mapBox->yo + e->scenePos().y()) / h;
+
+      selectBox.setX(x);
+      selectBox.setY(y);
+      selectBox.setWidth(0);
+      selectBox.setHeight(0);
+
+      //qDebug() << selectBox;
+    } else if(paintMode == PaintMode::Brush) {
+
+    } else if(paintMode == PaintMode::Fill) {
+      int w, h, x, y;
+
+      mapBox->map->getTileSize(w, h);
+      x = (mapBox->xo + e->scenePos().x()) / w;
+      y = (mapBox->yo + e->scenePos().y()) / h;
+      fill(mapBox->layer, x, y, mapBox->currentTile);
+    }
     //qDebug() << "  set tile";
   } else if(mapBox->mapEditorMode == MapEditorMode::Entity &&
     mapBox->map && e->button() == Qt::LeftButton) {
@@ -612,6 +683,44 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent * e) {
   }
   //qDebug() << "  accepted";
   e->accept();
+}
+
+void MapScene::fill(int layer, int x, int y, int tile, int firstTile)  {
+  int w, h;
+  mapBox->map->getSize(layer, w, h);
+  if(x < 0 || y < 0 || x >= w || y >= h) {
+    return;
+  }
+
+  /*  int x1, y1, x2, y2;
+  x1 = selectBox.x();
+  y1 = selectBox.y();
+  x2 = x1 + selectBox.width();
+  y2 = y1 + selectBox.height();
+
+  if(x2 < x1) std::swap(x1, x2);
+  if(y2 < y1) std::swap(y1, y2);
+
+  if((selectBox.width() != 0 || selectBox.height != 0) &&
+     (x < x1 || y < x1 || x > select))
+  */
+
+  if((selectBox.width() != 0 && selectBox.height() != 0) &&
+     (!(selectBox.contains(x, y, false)))) {
+    return;
+  }
+
+  if(firstTile == -1) {
+    firstTile = mapBox->map->getTile(layer, x, y);
+  }
+
+  if(mapBox->map->getTile(layer, x, y) == firstTile) {
+    mapBox->map->setTile(layer, x, y, tile);
+    fill(layer, x + 1, y, tile, firstTile);
+    fill(layer, x - 1, y, tile, firstTile);
+    fill(layer, x, y + 1, tile, firstTile);
+    fill(layer, x, y - 1, tile, firstTile);
+  }
 }
 
 /*
