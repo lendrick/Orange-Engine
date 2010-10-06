@@ -104,6 +104,7 @@ private:
   QMenu * fileMenu;
   QMenu * resourceMenu;
   QMenu * mapMenu;
+  QMenu * editMenu;
   QMenu * tilesetMenu;
   QMenu * spriteMenu;
   QMenu * viewMenu;
@@ -143,6 +144,13 @@ private:
   QAction * paintBrushAction;
   QAction * paintFillAction;
   QAction * paintSelectBoxAction;
+
+  QAction * cutAction;
+  QAction * copyAction;
+  QAction * pasteAction;
+  QAction * deleteAction;
+  QAction * selectAllAction;
+  QAction * selectNoneAction;
 
   // Other stuff
   QString appTitle;

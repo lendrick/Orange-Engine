@@ -26,6 +26,8 @@ public:
     Layer();
     Layer(int w, int h, int fill = 0);
     Layer(Layer * l, int xo, int yo, int w, int h, int fill = 0);
+    Layer(Layer * l);
+    void clear(int fill = 0);
     void fillArea(int x, int y, int w, int h, int fill);
     void stamp(Layer * l, int x, int y, int x_offset = 0, int y_offset = 0, bool skipZero = true);
     void dump();

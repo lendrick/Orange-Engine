@@ -126,6 +126,23 @@ Map::Layer::Layer(Layer * l, int xo, int yo, int w, int h, int fill) {
   }
 }
 
+Map::Layer::Layer(Layer * l) {
+  width = l->width;
+  height = l->height;
+  layerdata = new int[height*width];
+  wrap = l->wrap;
+
+  for(int x = 0; x < width; x++) {
+    for(int y = 0; y < height; y++) {
+      layerdata[x + y * width] = l->layerdata[x + y * width];
+    }
+  }
+}
+
+void Map::Layer::clear(int fill) {
+  fillArea(0, 0, width, height, fill);
+}
+
 void Map::Layer::stamp(Layer * l, int xo, int yo, int x_offset, int y_offset, bool skipZero) {
   for(int x = x_offset; x < width; x++) {
     for(int y = y_offset; y < height; y++) {

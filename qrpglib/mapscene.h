@@ -22,7 +22,9 @@ public:
   void drawEntityNames(int layer, QPainter *painter);
   void drawNumbers(int layer, QPainter *painter, int tw, int th);
   void drawSelectBox(int layer, QPainter *painter, int tw, int th);
+  void drawTileHighlight(QPainter *painter, int tw, int th);
   void drawFloatingLayer(Map::Layer * layer, QRect rect, int xo, int yo, int tw, int th);
+  void getMouseTileCoords(int &x, int &y);
 
   //void drawEntityBoundingBoxes(int layer, QPainter *painter);
   QLabel * fpsLabel;
@@ -51,6 +53,14 @@ public slots:
   void editMapScripts();
   void editGlobalScripts();
   void editProperties();
+
+  void cutSelection();
+  void pasteSelection();
+  void deleteSelection();
+  void copySelection();
+  void selectAll();
+  void selectNone();
+
   void fill(int layer, int x, int y, int tile, int firstTile = -1);
 
 signals:
@@ -70,6 +80,7 @@ private:
   void keyPressEvent(QKeyEvent * event);
   void keyReleaseEvent(QKeyEvent * event);
   void keyEvent(int key, int eventType);
+  void updateSelection();
 
   bool mouseInsideSelection(QGraphicsSceneMouseEvent * e);
   //bool event(QEvent *event);

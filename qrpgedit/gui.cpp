@@ -37,8 +37,13 @@ MainWindow::MainWindow() :
 
   setWindowTitle(appTitle);
 
+  mapwin = new MapWindow(0);
+  mapBox = mapwin->mapbox;
+  mapwin->resize(400, 400);
+
   // Create the main menu
   fileMenu = menuBar()->addMenu("&File");
+  editMenu = menuBar()->addMenu("&Edit");
   resourceMenu = menuBar()->addMenu("&Resources");
   mapMenu = resourceMenu->addMenu("&Maps");
   mapMenu->setDisabled(true);
@@ -87,6 +92,34 @@ MainWindow::MainWindow() :
   fileMenu->addAction(quitAction);
 
   mapToolBar->addSeparator();
+
+  // Edit menu
+
+  cutAction = editMenu->addAction("Cu&t");
+  cutAction->setShortcut(QKeySequence("Ctrl+X"));
+  connect(cutAction, SIGNAL(triggered()), mapBox->mapScene, SLOT(cutSelection()));
+
+  copyAction = editMenu->addAction("&Copy");
+  copyAction->setShortcut(QKeySequence("Ctrl+C"));
+  connect(copyAction, SIGNAL(triggered()), mapBox->mapScene, SLOT(copySelection()));
+
+  pasteAction = editMenu->addAction("&Paste");
+  pasteAction->setShortcut(QKeySequence("Ctrl+V"));
+  connect(pasteAction, SIGNAL(triggered()), mapBox->mapScene, SLOT(pasteSelection()));
+
+  deleteAction = editMenu->addAction("&Delete");
+  deleteAction->setShortcut(QKeySequence("Del"));
+  connect(deleteAction, SIGNAL(triggered()), mapBox->mapScene, SLOT(deleteSelection()));
+
+  editMenu->addSeparator();
+
+  selectAllAction = editMenu->addAction("Select &All");
+  selectAllAction->setShortcut(QKeySequence("Ctrl+A"));
+  connect(selectAllAction, SIGNAL(triggered()), mapBox->mapScene, SLOT(selectAll()));
+
+  selectNoneAction = editMenu->addAction("Select &None");
+  selectNoneAction->setShortcut(QKeySequence("Ctrl+N"));
+  connect(selectNoneAction, SIGNAL(triggered()), mapBox->mapScene, SLOT(selectNone()));
 
   // Map operation buttons
 
@@ -248,9 +281,6 @@ MainWindow::MainWindow() :
   
   ////////////////////////////////////////////////////////////
   // The map window
-  mapwin = new MapWindow(0);
-  mapBox = mapwin->mapbox;
-  mapwin->resize(400, 400);
 
   setCentralWidget(mapwin);
 

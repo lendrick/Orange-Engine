@@ -291,6 +291,9 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
     if(selectBox.width() != 0 || selectBox.height() != 0) {
       drawSelectBox(mapBox->layer, painter, tw, th);
     }
+
+    if(mapBox->mapEditorMode == MapEditorMode::Edit)
+      drawTileHighlight(painter, tw, th);
     //if(viewBoundingBoxes) drawEntityBoundingBoxes(mapBox->layer, painter);
   }
   glFlush();
@@ -386,6 +389,15 @@ void MapScene::drawSelectBox(int layer, QPainter * painter, int tw, int th) {
   painter->setPen(selectPen);
   painter->drawRect(x, y, w, h);
   painter->restore();
+}
+
+void MapScene::drawTileHighlight(QPainter * painter, int tw, int th) {
+  int x, y;
+  getMouseTileCoords(x, y);
+
+  if(x >= 0 && y >= 0) {
+    painter->fillRect(x * tw - mapBox->xo, y * th - mapBox->yo, tw, th, QColor(255, 255, 255, 50));
+  }
 }
 
 void MapScene::drawFloatingLayer(Map::Layer * layer, QRect rect, int xo, int yo, int tw, int th) {
@@ -680,15 +692,7 @@ void MapScene::mouseReleaseEvent(QGraphicsSceneMouseEvent * e) {
     if(paintMode == PaintMode::SelectBox) {
       if(!selection) {
         qDebug() << "selection released " << selectBox;
-        selectBox = selectBox.normalized();
-        qDebug() << "Normalized: " << selectBox;
-        Map::Layer * currentLayer = mapBox->getCurrentLayer();
-        selection = new Map::Layer(currentLayer,
-                              selectBox.x(), selectBox.y(),
-                              selectBox.width(), selectBox.height());
-        currentLayer->fillArea(selectBox.x(), selectBox.y(),
-                               selectBox.width(), selectBox.height(), 0);
-        selection->dump();
+        updateSelection();
       }
     } else {
       qDebug() << "WARNING: drawingSelectBox true while not in PaintMode::SelectBox";
@@ -807,6 +811,91 @@ bool MapScene::mouseInsideSelection(QGraphicsSceneMouseEvent * e) {
     return true;
   else
     return false;
+}
+
+void MapScene::cutSelection() {
+  copySelection();
+  selection->clear();
+  selectBox = QRect();
+}
+
+void MapScene::pasteSelection() {
+  if(selection) {
+    selection->stamp(mapBox->getCurrentLayer(), selectBox.x(), selectBox.y());
+
+    delete selection;
+    selection = 0;
+  }
+
+  int x, y;
+  getMouseTileCoords(x, y);
+
+  if(x == -1) x = 0;
+  if(y == -1) y = 0;
+
+  selection = new Map::Layer(clipboard);
+  selectBox = QRect(x, y, selection->width, selection->height);
+}
+
+void MapScene::deleteSelection() {
+  selection->clear();
+}
+
+void MapScene::copySelection() {
+  if(clipboard) {
+    delete clipboard;
+    clipboard = 0;
+  }
+
+  clipboard = new Map::Layer(selection);
+}
+
+void MapScene::selectAll() {
+  int w, h;
+  mapBox->map->getSize(mapBox->layer, w, h);
+  selectBox = QRect(0, 0, w, h);
+  updateSelection();
+}
+
+void MapScene::selectNone() {
+  selectBox = QRect();
+  if(selection) {
+    delete selection;
+    selection = 0;
+  }
+}
+
+void MapScene::updateSelection() {
+  if(selection) {
+    delete selection;
+    selection = 0;
+  }
+
+  selectBox = selectBox.normalized();
+  //qDebug() << "Normalized: " << selectBox;
+  Map::Layer * currentLayer = mapBox->getCurrentLayer();
+  selection = new Map::Layer(currentLayer,
+                        selectBox.x(), selectBox.y(),
+                        selectBox.width(), selectBox.height());
+  currentLayer->fillArea(selectBox.x(), selectBox.y(),
+                         selectBox.width(), selectBox.height(), 0);
+  selection->dump();
+}
+
+void MapScene::getMouseTileCoords(int &x, int &y) {
+  int tw, th;
+  mapBox->map->getTileSize(tw, th);
+  QPoint p = mapBox->mapFromGlobal(QCursor::pos());
+
+  //qDebug() << p << " " << mapBox->xo << " " << mapBox->yo << "(" << tw << " " << th << ")";
+  x = (p.x() + mapBox->xo) / tw;
+  y = (p.y() + mapBox->yo) / th;
+
+  if(x < 0 || x >= mapBox->getCurrentLayer()->width ||
+     y < 0 || y >= mapBox->getCurrentLayer()->height) {
+    x = -1;
+    y = -1;
+  }
 }
 
 /*
