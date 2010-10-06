@@ -4,11 +4,11 @@
 #include "polygon.h"
 #include "bitmap.h"
 #include "rpgscript.h"
+#include "entity.h"
 #include <QtCore>
 
 class Resource;
 class Bitmap;
-class Entity;
 typedef QSharedPointer<Entity> EntityPointer;
 
 class Map : public QObject, public QScriptable {

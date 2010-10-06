@@ -41,7 +41,6 @@ class Sprite;
 class Resource;
 class MainWindow;
 class Project;
-class Entity;
 class ScriptUtils;
 class Player;
 class QRPGConsole;

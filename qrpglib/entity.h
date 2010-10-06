@@ -5,8 +5,9 @@
 #include <QtScript>
 #include "entityscript.h"
 #include "sprite.h"
-#include "map.h"
 #include "resource.h"
+
+class Entity;
 
 typedef QSharedPointer<Entity> EntityPointer;
 typedef QSharedPointer<QObject> ObjectPointer;
