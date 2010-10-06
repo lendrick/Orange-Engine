@@ -41,6 +41,16 @@ MapScene::MapScene(MapBox * m)
   fpsLabel->setStyle(outlineStyle);
   addWidget(fpsLabel);
 
+  selection = 0;
+  clipboard = 0;
+
+  drawingSelectBox = false;
+  movingSelectBox = false;
+  mouseStartX = 0;
+  mouseStartY = 0;
+  selectBoxStartX = 0;
+  selectBoxStartY = 0;
+
   //talkBoxTest = new TalkBox("Hello, world!\ntesting 1 2 3\nblah blah blah");
   //addItem(talkBoxTest);
   //QStateMachine * machine = new QStateMachine;
@@ -234,6 +244,10 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
       if(i == mapBox->layer) {
         // Draw the current layer
         mapBox->map->draw(i, xo, yo, 1.0, viewBoundingBoxes);
+        if(selectBox.width() != 0 || selectBox.height() != 0) {
+          //qDebug() << "main layer " << xo << " " << yo;
+          drawFloatingLayer(selection, selectBox, xo, yo, tw, th);
+        }
       } else if(mapBox->getDrawMode() == LayerView::All ||
                 mapBox->getDrawMode() == LayerView::AllBelow ||
                 mapBox->getDrawMode() == LayerView::AllOpaque ) {
@@ -374,6 +388,18 @@ void MapScene::drawSelectBox(int layer, QPainter * painter, int tw, int th) {
   painter->restore();
 }
 
+void MapScene::drawFloatingLayer(Map::Layer * layer, QRect rect, int xo, int yo, int tw, int th) {
+  //qDebug() << "drawing floating layer";
+  int x, y;
+
+  x = rect.x() * tw - xo;
+  y = rect.y() * th - yo;
+
+  //qDebug() << x << " " << y;
+
+  mapBox->map->draw(layer, -x, -y, 1, false, false);
+}
+
 void MapScene::drawEntityNames(int layer, QPainter * painter) {
   painter->save();
   painter->setFont(*entityFont);
@@ -439,6 +465,111 @@ void MapScene::drawNumbers(int layer, QPainter * painter, int tw, int th) {
   }
 }
 
+void MapScene::mousePressEvent(QGraphicsSceneMouseEvent * e) {
+  //qDebug() << "MapScene::mousePressEvent";
+  //setFocus(Qt::MouseFocusReason);
+  //QGraphicsScene::mousePressEvent(e);
+  //if(e->isAccepted()) return;
+  //e->accept();
+  /*
+  foreach (QGraphicsItem *item, items()) {
+    QGraphicsProxyWidget * gpw = dynamic_cast< QGraphicsProxyWidget *>(item);
+    qDebug() << "  QGraphicsItem" << item->type();
+    if(gpw) {
+      //qDebug() << "  PROXYWIDGET " << mouseGrabberItem();
+    }
+    if(mouseGrabberItem()) {
+      //qDebug() <<  "  MouseGrabber Item";
+    }
+    if(gpw == mouseGrabberItem()) {
+      //qDebug() << "  ProxyWidget is mouse grabber";
+    }
+  }
+  */
+
+  drawingSelectBox = false;
+  movingSelectBox = false;
+  mouseStartX = e->scenePos().x();
+  mouseStartY = e->scenePos().y();
+
+  if(mapBox->mapEditorMode == MapEditorMode::Edit && mapBox->map && e->button() == Qt::LeftButton) {
+    if(paintMode == PaintMode::Draw) {
+      mapBox->setTile(e);
+    } else if(paintMode == PaintMode::SelectBox) {
+      if(mouseInsideSelection(e)) {
+        movingSelectBox = true;
+        selectBoxStartX = selectBox.x();
+        selectBoxStartY = selectBox.y();
+      } else {
+        drawingSelectBox = true;
+        //qDebug() << "MouseClick: " << e;
+        if(selection) {
+          selection->stamp(mapBox->getCurrentLayer(),selectBox.x(), selectBox.y());
+          delete selection;
+          selection = 0;
+        }
+
+        selectBox = QRect();
+
+        int w, h, x, y;
+
+        mapBox->map->getTileSize(w, h);
+        x = (mapBox->xo + mouseStartX) / w;
+        y = (mapBox->yo + mouseStartY) / h;
+
+        selectBox.setX(x);
+        selectBox.setY(y);
+        selectBox.setWidth(0);
+        selectBox.setHeight(0);
+
+        //qDebug() << selectBox;
+      }
+    } else if(paintMode == PaintMode::Brush) {
+
+    } else if(paintMode == PaintMode::Fill) {
+      int w, h, x, y;
+
+      mapBox->map->getTileSize(w, h);
+      x = (mapBox->xo + mouseStartX) / w;
+      y = (mapBox->yo + mouseStartY) / h;
+      fill(mapBox->layer, x, y, mapBox->currentTile);
+    }
+    //qDebug() << "  set tile";
+  } else if(mapBox->mapEditorMode == MapEditorMode::Entity &&
+    mapBox->map && e->button() == Qt::LeftButton) {
+    mapBox->dragEntity =
+      mapBox->entityAt(mouseStartX + mapBox->xo, mouseStartY + mapBox->yo);
+    //qDebug() << "  starting drag " << mapBox->dragEntity->getName().toAscii().data();
+  } else if(mapBox->map && e->button() == Qt::MidButton) {
+    mapBox->mouse_start_x = mouseStartX;
+    mapBox->mouse_start_y = mouseStartY;
+    //qDebug() << "  middle button pressed";
+  } else if(mapBox->map && play && playerEntity && e->button() == Qt::RightButton) {
+    playerEntity->clearQueue();
+    playerEntity->queueMoveTo(mouseStartX + mapBox->xo, mouseStartY + mapBox->yo);
+
+    EntityPointer x = mapBox->entityAt(mouseStartX + mapBox->xo, mouseStartY + mapBox->yo);
+    if(x) cprint("Entity: " + x->getName());
+    //qDebug() << "  right button pressed in play mode";
+  } else if(mapBox->map && e->button() == Qt::RightButton) {
+    EntityPointer x = mapBox->entityAt(mouseStartX + mapBox->xo, mouseStartY + mapBox->yo);
+    mouseScreenPos = e->screenPos();
+    mouseScenePos = e->scenePos();
+    if(x) {
+      selectedEntity = x;
+      entityPopupMenu->exec(e->screenPos());
+    } else {
+      mapPopupMenu->exec(e->screenPos());
+    }
+    //qDebug() << "  popup menu";
+  } else {
+    //qDebug() << "  unhandled";
+    //return;
+  }
+  //qDebug() << "  accepted";
+  e->accept();
+}
+
 void MapScene::mouseMoveEvent(QGraphicsSceneMouseEvent * e) {
   //qDebug() << "MapScene::mouseMoveEvent";
 
@@ -460,21 +591,27 @@ void MapScene::mouseMoveEvent(QGraphicsSceneMouseEvent * e) {
       if(paintMode == PaintMode::Draw) {
         mapBox->setTile(e);
       } else if(paintMode == PaintMode::SelectBox) {
-        //qDebug() << "MouseMove: " << e;
         int w, h, x, y;
-
         mapBox->map->getTileSize(w, h);
-        x = (mapBox->xo + e->scenePos().x()) / w;
-        y = (mapBox->yo + e->scenePos().y()) / h;
 
-        int width, height;
-        width = x - selectBox.x();
-        height = y - selectBox.y();
+        if(movingSelectBox) {
+          selectBox.moveTo(selectBoxStartX + (e->scenePos().x() - mouseStartX) / w,
+                           selectBoxStartY + (e->scenePos().y() - mouseStartY) / h);
+        } else if(drawingSelectBox) {
+          //qDebug() << "MouseMove: " << e;
+          mapBox->map->getTileSize(w, h);
+          x = (mapBox->xo + e->scenePos().x()) / w;
+          y = (mapBox->yo + e->scenePos().y()) / h;
 
-        if(width >= 0) width++;
-        if(height >= 0) height++;
-        selectBox.setWidth(width);
-        selectBox.setHeight(height);
+          int width, height;
+          width = x - selectBox.x();
+          height = y - selectBox.y();
+
+          if(width >= 0) width++;
+          if(height >= 0) height++;
+          selectBox.setWidth(width);
+          selectBox.setHeight(height);
+        }
       } else if(paintMode == PaintMode::Brush) {
 
       } else if(paintMode == PaintMode::Fill) {
@@ -535,18 +672,37 @@ void MapScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent * e) {
 }
 
 void MapScene::mouseReleaseEvent(QGraphicsSceneMouseEvent * e) {
-  //qDebug() << "MapScene::mouseReleaseEvent";
+  qDebug() << "MapScene::mouseReleaseEvent " << e->buttons();
   //QGraphicsScene::mouseReleaseEvent(e);
   //if(e->isAccepted()) return;
 
-  if((e->buttons() & Qt::LeftButton)) {
-    mapBox->dragEntity = EntityPointer();
-    e->accept();
-    //qDebug() << "  left button";
+  if(drawingSelectBox) {
+    if(paintMode == PaintMode::SelectBox) {
+      if(!selection) {
+        qDebug() << "selection released " << selectBox;
+        selectBox = selectBox.normalized();
+        qDebug() << "Normalized: " << selectBox;
+        Map::Layer * currentLayer = mapBox->getCurrentLayer();
+        selection = new Map::Layer(currentLayer,
+                              selectBox.x(), selectBox.y(),
+                              selectBox.width(), selectBox.height());
+        currentLayer->fillArea(selectBox.x(), selectBox.y(),
+                               selectBox.width(), selectBox.height(), 0);
+        selection->dump();
+      }
+    } else {
+      qDebug() << "WARNING: drawingSelectBox true while not in PaintMode::SelectBox";
+    }/*else {
+      mapBox->dragEntity = EntityPointer();
+      e->accept();
+    }*/
     return;
   } else {
-    //qDebug() << "  not accepted";
   }
+  drawingSelectBox = false;
+  movingSelectBox = false;
+  mouseStartX = 0;
+  mouseStartY = 0;
 
   QGraphicsScene::mouseReleaseEvent(e);
 }
@@ -599,92 +755,6 @@ void MapScene::keyReleaseEvent(QKeyEvent * event) {
   keyEvent(event->key(), QEvent::KeyRelease);
 }
 
-void MapScene::mousePressEvent(QGraphicsSceneMouseEvent * e) {
-  //qDebug() << "MapScene::mousePressEvent";
-  //setFocus(Qt::MouseFocusReason);
-  //QGraphicsScene::mousePressEvent(e);
-  //if(e->isAccepted()) return;
-  //e->accept();
-  /*
-  foreach (QGraphicsItem *item, items()) {
-    QGraphicsProxyWidget * gpw = dynamic_cast< QGraphicsProxyWidget *>(item);
-    qDebug() << "  QGraphicsItem" << item->type();
-    if(gpw) {
-      //qDebug() << "  PROXYWIDGET " << mouseGrabberItem();
-    }
-    if(mouseGrabberItem()) {
-      //qDebug() <<  "  MouseGrabber Item";
-    }
-    if(gpw == mouseGrabberItem()) {
-      //qDebug() << "  ProxyWidget is mouse grabber";
-    }
-  }
-  */
-  if(mapBox->mapEditorMode == MapEditorMode::Edit && mapBox->map && e->button() == Qt::LeftButton) {
-    if(paintMode == PaintMode::Draw) {
-      mapBox->setTile(e);
-    } else if(paintMode == PaintMode::SelectBox) {
-      //qDebug() << "MouseClick: " << e;
-      selectBox = QRect();
-
-      int w, h, x, y;
-
-      mapBox->map->getTileSize(w, h);
-      x = (mapBox->xo + e->scenePos().x()) / w;
-      y = (mapBox->yo + e->scenePos().y()) / h;
-
-      selectBox.setX(x);
-      selectBox.setY(y);
-      selectBox.setWidth(0);
-      selectBox.setHeight(0);
-
-      //qDebug() << selectBox;
-    } else if(paintMode == PaintMode::Brush) {
-
-    } else if(paintMode == PaintMode::Fill) {
-      int w, h, x, y;
-
-      mapBox->map->getTileSize(w, h);
-      x = (mapBox->xo + e->scenePos().x()) / w;
-      y = (mapBox->yo + e->scenePos().y()) / h;
-      fill(mapBox->layer, x, y, mapBox->currentTile);
-    }
-    //qDebug() << "  set tile";
-  } else if(mapBox->mapEditorMode == MapEditorMode::Entity &&
-    mapBox->map && e->button() == Qt::LeftButton) {
-    mapBox->dragEntity =
-      mapBox->entityAt(e->scenePos().x() + mapBox->xo, e->scenePos().y() + mapBox->yo);
-    //qDebug() << "  starting drag " << mapBox->dragEntity->getName().toAscii().data();
-  } else if(mapBox->map && e->button() == Qt::MidButton) {
-    mapBox->mouse_start_x = e->scenePos().x();
-    mapBox->mouse_start_y = e->scenePos().y();
-    //qDebug() << "  middle button pressed";
-  } else if(mapBox->map && play && playerEntity && e->button() == Qt::RightButton) {
-    playerEntity->clearQueue();
-    playerEntity->queueMoveTo(e->scenePos().x() + mapBox->xo, e->scenePos().y() + mapBox->yo);
-
-    EntityPointer x = mapBox->entityAt(e->scenePos().x() + mapBox->xo, e->scenePos().y() + mapBox->yo);
-    if(x) cprint("Entity: " + x->getName());
-    //qDebug() << "  right button pressed in play mode";
-  } else if(mapBox->map && e->button() == Qt::RightButton) {
-    EntityPointer x = mapBox->entityAt(e->scenePos().x() + mapBox->xo, e->scenePos().y() + mapBox->yo);
-    mouseScreenPos = e->screenPos();
-    mouseScenePos = e->scenePos();
-    if(x) {
-      selectedEntity = x;
-      entityPopupMenu->exec(e->screenPos());
-    } else {
-      mapPopupMenu->exec(e->screenPos());
-    }
-    //qDebug() << "  popup menu";
-  } else {
-    //qDebug() << "  unhandled";
-    //return;
-  }
-  //qDebug() << "  accepted";
-  e->accept();
-}
-
 void MapScene::fill(int layer, int x, int y, int tile, int firstTile)  {
   int w, h;
   mapBox->map->getSize(layer, w, h);
@@ -721,6 +791,22 @@ void MapScene::fill(int layer, int x, int y, int tile, int firstTile)  {
     fill(layer, x, y + 1, tile, firstTile);
     fill(layer, x, y - 1, tile, firstTile);
   }
+}
+
+bool MapScene::mouseInsideSelection(QGraphicsSceneMouseEvent * e) {
+  if(!selection || drawingSelectBox)
+    return false;
+
+  int w, h, x, y;
+
+  mapBox->map->getTileSize(w, h);
+  x = (mapBox->xo + e->scenePos().x()) / w;
+  y = (mapBox->yo + e->scenePos().y()) / h;
+
+  if(selectBox.contains(x, y, false))
+    return true;
+  else
+    return false;
 }
 
 /*

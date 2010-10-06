@@ -44,6 +44,7 @@ public slots:
   void addWidget(QWidget *);
   EntityPointer entityAt(int x, int y);
   QList < EntityPointer > entitiesAt(int x, int y);
+  Map::Layer * getCurrentLayer();
   
   void setEditMode();
   void setEntityMode();

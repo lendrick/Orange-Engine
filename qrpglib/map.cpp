@@ -11,14 +11,13 @@
 #include <stdlib.h>
 #include <iostream>
 #include <fstream>
+#include <iomanip>
 #include <string.h>
 #include <QXmlStreamReader>
 #include <QtGui>
 #include <QGLWidget>
 
-using std::cout;
-using std::ifstream;
-using std::ofstream;
+using namespace std;
 
 Map::Map(Bitmap * t, int x, int y, int w, int h, QString mapname) : QObject() {
   tileset = t;
@@ -110,7 +109,7 @@ Map::Layer::Layer(int h, int w, int fill) {
   for(int i = 0; i < h * w; i++) layerdata[i] = fill;
 }
 
-Map::Layer::Layer(Layer * l, int xo, int yo, int h, int w) {
+Map::Layer::Layer(Layer * l, int xo, int yo, int w, int h, int fill) {
   width = w;
   height = h;
   layerdata = new int[h*w];
@@ -118,12 +117,24 @@ Map::Layer::Layer(Layer * l, int xo, int yo, int h, int w) {
 
   for(int x = 0; x < width; x++) {
     for(int y = 0; y < height; y++) {
-      if(x < l->width && y < l->height) {
-        layerdata[x + y * w] = l->layerdata[x + xo + (y + yo) * width];
+      if(x + xo >= 0 && y + yo >= 0 && x + xo < l->width && y + yo < l->height) {
+        layerdata[x + y * w] = l->layerdata[x + xo + (y + yo) * l->width];
+      } else {
+        layerdata[x + y * w] = fill;
       }
     }
   }
+}
 
+void Map::Layer::stamp(Layer * l, int xo, int yo, int x_offset, int y_offset, bool skipZero) {
+  for(int x = x_offset; x < width; x++) {
+    for(int y = y_offset; y < height; y++) {
+      if(x + xo >= 0 && y + yo >= 0 && x + xo < l->width && y + yo < l->height) {
+        int t = layerdata[x + y * width];
+        if(!skipZero || t > 0) l->layerdata[x + xo + (y + yo) * l->width] = t;
+      }
+    }
+  }
 }
 
 void Map::Layer::resize(int w, int h, int fill) {
@@ -140,6 +151,15 @@ void Map::Layer::resize(int w, int h, int fill) {
 
   delete layerdata;
   layerdata = newdata;
+}
+
+void Map::Layer::dump() {
+  for(int y = 0; y < height; y++) {
+    for(int x = 0; x < width; x++) {
+      cout << setw(4) << layerdata[x + y * width] << " ";
+    }
+    cout << "\n";
+  }
 }
 
 void Map::Layer::fillArea(int xo, int yo, int w, int h, int fill) {
@@ -223,49 +243,55 @@ void Map::setViewport(int x, int y, int w, int h) {
   view_h = h;
 }
 
-void Map::draw(int layer, int x, int y, float opacity, bool boundingboxes) {
-  if(tileset) {
+void Map::draw(Layer *layer, int x, int y, float opacity, bool boundingboxes, bool entities) {
+  if(layer && tileset) {
     int xs, ys, h, w, x_off, y_off;
     int i, j;
-    
+
     xs = x / tile_w;
     ys = y / tile_h;
     w = view_w / tile_w + 2;
     h = view_h / tile_h + 2;
     x_off = x % tile_w;
-    y_off = y % tile_h; 
+    y_off = y % tile_h;
     if(x_off == tile_w) x_off = 0;
     if(y_off == tile_h) y_off = 0;
-    
+
     for(j = ys; j < ys + h; j++) {
       for(i = xs; i < xs + w; i++) {
-        if(i >= 0 && i < layers[layer]->width && j >= 0 && j < layers[layer]->height) {
+        if(i >= 0 && i < layer->width && j >= 0 && j < layer->height) {
           int tile_x = (i - xs) * tile_w - x_off + view_x;
           int tile_y = (j - ys) * tile_h - y_off + view_y;
-          
+
           tileset->draw(getTile(layer, i, j), tile_x, tile_y, opacity);
         }
       }
     }
 
-    // Sort in Y direction
-    if(play) {
-      if(layers[layer]->entities.size()) 
-        qSort(layers[layer]->entities.begin(), layers[layer]->entities.end(), Entity::entity_y_order);
-      
-      for(i = 0; i < layers[layer]->entities.size(); i++) {
-        layers[layer]->entities[i]->draw(x, y, 1, boundingboxes);
-      }
-    } else {
-      if(layers[layer]->startEntities.size()) 
-        qSort(layers[layer]->startEntities.begin(), layers[layer]->startEntities.end(), Entity::entity_y_order);
-      
-      for(i = 0; i < layers[layer]->startEntities.size(); i++) {
-        layers[layer]->startEntities[i]->draw(x, y, opacity, boundingboxes);
+    if(entities) {
+      // Sort entities in Y direction
+      if(play) {
+        if(layer->entities.size())
+          qSort(layer->entities.begin(), layer->entities.end(), Entity::entity_y_order);
+
+        for(i = 0; i < layer->entities.size(); i++) {
+          layer->entities[i]->draw(x, y, 1, boundingboxes);
+        }
+      } else {
+        if(layer->startEntities.size())
+          qSort(layer->startEntities.begin(), layer->startEntities.end(), Entity::entity_y_order);
+
+        for(i = 0; i < layer->startEntities.size(); i++) {
+          layer->startEntities[i]->draw(x, y, opacity, boundingboxes);
+        }
       }
     }
 
   }
+}
+
+void Map::draw(int layer, int x, int y, float opacity, bool boundingboxes, bool entities) {
+  draw(layers[layer], x, y, opacity, boundingboxes, entities);
 }
 
 void Map::addEntity(int layer, EntityPointer entity) {
@@ -327,6 +353,14 @@ int Map::getTile(int layer, int x, int y) {
      x >= 0 && x < layers[layer]->width &&
      y >= 0 && y < layers[layer]->height) 
     return layers[layer]->layerdata[x + y * layers[layer]->width];
+  return 0;
+}
+
+int Map::getTile(Layer * layer, int x, int y) {
+  if(layer &&
+     x >= 0 && x < layer->width &&
+     y >= 0 && y < layer->height)
+    return layer->layerdata[x + y * layer->width];
   return 0;
 }
 
@@ -416,7 +450,7 @@ void Map::save(QString filename) {
     for(y = 0; y < layers[i]->height; y++) {
       file << "      ";
       for(x = 0; x < layers[i]->width; x++) {
-        file << layers[i]->layerdata[y*layers[i]->width+x] << " ";
+        file << setw(4) << layers[i]->layerdata[y*layers[i]->width+x] << " ";
       }
       file << "\n";
     }

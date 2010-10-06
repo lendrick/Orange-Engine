@@ -22,6 +22,7 @@ public:
   void drawEntityNames(int layer, QPainter *painter);
   void drawNumbers(int layer, QPainter *painter, int tw, int th);
   void drawSelectBox(int layer, QPainter *painter, int tw, int th);
+  void drawFloatingLayer(Map::Layer * layer, QRect rect, int xo, int yo, int tw, int th);
 
   //void drawEntityBoundingBoxes(int layer, QPainter *painter);
   QLabel * fpsLabel;
@@ -69,8 +70,21 @@ private:
   void keyPressEvent(QKeyEvent * event);
   void keyReleaseEvent(QKeyEvent * event);
   void keyEvent(int key, int eventType);
+
+  bool mouseInsideSelection(QGraphicsSceneMouseEvent * e);
   //bool event(QEvent *event);
   //bool eventFilter(QObject * watched, QEvent * event);
+
+  Map::Layer * selection;
+  Map::Layer * clipboard;
+  QList< Map::Layer * > brushes;
+
+  bool drawingSelectBox;
+  bool movingSelectBox;
+  int mouseStartX;
+  int mouseStartY;
+  int selectBoxStartX;
+  int selectBoxStartY;
 };
 
 #endif // MAPSCENE_H

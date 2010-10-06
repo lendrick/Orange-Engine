@@ -13,22 +13,8 @@ typedef QSharedPointer<Entity> EntityPointer;
 
 class Map : public QObject, public QScriptable {
   Q_OBJECT
+  friend class MapBox;
 public:
-  Map();
-  Map(Bitmap * t, int x, int y, int w, int h, QString mapname = "Unnamed Map");
-  ~Map();
-  void draw(int layer, int x, int y, float opacity, bool boundingboxes = false);
-  void getTileSize(int &w, int &h);
-  void getSize(int layer, int &w, int &h);
-  void setTileset(Bitmap * t);
-  void setTileset(int layer, Bitmap * t);
-  Bitmap * getTileset();
-  void save(QString filename);
-  Resource * getThisMap() { return thisMap; }
-  void update();
-  QScriptValue scriptObject;
-  QScriptValue getScriptObject();
-
   struct Tile {
     int bitmap;
     bool solid;
@@ -39,8 +25,10 @@ public:
   struct Layer {
     Layer();
     Layer(int w, int h, int fill = 0);
-    Layer(Layer * l, int xo, int yo, int w, int h);
+    Layer(Layer * l, int xo, int yo, int w, int h, int fill = 0);
     void fillArea(int x, int y, int w, int h, int fill);
+    void stamp(Layer * l, int x, int y, int x_offset = 0, int y_offset = 0, bool skipZero = true);
+    void dump();
     ~Layer();
     void resize(int w, int h, int fill = 0);
 
@@ -55,11 +43,28 @@ public:
     int tile_w, tile_h;
   };
 
+  Map();
+  Map(Bitmap * t, int x, int y, int w, int h, QString mapname = "Unnamed Map");
+  ~Map();
+  void draw(int layer, int x, int y, float opacity, bool boundingboxes = false, bool entities = true);
+  void draw(Layer * layer, int x, int y, float opacity, bool boundingboxes = false, bool entities = true);
+  void getTileSize(int &w, int &h);
+  void getSize(int layer, int &w, int &h);
+  void setTileset(Bitmap * t);
+  void setTileset(int layer, Bitmap * t);
+  Bitmap * getTileset();
+  void save(QString filename);
+  Resource * getThisMap() { return thisMap; }
+  void update();
+  QScriptValue scriptObject;
+  QScriptValue getScriptObject();
+
 public slots:
   bool setName(QString n);
   QString getName();
   void setTile(int layer, int x, int y, int tile);
   int getTile(int layer, int x, int y);
+  int getTile(Layer * layer, int x, int y);
   int getLayerCount();
   QString getLayerName(int layer);
   void setLayerName(int layer, QString name);

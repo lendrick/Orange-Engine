@@ -354,6 +354,10 @@ QList < EntityPointer > MapBox::entitiesAt(int x, int y) {
   return entities;
 }
 
+Map::Layer * MapBox::getCurrentLayer() {
+  return map->layers[layer];
+}
+
 /*
 bool MapBox::viewportEvent(QEvent *event) {
   if(event->type() != QEvent::Paint && event->type() != QEvent::UpdateRequest)
