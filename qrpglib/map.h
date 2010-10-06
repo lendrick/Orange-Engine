@@ -39,8 +39,11 @@ public:
   struct Layer {
     Layer();
     Layer(int w, int h, int fill = 0);
+    Layer(Layer * l, int xo, int yo, int w, int h);
+    void fillArea(int x, int y, int w, int h, int fill);
     ~Layer();
-    resize(int w, int h, int fill = 0);
+    void resize(int w, int h, int fill = 0);
+
     int height, width;
     QString name;
     int * layerdata;

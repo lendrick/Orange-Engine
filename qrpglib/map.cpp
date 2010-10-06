@@ -110,7 +110,23 @@ Map::Layer::Layer(int h, int w, int fill) {
   for(int i = 0; i < h * w; i++) layerdata[i] = fill;
 }
 
-Map::Layer::resize(int w, int h, int fill) {
+Map::Layer::Layer(Layer * l, int xo, int yo, int h, int w) {
+  width = w;
+  height = h;
+  layerdata = new int[h*w];
+  wrap = false;
+
+  for(int x = 0; x < width; x++) {
+    for(int y = 0; y < height; y++) {
+      if(x < l->width && y < l->height) {
+        layerdata[x + y * w] = l->layerdata[x + xo + (y + yo) * width];
+      }
+    }
+  }
+
+}
+
+void Map::Layer::resize(int w, int h, int fill) {
   int * newdata = new int[h*w];
   for(int i = 0; i < h * w; i++) newdata[i] = fill;
 
@@ -124,6 +140,16 @@ Map::Layer::resize(int w, int h, int fill) {
 
   delete layerdata;
   layerdata = newdata;
+}
+
+void Map::Layer::fillArea(int xo, int yo, int w, int h, int fill) {
+  for(int x = xo; x < xo + w; x++) {
+    for(int y = yo; y < yo + h; y++) {
+      if(x < width && y < height) {
+        layerdata[x + y * width] = fill;
+      }
+    }
+  }
 }
 
 Map::~Map() {
