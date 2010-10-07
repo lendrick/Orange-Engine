@@ -87,6 +87,7 @@ public slots:
   void setStarting(bool);
   EntityPointer getEntity(int layer, int index);
   EntityPointer getStartEntity(int layer, int index);
+  Layer * getLayer(int l);
 
   void addScript(int, QString);
   void clearScripts();

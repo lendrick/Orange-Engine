@@ -71,13 +71,13 @@ MapScene::MapScene(MapBox * m)
   mapPopupMenu = new QMenu();
   entityPopupMenu = new QMenu();
 
-  newEntityAction = new QAction("New Entity", 0);
+  newEntityAction = new QAction("New Entity...", 0);
   deleteEntityAction = new QAction("Delete Entity", 0);
-  editEntityAction = new QAction("Edit Entity", 0);
-  editPropertiesAction = new QAction("Properties", 0);
+  editEntityAction = new QAction("Edit Entity...", 0);
+  editPropertiesAction = new QAction("Properties...", 0);
 
-  editMapScriptsAction = new QAction("Edit Map Scripts", 0);
-  editGlobalScriptsAction = new QAction("Edit Global Scripts", 0);
+  editMapScriptsAction = new QAction("Edit Map Scripts...", 0);
+  editGlobalScriptsAction = new QAction("Edit Global Scripts...", 0);
 
   mapPopupMenu->addAction(newEntityAction);
   mapPopupMenu->addAction(editMapScriptsAction);

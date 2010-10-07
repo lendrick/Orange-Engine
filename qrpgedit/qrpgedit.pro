@@ -61,7 +61,8 @@ SOURCES +=\
     ../qrpglib/collisiontester.cpp \
     ../qrpglib/boundswidget.cpp \
     ../qrpglib/bitmap_qt.cpp \
-    ../qrpglib/propertyeditor.cpp
+    ../qrpglib/propertyeditor.cpp \
+    ../qrpglib/layerdialog.cpp
 
 HEADERS  += \
     resource.h \
@@ -112,6 +113,7 @@ HEADERS  += \
     ../qrpglib/collisiontester.h \
     ../qrpglib/boundswidget.h \
     ../qrpglib/bitmap.h \
-    ../qrpglib/propertyeditor.h
+    ../qrpglib/propertyeditor.h \
+    ../qrpglib/layerdialog.h
 
 FORMS    +=

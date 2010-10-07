@@ -3,6 +3,8 @@
 #include "icons.h"
 #include "globals.h"
 #include "mapwindow.h"
+#include "mapbox.h"
+#include "layerdialog.h"
 
 LayerTable::LayerTable(QWidget * parent) : QTableWidget(parent) {
   setDragEnabled(true);
@@ -12,6 +14,11 @@ LayerTable::LayerTable(QWidget * parent) : QTableWidget(parent) {
   viewport()->setAcceptDrops(true);
   setSelectionMode(QAbstractItemView::SingleSelection);
   clickedLayer = 0;
+
+  layerPopupMenu = new QMenu();
+  layerPropertiesAction = layerPopupMenu->addAction("&Properties...");
+  connect(layerPropertiesAction, SIGNAL(triggered()),
+          this, SLOT(showLayerPropertiesDialog()));
 }
 
 void LayerTable::mousePressEvent(QMouseEvent *event)
@@ -19,7 +26,8 @@ void LayerTable::mousePressEvent(QMouseEvent *event)
   if(event->button() == Qt::LeftButton) {
     startPos = event->pos();
   } else if(event->button() == Qt::RightButton) {
-
+    clickedLayer = rowAt(event->pos().y());
+    layerPopupMenu->exec(event->globalPos());
   }
 
   QTableWidget::mousePressEvent(event);
@@ -94,6 +102,11 @@ void LayerTable::dropEvent(QDropEvent *event)
 
 QStringList LayerTable::mimeTypes() const {
   return QStringList("text/rpgx-map-layer-id");
+}
+
+void LayerTable::showLayerPropertiesDialog() {
+  LayerDialog d(mapBox->getMap()->getLayer(clickedLayer), 0);
+  d.exec();
 }
 
 /****************************************************/

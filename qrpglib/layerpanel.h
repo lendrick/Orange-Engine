@@ -15,10 +15,16 @@ protected:
   void dragEnterEvent(QDragEnterEvent *event);
   void dragMoveEvent(QDragMoveEvent *event);
   void dropEvent(QDropEvent *event);
+
+  QMenu * layerPopupMenu;
+  QAction * layerPropertiesAction;
+
   QStringList mimeTypes() const;
   //bool dropMimeData(int row, int column, const QMimeData* data, Qt::DropAction action);
 
   QPoint startPos;
+
+  int clickedLayer;
   /*
   QMimeData * mimeData(const QList<QTableWidgetItem *> items ) const;
   void dragMoveEvent(QDragMoveEvent* e);
@@ -26,6 +32,7 @@ protected:
   */
 public slots:
   //void removeRow(int);
+  void showLayerPropertiesDialog();
 protected slots:
   //void rowMoved(int row, int oldIndex, int newIndex);
 signals:
@@ -46,10 +53,8 @@ public:
   QAction * addLayerAction;
   QAction * delLayerAction;
 
-  QMenu * layerPopupMenu;
 private:
   int nameColumn;
-  int clickedLayer;
 
 signals:
   void addLayer(int);

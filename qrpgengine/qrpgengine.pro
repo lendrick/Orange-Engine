@@ -60,7 +60,8 @@ SOURCES +=\
     ../qrpglib/icons.cpp \
     ../qrpglib/collisiontester.cpp \
     ../qrpglib/boundswidget.cpp \
-    ../qrpglib/bitmap_qt.cpp
+    ../qrpglib/bitmap_qt.cpp \
+    ../qrpglib/layerdialog.cpp
 
 HEADERS  += \
     enginewindow.h \
@@ -110,6 +111,7 @@ HEADERS  += \
     ../qrpglib/icons.h \
     ../qrpglib/collisiontester.h \
     ../qrpglib/boundswidget.h \
-    ../qrpglib/bitmap.h
+    ../qrpglib/bitmap.h \
+    ../qrpglib/layerdialog.h
 
 FORMS    +=

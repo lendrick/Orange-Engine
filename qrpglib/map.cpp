@@ -168,6 +168,11 @@ void Map::Layer::resize(int w, int h, int fill) {
 
   delete layerdata;
   layerdata = newdata;
+  width = w;
+  height = h;
+
+  //message("layer resized");
+  dump();
 }
 
 void Map::Layer::dump() {
@@ -533,6 +538,13 @@ QString Map::getScript(int index) const {
 
 int Map::getScriptCondition(int index) const {
   return scripts[index].condition;
+}
+
+Map::Layer * Map::getLayer(int l) {
+  if(l < layers.size())
+    return layers[l];
+  else
+    return 0;
 }
 
 QScriptValue Map::getScriptObject() {
