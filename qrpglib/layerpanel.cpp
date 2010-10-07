@@ -11,12 +11,17 @@ LayerTable::LayerTable(QWidget * parent) : QTableWidget(parent) {
   setDropIndicatorShown(true);
   viewport()->setAcceptDrops(true);
   setSelectionMode(QAbstractItemView::SingleSelection);
+  clickedLayer = 0;
 }
 
 void LayerTable::mousePressEvent(QMouseEvent *event)
 {
-  if (event->button() == Qt::LeftButton)
+  if(event->button() == Qt::LeftButton) {
     startPos = event->pos();
+  } else if(event->button() == Qt::RightButton) {
+
+  }
+
   QTableWidget::mousePressEvent(event);
 }
 

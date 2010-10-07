@@ -192,6 +192,22 @@ GLuint Bitmap::load_texture(QString name) {
   return gltex;
 }
 
+void Bitmap::getSize(int &w, int &h) {
+  w = width;
+  h = height;
+}
+
+void Bitmap::getPixmapSize(int &w, int &h) {
+  w = tex_w;
+  h = tex_h;
+}
+
+void Bitmap::getGridSize(int &w, int &h) {
+  getPixmapSize(w, h);
+  w /= width;
+  h /= height;
+}
+
 void Bitmap::save(QString filename)
 {
   QFile outfile(filename);

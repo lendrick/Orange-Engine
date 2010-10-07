@@ -20,7 +20,9 @@ public:
   void draw(int tile, float x, float y, float opacity = 1.0, float scale = 1.0);
   void drawBoundingBox(int tile, float x, float y);
   int tileCount();
-  void getSize(int &w, int &h) { w = width; h = height; }
+  void getSize(int &w, int &h);
+  void getPixmapSize(int &w, int &h);
+  void getGridSize(int &w, int &h);
   void stub();
   void unStub();
   QString getName() { return name; }
@@ -32,6 +34,7 @@ private:
 
   int width, height, x_origin, y_origin;
   int tex_w, tex_h;
+  int rows, cols;
 
   bool isStub;
   QString name;

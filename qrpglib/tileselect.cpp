@@ -23,6 +23,7 @@ TileBox::TileBox(QWidget * parent) :
   selected = 0;
   scroll = 0;
   setMinimumWidth(200);
+  tileSpacing = 2;
 }
 
 void TileBox::setTileset(Bitmap * t) {
@@ -52,9 +53,9 @@ void TileBox::resizeGL(int w, int h) {
 
     if(tileset) {
       tileset->getSize(sw, sh);
-      cols = (width() - 1) / (sw + 1);
+      cols = (width() - 1) / (sw + tileSpacing);
       rows = tileset->tileCount() / cols + 1;
-      vrows = height() / (sh + 1) + 1;
+      vrows = height() / (sh + tileSpacing) + 1;
       
       if(vrows < rows) {
         emit setRange(0, rows-vrows+1);
@@ -78,38 +79,52 @@ void TileBox::paintGL() {
   gluOrtho2D(0, width(), height(), 0);
   if(tileset) {
     int w, h;
+    int pw, ph;
     int x, y, t, rows, cols, tiles;
     tileset->getSize(w, h);
+    tileset->getPixmapSize(pw, ph);
     tiles = tileset->tileCount();
-    cols = (this->width() - 1) / (w + 1);
+    //cols = (this->width() - 1) / (w + 1);
+    tileset->getGridSize(cols, rows);
     if(cols == 0) cols = 1;
-
-    rows = (this->height()) / (w + 1) + 1;
+    if(rows == 0) rows = 1;
 
     // Draw tiles
     for(y = 0; y < rows; y++) {
       for(x = 0; x < cols; x++) {
-	      t = (y + scroll) * cols + x;
-	      //cout << y << " " << x << " " << t << "\n";
-	      if(t < tiles) tileset->draw(t, x * (w + 1) + 1, y * (h + 1) + 1);
+        t = (y + scroll) * cols + x + 1;
+        //cout << y << " " << x << " " << t << "\n";
+        if(t < tiles)
+          tileset->draw(t, x * (w + tileSpacing) + 1,
+                        y * (h + tileSpacing) + tileSpacing * 2 + h);
       }
     }
     //cout << "\n";
     
     // Draw select box
-    x = (selected % cols) * (w + 1);
-    y = (selected / cols - scroll) * (h + 1);
+    if(selected == 0) {
+      x = 0;
+      y = 0;
+    } else {
+      int s = selected - 1;
+      x = (s % cols) * (w + tileSpacing);
+      y = (s / cols - scroll) * (h + tileSpacing) + h + tileSpacing;
+    }
+
     glDisable(GL_TEXTURE_2D);
-    glColor3f(1.0, 1.0, 0.0);
+    glColor3f(0.8, 0.8, 0.8);
+    glLineWidth(2);
 
     if(y >= 0) {
       glBegin(GL_LINE_LOOP);
       glVertex3f(x, y + 1, 0);
-      glVertex3f(x + w + 1, y + 1, 0);
-      glVertex3f(x + w + 1, y + h + 2, 0);
-      glVertex3f(x, y + h + 2, 0);   
+      glVertex3f(x + w + 2, y + 1, 0);
+      glVertex3f(x + w + 2, y + h + 3, 0);
+      glVertex3f(x, y + h + 3, 0);
       glEnd();    
     }
+
+    glLineWidth(1);
   }
   glFlush();
   glPopMatrix();
@@ -134,17 +149,35 @@ void TileBox::mousePressEvent(QMouseEvent * e) {
   if(tileset) {
     int tx, ty, tile;
     int w, h;
+    int gw, gh;
+
+    int mx = e->x();
+    int my = e->y() + scroll;
+
     tileset->getSize(w, h);
-    
-    tx = e->x() / (w + 1);
-    ty = e->y() / (h + 1) + scroll;
-    
-    tile = tx + ty * (this->width() - this->width() % (w + 1))/ (w + 1);
-    if(tile < tileset->tileCount()) selected = tile;
+    tileset->getGridSize(gw, gh);
+
+    if(mx > (gw + tileSpacing) * w || my > (gh + tileSpacing + 1) * h) {
+      //qDebug() << "mouse press out of range";
+      return;
+    }
+
+    qDebug() << ":" << mx << ", " << my << "  " << gw << ", " << gh << " " << tileSpacing;
+
+    if(my < h + tileSpacing) {
+      selected = 0;
+    } else {
+      tx = e->x() / (w + tileSpacing);
+      ty = e->y() / (h + tileSpacing);
+      ty -= 1;
+
+      tile = tx + ty * gw + 1;
+      if(tile < tileset->tileCount()) selected = tile;
+    }
 
     makeCurrent();
     updateGL();
-    //cout << "Selected tile " << selected << "\n";
+    qDebug() << "Selected tile " << selected << "\n";
     emit tileChanged(selected);
     //cout << "Selected tile " << selected << "\n";
   }

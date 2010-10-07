@@ -32,6 +32,7 @@ private:
   Bitmap * tileset;
   int selected;
   int scroll;
+  int tileSpacing;
 };
 
 class TileSelect : public QWidget {

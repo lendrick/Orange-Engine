@@ -45,9 +45,12 @@ public:
   QToolBar * layerButtons;
   QAction * addLayerAction;
   QAction * delLayerAction;
+
+  QMenu * layerPopupMenu;
 private:
   int nameColumn;
-  
+  int clickedLayer;
+
 signals:
   void addLayer(int);
   void delLayer(int);
