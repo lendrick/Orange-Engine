@@ -228,6 +228,10 @@ Map * MapBox::getMap() {
 
 void MapBox::setMap(int map_num) {
   int lw, lh, tw, th, w, h;
+
+  if(map)
+    map->runUnLoadScripts();
+
   map = 0;
   RPGEngine::setCurrentMap(0);
   if(map_num >= 0) {

@@ -194,9 +194,17 @@ void Map::Layer::fillArea(int xo, int yo, int w, int h, int fill) {
   }
 }
 
+void Map::Layer::runUnLoadScripts() {
+  EntityPointer e;
+  foreach(e, entities) {
+    e->runUnLoadScripts();
+  }
+}
+
 Map::~Map() {
+  // Map scripts
   int i;
-  
+
   for(i = 0; i < tiles.size(); i++) delete tiles[i];
   for(i = 0; i < layers.size(); i++) delete layers[i];
 }
@@ -209,7 +217,7 @@ void Map::update() {
   for(i = 0; i < scripts.size(); i++) {
     bool execute = false;
     RPGScript * s = &(scripts[i]);
-    if(starting && s->condition == ScriptCondition::Start) {
+    if(starting && s->condition == ScriptCondition::Load) {
       execute = true;
     } else if(s->condition == ScriptCondition::EveryFrame) {
       execute = true;
@@ -549,6 +557,35 @@ Map::Layer * Map::getLayer(int l) {
 
 QScriptValue Map::getScriptObject() {
   return scriptObject;
+}
+
+void Map::runUnLoadScripts() {
+  if(!play) return;
+
+  foreach(Layer * l, layers) {
+    l->runUnLoadScripts();
+  }
+
+  for(int i = 0; i < scripts.size(); i++) {
+    bool execute = false;
+    RPGScript * s = &(scripts[i]);
+    if(s->condition == ScriptCondition::UnLoad) {
+      execute = true;
+    }
+
+    //push context
+    if(execute) {
+      //cprint("execute: " + s->script + "\n");
+      QScriptContext * context = scriptEngine->pushContext();
+      context->setThisObject(scriptObject);
+      scriptEngine->evaluate(s->script);
+
+      if(scriptEngine->hasUncaughtException())
+        message(scriptEngine->uncaughtException().toString());
+
+      scriptEngine->popContext();
+    }
+  }
 }
 
 QScriptValue mapConstructor(QScriptContext * context, QScriptEngine * engine) {

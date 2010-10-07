@@ -139,9 +139,11 @@ void Entity::update() {
   for(int i = 0; i < scripts.size(); i++) {
     bool execute = false;
     EntityScript * s = &(scripts[i]);
-    if(starting && s->condition == ScriptCondition::Start) {
+    if(starting && s->condition == ScriptCondition::Load) {
       execute = true;
-    } else if(s->condition == ScriptCondition::Touch || s->condition == ScriptCondition::Activate) {
+    } else if(s->condition == ScriptCondition::Enter ||
+              s->condition == ScriptCondition::Activate ||
+              s->condition == ScriptCondition::Exit) {
       double x1, y1, x2, y2;
       double px1, py1, px2, py2;
       playerEntity->getRealBoundingBox(px1, py1, px2, py2);
@@ -155,12 +157,16 @@ void Entity::update() {
         getRealScriptBoundingBox(i, x1, y1, x2, y2);
       }
 
-      if(s->condition == ScriptCondition::Touch) {
+      if(s->condition == ScriptCondition::Enter) {
         s->wasTouching = s->isTouching;
         s->isTouching = CollisionTester::stationaryTest(x1, y1, x2, y2, px1, py1, px2, py2);
         if(s->isTouching && !s->wasTouching) execute = true;
       } else if(playerEntity->isActivated() && s->condition == ScriptCondition::Activate) {
         execute = CollisionTester::stationaryTest(x1, y1, x2, y2, px1, py1, px2, py2);
+      } else if(s->condition == ScriptCondition::Exit) {
+        s->wasTouching = s->isTouching;
+        s->isTouching = CollisionTester::stationaryTest(x1, y1, x2, y2, px1, py1, px2, py2);
+        if(!s->isTouching && s->wasTouching) execute = true;
       }
     //} else if(activated && scripts[i].condition == ScriptCondition::Activate) {
     } else if(s->condition == ScriptCondition::EveryFrame) {
@@ -183,6 +189,30 @@ void Entity::update() {
   }
   
   starting = touched = activated = false;
+}
+
+void Entity::runUnLoadScripts() {
+  for(int i = 0; i < scripts.size(); i++) {
+    bool execute = false;
+    EntityScript * s = &(scripts[i]);
+    if(s->condition == ScriptCondition::UnLoad) {
+      execute = true;
+    }
+
+    //push context
+    if(execute) {
+      //cprint("execute: " + s->script + "\n");
+      QScriptContext * context = scriptEngine->pushContext();
+      //Npc * n = dynamic_cast< Npc * >(this);
+      context->setThisObject(scriptObject);
+      scriptEngine->evaluate(s->script);
+
+      if(scriptEngine->hasUncaughtException())
+        message(scriptEngine->uncaughtException().toString());
+
+      scriptEngine->popContext();
+    }
+  }
 }
 
 int Entity::getState() {

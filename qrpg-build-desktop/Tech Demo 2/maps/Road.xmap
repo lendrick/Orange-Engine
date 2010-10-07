@@ -6,7 +6,9 @@
 rpgx.setLayer(1);
 player.addToMap(1);
 player.setPos(920, 270);
-rpgx.setCamera(player);]]></script>
+rpgx.setCamera(player);
+adventureTheme.play();]]></script>
+    <script condition='1'><![CDATA[adventureTheme.stop();]]></script>
   </scripts>  <layer>
     <width>30</width>
     <height>15</height>
@@ -61,12 +63,12 @@ rpgx.setCamera(player);]]></script>
     <entities>
       <entity name='Chest' state='-1' x='495' y='178' bx1='-20' by1='-20' bx2='20' by2='20' overrideboundingbox='1'>
         <scripts>
-          <script condition='2'><![CDATA[this.say("Received a potion!");]]></script>
+          <script condition='4'><![CDATA[this.say("Received a potion!");]]></script>
         </scripts>
       </entity>
       <entity name='Town Warp' state='-1' x='957' y='239' bx1='-16' by1='-100' bx2='16' by2='100' overrideboundingbox='1'>
         <scripts>
-          <script condition='1'><![CDATA[rpgx.setMap("Town");]]></script>
+          <script condition='2'><![CDATA[rpgx.setMap("Town");]]></script>
         </scripts>
       </entity>
     </entities>

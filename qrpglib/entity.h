@@ -90,6 +90,7 @@ public slots:
   void destroy();
   EntityPointer getSharedPointer();
   QString toXml();
+  void runUnLoadScripts();
 
   void start();
   void touch();

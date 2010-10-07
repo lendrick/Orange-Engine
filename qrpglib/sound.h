@@ -27,6 +27,7 @@ protected:
   Mix_Chunk * chunk;
   int channel;
   int volume;
+  QString name;
 
 };
 

@@ -123,19 +123,25 @@ extern QTreeWidget * maplist;
 
 struct ScriptCondition {
   enum ScriptConditionEnum {
-    Start,
-    Touch,
+    Load,
+    UnLoad,
+    Enter,
+    Exit,
     Activate,
+    Touching,
     EveryFrame
   };
 
   static const QStringList conditions() {
     return QStringList()
-      << "Start"
-      << "Touch"
+      << "Load"
+      << "UnLoad"
+      << "Enter"
+      << "Exit"
       << "Activate"
+      << "Touching"
       << "Every Frame";
-  };
+  }
 };
 
 #endif

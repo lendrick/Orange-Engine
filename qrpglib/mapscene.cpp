@@ -148,7 +148,7 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
     for(int i = 0; i < globalScripts.size(); i++) {
       bool execute = false;
       RPGScript * s = &(globalScripts[i]);
-      if(rpgEngineStarting && s->condition == ScriptCondition::Start) {
+      if(rpgEngineStarting && s->condition == ScriptCondition::Load) {
         execute = true;
       } else if(s->condition == ScriptCondition::EveryFrame) {
         execute = true;

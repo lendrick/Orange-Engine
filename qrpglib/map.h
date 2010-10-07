@@ -27,12 +27,13 @@ public:
     Layer(int w, int h, int fill = 0);
     Layer(Layer * l, int xo, int yo, int w, int h, int fill = 0);
     Layer(Layer * l);
+    ~Layer();
     void clear(int fill = 0);
     void fillArea(int x, int y, int w, int h, int fill);
     void stamp(Layer * l, int x, int y, int x_offset = 0, int y_offset = 0, bool skipZero = true);
     void dump();
-    ~Layer();
     void resize(int w, int h, int fill = 0);
+    void runUnLoadScripts();
 
     int height, width;
     QString name;
@@ -94,6 +95,7 @@ public slots:
   int getScriptCount() const;
   QString getScript(int) const;
   int getScriptCondition(int) const;
+  void runUnLoadScripts();
 
   //TODO
   //void SetTileset(QString tileSetName);

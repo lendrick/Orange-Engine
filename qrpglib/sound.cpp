@@ -3,6 +3,7 @@
 #include "SDL/SDL.h"
 #include "SDL/SDL_mixer.h"
 #include "sound.h"
+#include "globals.h"
 
 Sound::Sound(QObject *parent) :
     QObject(parent)
@@ -22,6 +23,7 @@ Sound::Sound(QString filename, QObject * parent) : QObject(parent)
 
 void Sound::play()
 {
+  cprint("Playing sound '" + name + "'");
   if(chunk) {
     int loops = 0;
     if(loop) loops = -1;
@@ -33,6 +35,7 @@ void Sound::play()
 
 void Sound::stop()
 {
+  cprint("Stopping sound '" + name + "'");
   Mix_HaltChannel(channel);
 }
 
@@ -48,6 +51,8 @@ void Sound::setVolume(int v)
 
 void Sound::load(QString filename)
 {
+  cprint("Loading sound '" + filename + "'");
+  name = filename;
   if(chunk) Mix_FreeChunk(chunk);
   chunk = Mix_LoadWAV(filename.toAscii());
   if(!chunk) {
