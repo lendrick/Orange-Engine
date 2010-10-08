@@ -873,7 +873,27 @@ void MapScene::updateSelection() {
     selection = 0;
   }
 
-  selectBox = selectBox.normalized();
+  // You would think this would work, but it actually results in a rectangle that's one step
+  // too large on each side:
+  //selectBox = selectBox.normalized();
+
+  if(selectBox.width() < 0) {
+    int w = selectBox.width();
+    int x = selectBox.x();
+
+    selectBox.moveLeft(x + w);
+    selectBox.setWidth(-w);
+  }
+
+  if(selectBox.height() < 0) {
+    int h = selectBox.height();
+    int y = selectBox.y();
+
+    selectBox.moveTop(y + h);
+    selectBox.setHeight(-h);
+  }
+
+
   //qDebug() << "Normalized: " << selectBox;
   Map::Layer * currentLayer = mapBox->getCurrentLayer();
   selection = new Map::Layer(currentLayer,
