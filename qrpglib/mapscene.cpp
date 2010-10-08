@@ -788,6 +788,8 @@ void MapScene::fill(int layer, int x, int y, int tile, int firstTile)  {
     firstTile = mapBox->map->getTile(layer, x, y);
   }
 
+  if(tile == firstTile) return;
+
   if(mapBox->map->getTile(layer, x, y) == firstTile) {
     mapBox->map->setTile(layer, x, y, tile);
     fill(layer, x + 1, y, tile, firstTile);
