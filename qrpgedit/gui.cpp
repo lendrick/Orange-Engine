@@ -251,6 +251,10 @@ MainWindow::MainWindow() :
   paintSelectBoxAction->setCheckable(true);
   paintToolBar->addAction(paintSelectBoxAction);
 
+  paintDrawAction->setChecked(true);
+  paintBrushAction->setDisabled(true);
+  paintBrushAction->setVisible(false);
+
   ////////////////////////////////////////////////////////////
   // The resource list;
 
@@ -294,13 +298,16 @@ MainWindow::MainWindow() :
   connect(tiles->tilebox, SIGNAL(tileChanged(int)), mapwin->mapbox, SLOT(setCurrentTile(int)));
   
   connect(layerPanel, SIGNAL(selectLayer(int)), mapwin->mapbox, SLOT(setLayer(int)));
-  connect(mapEditAction, SIGNAL(triggered()), mapBox, SLOT(setEditMode()));
-  connect(mapEntityAction, SIGNAL(triggered()), mapBox, SLOT(setEntityMode()));
 
-  connect(paintDrawAction, SIGNAL(triggered()), this, SLOT(setPaintModeDraw()));
-  connect(paintFillAction, SIGNAL(triggered()), this, SLOT(setPaintModeFill()));
-  connect(paintSelectBoxAction, SIGNAL(triggered()), this, SLOT(setPaintModeSelectBox()));
-  connect(paintBrushAction, SIGNAL(triggered()), this, SLOT(setPaintModeBrush()));
+  connect(mapEditAction, SIGNAL(toggled()), mapBox, SLOT(setEditMode()));
+  connect(mapEditAction, SIGNAL(toggled(bool)), paintToolBar, SLOT(setEnabled(bool)));
+
+  connect(mapEntityAction, SIGNAL(toggled()), mapBox, SLOT(setEntityMode()));
+
+  connect(paintDrawAction, SIGNAL(toggled(bool)), this, SLOT(setPaintModeDraw(bool)));
+  connect(paintFillAction, SIGNAL(toggled(bool)), this, SLOT(setPaintModeFill(bool)));
+  connect(paintSelectBoxAction, SIGNAL(toggled(bool)), this, SLOT(setPaintModeSelectBox(bool)));
+  connect(paintBrushAction, SIGNAL(toggled(bool)), this, SLOT(setPaintModeBrush(bool)));
 
 
   connect(mapBox, SIGNAL(mousePos(int, int, int, int)), 
@@ -550,20 +557,20 @@ void MainWindow::setViewBoundingBoxes(bool b) {
   viewBoundingBoxes = b;
 }
 
-void MainWindow::setPaintModeBrush() {
-  paintMode = PaintMode::Brush;
+void MainWindow::setPaintModeBrush(bool b) {
+  if(b) paintMode = PaintMode::Brush;
 }
 
-void MainWindow::setPaintModeDraw() {
-  paintMode = PaintMode::Draw;
+void MainWindow::setPaintModeDraw(bool b) {
+  if(b) paintMode = PaintMode::Draw;
 }
 
-void MainWindow::setPaintModeSelectBox() {
-  paintMode = PaintMode::SelectBox;
+void MainWindow::setPaintModeSelectBox(bool b) {
+  if(b) paintMode = PaintMode::SelectBox;
 }
 
-void MainWindow::setPaintModeFill() {
-  paintMode = PaintMode::Fill;
+void MainWindow::setPaintModeFill(bool b) {
+  if(b) paintMode = PaintMode::Fill;
 }
 
 /*

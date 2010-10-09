@@ -14,6 +14,7 @@ using std::cout;
 
 Bitmap::Bitmap(QString image, int spr_w, int spr_h, 
 	       int origin_x, int origin_y, QString bmpname) {
+  this->pixmap = 0;
   this->image = image;
   this->x_origin = origin_x;
   this->y_origin = origin_y;
@@ -159,14 +160,17 @@ int Bitmap::pow2(int x) {
 }
 
 GLuint Bitmap::load_texture(QString name) {
-  QImage temp, texture;
+  QImage texture;
   GLuint gltex;
 
-  if(!temp.load(name)) {
+  if(pixmap) delete pixmap;
+  pixmap = new QImage;
+
+  if(!pixmap->load(name)) {
     message("Could not load texture " + name);
   } 
 
-  texture = QGLWidget::convertToGLFormat(temp);
+  texture = QGLWidget::convertToGLFormat(*pixmap);
 
 
   glGenTextures(1, &gltex);

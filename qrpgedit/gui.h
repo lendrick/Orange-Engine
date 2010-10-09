@@ -77,10 +77,10 @@ public slots:
   void setViewGrid(bool);
   void setViewBoundingBoxes(bool);
 
-  void setPaintModeDraw();
-  void setPaintModeBrush();
-  void setPaintModeFill();
-  void setPaintModeSelectBox();
+  void setPaintModeDraw(bool);
+  void setPaintModeBrush(bool);
+  void setPaintModeFill(bool);
+  void setPaintModeSelectBox(bool);
 
 signals:
   void setMap(int);

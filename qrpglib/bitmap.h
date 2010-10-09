@@ -32,6 +32,8 @@ private:
   GLuint load_texture(QString name);
   GLuint gl_texture;
 
+  QImage * pixmap;
+
   int width, height, x_origin, y_origin;
   int tex_w, tex_h;
   int rows, cols;
@@ -58,7 +60,7 @@ public:
 private:
   void readBitmap();
   void readUnknownElement();
-  
+
   Bitmap * bitmap;
   QFileInfo fileinfo;
 };
