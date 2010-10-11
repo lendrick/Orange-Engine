@@ -14,6 +14,7 @@
 #include "rpgengine.h"
 #include "projectreader.h"
 #include "talkbox.h"
+#include "scriptutils.h"
 
 // for testing
 #include <cstdlib>
@@ -88,23 +89,15 @@ int main(int argc, char *argv[]) {
   //TalkBoxProxy * tb = new TalkBoxProxy("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
   //tb->deleteLater();
 
+
+  bool dirExists = QDir::setCurrent("scripts");
+  scriptUtils->include("init.js");
+  if(dirExists) QDir::setCurrent("..");
+
   apptime.start();
   fpstime.start();
   timeLastFrame = apptime.elapsed();
 
-  bool dirExists = QDir::setCurrent("scripts");
-  QFile f("startup.js");
-  f.open(QIODevice::ReadOnly);
-  QTextStream in(&f);
-  QString script = in.readAll();
-  f.close();
-  if(dirExists) QDir::setCurrent("..");
-
-  
-  scriptEngine->evaluate(script);
-  if(scriptEngine->hasUncaughtException()) 
-    message(QString::number(scriptEngine->uncaughtExceptionLineNumber()) + ": " +
-    scriptEngine->uncaughtException().toString());
   mapedit.exec();
 
   return 0;

@@ -1,5 +1,6 @@
 #include <QtCore>
 #include <QtScript>
+#include <QtDeclarative>
 //#include <QtScriptTools/QScriptEngineDebugger>
 #include "globals.h"
 #include "map.h"
@@ -55,6 +56,8 @@ int paintMode = PaintMode::Draw;
 
 QScriptEngine * scriptEngine;
 //QScriptEngineDebugger * scriptDebugger;
+QDeclarativeEngine * declarativeEngine;
+
 
 ScriptUtils * scriptUtils;
 QPixmap * talkBoxBackground;
@@ -75,6 +78,7 @@ bool viewBoundingBoxes = false;
 
 void message(QString s)
 {
+  qDebug() << "MESSAGE: " << s;
   QMessageBox b;
   b.setText(s);
   b.exec();
@@ -94,4 +98,5 @@ void initScriptEngine()
   //scriptDebugger = new QScriptEngineDebugger;
   //scriptDebugger->attachTo(scriptEngine);
   scriptUtils = new ScriptUtils;
+  declarativeEngine = new QDeclarativeEngine;
 }

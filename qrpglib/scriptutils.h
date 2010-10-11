@@ -3,6 +3,7 @@
 
 #include <QtCore>
 #include <QtScript>
+#include <QtDeclarative>
 #include "map.h"
 #include "player.h"
 
@@ -15,13 +16,16 @@ public:
   ScriptUtils();
 
 public slots:
-  void messageBox(QString s);
+  void alert(QString s);
   void print(QString s);
   QScriptValue getEntity(QString s);
   QScriptValue teleport(QString, int, int);
   void setCamera(EntityPointer e);
   void setMap(QString m);
   void setLayer(int l);
+  void addQml(QString filename);
+  void addQmlString(QString string);
+  QScriptValue include(QString filename);
 };
 
 #endif

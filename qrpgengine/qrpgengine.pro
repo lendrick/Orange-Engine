@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui script opengl xml
+QT       += core gui script opengl xml declarative
 
 TARGET = qrpgengine
 TEMPLATE = app

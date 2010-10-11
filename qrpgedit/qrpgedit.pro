@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui script opengl
+QT       += core gui script opengl xml declarative
 
 TARGET = qrpgedit
 TEMPLATE = app

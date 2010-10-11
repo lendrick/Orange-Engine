@@ -4,6 +4,7 @@
 #include <QtCore>
 #include <QtGui>
 #include <QtScript>
+#include <QtDeclarative>
 #include <QGLWidget>
 //#include <QtScriptTools/QScriptEngineDebugger>
 
@@ -79,6 +80,7 @@ extern Map * currentMap;
 extern QGLWidget * mainGLWidget;
 
 extern QScriptEngine * scriptEngine;
+extern QDeclarativeEngine * declarativeEngine;
 //extern QScriptEngineDebugger * scriptDebugger;
 extern ScriptUtils * scriptUtils;
 
