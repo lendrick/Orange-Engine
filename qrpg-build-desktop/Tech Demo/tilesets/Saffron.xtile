@@ -1,9 +1,0 @@
-<!DOCTYPE xtile>
-<tileset>
-  <name>Saffron</name>
-  <image>rafaela_walk.png</image>
-  <width>32</width>
-  <height>64</height>
-  <xorigin>0</xorigin>
-  <yorigin>0</yorigin>
-</tileset>

@@ -16,8 +16,8 @@ function StatBlock() {
   this.items = new Array();
 }
 
-StatBlock.prototype.clearSlots() {
-  foreach(var slot in slots) {
+StatBlock.prototype.clearSlots = function() {
+  for(var slot in slots) {
     items[slot] = Array();
   }
 }
@@ -25,7 +25,7 @@ StatBlock.prototype.clearSlots() {
 StatBlock.prototype.getStat = function(stat) {
   var total = 0;
   for(var itemSlots in items) {
-    foreach(var item in items[itemSlots]) {
+    for(var item in items[itemSlots]) {
       total += items[itemSlots][item].getStat(stat);
     }
   }
@@ -52,4 +52,15 @@ StatBlock.prototype.equip = function(item, slot, number) {
   return false;
 }
 
-rpgx.messageBox('statblock loaded');
+Character.prototype = new StatBlock();
+Character.prototype.constructor = Character();
+Character.prototype.parent = StatBlock.prototype;
+
+function Character(name) {
+  this.itemType = 'Character';
+  this.name = name;
+}
+
+var test = "Hello, world!";
+
+rpgx.print('statblock loaded');

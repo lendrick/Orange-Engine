@@ -128,8 +128,9 @@ QScriptValue ScriptUtils::include(QString filename) {
   //qDebug() << program;
   QScriptValue r = scriptEngine->evaluate(program, filename);
   if(scriptEngine->hasUncaughtException()) {
-    cprint("SCRIPT ERROR: " + QString::number(scriptEngine->uncaughtExceptionLineNumber()) + ": " +
+    cprint(filename + ": " + QString::number(scriptEngine->uncaughtExceptionLineNumber()) + ": " +
             scriptEngine->uncaughtException().toString());
+    scriptEngine->clearExceptions();
   }
 
   return r;
