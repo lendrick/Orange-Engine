@@ -110,7 +110,7 @@ townTheme.play();]]></script>
     <entities>
       <entity name='Entity 1' state='0' x='378' y='200' bx1='-10' by1='-10' bx2='8' by2='4' sprite='Female Warrior' overrideboundingbox='1' solid = '1'>
         <scripts>
-          <script condition='4'><![CDATA[this.say("Rats have infested the town sewer!");]]></script>
+          <script condition='4'><![CDATA[say("Rats have infested the town sewer!");]]></script>
           <script condition='0'><![CDATA[]]></script>
         </scripts>
       </entity>

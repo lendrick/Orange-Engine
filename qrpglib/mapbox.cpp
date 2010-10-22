@@ -30,7 +30,7 @@ using std::cout;
 
 
 MapBox::MapBox(QWidget * parent) :
-  QGraphicsView(parent) {
+  QDeclarativeView(parent) {
   map = 0;
   xo = 0;
   yo = 0;

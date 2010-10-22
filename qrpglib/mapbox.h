@@ -13,7 +13,7 @@
 class MapScene;
 class Map;
 
-class MapBox : public QGraphicsView {
+class MapBox : public QDeclarativeView {
   Q_OBJECT
   
   friend class MapScene;

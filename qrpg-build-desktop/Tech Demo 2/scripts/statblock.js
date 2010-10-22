@@ -1,3 +1,6 @@
+
+rpgx.print('loading statblock');
+
 function StatBlock() {
   this.atk = 0;
   this.def = 0;
@@ -62,5 +65,4 @@ function Character(name) {
 }
 
 var test = "Hello, world!";
-
-rpgx.print('statblock loaded');
+rpgx.print("Test: " + test);

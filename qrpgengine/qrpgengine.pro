@@ -115,3 +115,6 @@ HEADERS  += \
     ../qrpglib/layerdialog.h
 
 FORMS    +=
+
+OTHER_FILES += \
+    ../qrpg-build-desktop/interface/talkbox.qml

@@ -125,6 +125,15 @@ QScriptValue ScriptUtils::include(QString filename) {
   QTextStream in(&f);
   QString program(in.readAll());
   f.close();
+
+  QScriptContext *context = scriptEngine->currentContext();
+  QScriptContext *parent = context->parentContext();
+  if(parent!=0)
+  {
+    context->setActivationObject(context->parentContext()->activationObject());
+    context->setThisObject(context->parentContext()->thisObject());
+  }
+
   //qDebug() << program;
   QScriptValue r = scriptEngine->evaluate(program, filename);
   if(scriptEngine->hasUncaughtException()) {
@@ -134,4 +143,22 @@ QScriptValue ScriptUtils::include(QString filename) {
   }
 
   return r;
+}
+
+// Ideally, the components should be loaded at start time instad of when created.
+// This is mostly just to make sure it works.
+QScriptValue ScriptUtils::createComponent(QString filename) {
+  QDeclarativeComponent * c = new QDeclarativeComponent(mapBox->engine(), filename, mapBox);
+  if(c->status() == QDeclarativeComponent::Error) {
+    qDebug() << c->errors();
+  }
+  return scriptEngine->newQObject(c->create(), QScriptEngine::ScriptOwnership);
+}
+
+QScriptValue ScriptUtils::createComponent(QString filename, QObject * parent) {
+  QDeclarativeComponent * c = new QDeclarativeComponent(mapBox->engine(), filename, parent);
+  if(c->status() == QDeclarativeComponent::Error) {
+    qDebug() << c->errors();
+  }
+  return scriptEngine->newQObject(c->create(), QScriptEngine::ScriptOwnership);
 }
