@@ -1,26 +1,30 @@
 import Qt 4.7
 
 BorderImage {
+    objectName: "talkBox"
     id: talkbox
     x: 0
-    y: 0
+    y: 480-168
     width: 640
     height: 168
     rotation: 0
-    border.bottom: 25
-    border.top: 25
-    border.right: 25
-    border.left: 25
+    border.bottom: 28
+    border.top: 28
+    border.right: 28
+    border.left: 28
+    border.objectName: "Border"
     source: "box-highres.png"
+    state: "New"
+    opacity: 0
 
     Text {
+      objectName: "text1"
       id: text1
       x: 30
       y: 25
       width: 580
       height: 118
       color: "#ffffff"
-      text: "Hello, world!  Hello, world!  Hello, world!  Hello, world!  Hello, world!  Hello, world!  Hello, world!  Hello, world!  Hello, world!  Hello, world!  "
       clip: true
       style: Text.Outline
       font.pixelSize: 34
@@ -32,11 +36,21 @@ BorderImage {
     }
     states: [
         State {
-            name: "State1"
+            name: "New"
 
             PropertyChanges {
                 target: talkbox
                 opacity: 0
+                scale: .75
+            }
+        },
+        State {
+            name: "Show"
+
+            PropertyChanges {
+                target: talkbox
+                opacity: 1
+                scale: 1
             }
         },
         State {
@@ -52,4 +66,17 @@ BorderImage {
             }
         }
     ]
+
+    transitions: Transition {
+      PropertyAnimation {
+        properties: "opacity"
+        duration: 500
+      }
+      PropertyAnimation {
+        properties: "scale"
+        duration: 500
+        easing.type: Easing.OutBack
+      }
+    }
+
 }

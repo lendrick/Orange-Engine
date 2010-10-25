@@ -7,6 +7,8 @@
 #include "map.h"
 #include "player.h"
 
+//Q_DECLARE_METATYPE(QDeclarativeListProperty<QGraphicsObject>);
+
 class Entity;
 
 class ScriptUtils : public QObject, public QScriptable {
@@ -14,6 +16,7 @@ class ScriptUtils : public QObject, public QScriptable {
 
 public:
   ScriptUtils();
+  void dumpObject(QObject * o);
 
 public slots:
   void alert(QString s);
@@ -28,6 +31,7 @@ public slots:
   void addQml(QString filename);
   void addQmlString(QString string);
   QScriptValue include(QString filename);
+  void dumpScriptObject(QScriptValue objectValue);
 };
 
 #endif

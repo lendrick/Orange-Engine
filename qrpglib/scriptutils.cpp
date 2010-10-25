@@ -148,11 +148,22 @@ QScriptValue ScriptUtils::include(QString filename) {
 // Ideally, the components should be loaded at start time instad of when created.
 // This is mostly just to make sure it works.
 QScriptValue ScriptUtils::createComponent(QString filename) {
-  QDeclarativeComponent * c = new QDeclarativeComponent(mapBox->engine(), filename, mapBox);
+  QDeclarativeComponent * c = new QDeclarativeComponent(mapBox->engine(), filename);
   if(c->status() == QDeclarativeComponent::Error) {
     qDebug() << c->errors();
   }
-  return scriptEngine->newQObject(c->create(), QScriptEngine::ScriptOwnership);
+  QObject * item = c->create();
+  QGraphicsItem * o = qobject_cast<QGraphicsObject *>(item);
+  mapBox->mapScene->addItem(o);
+
+  qDebug() << "Object property names:";
+  qDebug() << item->dynamicPropertyNames();
+  QScriptValue scriptObject = scriptEngine->newQObject(item, QScriptEngine::ScriptOwnership);
+  qDebug() << "ScriptObject values:";
+  dumpScriptObject(scriptObject);
+  qDebug() << "Object children:";
+  qDebug() << item->children();
+  return scriptObject;
 }
 
 QScriptValue ScriptUtils::createComponent(QString filename, QObject * parent) {
@@ -161,4 +172,18 @@ QScriptValue ScriptUtils::createComponent(QString filename, QObject * parent) {
     qDebug() << c->errors();
   }
   return scriptEngine->newQObject(c->create(), QScriptEngine::ScriptOwnership);
+}
+
+void ScriptUtils::dumpScriptObject(QScriptValue objectValue) {
+  QScriptValueIterator i(objectValue);
+
+  while(i.hasNext()) {
+    i.next();
+    qDebug() << "Object: " << i.name();
+    //scriptEngine->globalObject().setProperty(i.name(), i.value());
+  }
+}
+
+void ScriptUtils::dumpObject(QObject * o) {
+  qDebug() << o->dynamicPropertyNames();
 }

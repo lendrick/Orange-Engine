@@ -17,4 +17,9 @@ function createObject(qmlFile, parent) {
 
 function say(string) {
   var object = createObject("../interface/talkbox.qml");
+  object.text1.text = string;
+  object.state = "Show";
+  //alert(object.Border.top);
+  //alert("Name: " + object.objectName);
+  //alert(object.text1.text);
 }
