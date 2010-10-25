@@ -242,6 +242,8 @@ void Map::update() {
   if(playerEntity->isActivated()) qDebug() << "player activated";
   for(int i = 0; i < layers.size(); i++) {
     for(int j = 0; j < layers[i]->entities.size(); j++) {
+
+      if(playerEntity->isActivated()) qDebug() << i << " " << j << ": " << layers[i]->entities[j]->getName();
       layers[i]->entities[j]->update();
     }
   }
@@ -510,7 +512,7 @@ void Map::reset() {
 
       //qDebug() << "adding dynamic entity to map: " << e->getName();
 
-      layers[i]->entities.append(newEntity);
+      //layers[i]->entities.append(newEntity);
       e->addToMap(i);
       mapentitynames[e->getName()] = e->getId();
     }
