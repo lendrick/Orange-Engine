@@ -1,7 +1,14 @@
 import Qt 4.7
+Item {
+  id: ui
+  objectName: "ui"
+  x: 0
+  y: 0
+  height: 640
+  width: 480
 
-BorderImage {
-    objectName: "talkBox"
+  BorderImage {
+    objectName: "talkbox"
     id: talkbox
     x: 0
     y: 480-168
@@ -14,8 +21,16 @@ BorderImage {
     border.left: 28
     border.objectName: "Border"
     source: "box-highres.png"
-    state: "New"
+    state: "Hide"
     opacity: 0
+    focus: true;
+
+    Keys.onPressed: {
+      if(state == "Show") {
+        event.accepted = true;
+        state = "Hide";
+      }
+    }
 
     Text {
       objectName: "text1"
@@ -35,48 +50,66 @@ BorderImage {
       wrapMode: Text.WordWrap
     }
     states: [
-        State {
-            name: "New"
+      State {
+        name: "Hide"
 
-            PropertyChanges {
-                target: talkbox
-                opacity: 0
-                scale: .75
-            }
-        },
-        State {
-            name: "Show"
-
-            PropertyChanges {
-                target: talkbox
-                opacity: 1
-                scale: 1
-            }
-        },
-        State {
-            name: "State2"
-            PropertyChanges {
-                target: talkbox
-                opacity: 1
-            }
-
-            PropertyChanges {
-                target: text1
-                opacity: 0
-            }
+        PropertyChanges {
+          target: talkbox
+          opacity: 0
+          scale: .75
         }
+
+      },
+      State {
+        name: "Show"
+
+        PropertyChanges {
+          target: talkbox
+          opacity: 1
+          scale: 1
+        }
+      },
+      State {
+        name: "State2"
+        PropertyChanges {
+          target: talkbox
+          opacity: 1
+        }
+
+        PropertyChanges {
+          target: text1
+          opacity: 0
+        }
+      }
     ]
 
-    transitions: Transition {
-      PropertyAnimation {
-        properties: "opacity"
-        duration: 500
+    transitions: [
+      Transition {
+        to: "Hide"
+        PropertyAnimation {
+          properties: "opacity"
+          duration: 150
+        }
+        PropertyAnimation {
+          properties: "scale"
+          duration: 350
+          easing.type: Easing.Linear
+        }
+      },
+
+      Transition {
+        to: "Show"
+        PropertyAnimation {
+          properties: "opacity"
+          duration: 350
+        }
+        PropertyAnimation {
+          properties: "scale"
+          duration: 350
+          easing.type: Easing.OutBack
+        }
       }
-      PropertyAnimation {
-        properties: "scale"
-        duration: 500
-        easing.type: Easing.OutBack
-      }
-    }
+    ]
+  }
 
 }

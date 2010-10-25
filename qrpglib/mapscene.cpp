@@ -22,6 +22,7 @@
 #include "rpgengine.h"
 #include "rpgscript.h"
 #include "mapscene.h"
+#include "scriptutils.h"
 
 using std::cout;
 
@@ -142,6 +143,10 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
     if(input->console) {
       console->setVisible(!(console->isVisible()));
       input->console = false;
+    }
+
+    if(rpgEngineStarting) {
+      scriptUtils->include("scripts/startup.js");
     }
 
     // Global scripts.

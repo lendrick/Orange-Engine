@@ -90,9 +90,9 @@ int main(int argc, char *argv[]) {
   //tb->deleteLater();
 
 
-  bool dirExists = QDir::setCurrent("scripts");
-  scriptUtils->include("init.js");
-  if(dirExists) QDir::setCurrent("..");
+  //bool dirExists = QDir::setCurrent("scripts");
+  scriptUtils->include("scripts/init.js");
+  //if(dirExists) QDir::setCurrent("..");
 
   apptime.start();
   fpstime.start();

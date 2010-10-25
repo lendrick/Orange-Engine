@@ -134,8 +134,18 @@ QScriptValue ScriptUtils::include(QString filename) {
     context->setThisObject(context->parentContext()->thisObject());
   }
 
-  //qDebug() << program;
+  // Change to the directory of the script before running it.
+  QFileInfo fileInfo(filename);
+  QDir currentDir = QDir::current();
+  QDir::setCurrent(fileInfo.absolutePath());
+  //qDebug() << "DIR:" << QDir::currentPath();
+
+  // Run the script
   QScriptValue r = scriptEngine->evaluate(program, filename);
+
+  // Change back to the original directory when finished.
+  QDir::setCurrent(currentDir.absolutePath());
+
   if(scriptEngine->hasUncaughtException()) {
     cprint(filename + ": " + QString::number(scriptEngine->uncaughtExceptionLineNumber()) + ": " +
             scriptEngine->uncaughtException().toString());
