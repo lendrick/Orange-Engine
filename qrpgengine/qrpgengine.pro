@@ -117,4 +117,5 @@ HEADERS  += \
 FORMS    +=
 
 OTHER_FILES += \
-    ../qrpg-build-desktop/interface/talkbox.qml
+    ../qrpg-build-desktop/interface/talkbox.qml \
+    ../qrpg-build-desktop/interface/box.qml
