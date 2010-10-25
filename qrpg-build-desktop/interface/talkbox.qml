@@ -1,4 +1,6 @@
 import Qt 4.7
+import "talkbox.js" as TalkBoxScript
+
 Item {
   id: ui
   objectName: "ui"
@@ -7,68 +9,52 @@ Item {
   height: 640
   width: 480
 
-  BorderImage {
+  Box {
     objectName: "talkbox"
     id: talkbox
     x: 0
     y: 480-168
     width: 640
     height: 168
-    rotation: 0
-    border.bottom: 28
-    border.top: 28
-    border.right: 28
-    border.left: 28
-    border.objectName: "Border"
-    source: "box-highres.png"
-    state: "Hide"
-    opacity: 0
-    focus: true;
+    focus: true
+    property list<Item> textArray
+
+    Component.onCompleted: TalkBoxScript.startUp();
+
+    function append(textString) {
+      TalkBoxScript.appendText(textString);
+    }
+
+    function show() {
+      state = "Show";
+      TalkBoxScript.textBoxArray[0].state = "Show";
+    }
+
+    function hide() {
+      state = "Hide";
+    }
+
+    function queueSize() {
+      return TalkBoxScript.textBoxArray.length;
+    }
 
     Keys.onPressed: {
       if(state == "Show") {
+        var object = TalkBoxScript.textBoxArray.shift();
+        object.state = "Hide";
+        object.destroy(500);
+
+        if(TalkBoxScript.textBoxArray.length > 0) {
+          TalkBoxScript.textBoxArray[0].state = "Show";
+        } else {
+          state = "Hide";
+        }
+
         event.accepted = true;
-        state = "Hide";
       }
     }
 
-    Text {
-      objectName: "text1"
-      id: text1
-      x: 30
-      y: 25
-      width: 580
-      height: 118
-      color: "#ffffff"
-      clip: true
-      style: Text.Outline
-      font.pixelSize: 34
-      styleColor: "#000000"
-      font.bold: true
-      font.family: "DejaVu Sans"
-      smooth: true
-      wrapMode: Text.WordWrap
-    }
     states: [
-      State {
-        name: "Hide"
-
-        PropertyChanges {
-          target: talkbox
-          opacity: 0
-          scale: .75
-        }
-
-      },
-      State {
-        name: "Show"
-
-        PropertyChanges {
-          target: talkbox
-          opacity: 1
-          scale: 1
-        }
-      },
       State {
         name: "State2"
         PropertyChanges {
@@ -83,33 +69,6 @@ Item {
       }
     ]
 
-    transitions: [
-      Transition {
-        to: "Hide"
-        PropertyAnimation {
-          properties: "opacity"
-          duration: 150
-        }
-        PropertyAnimation {
-          properties: "scale"
-          duration: 350
-          easing.type: Easing.Linear
-        }
-      },
-
-      Transition {
-        to: "Show"
-        PropertyAnimation {
-          properties: "opacity"
-          duration: 225
-        }
-        PropertyAnimation {
-          properties: "scale"
-          duration: 350
-          easing.type: Easing.OutBack
-        }
-      }
-    ]
   }
 
 }

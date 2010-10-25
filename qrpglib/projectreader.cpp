@@ -45,7 +45,7 @@ Project * ProjectReader::read(QIODevice * device)
 
 Project * ProjectReader::read(QString filename)
 {
-  qDebug() << "reading project " << filename;
+  //qDebug() << "reading project " << filename;
   QFile f(filename);
   f.open(QIODevice::ReadOnly);
   fileinfo = QFileInfo(f);

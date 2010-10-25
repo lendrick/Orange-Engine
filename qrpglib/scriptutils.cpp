@@ -37,6 +37,7 @@ ScriptUtils::ScriptUtils() : QObject() {
   scriptEngine->globalObject().setProperty("alert", metaObject);
   */
 
+  /*
   const QMetaObject* obj = this->metaObject();
   for(int i = obj->methodOffset(); i < obj->methodCount(); ++i) {
     QString name = QString::fromLatin1(obj->method(i).signature());
@@ -62,7 +63,7 @@ ScriptUtils::ScriptUtils() : QObject() {
     qDebug() << "Object: " << i.name();
     //scriptEngine->globalObject().setProperty(i.name(), i.value());
   }
-
+  */
 
   qScriptRegisterMetaType(scriptEngine, entityPointerToScriptValue, entityPointerFromScriptValue);
 }
@@ -166,13 +167,11 @@ QScriptValue ScriptUtils::createComponent(QString filename) {
   QGraphicsItem * o = qobject_cast<QGraphicsObject *>(item);
   mapBox->mapScene->addItem(o);
 
-  qDebug() << "Object property names:";
-  qDebug() << item->dynamicPropertyNames();
   QScriptValue scriptObject = scriptEngine->newQObject(item, QScriptEngine::ScriptOwnership);
-  qDebug() << "ScriptObject values:";
-  dumpScriptObject(scriptObject);
-  qDebug() << "Object children:";
-  qDebug() << item->children();
+  //qDebug() << "ScriptObject values:";
+  //dumpScriptObject(scriptObject);
+  //qDebug() << "Object children:";
+  //qDebug() << item->children();
   return scriptObject;
 }
 

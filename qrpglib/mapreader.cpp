@@ -213,7 +213,7 @@ EntityPointer MapReader::readEntity() {
   int invisible = attributes().value("invisible").toString().toInt();
   int solid = attributes().value("solid").toString().toInt();
 
-  qDebug() << "loading NPC " + ename;
+  //qDebug() << "loading NPC " + ename;
   Entity * ePtr = new Npc(ename);
   EntityPointer e = ePtr->getSharedPointer();
 
@@ -262,7 +262,7 @@ EntityPointer MapReader::readEntity() {
     }
   }
 
-  qDebug() << "return entity";
+  //qDebug() << "return entity";
 
   return e;
 }

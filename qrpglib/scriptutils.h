@@ -8,6 +8,7 @@
 #include "player.h"
 
 //Q_DECLARE_METATYPE(QDeclarativeListProperty<QGraphicsObject>);
+//Q_SCRIPT_DECLARE_QMETAOBJECT(QDeclarativeListProperty<QDeclarativeItem>, QObject *);
 
 class Entity;
 

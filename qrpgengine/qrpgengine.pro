@@ -118,4 +118,7 @@ FORMS    +=
 
 OTHER_FILES += \
     ../qrpg-build-desktop/interface/talkbox.qml \
-    ../qrpg-build-desktop/interface/box.qml
+    ../qrpg-build-desktop/interface/Box.qml \
+    ../qrpg-build-desktop/interface/BigText.qml \
+    ../qrpg-build-desktop/interface/TalkBoxText.qml \
+    ../qrpg-build-desktop/interface/talkbox.js

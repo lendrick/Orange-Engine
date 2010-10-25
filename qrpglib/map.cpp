@@ -6,6 +6,7 @@
 #include "globals.h"
 #include "entity.h"
 #include "npc.h"
+#include "player.h"
 #include "rpgscript.h"
 #include <GL/gl.h>
 #include <stdlib.h>
@@ -238,6 +239,7 @@ void Map::update() {
   }
 
   // update entities
+  if(playerEntity->isActivated()) qDebug() << "player activated";
   for(int i = 0; i < layers.size(); i++) {
     for(int j = 0; j < layers[i]->entities.size(); j++) {
       layers[i]->entities[j]->update();
@@ -499,14 +501,14 @@ void Map::save(QString filename) {
 
 void Map::reset() {
   clear();
-  qDebug() << "resetting " << this->getName();
+  //qDebug() << "resetting " << this->getName();
 
   for(int i = 0; i < layers.size(); i++) {
     for(int j = 0; j < layers[i]->startEntities.size(); j++) {
       EntityPointer e = layers[i]->startEntities[j];
       EntityPointer newEntity = e->clone();
 
-      qDebug() << "adding dynamic entity to map: " << e->getName();
+      //qDebug() << "adding dynamic entity to map: " << e->getName();
 
       layers[i]->entities.append(newEntity);
       e->addToMap(i);

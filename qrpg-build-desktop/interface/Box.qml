@@ -2,6 +2,7 @@ import Qt 4.7
 
 BorderImage {
   rotation: 0
+  id: box
   border.bottom: 28
   border.top: 28
   border.right: 28
@@ -16,7 +17,7 @@ BorderImage {
       name: "Hide"
 
       PropertyChanges {
-        target: talkbox
+        target: box
         opacity: 0
         scale: .75
       }
@@ -26,7 +27,7 @@ BorderImage {
       name: "Show"
 
       PropertyChanges {
-        target: talkbox
+        target: box
         opacity: 1
         scale: 1
       }

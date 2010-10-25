@@ -100,6 +100,8 @@ MapScene::MapScene(MapBox * m)
   entityFont = new QFont("Arial", 12);
 
   selectedEntity = EntityPointer();
+
+  mapBox->rootContext()->setContextProperty("scene", this);
 }
 
 void MapScene::init(int w, int h)
@@ -139,6 +141,7 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
     if(input->left) mapBox->Move(-1, 0);
     if(input->right) mapBox->Move(1, 0);
     */
+
     if(input->action) playerEntity->setActivated(true);
     if(input->console) {
       console->setVisible(!(console->isVisible()));
@@ -192,6 +195,7 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
       fpstime.restart();
     }
     fpsLabel->repaint();
+    input->action = false;
   }
 
   int i;

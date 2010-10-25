@@ -10,7 +10,7 @@ Npc::Npc(QString newName) : Entity(newName) {
   currentMove = 0;
   defaultSpeed = 64;
   solid = true;
-  qDebug() << "Creating NPC '" + newName + "'";
+  //qDebug() << "Creating NPC '" + newName + "'";
   scriptObject = scriptEngine->newQObject(this);
 }
 
@@ -96,6 +96,17 @@ void Npc::update() {
       scriptEngine->popContext();
       delete currentMove;
       currentMove = 0;
+    } else if(currentMove->type == WaitConditionItem) {
+      QScriptContext * context = scriptEngine->pushContext();
+      context->setThisObject(scriptObject);
+      QScriptValue condition = scriptEngine->evaluate(currentMove->script);
+      if(scriptEngine->hasUncaughtException())
+        message(scriptEngine->uncaughtException().toString());
+      scriptEngine->popContext();
+      if(condition.toBool()) {
+        delete currentMove;
+        currentMove = 0;
+      }
     }
   }
 }
@@ -118,6 +129,10 @@ void Npc::queueWait(int w) {
 
 void Npc::queueScript(QString s) {
   moveQueue.push_back(new MoveQueueItem(s));
+}
+
+void Npc::queueWaitCondition(QString s) {
+  moveQueue.push_back(new MoveQueueItem(s, true));
 }
 
 void Npc::clearQueue() {
@@ -147,9 +162,13 @@ Npc::MoveQueueItem::MoveQueueItem(int w) {
   wait = w;
 }
 
-Npc::MoveQueueItem::MoveQueueItem(QString s) {
+Npc::MoveQueueItem::MoveQueueItem(QString s, bool waitForCondition) {
   init();
-  type = ScriptItem;
+  if(!waitForCondition) {
+    type = ScriptItem;
+  } else {
+    type = WaitConditionItem;
+  }
   script = s;
 }
 
