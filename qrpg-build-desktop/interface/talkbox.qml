@@ -101,7 +101,7 @@ Item {
         to: "Show"
         PropertyAnimation {
           properties: "opacity"
-          duration: 350
+          duration: 225
         }
         PropertyAnimation {
           properties: "scale"
