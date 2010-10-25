@@ -39,7 +39,7 @@ Item {
     }
 
     Keys.onPressed: {
-      if(state == "Show") {
+      if(state == "Show" && !event.isAutoRepeat ) {
         var object = TalkBoxScript.textBoxArray.shift();
         object.state = "Hide";
         object.destroy(500);
