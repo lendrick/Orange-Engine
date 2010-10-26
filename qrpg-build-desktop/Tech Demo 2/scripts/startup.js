@@ -1,1 +1,3 @@
-var ui = createObject("../../interface/talkbox.qml");
+var ui = createObject("../../interface/ui.qml");
+
+ui.statusScreen.show();
