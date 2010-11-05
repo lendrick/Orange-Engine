@@ -489,8 +489,8 @@ void MapScene::drawNumbers(int layer, QPainter * painter, int tw, int th) {
 void MapScene::mousePressEvent(QGraphicsSceneMouseEvent * e) {
   //qDebug() << "MapScene::mousePressEvent";
   //setFocus(Qt::MouseFocusReason);
-  //QGraphicsScene::mousePressEvent(e);
-  //if(e->isAccepted()) return;
+  QGraphicsScene::mousePressEvent(e);
+  if(e->isAccepted()) return;
   //e->accept();
   /*
   foreach (QGraphicsItem *item, items()) {
@@ -512,6 +512,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent * e) {
   movingSelectBox = false;
   mouseStartX = e->scenePos().x();
   mouseStartY = e->scenePos().y();
+  e->accept();
 
   if(mapBox->mapEditorMode == MapEditorMode::Edit && mapBox->map && e->button() == Qt::LeftButton) {
     if(paintMode == PaintMode::Draw) {
@@ -586,9 +587,10 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent * e) {
   } else {
     //qDebug() << "  unhandled";
     //return;
+    e->ignore();
   }
   //qDebug() << "  accepted";
-  e->accept();
+
 }
 
 void MapScene::mouseMoveEvent(QGraphicsSceneMouseEvent * e) {
@@ -606,6 +608,7 @@ void MapScene::mouseMoveEvent(QGraphicsSceneMouseEvent * e) {
   if(e->isAccepted()) return;
   //cout << e->buttons() << "\n";
   if(e->buttons()) {
+    e->accept();
     if(mapBox->mapEditorMode == MapEditorMode::Edit && mapBox->map && (e->buttons() & Qt::LeftButton) &&
        e->scenePos().x() > 0 && e->scenePos().y() > 0 &&
        e->scenePos().x() < this->width() && e->scenePos().y() < this->height()) {
@@ -653,10 +656,11 @@ void MapScene::mouseMoveEvent(QGraphicsSceneMouseEvent * e) {
       //qDebug() << "  scroll";
     } else {
       //qDebug() << "  not handled";
+      e->ignore();
       return;
     }
   }
-  e->accept();
+
   //qDebug() << "  accepted";
 }
 /*
@@ -693,10 +697,14 @@ void MapScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent * e) {
 }
 
 void MapScene::mouseReleaseEvent(QGraphicsSceneMouseEvent * e) {
-  qDebug() << "MapScene::mouseReleaseEvent " << e->buttons();
+  QGraphicsScene::mouseReleaseEvent(e);
+
+  if(e->isAccepted()) return;
+
+  //qDebug() << "MapScene::mouseReleaseEvent " << e->buttons();
   //QGraphicsScene::mouseReleaseEvent(e);
   //if(e->isAccepted()) return;
-
+  e->accept();
   if(drawingSelectBox) {
     if(paintMode == PaintMode::SelectBox) {
       if(!selection) {
@@ -711,13 +719,13 @@ void MapScene::mouseReleaseEvent(QGraphicsSceneMouseEvent * e) {
     }*/
     return;
   } else {
+    e->ignore();
   }
   drawingSelectBox = false;
   movingSelectBox = false;
   mouseStartX = 0;
   mouseStartY = 0;
 
-  QGraphicsScene::mouseReleaseEvent(e);
 }
 
 void MapScene::keyEvent(int key, int eventType) {

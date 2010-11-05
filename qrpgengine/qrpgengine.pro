@@ -123,4 +123,6 @@ OTHER_FILES += \
     ../qrpg-build-desktop/interface/talkbox.js \
     ../qrpg-build-desktop/interface/ui.qml \
     ../qrpg-build-desktop/interface/SimpleMenu.qml \
-    ../qrpg-build-desktop/interface/SimpleMenu.js
+    ../qrpg-build-desktop/interface/SimpleMenu.js \
+    ../qrpg-build-desktop/interface/SimpleMenuItem.qml \
+    ../qrpg-build-desktop/interface/MediumText.qml

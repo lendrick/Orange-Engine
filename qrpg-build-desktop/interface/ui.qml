@@ -94,17 +94,33 @@ Item {
       id: leftSideBar
       x: 0
       y: 0
-      width: 240
+      width: 200
       height: 480
       state: "Show"
+
+      SimpleMenu {
+        width: 150
+        height: 430
+        x: 25
+        y: 25
+        objectName: "mainMenu"
+        id: mainMenu
+
+        Component.onCompleted: {
+          addOption("Party");
+          addOption("Item");
+          addOption("Magic");
+          setSelectedIndex(0);
+        }
+      }
     }
 
     Box {
       objectName: "mainSection"
       id: mainSection
-      x: 240
+      x: 200
       y: 0
-      width: 400
+      width: 440
       height: 480
       state: "Show"
     }
