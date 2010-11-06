@@ -107,22 +107,77 @@ Item {
         id: mainMenu
 
         Component.onCompleted: {
-          addOption("Party");
-          addOption("Item");
-          addOption("Magic");
+          addOption("Party", partyScreen);
+          addOption("Item", itemScreen);
+          addOption("Magic", magicScreen);
           setSelectedIndex(0);
         }
       }
     }
 
-    Box {
-      objectName: "mainSection"
-      id: mainSection
+    Item {
+      objectName: "partyScreen"
+      id: partyScreen
       x: 200
       y: 0
       width: 440
       height: 480
       state: "Show"
+
+      Box {
+        id: characterSelect
+        objectName: "characterSelect"
+        width: 440
+        height: 100
+        x: 0
+        y: 0
+
+        state: "Show"
+        MediumText {
+          x: 25
+          y: 25
+          text: "party"
+        }
+      }
+
+      Box {
+        id: characterScreen
+        objectName: "characterScreen"
+        width: 440
+        height: 380
+        x: 0
+        y: 100
+
+        state: "Show"
+      }
+
+
+    }
+
+    Box {
+      objectName: "itemScreen"
+      id: itemScreen
+      x: 200
+      y: 0
+      width: 440
+      height: 480
+      state: "Hide"
+      MediumText {
+        text: "items"
+      }
+    }
+
+    Box {
+      objectName: "magicScreen"
+      id: magicScreen
+      x: 200
+      y: 0
+      width: 440
+      height: 480
+      state: "Hide"
+      MediumText {
+        text: "magic"
+      }
     }
 
     states: [

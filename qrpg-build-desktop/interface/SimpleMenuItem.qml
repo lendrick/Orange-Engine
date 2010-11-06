@@ -52,7 +52,7 @@ MediumText {
       name: "Normal"
       PropertyChanges {
         target: simpleMenuItem
-        scale: 1
+        color: '#bbbbbb'
       }
     },
 
@@ -60,7 +60,7 @@ MediumText {
       name: "Hover"
       PropertyChanges {
         target: simpleMenuItem
-        scale: 1.1
+        color: '#ffff55'
       }
     },
 
@@ -68,7 +68,7 @@ MediumText {
       name: "Selected"
       PropertyChanges {
         target: simpleMenuItem
-        scale: 1.1
+        color: '#ffffff'
       }
     }
   ]
@@ -76,7 +76,7 @@ MediumText {
   transitions: [
     Transition {
       PropertyAnimation {
-        properties: "scale"
+        properties: "color"
         duration: 100
       }
     }

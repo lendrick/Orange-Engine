@@ -14,7 +14,7 @@ Column {
     }
   }
 
-  function addOption(option) {
+  function addOption(option, object) {
     //console.log("adding menu option " + option)
     var item = SimpleMenuScript.SimpleMenuItemComponent.createObject(simpleMenu);
     item.text = option;
