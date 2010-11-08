@@ -12,13 +12,13 @@ Box {
 
   function setPartyMember(c) {
     console.log("Setting party member to " + c.name);
+    utils.debugObject(c);
     character = c;
     console.log("creating bindings");
     console.log(utils);
-    utils.setObjectProperty(character, "def", 30);
-    utils.debugObject(character);
+    //utils.setObjectProperty(c, "def", 30);
     utils.test();
-    console.log("DEF: " + character.def);
+    console.log("DEF: " + c.def);
 
     console.log("done");
   }

@@ -20,11 +20,14 @@ void QmlUtils::debugObject(QVariant o) {
   qDebug() << o.type() << ": " << o;
   //if(o.canConvert(QVariant::QObject*)) {
   QObject * obj = o.value< QObject* >();
-    qDebug() << o.value< QObject* >();
-  //}
 
-  QList<QByteArray> prop = obj->dynamicPropertyNames();
-  foreach(QByteArray a, prop) {
-    qDebug() << "  " << a << ": " << obj->property(a);
+  if(obj) {
+    qDebug() << o.value< QObject* >();
+    //}
+
+    QList<QByteArray> prop = obj->dynamicPropertyNames();
+    foreach(QByteArray a, prop) {
+      qDebug() << "  " << a << ": " << obj->property(a);
+    }
   }
 }

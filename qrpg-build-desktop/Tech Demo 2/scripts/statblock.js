@@ -2,7 +2,7 @@
 rpgx.print('loading statblock');
 
 function newStatBlock() {
-  o = new QObject();
+  o = new BindObject();
   o.atk = 0;
   o.def = 0;
   o.matk = 0;

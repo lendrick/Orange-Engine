@@ -22,27 +22,33 @@ QScriptClass::QueryFlags BindObject::queryProperty
 void BindObject::setProperty
   (QScriptValue & object, const QScriptString & name, uint id, const QScriptValue & value)
 {
-  QDeclarativePropertyMapPtr m = qscriptvalue_cast< QDeclarativePropertyMapPtr >(object.data());
+  QDeclarativePropertyMapPtr m = qscriptvalue_cast< QDeclarativePropertyMapPtr >(object);
 
-  qDebug() << "setProperty " << name.toString() << " " << value.toVariant();
+  //qDebug() << "setProperty " << name.toString() << " " << value.toVariant();
 
   if(m) {
     (*m)[name] = value.toVariant();
+  } else {
+    qDebug() << "setProperty FAILED";
   }
 }
 
 QScriptValue BindObject::property
   (const QScriptValue & object, const QScriptString & name, uint id)
 {
-  QDeclarativePropertyMapPtr m = qscriptvalue_cast< QDeclarativePropertyMapPtr >(object.data());
-
-  qDebug() << "get property " << name.toString() << (*m)[name];
-  QScriptValue q = engine()->newVariant((*m)[name]);
-  qDebug() << q.toString();
-  qDebug() << "done";
-
+  QDeclarativePropertyMapPtr m = qscriptvalue_cast< QDeclarativePropertyMapPtr >(object);
   if(!m)
+  {
+    //qDebug() << "get property FAILED";
     return QScriptValue();
+  }
+  //qDebug() << "object type " << object.
+  //qDebug() << "get property " << name.toString() << (*m)[name];
+  QScriptValue q = engine()->newVariant((*m)[name]);
+  //qDebug() << q.toString();
+  //qDebug() << "done";
+
+
 
   if(m->contains(name)) {
     return engine()->newVariant((*m)[name]);
@@ -54,6 +60,7 @@ QScriptValue BindObject::property
 //QScriptClassPropertyIterator * newIterator ( const QScriptValue & object );
 
 QScriptValue bindObjectToScriptValue(QScriptEngine *eng, const QDeclarativePropertyMapPtr &pm) {
+  qDebug() << "bindObjectToScriptValue";
   QScriptValue ctor = eng->globalObject().property("BindObject");
   BindObject *cls = qscriptvalue_cast<BindObject *>(ctor.data());
   if (!cls)
@@ -63,6 +70,7 @@ QScriptValue bindObjectToScriptValue(QScriptEngine *eng, const QDeclarativePrope
 }
 
 void bindObjectFromScriptValue(const QScriptValue &obj, QDeclarativePropertyMapPtr &pm) {
+  qDebug() << "bindObjectFromScriptValue";
   pm = qvariant_cast< QDeclarativePropertyMap* >(obj.data().toVariant());
 }
 
