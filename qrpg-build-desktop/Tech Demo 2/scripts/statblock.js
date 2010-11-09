@@ -1,67 +1,84 @@
 
 rpgx.print('loading statblock');
 
-function StatBlock() {
-  this.atk = 0;
-  this.def = 0;
-  this.matk = 0;
-  this.mdef = 0;
-  this.hp = 0;
-  this.mp = 0;
-  this.spd = 0;
-  this.dex = 0;
+function newStatBlock() {
+  o = new QObject();
+  o.atk = 0;
+  o.def = 0;
+  o.matk = 0;
+  o.mdef = 0;
+  o.hp = 0;
+  o.mp = 0;
+  o.spd = 0;
+  o.dex = 0;
+  o.currentHp = 0;
+  o.currentMp = 0;
+  o.cls = "";
+  o.level = 0;
+  o.status = new Array();
   
-  this.itemType = "";
-  this.name = "";
+  o.itemType = "";
+  o.name = "";
   
-  this.slots = new Array();
+  o.slots = new Array();
   
-  this.items = new Array();
-}
+  o.items = new Array();
 
-StatBlock.prototype.clearSlots = function() {
-  for(var slot in slots) {
-    items[slot] = Array();
+  o.heal = function() {
+    currentMp = mp;
+    currentHp = hp;
   }
-}
 
-StatBlock.prototype.getStat = function(stat) {
-  var total = 0;
-  for(var itemSlots in items) {
-    for(var item in items[itemSlots]) {
-      total += items[itemSlots][item].getStat(stat);
+  o.setDef = function(d) {
+   o.def = d;
+  }
+
+  o.clearSlots = function() {
+    for(var slot in slots) {
+      items[slot] = Array();
     }
   }
-  return total + this["stat"];
-}
 
-StatBlock.prototype.getType = function() {
-  return itemType;
-}
-
-// This function eqips an item if able, or returns false.  If item is equipped,
-// it returns the item that *was* equipped.
-StatBlock.prototype.equip = function(item, slot, number) {
-  if(slots[item.getType()] >= number) {
-    oldItem = items[item.getType()][number];
-    items[item.getType()][number] = item;
-    if(!oldItem) {
-      return true;
-    } else {
-      return oldItem;
+  o.getStat = function(stat) {
+    var total = 0;
+    for(var itemSlots in items) {
+      for(var item in items[itemSlots]) {
+        total += items[itemSlots][item].getStat(stat);
+      }
     }
+    return total + this["stat"];
   }
-  
-  return false;
+
+  o.getType = function() {
+    return itemType;
+  }
+
+  // This function eqips an item if able, or returns false.  If item is equipped,
+  // it returns the item that *was* equipped.
+  o.equip = function(item, slot, number) {
+    if(slots[item.getType()] >= number) {
+      oldItem = items[item.getType()][number];
+      items[item.getType()][number] = item;
+      if(!oldItem) {
+        return true;
+      } else {
+        return oldItem;
+      }
+    }
+
+    return false;
+  }
+
+  return o;
 }
 
-Character.prototype = new StatBlock();
-Character.prototype.constructor = Character();
-Character.prototype.parent = StatBlock.prototype;
 
-function Character(name) {
-  this.itemType = 'Character';
-  this.name = name;
+function newCharacter(name) {
+  o = newStatBlock();
+  o.itemType = 'Character';
+  o.name = name;
+  //rpgx.makeQmlGlobal(o);
+  return o;
 }
 
 var test = "Hello, world!";

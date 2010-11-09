@@ -13,6 +13,7 @@
 #include "mapbox.h"
 #include "qrpgconsole.h"
 #include "talkbox.h"
+#include "qmlutils.h"
 #include "rpgscript.h"
 
 QTreeWidget * maplist;
@@ -60,6 +61,8 @@ QDeclarativeEngine * declarativeEngine;
 
 
 ScriptUtils * scriptUtils;
+QmlUtils * qmlUtils;
+
 QPixmap * talkBoxBackground;
 int timeLastFrame = 0;
 int timeSinceLastFrame = 0;
@@ -98,5 +101,6 @@ void initScriptEngine()
   //scriptDebugger = new QScriptEngineDebugger;
   //scriptDebugger->attachTo(scriptEngine);
   scriptUtils = new ScriptUtils;
-  declarativeEngine = new QDeclarativeEngine;
+
+  qDebug() << "init script engine";
 }

@@ -61,7 +61,9 @@ SOURCES +=\
     ../qrpglib/collisiontester.cpp \
     ../qrpglib/boundswidget.cpp \
     ../qrpglib/bitmap_qt.cpp \
-    ../qrpglib/layerdialog.cpp
+    ../qrpglib/layerdialog.cpp \
+    ../qrpglib/qmlutils.cpp \
+    ../qrpglib/bindobject.cpp
 
 HEADERS  += \
     enginewindow.h \
@@ -112,7 +114,9 @@ HEADERS  += \
     ../qrpglib/collisiontester.h \
     ../qrpglib/boundswidget.h \
     ../qrpglib/bitmap.h \
-    ../qrpglib/layerdialog.h
+    ../qrpglib/layerdialog.h \
+    ../qrpglib/qmlutils.h \
+    ../qrpglib/bindobject.h
 
 FORMS    +=
 
@@ -125,4 +129,14 @@ OTHER_FILES += \
     ../qrpg-build-desktop/interface/SimpleMenu.qml \
     ../qrpg-build-desktop/interface/SimpleMenu.js \
     ../qrpg-build-desktop/interface/SimpleMenuItem.qml \
-    ../qrpg-build-desktop/interface/MediumText.qml
+    ../qrpg-build-desktop/interface/MediumText.qml \
+    ../qrpg-build-desktop/interface/HideShowContainer.qml \
+    ../qrpg-build-desktop/Tech Demo 2/scripts/characters.js \
+    ../qrpg-build-desktop/Tech Demo 2/scripts/startup.js \
+    ../qrpg-build-desktop/interface/PartyScreen.qml \
+    ../qrpg-build-desktop/interface/CharacterScreen.qml \
+    ../qrpg-build-desktop/interface/PartyScreen.js \
+    ../qrpg-build-desktop/interface/CharacterScreen.js \
+    ../qrpg-build-desktop/interface/SmallText.qml \
+    ../qrpg-build-desktop/interface/StatItem.qml \
+    ../qrpg-build-desktop/interface/BindItem.qml

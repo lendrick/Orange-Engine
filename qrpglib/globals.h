@@ -48,6 +48,7 @@ class QRPGConsole;
 class ImageFrame;
 class TalkBox;
 class RPGScript;
+class QmlUtils;
 
 extern TalkBox * talkBoxTest;
 
@@ -81,6 +82,7 @@ extern QGLWidget * mainGLWidget;
 
 extern QScriptEngine * scriptEngine;
 extern QDeclarativeEngine * declarativeEngine;
+extern QmlUtils * qmlUtils;
 //extern QScriptEngineDebugger * scriptDebugger;
 extern ScriptUtils * scriptUtils;
 

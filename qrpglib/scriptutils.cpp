@@ -10,6 +10,9 @@
 #include "mapscene.h"
 #include "mapbox.h"
 #include "sound.h"
+#include "bindobject.h"
+
+QScriptValue bindObjectConstructor(QScriptContext * context, QScriptEngine * engine);
 
 static QScriptValue f(QScriptContext* c, QScriptEngine* e)
 {
@@ -30,6 +33,14 @@ ScriptUtils::ScriptUtils() : QObject() {
   QScriptValue soundCtor = scriptEngine->newFunction(soundConstructor);
   metaObject = scriptEngine->newQMetaObject(&QObject::staticMetaObject, soundCtor);
   scriptEngine->globalObject().setProperty("Sound", metaObject);
+
+  QScriptValue objectCtor = scriptEngine->newFunction(qObjectConstructor);
+  metaObject = scriptEngine->newQMetaObject(&QObject::staticMetaObject, objectCtor);
+  scriptEngine->globalObject().setProperty("QObject", metaObject);
+
+  QScriptValue bindObjectCtor = scriptEngine->newFunction(bindObjectConstructor);
+  metaObject = scriptEngine->newQMetaObject(&QObject::staticMetaObject, bindObjectCtor);
+  scriptEngine->globalObject().setProperty("BindObject", metaObject);
 
   /*
   QScriptValue alertFunc = scriptEngine->newFunction(alert);
@@ -74,6 +85,11 @@ void ScriptUtils::alert(QString s) {
 
 void ScriptUtils::print(QString s) {
   cprint(s);
+}
+
+void ScriptUtils::debug(QString s) {
+  //qDebug() << "DEBUG";
+  qDebug() << s;
 }
 
 QScriptValue ScriptUtils::getEntity(QString s) {
@@ -150,6 +166,8 @@ QScriptValue ScriptUtils::include(QString filename) {
   if(scriptEngine->hasUncaughtException()) {
     cprint(filename + ": " + QString::number(scriptEngine->uncaughtExceptionLineNumber()) + ": " +
             scriptEngine->uncaughtException().toString());
+    qDebug() << filename << ": " << QString::number(scriptEngine->uncaughtExceptionLineNumber()) << ": " <<
+                scriptEngine->uncaughtException().toString();
     scriptEngine->clearExceptions();
   }
 
@@ -196,3 +214,24 @@ void ScriptUtils::dumpScriptObject(QScriptValue objectValue) {
 void ScriptUtils::dumpObject(QObject * o) {
   qDebug() << o->dynamicPropertyNames();
 }
+
+void ScriptUtils::makeQmlGlobal(QScriptValue o) {
+  qDebug() << "makeQmlGlobal()";
+  dumpScriptObject(o);
+  qDebug() << o.toQObject();
+  //declarativeEngine->rootContext()->setContextProperty(o.toQObject()->objectName(), o.toQObject());
+}
+
+QScriptValue qObjectConstructor(QScriptContext * context, QScriptEngine * engine) {
+  qDebug() << "creating new QObject";
+  try {
+    QObject * object = new QObject;
+    object->setProperty("qobjectx", 1);
+    return engine->newQObject(object, QScriptEngine::QtOwnership,
+                              QScriptEngine::AutoCreateDynamicProperties|QScriptEngine::SkipMethodsInEnumeration);
+  } catch(QString s) {
+    return context->throwError(s);
+  }
+}
+
+

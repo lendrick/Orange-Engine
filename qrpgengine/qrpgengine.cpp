@@ -15,6 +15,7 @@
 #include "projectreader.h"
 #include "talkbox.h"
 #include "scriptutils.h"
+#include "qmlutils.h"
 
 // for testing
 #include <cstdlib>
@@ -89,6 +90,9 @@ int main(int argc, char *argv[]) {
   //TalkBoxProxy * tb = new TalkBoxProxy("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
   //tb->deleteLater();
 
+  declarativeEngine = mapBox->engine();
+  qmlUtils = new QmlUtils;
+  declarativeEngine->rootContext()->setContextProperty("utils", qmlUtils);
 
   //bool dirExists = QDir::setCurrent("scripts");
   scriptUtils->include("scripts/init.js");

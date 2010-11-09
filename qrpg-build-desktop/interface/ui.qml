@@ -9,6 +9,14 @@ Item {
   height: 640
   width: 480
 
+  function addPartyMember(character) {
+    partyScreen.addPartyMember(character);
+  }
+
+  function setPartyMember(i, character) {
+    partyScreen.setPartyMember(i, character);
+  }
+
   Box {
     objectName: "talkbox"
     id: talkbox
@@ -115,43 +123,9 @@ Item {
       }
     }
 
-    Item {
-      objectName: "partyScreen"
+    PartyScreen {
       id: partyScreen
-      x: 200
-      y: 0
-      width: 440
-      height: 480
-      state: "Show"
-
-      Box {
-        id: characterSelect
-        objectName: "characterSelect"
-        width: 440
-        height: 100
-        x: 0
-        y: 0
-
-        state: "Show"
-        MediumText {
-          x: 25
-          y: 25
-          text: "party"
-        }
-      }
-
-      Box {
-        id: characterScreen
-        objectName: "characterScreen"
-        width: 440
-        height: 380
-        x: 0
-        y: 100
-
-        state: "Show"
-      }
-
-
+      objectName: "partyScreen"
     }
 
     Box {
@@ -163,6 +137,8 @@ Item {
       height: 480
       state: "Hide"
       MediumText {
+        x: 25
+        y: 25
         text: "items"
       }
     }
@@ -176,6 +152,8 @@ Item {
       height: 480
       state: "Hide"
       MediumText {
+        x: 25
+        y: 25
         text: "magic"
       }
     }

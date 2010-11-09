@@ -19,6 +19,7 @@ Column {
     var item = SimpleMenuScript.SimpleMenuItemComponent.createObject(simpleMenu);
     item.text = option;
     item.opacity = 1;
+    item.object = object;
     addItem(item);
   }
 

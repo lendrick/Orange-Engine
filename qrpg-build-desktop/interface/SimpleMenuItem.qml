@@ -5,6 +5,7 @@ MediumText {
   wrapMode: Text.NoWrap
   property int index
   property bool selected: false
+  property Item object;
   state: "Normal"
 
   function setSelected() {
@@ -13,11 +14,13 @@ MediumText {
 
   function select() {
     selected = true;
+    object.show();
     if(state != "Hover") resetState();
   }
 
   function deselect() {
     selected = false;
+    object.hide();
     if(state != "Hover") resetState();
   }
 
@@ -52,7 +55,7 @@ MediumText {
       name: "Normal"
       PropertyChanges {
         target: simpleMenuItem
-        color: '#bbbbbb'
+        color: '#999'
       }
     },
 
@@ -60,7 +63,7 @@ MediumText {
       name: "Hover"
       PropertyChanges {
         target: simpleMenuItem
-        color: '#ffff55'
+        color: '#ff2'
       }
     },
 
@@ -68,7 +71,7 @@ MediumText {
       name: "Selected"
       PropertyChanges {
         target: simpleMenuItem
-        color: '#ffffff'
+        color: '#fff'
       }
     }
   ]

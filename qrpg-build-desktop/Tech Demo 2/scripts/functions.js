@@ -1,4 +1,4 @@
-function print(string) {
+function cprint(string) {
   rpgx.print(string);
 }
 
@@ -25,4 +25,10 @@ function say(string) {
   //alert(object.Border.top);
   //alert("Name: " + object.objectName);
   //alert(object.text1.text);
+}
+
+function extend(obj1, obj2) {
+  for (attrname in obj2) {
+    obj1[attrname] = obj2[attrname];
+  }
 }
