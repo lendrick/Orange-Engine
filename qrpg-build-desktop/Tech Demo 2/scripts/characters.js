@@ -27,6 +27,8 @@ characters['Lendrick'].addSlots('Accessory', 2);
 
 characters['Lendrick'].currentHp = characters['Lendrick'].hp;
 characters['Lendrick'].currentMp = characters['Lendrick'].mp;
+
+characters['Lendrick'].portrait = "../Tech Demo 2/images/lendrick_portrait.png";
 //characters['Lendrick'].setDef(20);
 
 characters['Sithra'] = newCharacter('Sithra');
@@ -56,6 +58,8 @@ characters['Sithra'].addSlots('Accessory', 2);
 
 characters['Sithra'].currentHp = characters['Sithra'].hp;
 characters['Sithra'].currentMp = characters['Sithra'].mp;
+
+characters['Sithra'].portrait = "../Tech Demo 2/images/sithra_portrait.png";
 
 party.push(characters['Lendrick']);
 party.push(characters['Sithra']);

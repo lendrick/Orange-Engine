@@ -6,7 +6,7 @@
 rpgx.setLayer(1);
 player.setSprite("Male Ranger");
 player.addToMap(1);
-player.setPos(50, 320);
+player.setPos(375, 250);
 rpgx.setCamera(player);
 townTheme.play();]]></script>
     <script condition='1'><![CDATA[townTheme.stop();]]></script>

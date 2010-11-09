@@ -139,4 +139,5 @@ OTHER_FILES += \
     ../qrpg-build-desktop/interface/StatItem.qml \
     ../qrpg-build-desktop/interface/BindItem.qml \
     ../qrpg-build-desktop/Tech Demo 2/qml/Character.qml \
-    ../qrpg-build-desktop/Tech Demo 2/qml/Character.js
+    ../qrpg-build-desktop/Tech Demo 2/qml/Character.js \
+    ../qrpg-build-desktop/interface/ImageMenuItem.qml

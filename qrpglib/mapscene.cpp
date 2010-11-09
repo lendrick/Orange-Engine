@@ -96,6 +96,9 @@ MapScene::MapScene(MapBox * m)
   connect(editGlobalScriptsAction, SIGNAL(triggered()), this, SLOT(editGlobalScripts()));
   connect(editPropertiesAction, SIGNAL(triggered()), this, SLOT(editProperties()));
 
+  connect(this, SIGNAL(menuKey()), scriptUtils, SIGNAL(menuKey()));
+
+
   mapFont = new QFont("Arial", 6);
   entityFont = new QFont("Arial", 12);
 
@@ -142,6 +145,10 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
     if(input->right) mapBox->Move(1, 0);
     */
 
+    if(input->menu) {
+      emit menuKey();
+      input->menu = false;
+    }
     if(input->action) playerEntity->setActivated(true);
     if(input->console) {
       console->setVisible(!(console->isVisible()));
@@ -747,6 +754,9 @@ void MapScene::keyEvent(int key, int eventType) {
       break;
     case Qt::Key_Escape:
       input->cancel = (eventType == QEvent::KeyPress);
+      break;
+    case Qt::Key_Tab:
+      input->menu = (eventType == QEvent::KeyPress);
       break;
     case Qt::Key_Space:
       input->action = (eventType == QEvent::KeyPress);

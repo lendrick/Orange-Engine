@@ -12,4 +12,8 @@ for(var i in party) {
 
 ui.statusScreen.partyScreen.setCurrentPartyMember(0);
 
-ui.statusScreen.show();
+function toggleUi() {
+  ui.statusScreen.toggleVisible();
+}
+
+rpgx.menuKey.connect(toggleUi);

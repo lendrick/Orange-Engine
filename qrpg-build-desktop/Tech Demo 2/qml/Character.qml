@@ -20,6 +20,8 @@ Item {
   property string itemType;
   property string name;
 
+  property string portrait;
+
   function heal() {
     mp = currentMp;
     hp = currentHp;

@@ -34,6 +34,9 @@ public slots:
   void addQmlString(QString string);
   QScriptValue include(QString filename);
   void dumpScriptObject(QScriptValue objectValue);
+
+signals:
+  void menuKey();
 };
 
 

@@ -12,6 +12,14 @@ Item {
     state = "Show";
   }
 
+  function toggleVisible() {
+    console.log("toggleVisible")
+    if(state == "Show")
+      state = "Hide";
+    else
+      state = "Show";
+  }
+
   states: [
     State {
       name: "Hide"

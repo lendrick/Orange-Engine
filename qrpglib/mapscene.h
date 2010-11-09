@@ -68,6 +68,7 @@ signals:
   void showEntityDialog(EntityPointer);
   void showMapScriptDialog(Map *);
   void showGlobalScriptDialog();
+  void menuKey();
 
 private:
   void mousePressEvent(QGraphicsSceneMouseEvent * e);
