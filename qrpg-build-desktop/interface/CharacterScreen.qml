@@ -11,16 +11,16 @@ Box {
   property variant character
 
   function setPartyMember(c) {
-    console.log("Setting party member to " + c.name);
-    utils.debugObject(c);
+    //console.log("Setting party member to " + c.name);
+    //utils.debugObject(c);
     character = c;
-    console.log("creating bindings");
-    console.log(utils);
+    //console.log("creating bindings");
+    //console.log(utils);
     //utils.setObjectProperty(c, "def", 30);
-    utils.test();
-    console.log("DEF: " + c.def);
+    //utils.test();
+    //console.log("DEF: " + c.def);
 
-    console.log("done");
+    //console.log("done");
   }
 
   function newBinding(parent) {
@@ -60,13 +60,13 @@ Box {
       StatItem {
         id: hpDisplay
         title: "HP"
-        bind: character.currentHp + " / " + character.hp
+        bind: character.getStat('currentHp') + " / " + character.getStat('hp');
       }
 
       StatItem {
         id: mpDisplay
         title: "MP"
-        bind: character.currentMp + " / " + character.mp
+        bind: character.getStat('currentMp') + " / " + character.getStat('mp');
       }
 
       Item {
@@ -78,37 +78,37 @@ Box {
       StatItem {
         id: strDisplay
         title: "Atk"
-        bind: character.atk
+        bind: character.getStat('atk');
       }
 
       StatItem {
         id: defDisplay
         title: "Def"
-        bind: character.def
+        bind: character.getStat('def');
       }
 
       StatItem {
         id: matkDisplay
         title: "MAtk"
-        bind: character.matk
+        bind: character.getStat('matk');
       }
 
       StatItem {
         id: mdefDisplay
         title: "MDef"
-        bind: character.mdef
+        bind: character.getStat('mdef');
       }
 
       StatItem {
         id: spdDisplay
         title: "Spd"
-        bind: character.spd
+        bind: character.getStat('spd');
       }
 
       StatItem {
         id: dexDisplay
         title: "Dex"
-        bind: character.dex
+        bind: character.getStat('dex');
       }
     }
 

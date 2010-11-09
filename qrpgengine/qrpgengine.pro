@@ -62,8 +62,7 @@ SOURCES +=\
     ../qrpglib/boundswidget.cpp \
     ../qrpglib/bitmap_qt.cpp \
     ../qrpglib/layerdialog.cpp \
-    ../qrpglib/qmlutils.cpp \
-    ../qrpglib/bindobject.cpp
+    ../qrpglib/qmlutils.cpp
 
 HEADERS  += \
     enginewindow.h \
@@ -115,8 +114,7 @@ HEADERS  += \
     ../qrpglib/boundswidget.h \
     ../qrpglib/bitmap.h \
     ../qrpglib/layerdialog.h \
-    ../qrpglib/qmlutils.h \
-    ../qrpglib/bindobject.h
+    ../qrpglib/qmlutils.h
 
 FORMS    +=
 
@@ -139,4 +137,6 @@ OTHER_FILES += \
     ../qrpg-build-desktop/interface/CharacterScreen.js \
     ../qrpg-build-desktop/interface/SmallText.qml \
     ../qrpg-build-desktop/interface/StatItem.qml \
-    ../qrpg-build-desktop/interface/BindItem.qml
+    ../qrpg-build-desktop/interface/BindItem.qml \
+    ../qrpg-build-desktop/Tech Demo 2/qml/Character.qml \
+    ../qrpg-build-desktop/Tech Demo 2/qml/Character.js

@@ -11,9 +11,9 @@ rpgx.setCamera(player);
 townTheme.play();]]></script>
     <script condition='1'><![CDATA[townTheme.stop();]]></script>
     <script condition='1'><![CDATA[
-characters["Lendrick"].def++;
-ui.setPartyMember(0, characters["Lendrick"]);
-rpgx.print(characters["Lendrick"].def);
+//characters["Lendrick"].atk++;
+//ui.setPartyMember(0, characters["Lendrick"]);
+//rpgx.print(characters["Lendrick"].def);
 ]]></script>
   </scripts>  <layer>
     <width>40</width>

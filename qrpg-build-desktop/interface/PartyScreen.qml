@@ -16,12 +16,12 @@ HideShowContainer {
   }
 
   function setCurrentPartyMember(index) {
-    console.log("set party member to " + index)
+    //console.log("set party member to " + index)
     characterSelect.setPartyMember(index);
-    console.log("showing character screen " + index)
+    //console.log("showing character screen " + index)
     PartyScreenScript.characterScreens[index].show();
     selectedIndex = index;
-    console.log("setting party member to " + selectedCharacter().name);
+    //console.log("setting party member to " + selectedCharacter().name);
   }
 
   function setPartyMember(i, character) {
@@ -30,14 +30,12 @@ HideShowContainer {
 
   function addPartyMember(character) {
     utils.debugObject(character);
-    console.log("adding character to menu: " + character.name);
+    //console.log("adding character to menu: " + character.name);
     characterSelect.addPartyMember(character);
     var scr = PartyScreenScript.newCharacterScreen(this);
-    console.log("1");
     scr.setPartyMember(character);
-    console.log("2");
     PartyScreenScript.characterScreens.push(scr);
-    console.log("character added to menu")
+    //console.log("character added to menu")
   }
 
   Box {

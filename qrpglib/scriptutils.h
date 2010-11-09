@@ -34,9 +34,7 @@ public slots:
   void addQmlString(QString string);
   QScriptValue include(QString filename);
   void dumpScriptObject(QScriptValue objectValue);
-  void makeQmlGlobal(QScriptValue o);
 };
 
-QScriptValue qObjectConstructor(QScriptContext * context, QScriptEngine * engine);
 
 #endif

@@ -1,8 +1,8 @@
 
 rpgx.print('loading statblock');
-
+/*
 function newStatBlock() {
-  o = new BindObject();
+  o = new Object();
   o.atk = 0;
   o.def = 0;
   o.matk = 0;
@@ -71,15 +71,16 @@ function newStatBlock() {
 
   return o;
 }
-
+*/
 
 function newCharacter(name) {
-  o = newStatBlock();
+  //o = newStatBlock();
+  var o = createObject("../qml/Character.qml");
   o.itemType = 'Character';
   o.name = name;
   //rpgx.makeQmlGlobal(o);
   return o;
 }
 
-var test = "Hello, world!";
-rpgx.print("Test: " + test);
+//var test = "Hello, world!";
+//rpgx.print("Test: " + test);

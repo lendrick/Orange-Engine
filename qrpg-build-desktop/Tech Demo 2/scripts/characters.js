@@ -14,10 +14,16 @@ characters['Lendrick'].dex =  5;
 characters['Lendrick'].cls = "Wizard";
 characters['Lendrick'].level = 1;
 
+/*
 characters['Lendrick'].slots['Armor'] = 1;
 characters['Lendrick'].slots['Weapon'] = 1;
 characters['Lendrick'].slots['Shield'] = 1;
 characters['Lendrick'].slots['Accessory'] = 2;
+*/
+characters['Lendrick'].addSlots('Armor', 1);
+characters['Lendrick'].addSlots('Weapon', 1);
+characters['Lendrick'].addSlots('Shield', 1);
+characters['Lendrick'].addSlots('Accessory', 2);
 
 characters['Lendrick'].currentHp = characters['Lendrick'].hp;
 characters['Lendrick'].currentMp = characters['Lendrick'].mp;
@@ -36,10 +42,17 @@ characters['Sithra'].dex =  7;
 characters['Sithra'].cls = "Priest";
 characters['Sithra'].level = 1;
 
+/*
 characters['Sithra'].slots['Armor'] = 1;
 characters['Sithra'].slots['Weapon'] = 1;
 characters['Sithra'].slots['Shield'] = 1;
 characters['Sithra'].slots['Accessory'] = 2;
+*/
+characters['Sithra'].addSlots('Armor', 1);
+characters['Sithra'].addSlots('Weapon', 1);
+characters['Sithra'].addSlots('Shield', 1);
+characters['Sithra'].addSlots('Accessory', 2);
+
 
 characters['Sithra'].currentHp = characters['Sithra'].hp;
 characters['Sithra'].currentMp = characters['Sithra'].mp;
