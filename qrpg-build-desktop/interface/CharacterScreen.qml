@@ -3,8 +3,8 @@ import Qt 4.7
 
 Box {
   id: characterScreen
-  width: 440
-  height: 380
+  width: parent.width
+  height: parent.height - 100
   x: 0
   y: 100
   state: "Hide"

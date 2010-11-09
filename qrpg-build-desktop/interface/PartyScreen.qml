@@ -3,10 +3,6 @@ import "PartyScreen.js" as PartyScreenScript
 
 HideShowContainer {
   id: partyScreen
-  x: 200
-  y: 0
-  width: 440
-  height: 480
   state: "Show"
   Component.onCompleted: PartyScreenScript.startUp();
   property int selectedIndex
@@ -47,7 +43,7 @@ HideShowContainer {
   Box {
     id: characterSelect
     objectName: "characterSelect"
-    width: 440
+    width: parent.width
     height: 100
     x: 0
     y: 0

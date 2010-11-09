@@ -1,17 +1,17 @@
 import Qt 4.7
 import "talkbox.js" as TalkBoxScript
 
-Item {
+Item {  //Item
   id: ui
   objectName: "ui"
+  //color: Qt.rgba(0, 0, 0, .2);  //test only
 
-  /*
   x: 0
   y: 0
-  height: 640
-  width: 480
-  */
-  anchors.fill: parent
+  width: 640
+  height: 480
+
+  //anchors.fill: parent
 
   function addPartyMember(character) {
     partyScreen.addPartyMember(character);
@@ -25,26 +25,26 @@ Item {
     objectName: "talkbox"
     id: talkbox
 
-
+    /*
     width: 640
     height: 168
     x: 0
     y: 480-height
     z: 0
-
+    */
 
     /*
     width: parent.width
     height: 168
     x: 0
     y: parent.height - height
-*/
+    */
     //anchors.fill: parent
 
-    //anchors.left: parent.left
-    //anchors.right: parent.right
-    //anchors.bottom: parent.bottom
-    //height: 168
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    height: 168
 
     focus: true
     property list<Item> textArray
@@ -106,11 +106,15 @@ Item {
     objectName: "statusScreen"
     id: statusScreen
 
-
+/*
     x: 0
     y: 0
     height: 640
     width: 480
+  */
+
+    anchors.fill:  parent
+
     state: "Hide"
 
     /*
@@ -127,15 +131,21 @@ Item {
       id: leftSideBar
       x: 0
       y: 0
-      width: 200
-      height: 480
+      width: parent.width / 3
+      height: parent.height
       state: "Show"
 
       SimpleMenu {
+        anchors.fill: parent
+        anchors.margins: 25
+
+        /*
         width: 150
         height: 430
         x: 25
         y: 25
+        */
+
         objectName: "mainMenu"
         id: mainMenu
 
@@ -151,15 +161,27 @@ Item {
     PartyScreen {
       id: partyScreen
       objectName: "partyScreen"
+      width: parent.width * 2/3
+      anchors.right:  parent.right
+      anchors.top:  parent.top
+      anchors.bottom: parent.bottom
     }
 
     Box {
       objectName: "itemScreen"
       id: itemScreen
-      x: 200
+
+      /*
+      x: parent.width / 3
       y: 0
       width: 440
       height: 480
+      */
+      width: parent.width * 2/3
+      anchors.right:  parent.right
+      anchors.top:  parent.top
+      anchors.bottom: parent.bottom
+
       state: "Hide"
       MediumText {
         x: 25
@@ -171,10 +193,11 @@ Item {
     Box {
       objectName: "magicScreen"
       id: magicScreen
-      x: 200
-      y: 0
-      width: 440
-      height: 480
+      width: parent.width * 2/3
+      anchors.right:  parent.right
+      anchors.top:  parent.top
+      anchors.bottom: parent.bottom
+
       state: "Hide"
       MediumText {
         x: 25
