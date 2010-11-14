@@ -5,6 +5,7 @@ var ImageMenuItemComponent;
 var menuItems;
 
 function startUp() {
+  rpgx.debug("CHARACTER SCREEN LOADING");
   CharacterScreenComponent = Qt.createComponent("CharacterScreen.qml");
   characterScreens = Array();
   console.log("character screen initialized");

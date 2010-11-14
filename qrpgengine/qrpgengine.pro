@@ -114,7 +114,8 @@ HEADERS  += \
     ../qrpglib/boundswidget.h \
     ../qrpglib/bitmap.h \
     ../qrpglib/layerdialog.h \
-    ../qrpglib/qmlutils.h
+    ../qrpglib/qmlutils.h \
+    ../qrpglib/qdeclarativedebughelper_p.h
 
 FORMS    +=
 
@@ -140,4 +141,6 @@ OTHER_FILES += \
     ../qrpg-build-desktop/interface/BindItem.qml \
     ../qrpg-build-desktop/Tech Demo 2/qml/Character.qml \
     ../qrpg-build-desktop/Tech Demo 2/qml/Character.js \
-    ../qrpg-build-desktop/interface/ImageMenuItem.qml
+    ../qrpg-build-desktop/interface/ImageMenuItem.qml \
+    ../qrpg-build-desktop/Tech Demo 2/qml/CharacterItemSlot.qml \
+    ../qrpg-build-desktop/interface/SlotItem.qml

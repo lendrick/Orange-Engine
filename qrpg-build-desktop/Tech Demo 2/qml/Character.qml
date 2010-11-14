@@ -4,43 +4,119 @@ import "Character.js" as CharacterScript
 Item {
   visible: false
   id: characterItem
-  property int atk
-  property int def
-  property int matk
-  property int mdef
-  property int hp
-  property int mp
-  property int spd
-  property int dex
-  property int currentHp
-  property int currentMp
-  property string cls
-  property int level
+  property int atk: 0
+  property int def: 0
+  property int matk: 0
+  property int mdef: 0
+  property int maxHp: 0
+  property int maxMp: 0
+  property int spd: 0
+  property int dex: 0
 
-  property string itemType;
-  property string name;
+  onAtkChanged: updateStat('atk');
+  onDefChanged: updateStat('def');
+  onMatkChanged: updateStat('matk');
+  onMdefChanged: updateStat('mdef');
+  onMaxHpChanged: updateStat('maxHp');
+  onMaxMpChanged: updateStat('maxMp');
+  onSpdChanged: updateStat('spd');
+  onDexChanged: updateStat('dex');
 
-  property string portrait;
+  property int current_atk: 0
+  property int current_def: 0
+  property int current_matk: 0
+  property int current_mdef: 0
+  property int current_maxHp: 0
+  property int current_maxMp: 0
+  property int current_spd: 0
+  property int current_dex: 0
+
+
+  property int hp: 0
+  property int mp: 0
+  property string cls: ''
+  property int level: 0
+
+  property string itemType: ''
+  property string name: ''
+
+  property string portrait: ''
+
+  Component.onCompleted: CharacterScript.startUp();
 
   function heal() {
-    mp = currentMp;
-    hp = currentHp;
+    mp = current_maxMp;
+    hp = current_maxHp;
   }
 
   function addSlots(name, count) {
-    CharacterScript.slots[name] = count;
+    CharacterScript.slots[name] = Array();
+    for(var i = 0; i < count; i++) {
+      console.log(characterItem.name + " adding slot " + name + " " + i);
+      var slot = CharacterScript.CharacterItemSlotComponent.createObject(characterItem);
+      slot.name = name;
+      CharacterScript.slots[name].push(slot);
+      console.log(characterItem.name + " slot " + name + " " + i + " added");
+    }
   }
 
 
   function getStat(stat) {
+    //var total = getChildrenStat(stat);
+    //console.log("getstat " + total + characterItem[stat]);
+    console.log(characterItem.name + " getStat " + stat + ": " + characterItem['current_' + stat]);
+    return characterItem['current_' + stat];
+  }
+
+  function updateStat(stat) {
+    console.log(characterItem.name + " updateStat " + stat);
+    characterItem['current_' + stat] = getChildrenStat(stat) + characterItem[stat];
+    updateParentStat(stat);
+    console.log(characterItem.name + " updateStat " + stat + " done: " +
+                characterItem['current_' + stat]);
+  }
+
+  function updateStats() {
+    console.log(characterItem.name + " updateStats");
+    var stats = Array('atk', 'def', 'matk', 'mdef', 'maxHp', 'maxMp', 'spd', 'dex');
+    for(var i in stats) {
+      updateStat(stats[i]);
+    }
+
+    updateParent();
+    console.log(characterItem.name + " updateStats done");
+  }
+
+  function updateParent() {
+    if(parent && parent.updateStats) parent.updateStats();
+  }
+
+  function updateParentStat(stat) {
+    if(parent && parent.updateStat) parent.updateStat(stat);
+  }
+
+  function setStat(stat, val) {
+    characterItem[stat] = val;
+    //updateStat(stat);
+  }
+
+  function getSlot(slot, number) {
+    return CharacterScript.slots[slot][number];
+  }
+
+  function getChildrenStat(stat) {
+    // Iterate through all immediate children and return sum of requested stat,
+    // not including root oblect
     var total = 0;
-    for(var itemSlots in CharacterScript.items) {
-      for(var item in CharacterScript.items[itemSlots]) {
-        total += CharacterScript.items[itemSlots][item].getStat(stat);
+    for(var itemSlots in CharacterScript.slots) {
+      for(var slot in CharacterScript.slots[itemSlots]) {
+        console.log("Slot " + itemSlots + " " + slot);
+        if(CharacterScript.slots[itemSlots][slot].item)
+          total += CharacterScript.slots[itemSlots][slot].item.getStat(stat);
       }
     }
-    //console.log("getstat " + total + characterItem[stat]);
-    return total + characterItem[stat];
+
+    return total;
   }
 
   function getType() {
@@ -50,9 +126,15 @@ Item {
   // This function eqips an item if able, or returns false.  If item is equipped,
   // it returns the item that *was* equipped.
   function equip(item, slot, number) {
-    if(CharacterScript.slots[item.getType()] >= number) {
-      oldItem = CharacterScript.items[item.getType()][number];
-      CharacterScript.items[item.getType()][number] = item;
+    console.log(characterItem.name + " equip " + item.getType() + " " + CharacterScript.slots[item.getType()].length);
+
+    //rpgx.dumpScriptObject(item);
+
+    if(CharacterScript.slots[item.getType()].length >= number) {
+      oldItem = CharacterScript.slots[item.getType()][number].item;
+      CharacterScript.slots[item.getType()][number].item = item;
+      updateStats();
+
       if(!oldItem) {
         return true;
       } else {

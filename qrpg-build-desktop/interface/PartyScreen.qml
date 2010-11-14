@@ -12,12 +12,12 @@ HideShowContainer {
   }
 
   function setCurrentPartyMember(index) {
-    console.log("set party member to " + index)
+    //console.log("set party member to " + index)
     characterSelect.setPartyMember(index);
-    console.log("showing character screen " + index)
+    //console.log("showing character screen " + index)
     PartyScreenScript.characterScreens[index].show();
     selectedIndex = index;
-    console.log("setting party member to " + selectedCharacter().name);
+    //console.log("setting party member to " + selectedCharacter().name);
   }
 
   function setPartyMember(i, character) {
@@ -26,18 +26,18 @@ HideShowContainer {
 
   function addPartyMember(character) {
     utils.debugObject(character);
-    console.log("adding character to menu: " + character.name);
+    //console.log("adding character to menu: " + character.name);
 
     var scr = PartyScreenScript.newCharacterScreen(this);
-    console.log("1");
+    //console.log("1");
     scr.setPartyMember(character);
-    console.log("2");
+    //console.log("2");
     PartyScreenScript.characterScreens.push(scr);
 
     var currentIndex = PartyScreenScript.characterScreens.length - 1;
-    console.log("adding character to select row");
+    //console.log("adding character to select row");
     characterSelect.addPartyMember(character, currentIndex);
-    console.log("character added to menu")
+    //console.log("character added to menu")
   }
 
   Box {
@@ -77,7 +77,15 @@ HideShowContainer {
       //color: '#444444'
 
       property alias selectedIndex: partyScreen.selectedIndex;
-      property int selectedPos: x + PartyScreenScript.menuItems[partyScreen.selectedIndex].x + PartyScreenScript.menuItems[partyScreen.selectedIndex].width/2
+      property int selectedPos: getSelectedPos();
+
+      function getSelectedPos() {
+        //if(PartyScreenScript.menuItems[partyScreen.selectedIndex])
+          return x + PartyScreenScript.menuItems[partyScreen.selectedIndex].x +
+            PartyScreenScript.menuItems[partyScreen.selectedIndex].width/2;
+        //else
+          //return x;
+      }
 
       function setOptions(options) {
         for(var o in options) {
@@ -86,28 +94,28 @@ HideShowContainer {
       }
 
       function addOption(portrait, object) {
-        console.log("adding menu image " + portrait);
+        //console.log("adding menu image " + portrait);
         var item = PartyScreenScript.ImageMenuItemComponent.createObject(portraitMenu);
-        console.log("1");
+        //console.log("1");
         item.source = portrait;
-        console.log("2");
+        //console.log("2");
         item.opacity = 1;
-        console.log("3 object " + object);
+        //console.log("3 object " + object);
         item.object = object;
-        console.log("4");
+        //console.log("4");
         addItem(item);
-        console.log("5");
+        //console.log("5");
       }
 
       function addItem(item) {
-        console.log("addItem " + item);
+        //console.log("addItem " + item);
         item.index = PartyScreenScript.menuItems.length;
-        console.log("adding ITEM " + item.index);
+        //console.log("adding ITEM " + item.index);
         PartyScreenScript.menuItems.push(item);
-        console.log("item added");
-        for(var i in PartyScreenScript.menuItems) {
-          console.log(SimpleMenuScript.menuItems[i].opacity);
-        }
+        //console.log("item added");
+        //for(var i in PartyScreenScript.menuItems) {
+          //console.log(PartyScreenScript.menuItems[i].opacity);
+        //}
       }
 
       function getItems() {
@@ -127,7 +135,7 @@ HideShowContainer {
       }
 
       function setSelectedIndex(i) {
-        console.log("setSelectedIndex " + i);
+        //console.log("setSelectedIndex " + i);
         PartyScreenScript.menuItems[selectedIndex].deselect();
         PartyScreenScript.menuItems[i].select();
         selectedIndex = i;
@@ -139,13 +147,13 @@ HideShowContainer {
 
 
     function addPartyMember(character, index) {
-      console.log("adding portrait menu option " + index + ": " + character.name)
+      //console.log("adding portrait menu option " + index + ": " + character.name)
       portraitMenu.addOption(character.portrait,
         PartyScreenScript.characterScreens[index]);
     }
 
     function setPartyMember(index) {
-      console.log("setting characterSelect to " + index);
+      //console.log("setting characterSelect to " + index);
       selectedIndex = index;
     }
   }

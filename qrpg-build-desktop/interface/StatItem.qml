@@ -8,6 +8,9 @@ Item {
   property alias value: statValue.text
   property alias bind: statBinding.value
 
+  property alias statValueItem: statValue
+  property alias statTitleItem: statTitle
+
   SmallText {
     id: statTitle
   }

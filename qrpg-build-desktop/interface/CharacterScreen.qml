@@ -42,12 +42,12 @@ Box {
         id: characterName
         fmt.color: '#ff2'
         fmt.font.bold: true
-        bind: character.name
+        bind: if(character) character.name
       }
 
       BindItem {
         id: classDisplay
-        bind: character.cls + " " + character.level
+        bind: if(character) character.cls + " " + character.level
         fmt.font.bold: true
       }
 
@@ -60,13 +60,13 @@ Box {
       StatItem {
         id: hpDisplay
         title: "HP"
-        bind: character.getStat('currentHp') + " / " + character.getStat('hp');
+        bind: if(character) character.hp + " / " + character.current_maxHp;
       }
 
       StatItem {
         id: mpDisplay
         title: "MP"
-        bind: character.getStat('currentMp') + " / " + character.getStat('mp');
+        bind: if(character) character.mp + " / " + character.current_maxMp;
       }
 
       Item {
@@ -78,37 +78,37 @@ Box {
       StatItem {
         id: strDisplay
         title: "Atk"
-        bind: character.getStat('atk');
+        bind: if(character) character.current_atk;
       }
 
       StatItem {
         id: defDisplay
         title: "Def"
-        bind: character.getStat('def');
+        bind: if(character) character.current_def;
       }
 
       StatItem {
         id: matkDisplay
         title: "MAtk"
-        bind: character.getStat('matk');
+        bind: if(character) character.current_matk;
       }
 
       StatItem {
         id: mdefDisplay
         title: "MDef"
-        bind: character.getStat('mdef');
+        bind: if(character) character.current_mdef;
       }
 
       StatItem {
         id: spdDisplay
         title: "Spd"
-        bind: character.getStat('spd');
+        bind: if(character) character.current_spd;
       }
 
       StatItem {
         id: dexDisplay
         title: "Dex"
-        bind: character.getStat('dex');
+        bind: if(character) character.current_dex;
       }
     }
 
@@ -117,7 +117,40 @@ Box {
       width: parent.width / 2 - 25
       x: parent.width / 2 + 25
 
+      Item {
+        id: statSpacer3
+        height: 25
+        width: 1
+      }
 
+      SlotItem {
+        id: weaponSlot0
+        title: "Weapon"
+        bind: {
+          if(character && character.getSlot("Weapon", 0).item)
+            character.getSlot("Weapon", 0).item.name;
+          else
+            'none';
+        }
+      }
+
+      SlotItem {
+        id: armorSlot0
+        title: "Armor"
+        bind: if(character && character.getSlot("Armor", 0).item) character.getSlot("Armor", 0).item.name; else 'none';
+      }
+
+      SlotItem {
+        id: accessorySlot0
+        title: "Accessory"
+        bind: if(character && character.getSlot("Accessory", 0).item) character.getSlot("Accessory", 0).item.name; else 'none';
+      }
+
+      SlotItem {
+        id: accessorySlot1
+        title: "Accessory"
+        bind: if(character && character.getSlot("Accessory", 1).item) character.getSlot("Accessory", 1).item.name; else 'none';
+      }
     }
   }
 }

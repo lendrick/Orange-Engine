@@ -18,6 +18,7 @@ class ScriptUtils : public QObject, public QScriptable {
 public:
   ScriptUtils();
   void dumpObject(QObject * o);
+  void init();
 
 public slots:
   void alert(QString s);
@@ -27,6 +28,7 @@ public slots:
   QScriptValue teleport(QString, int, int);
   QScriptValue createComponent(QString filename);
   QScriptValue createComponent(QString filename, QObject * parent);
+  QScriptValue copy(QScriptValue v);
   void setCamera(EntityPointer e);
   void setMap(QString m);
   void setLayer(int l);

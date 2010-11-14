@@ -22,16 +22,6 @@ static QScriptValue f(QScriptContext* c, QScriptEngine* e)
 
 
 ScriptUtils::ScriptUtils() : QObject() {
-  QScriptValue objectValue = scriptEngine->newQObject(this);
-  scriptEngine->globalObject().setProperty("rpgx", objectValue);
-
-  QScriptValue npcCtor = scriptEngine->newFunction(npcConstructor);
-  QScriptValue metaObject = scriptEngine->newQMetaObject(&QObject::staticMetaObject, npcCtor);
-  scriptEngine->globalObject().setProperty("Npc", metaObject);
-
-  QScriptValue soundCtor = scriptEngine->newFunction(soundConstructor);
-  metaObject = scriptEngine->newQMetaObject(&QObject::staticMetaObject, soundCtor);
-  scriptEngine->globalObject().setProperty("Sound", metaObject);
 
   /*
   QScriptValue alertFunc = scriptEngine->newFunction(alert);
@@ -66,8 +56,28 @@ ScriptUtils::ScriptUtils() : QObject() {
     //scriptEngine->globalObject().setProperty(i.name(), i.value());
   }
   */
+  init();
+}
 
+void ScriptUtils::init() {
+  QScriptValue global = copy(scriptEngine->globalObject());
+  scriptEngine->setGlobalObject(global);
+  QScriptValue objectValue = scriptEngine->newQObject(this);
+  //dumpScriptObject(scriptEngine->globalObject());
+  qDebug() << "scriptvalue rpgx " << global.isObject();
+  scriptEngine->globalObject().setProperty("rpgx", objectValue);
+
+  QScriptValue npcCtor = scriptEngine->newFunction(npcConstructor);
+  QScriptValue metaObject = scriptEngine->newQMetaObject(&QObject::staticMetaObject, npcCtor);
+  scriptEngine->globalObject().setProperty("Npc", metaObject);
+
+  QScriptValue soundCtor = scriptEngine->newFunction(soundConstructor);
+  metaObject = scriptEngine->newQMetaObject(&QObject::staticMetaObject, soundCtor);
+  scriptEngine->globalObject().setProperty("Sound", metaObject);
   qScriptRegisterMetaType(scriptEngine, entityPointerToScriptValue, entityPointerFromScriptValue);
+
+  qDebug() << "connecting signal";
+  connect(mapBox->mapScene, SIGNAL(menuKey()), this, SIGNAL(menuKey()));
 }
 
 void ScriptUtils::alert(QString s) {
@@ -90,6 +100,20 @@ QScriptValue ScriptUtils::getEntity(QString s) {
 
 QScriptValue ScriptUtils::teleport(QString map, int x, int y) {
   return QScriptValue(QScriptValue::NullValue);
+}
+
+QScriptValue ScriptUtils::copy(QScriptValue v) {
+  QScriptValue c = scriptEngine->newObject();
+  QScriptValueIterator i(v);
+
+  while(i.hasNext()) {
+    i.next();
+    qDebug() << "Object: " << i.name();
+    c.setProperty(i.name(), i.value());
+    //scriptEngine->globalObject().setProperty(i.name(), i.value());
+  }
+
+  return c;
 }
 
 void ScriptUtils::setCamera(EntityPointer e) {

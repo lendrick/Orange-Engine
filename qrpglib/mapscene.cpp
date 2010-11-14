@@ -96,9 +96,6 @@ MapScene::MapScene(MapBox * m)
   connect(editGlobalScriptsAction, SIGNAL(triggered()), this, SLOT(editGlobalScripts()));
   connect(editPropertiesAction, SIGNAL(triggered()), this, SLOT(editProperties()));
 
-  connect(this, SIGNAL(menuKey()), scriptUtils, SIGNAL(menuKey()));
-
-
   mapFont = new QFont("Arial", 6);
   entityFont = new QFont("Arial", 12);
 

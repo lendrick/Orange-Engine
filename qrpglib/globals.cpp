@@ -15,6 +15,7 @@
 #include "talkbox.h"
 #include "qmlutils.h"
 #include "rpgscript.h"
+#include "qdeclarativedebughelper_p.h"
 
 QTreeWidget * maplist;
 Resource * mapfolder;
@@ -97,7 +98,14 @@ void escapeCData(QString & s) {
 
 void initScriptEngine()
 {
-  scriptEngine = new QScriptEngine;
+  //scriptEngine = new QScriptEngine;
+
+  scriptEngine = QDeclarativeDebugHelper::getScriptEngine(declarativeEngine);
+  //QDeclarativeExpression *expr = new QDeclarativeExpression(declarativeEngine->rootContext(), mapBox->rootObject(), "plasmoid.setEngine(plasmoid)");
+  //expr->evaluate();
+  //delete expr;
+
+  qDebug() << scriptEngine;
   //scriptDebugger = new QScriptEngineDebugger;
   //scriptDebugger->attachTo(scriptEngine);
   scriptUtils = new ScriptUtils;

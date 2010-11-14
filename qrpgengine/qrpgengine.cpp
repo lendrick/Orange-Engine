@@ -27,11 +27,15 @@ int main(int argc, char *argv[]) {
 //#endif
   QApplication::setGraphicsSystem("opengl");
   QApplication mapedit(argc, argv);
+  EngineWindow mainwindow;
+
+  mapBox = mainwindow.mapBox;
+  declarativeEngine = mapBox->engine();
   initScriptEngine();
 
+
   RPGEngine::init();
-  mainGLWidget = new QGLWidget;
-  EngineWindow mainwindow;
+  //mainGLWidget = new QGLWidget;
   play = true;
 
   QTreeWidget * resources = new QTreeWidget;
@@ -40,7 +44,6 @@ int main(int argc, char *argv[]) {
   spritefolder = new Resource(Resource::Folder, 0, "Sprites", resources);
   scriptfolder = new Resource(Resource::Folder, 0, "Scripts", resources);
   entityfolder = new Resource(Resource::Folder, 0, "Entities", resources);
-  mapBox = mainwindow.mapBox;
 
   ProjectReader projectReader;
   Project * loadedProject;
@@ -89,8 +92,8 @@ int main(int argc, char *argv[]) {
 
   //TalkBoxProxy * tb = new TalkBoxProxy("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
   //tb->deleteLater();
+  //declarativeEngine = mapBox->engine();
 
-  declarativeEngine = mapBox->engine();
   qmlUtils = new QmlUtils;
   declarativeEngine->rootContext()->setContextProperty("utils", qmlUtils);
 
