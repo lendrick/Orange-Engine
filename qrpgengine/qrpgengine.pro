@@ -143,4 +143,13 @@ OTHER_FILES += \
     ../qrpg-build-desktop/Tech Demo 2/qml/Character.js \
     ../qrpg-build-desktop/interface/ImageMenuItem.qml \
     ../qrpg-build-desktop/Tech Demo 2/qml/CharacterItemSlot.qml \
-    ../qrpg-build-desktop/interface/SlotItem.qml
+    ../qrpg-build-desktop/interface/SlotItem.qml \
+    ../qrpg-build-desktop/Tech Demo 2/scripts/Ability.qml \
+    ../qrpg-build-desktop/Tech Demo 2/scripts/items.js \
+    ../qrpg-build-desktop/interface/ItemScreen.qml \
+    ../qrpg-build-desktop/interface/ItemScreen.js \
+    ../qrpg-build-desktop/interface/InventoryItem.qml \
+    ../qrpg-build-desktop/interface/PortraitMenu.qml \
+    ../qrpg-build-desktop/interface/PortraitMenu.js \
+    ../qrpg-build-desktop/interface/MagicScreen.qml \
+    ../qrpg-build-desktop/interface/MagicScreen.js

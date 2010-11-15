@@ -31,7 +31,6 @@ Item {
   property int current_spd: 0
   property int current_dex: 0
 
-
   property int hp: 0
   property int mp: 0
   property string cls: ''
@@ -42,7 +41,30 @@ Item {
 
   property string portrait: ''
 
+  property Item useAbility;
+
   Component.onCompleted: CharacterScript.startUp();
+
+  function copy() {
+    var c = newCharacter(name);
+
+    c.atk = atk;
+    c.def = def;
+    c.matk = matk;
+    c.mdef = mdef;
+    c.maxHp = maxHp;
+    c.maxMp = maxMp;
+    c.spd = spd;
+    c.dex = dex;
+    c.hp = hp;
+    c.mp = mp;
+    c.cls = cls;
+    c.level = level;
+    c.itemType = itemType;
+    c.portrait = portrait;
+
+    return c;
+  }
 
   function heal() {
     mp = current_maxMp;
@@ -52,39 +74,37 @@ Item {
   function addSlots(name, count) {
     CharacterScript.slots[name] = Array();
     for(var i = 0; i < count; i++) {
-      console.log(characterItem.name + " adding slot " + name + " " + i);
+      //console.log(characterItem.name + " adding slot " + name + " " + i);
       var slot = CharacterScript.CharacterItemSlotComponent.createObject(characterItem);
       slot.name = name;
       CharacterScript.slots[name].push(slot);
-      console.log(characterItem.name + " slot " + name + " " + i + " added");
+      //console.log(characterItem.name + " slot " + name + " " + i + " added");
     }
   }
 
 
   function getStat(stat) {
-    //var total = getChildrenStat(stat);
-    //console.log("getstat " + total + characterItem[stat]);
-    console.log(characterItem.name + " getStat " + stat + ": " + characterItem['current_' + stat]);
+    //console.log(characterItem.name + " getStat " + stat + ": " + characterItem['current_' + stat]);
     return characterItem['current_' + stat];
   }
 
   function updateStat(stat) {
-    console.log(characterItem.name + " updateStat " + stat);
+    //console.log(characterItem.name + " updateStat " + stat);
     characterItem['current_' + stat] = getChildrenStat(stat) + characterItem[stat];
     updateParentStat(stat);
-    console.log(characterItem.name + " updateStat " + stat + " done: " +
-                characterItem['current_' + stat]);
+    //console.log(characterItem.name + " updateStat " + stat + " done: " +
+    //            characterItem['current_' + stat]);
   }
 
   function updateStats() {
-    console.log(characterItem.name + " updateStats");
+    //console.log(characterItem.name + " updateStats");
     var stats = Array('atk', 'def', 'matk', 'mdef', 'maxHp', 'maxMp', 'spd', 'dex');
     for(var i in stats) {
       updateStat(stats[i]);
     }
 
     updateParent();
-    console.log(characterItem.name + " updateStats done");
+    //console.log(characterItem.name + " updateStats done");
   }
 
   function updateParent() {
@@ -126,7 +146,7 @@ Item {
   // This function eqips an item if able, or returns false.  If item is equipped,
   // it returns the item that *was* equipped.
   function equip(item, slot, number) {
-    console.log(characterItem.name + " equip " + item.getType() + " " + CharacterScript.slots[item.getType()].length);
+    console.log(characterItem.name + " equip " + item.getType() + " " + number);
 
     //rpgx.dumpScriptObject(item);
 

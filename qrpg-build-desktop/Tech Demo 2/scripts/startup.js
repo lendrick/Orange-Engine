@@ -22,3 +22,11 @@ function toggleUi() {
 }
 
 rpgx.menuKey.connect(toggleUi);
+
+inventory.push(items['Staff'].copy());
+
+for(var i = 0; i < 15; i++)
+  inventory.push(items['Potion'].copy());
+
+for(var i = 0; i < 15; i++)
+  inventory.push(items['Green Tea'].copy());

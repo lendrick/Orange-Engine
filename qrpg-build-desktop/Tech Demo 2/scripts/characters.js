@@ -1,27 +1,6 @@
+
 var characters = new Array();
-var items = new Array();
 var party = new Array();
-
-items['Staff'] = newCharacter('Staff');
-items['Staff'].itemType = 'Weapon';
-items['Staff'].atk = 8;
-
-items['Dagger'] = newCharacter('Dagger');
-items['Dagger'].itemType = 'Weapon';
-items['Dagger'].atk = 5;
-
-items['Leather Armor'] = newCharacter('LeatherAr');
-items['Leather Armor'].itemType = 'Armor';
-items['Leather Armor'].def = 8;
-
-items['Wizard Robe'] = newCharacter('WizRobe');
-items['Wizard Robe'].itemType = 'Armor';
-items['Wizard Robe'].def = 4;
-items['Wizard Robe'].matk = 5;
-
-items['Wizard Hat'] = newCharacter('WizHat');
-items['Wizard Hat'].itemType = 'Accessory';
-items['Wizard Hat'].mdef = 4;
 
 characters['Lendrick'] = newCharacter('Lendrick');
 
@@ -54,9 +33,9 @@ characters['Lendrick'].heal();
 //characters['Lendrick'].currentMp = characters['Lendrick'].mp;
 
 characters['Lendrick'].portrait = "../Tech Demo 2/images/lendrick_portrait.png";
-characters['Lendrick'].equip(items['Dagger'], 'Weapon', 0);
-characters['Lendrick'].equip(items['Wizard Robe'], 'Armor', 0);
-characters['Lendrick'].equip(items['Wizard Hat'], 'Accessory', 0);
+characters['Lendrick'].equip(items['Dagger'].copy(), 'Weapon', 0);
+characters['Lendrick'].equip(items['Wizard Robe'].copy(), 'Armor', 0);
+characters['Lendrick'].equip(items['Wizard Hat'].copy(), 'Accessory', 0);
 
 characters['Sithra'] = newCharacter('Sithra');
 
@@ -82,8 +61,8 @@ characters['Sithra'].addSlots('Weapon', 1);
 characters['Sithra'].addSlots('Shield', 1);
 characters['Sithra'].addSlots('Accessory', 2);
 
-characters['Sithra'].equip(items['Staff'], 'Weapon', 0);
-characters['Sithra'].equip(items['Leather Armor'], 'Armor', 0);
+characters['Sithra'].equip(items['Staff'].copy(), 'Weapon', 0);
+characters['Sithra'].equip(items['Leather Armor'].copy(), 'Armor', 0);
 
 characters['Sithra'].heal();
 

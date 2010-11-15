@@ -32,3 +32,18 @@ function extend(obj1, obj2) {
     obj1[attrname] = obj2[attrname];
   }
 }
+
+function newCharacter(name) {
+  //o = newStatBlock();
+  var o = createObject("../qml/Character.qml");
+  o.itemType = 'Character';
+  o.name = name;
+  //rpgx.makeQmlGlobal(o);
+  return o;
+}
+
+function newAbility(name) {
+  var o = createObject("../qml/Ability.qml");
+  o.name = name;
+  return o;
+}

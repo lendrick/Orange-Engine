@@ -15,10 +15,12 @@ Item {  //Item
 
   function addPartyMember(character) {
     partyScreen.addPartyMember(character);
+    magicScreen.addPartyMember(character);
   }
 
   function setPartyMember(i, character) {
     partyScreen.setPartyMember(i, character);
+    Screen.setPartyMember(i, character);
   }
 
   Box {
@@ -161,49 +163,31 @@ Item {  //Item
     PartyScreen {
       id: partyScreen
       objectName: "partyScreen"
+
       width: parent.width * 2/3
       anchors.right:  parent.right
       anchors.top:  parent.top
       anchors.bottom: parent.bottom
     }
 
-    Box {
+    ItemScreen {
       objectName: "itemScreen"
       id: itemScreen
 
-      /*
-      x: parent.width / 3
-      y: 0
-      width: 440
-      height: 480
-      */
       width: parent.width * 2/3
       anchors.right:  parent.right
       anchors.top:  parent.top
       anchors.bottom: parent.bottom
-
-      state: "Hide"
-      MediumText {
-        x: 25
-        y: 25
-        text: "items"
-      }
     }
 
-    Box {
+    MagicScreen {
       objectName: "magicScreen"
       id: magicScreen
+
       width: parent.width * 2/3
       anchors.right:  parent.right
       anchors.top:  parent.top
       anchors.bottom: parent.bottom
-
-      state: "Hide"
-      MediumText {
-        x: 25
-        y: 25
-        text: "magic"
-      }
     }
   }
 }

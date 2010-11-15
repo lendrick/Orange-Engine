@@ -1,4 +1,5 @@
 rpgx.include('functions.js');
-rpgx.include('statblock.js');
+rpgx.include('abilities.js');
+rpgx.include('items.js');
 rpgx.include('characters.js');
 
