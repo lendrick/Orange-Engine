@@ -123,8 +123,6 @@ OTHER_FILES += \
     ../qrpg-build-desktop/interface/Box.qml \
     ../qrpg-build-desktop/interface/BigText.qml \
     ../qrpg-build-desktop/interface/TalkBoxText.qml \
-    ../qrpg-build-desktop/interface/talkbox.js \
-    ../qrpg-build-desktop/interface/ui.qml \
     ../qrpg-build-desktop/interface/SimpleMenu.qml \
     ../qrpg-build-desktop/interface/SimpleMenu.js \
     ../qrpg-build-desktop/interface/SimpleMenuItem.qml \
@@ -153,4 +151,9 @@ OTHER_FILES += \
     ../qrpg-build-desktop/interface/PortraitMenu.js \
     ../qrpg-build-desktop/interface/MagicScreen.qml \
     ../qrpg-build-desktop/interface/MagicScreen.js \
-    ../qrpg-build-desktop/Tech Demo 2/qml/Ability.js
+    ../qrpg-build-desktop/Tech Demo 2/qml/Ability.js \
+    ../qrpg-build-desktop/interface/Ui.qml \
+    ../qrpg-build-desktop/interface/Ui.js \
+    ../qrpg-build-desktop/interface/CharacterItemSlot.qml \
+    ../qrpg-build-desktop/interface/Character.js \
+    ../qrpg-build-desktop/interface/Character.qml

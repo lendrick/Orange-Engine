@@ -1,4 +1,4 @@
-var ui = createObject("../../interface/ui.qml");
+ui = createObject("../../interface/Ui.qml");
 
 function cprint(string) {
   rpgx.print(string);

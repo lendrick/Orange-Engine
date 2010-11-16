@@ -172,7 +172,7 @@ Item {
   //o.items = new Array();
 
   function activateUseAbility(user, targets) {
-    rpgx.dumpScriptObject(this);
+    //rpgx.dumpScriptObject(this);
     allAbilities[useAbility].activate.call(this, user, targets);
   }
 

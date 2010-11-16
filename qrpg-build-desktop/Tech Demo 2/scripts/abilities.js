@@ -16,7 +16,7 @@ var allAbilities = Array();
     console.log(caster.name + " uses " + this.name + " on " + targets[0].name);
     target = targets[0];
     target.hp += 30;
-    rpgx.dumpScriptObject(this);
+    //rpgx.dumpScriptObject(this);
     this.deleteObject();
     console.log("CurePotion done");
   }

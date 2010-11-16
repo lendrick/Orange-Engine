@@ -1,12 +1,12 @@
 import Qt 4.7
-import "talkbox.js" as TalkBoxScript
+import "Ui.js" as UiScript
 
 Item {  //Item
   id: ui
   objectName: "ui"
   //color: Qt.rgba(0, 0, 0, .2);  //test only
 
-  Component.onCompleted: TalkBoxScript.startUp();
+  Component.onCompleted: UiScript.startUp();
 
   x: 0
   y: 0
@@ -16,7 +16,7 @@ Item {  //Item
   //anchors.fill: parent
 
   function newCharacter(name) {
-    var c = TalkBoxScript.CharacterComponent.createObject(this);
+    var c = UiScript.CharacterComponent.createObject(this);
     c.name = name;
     return c;
   }
@@ -60,13 +60,13 @@ Item {  //Item
     property list<Item> textArray
 
     function append(textString) {
-      TalkBoxScript.appendText(textString);
+      UiScript.appendText(textString);
     }
 
     function show() {
       state = "Show";
-      TalkBoxScript.textBoxArray[0].state = "Show";
-      //TalkBoxScript.textBoxArray[0].text += " " + parent.objectName;
+      UiScript.textBoxArray[0].state = "Show";
+      //UiScript.textBoxArray[0].text += " " + parent.objectName;
     }
 
     function hide() {
@@ -74,17 +74,17 @@ Item {  //Item
     }
 
     function queueSize() {
-      return TalkBoxScript.textBoxArray.length;
+      return UiScript.textBoxArray.length;
     }
 
     Keys.onPressed: {
       if(state == "Show" && !event.isAutoRepeat ) {
-        var object = TalkBoxScript.textBoxArray.shift();
+        var object = UiScript.textBoxArray.shift();
         object.state = "Hide";
         object.destroy(500);
 
-        if(TalkBoxScript.textBoxArray.length > 0) {
-          TalkBoxScript.textBoxArray[0].state = "Show";
+        if(UiScript.textBoxArray.length > 0) {
+          UiScript.textBoxArray[0].state = "Show";
         } else {
           state = "Hide";
         }
