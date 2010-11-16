@@ -1,4 +1,4 @@
-var abilities = Array();
+var allAbilities = Array();
 
 {
   var ability;
@@ -11,10 +11,19 @@ var abilities = Array();
   ability.useInBattle = true;
   ability.useOutsideBattle = true;
 
+
   ability.activate = function(caster, targets) {
+    console.log(caster.name + " uses " + this.name + " on " + targets[0].name);
     target = targets[0];
     target.hp += 30;
+    rpgx.dumpScriptObject(this);
+    this.deleteObject();
+    console.log("CurePotion done");
   }
 
-  abilities['CurePotion'] = ability;
+  //rpgx.dumpScriptObject(activate);
+  //ability.setActivateFunction(activate);
+
+  allAbilities['CurePotion'] = ability;
+  console.log("Created ability " + ability.name);
 }

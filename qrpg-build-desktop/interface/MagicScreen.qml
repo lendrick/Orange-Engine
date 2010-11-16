@@ -3,7 +3,7 @@ import "MagicScreen.js" as MagicScreenScript
 
 HideShowContainer {
   id: magicScreen
-  state: "Show"
+  state: "Hide"
   Component.onCompleted: MagicScreenScript.startUp();
   property alias selectedIndex: characterSelect.selectedIndex
 
@@ -38,6 +38,8 @@ HideShowContainer {
     //console.log("adding character to select row");
     characterSelect.addPartyMember(character, MagicScreenScript.characterMagicScreens[currentIndex]);
     //console.log("character added to menu")
+
+    if(currentIndex == 0) selectedIndex = 0;
   }
 
   PortraitMenu {

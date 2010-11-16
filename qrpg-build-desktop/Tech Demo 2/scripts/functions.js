@@ -1,3 +1,5 @@
+var ui = createObject("../../interface/ui.qml");
+
 function cprint(string) {
   rpgx.print(string);
 }
@@ -7,7 +9,7 @@ function alert(string) {
 }
 
 function createObject(qmlFile, parent) {
-  print("Creating " + qmlFile);
+  //print("Creating " + qmlFile);
   if(parent) {
     return rpgx.createComponent(qmlFile, parent);
   } else {
@@ -34,16 +36,30 @@ function extend(obj1, obj2) {
 }
 
 function newCharacter(name) {
-  //o = newStatBlock();
-  var o = createObject("../qml/Character.qml");
+  console.log("New character " + name);
+  //var o = createObject("../qml/Character.qml");
+  var o = ui.newCharacter(name);
   o.itemType = 'Character';
-  o.name = name;
+  //o.name = name;
   //rpgx.makeQmlGlobal(o);
   return o;
 }
 
 function newAbility(name) {
-  var o = createObject("../qml/Ability.qml");
+  var o = Object();
   o.name = name;
+  o.targetSelf = false;
+  o.targetFriends = false;
+  o.targetEnemies = false;
+  o.targetMultiple = false;
+  o.usableInBattle = false;
+  o.usableOutsideBattle = false;
+  o.mpcost = 0;
+
+  o.activate = function(user, targets) {
+    console.log(caster.name + " uses " + this.name + " on " + targets[0].name +
+                " (ABILITY.ACTIVATE() FUNCTION NOT IMPLEMENTED)");
+  }
+
   return o;
 }

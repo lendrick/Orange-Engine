@@ -28,8 +28,9 @@ var inventory = Array();
 
   item = newCharacter('Potion');
   item.itemType = 'Consumable';
-  item.useAbility = abilities['CurePotion'];
+  item.useAbility = 'CurePotion';
   items['Potion'] = item;
+  //console.log("potion ability: " + allAbilities['CurePotion'].name)
 
   item = newCharacter('Green Tea');
   item.itemType = 'Consumable';

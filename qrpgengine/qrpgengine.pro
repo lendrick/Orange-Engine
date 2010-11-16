@@ -152,4 +152,5 @@ OTHER_FILES += \
     ../qrpg-build-desktop/interface/PortraitMenu.qml \
     ../qrpg-build-desktop/interface/PortraitMenu.js \
     ../qrpg-build-desktop/interface/MagicScreen.qml \
-    ../qrpg-build-desktop/interface/MagicScreen.js
+    ../qrpg-build-desktop/interface/MagicScreen.js \
+    ../qrpg-build-desktop/Tech Demo 2/qml/Ability.js

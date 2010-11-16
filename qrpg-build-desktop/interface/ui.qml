@@ -6,12 +6,20 @@ Item {  //Item
   objectName: "ui"
   //color: Qt.rgba(0, 0, 0, .2);  //test only
 
+  Component.onCompleted: TalkBoxScript.startUp();
+
   x: 0
   y: 0
   width: 640
   height: 480
 
   //anchors.fill: parent
+
+  function newCharacter(name) {
+    var c = TalkBoxScript.CharacterComponent.createObject(this);
+    c.name = name;
+    return c;
+  }
 
   function addPartyMember(character) {
     partyScreen.addPartyMember(character);
@@ -50,8 +58,6 @@ Item {  //Item
 
     focus: true
     property list<Item> textArray
-
-    Component.onCompleted: TalkBoxScript.startUp();
 
     function append(textString) {
       TalkBoxScript.appendText(textString);

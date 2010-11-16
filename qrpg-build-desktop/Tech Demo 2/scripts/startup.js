@@ -1,4 +1,3 @@
-var ui = createObject("../../interface/ui.qml");
 
 rpgx.debug("RUNNING startup.js");
 
@@ -9,24 +8,34 @@ rpgx.debug("RUNNING startup.js");
 
 
 for(var i in party) {
-  //rpgx.makeQmlGlobal(party[i]);
   ui.addPartyMember(party[i]);
 }
 
 ui.statusScreen.partyScreen.setCurrentPartyMember(0);
+ui.statusScreen.magicScreen.setCurrentPartyMember(0);
 
 function toggleUi() {
-  //party[0].equip(items['Dagger'], 'Weapon', 0);
-  //party[0].atkChanged();
   ui.statusScreen.toggleVisible();
 }
 
 rpgx.menuKey.connect(toggleUi);
 
+console.log("inv " + inventory.length);
+
 inventory.push(items['Staff'].copy());
+inventory.push(items['Potion'].copy());
 
 for(var i = 0; i < 15; i++)
   inventory.push(items['Potion'].copy());
 
 for(var i = 0; i < 15; i++)
   inventory.push(items['Green Tea'].copy());
+
+//console.log(inventory[1].name + " " + inventory[1].getUseAbility().name);
+
+//inventory[1].getUseAbility().setActivateFunction(toggleUi);
+
+//allAbilities['CurePotion'].setActivateFunction(toggleUi);
+//rpgx.dumpScriptObject(toggleUi);
+
+inventory[1].activateUseAbility(party[1], Array(party[0]));

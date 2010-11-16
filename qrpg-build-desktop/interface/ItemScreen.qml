@@ -32,9 +32,9 @@ Box {
 
   function updateInventory() {
     console.log("updateInventory");
-    for(var i in ItemScreenScript.invList) {
-      var x = invList.pop();
-      x.deleteLater();
+    while(ItemScreenScript.invList.length > 0) {
+      var x = ItemScreenScript.invList.pop();
+      x.destroy();
     }
 
     for(var i in inventory) {
@@ -42,6 +42,8 @@ Box {
       item.item = inventory[i];
       item.x = (i % 2) * inventoryListContainer.inv.width / 2;
       item.y = Math.floor(i / 2) * item.height;
+      ItemScreenScript.invList.push(item);
     }
+
   }
 }

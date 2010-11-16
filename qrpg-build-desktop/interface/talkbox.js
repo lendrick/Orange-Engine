@@ -1,7 +1,9 @@
 var TalkBoxTextComponent;
 var textBoxArray;
+var CharacterComponent;
 
 function startUp() {
+  CharacterComponent = Qt.createComponent("Character.qml");
   TalkBoxTextComponent = Qt.createComponent("TalkBoxText.qml");
   textBoxArray = Array();
 }

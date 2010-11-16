@@ -38,10 +38,11 @@ Item {
 
   property string itemType: ''
   property string name: ''
+  property string description: ''
 
   property string portrait: ''
 
-  property Item useAbility;
+  property string useAbility: ''
 
   Component.onCompleted: CharacterScript.startUp();
 
@@ -62,6 +63,8 @@ Item {
     c.level = level;
     c.itemType = itemType;
     c.portrait = portrait;
+    c.description = description;
+    c.useAbility = useAbility;
 
     return c;
   }
@@ -130,7 +133,7 @@ Item {
     var total = 0;
     for(var itemSlots in CharacterScript.slots) {
       for(var slot in CharacterScript.slots[itemSlots]) {
-        console.log("Slot " + itemSlots + " " + slot);
+        //console.log("Slot " + itemSlots + " " + slot);
         if(CharacterScript.slots[itemSlots][slot].item)
           total += CharacterScript.slots[itemSlots][slot].item.getStat(stat);
       }
@@ -167,4 +170,17 @@ Item {
   //o.slots = new Array();
   //o.status = new Array();
   //o.items = new Array();
+
+  function activateUseAbility(user, targets) {
+    rpgx.dumpScriptObject(this);
+    allAbilities[useAbility].activate.call(this, user, targets);
+  }
+
+  function getAbilities() {
+
+  }
+
+  function deleteObject() {
+    this.destroy();
+  }
 }
