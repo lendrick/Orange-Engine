@@ -39,3 +39,26 @@ for(var i = 0; i < 15; i++)
 //rpgx.dumpScriptObject(toggleUi);
 
 inventory[1].activateUseAbility(party[1], Array(party[0]));
+
+/*
+var test1 = Array('Fight');
+var test2 = Array('Magic', 'Fire');
+var test3 = Array('Magic', 'Cure');
+var test4 = Array('Run');
+
+var test = new Object();
+
+test = addBranch(test, test1, 'fight');
+test = addBranch(test, test2, 'fire');
+test = addBranch(test, test3, 'cure');
+test = addBranch(test, test4, 'run');
+console.log(serialize(test));
+
+var x = new Object();
+x['a'] = 'foo';
+x['b'] = new Object();
+x['b']['c'] = 'yada';
+x['b']['d'] = 'blah';
+x['e'] = 'bar';
+*/
+console.log(serialize(party[0].getAbilityTree()));

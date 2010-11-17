@@ -36,8 +36,9 @@ Item {
   property string cls: ''
   property int level: 0
 
-  property string itemType: ''
+  //property string itemType: ''
   property string name: ''
+  property string displayName: ''
   property string description: ''
 
   property string portrait: ''
@@ -45,6 +46,8 @@ Item {
   property string useAbility: ''
 
   Component.onCompleted: CharacterScript.startUp();
+
+  signal typeChanged();
 
   function copy() {
     var c = newCharacter(name);
@@ -61,7 +64,8 @@ Item {
     c.mp = mp;
     c.cls = cls;
     c.level = level;
-    c.itemType = itemType;
+    //c.itemType = itemType;
+    c.setTypes(getTypes());
     c.portrait = portrait;
     c.description = description;
     c.useAbility = useAbility;
@@ -72,6 +76,13 @@ Item {
   function heal() {
     mp = current_maxMp;
     hp = current_maxHp;
+  }
+
+  function getAncestor() {
+    var x = this;
+    while(x.parent && x.parent != ui)
+      x = x.parent;
+    return x;
   }
 
   function addSlots(name, count) {
@@ -85,6 +96,21 @@ Item {
     }
   }
 
+  function addAbility(a) {
+    CharacterScript.abilities.push(a);
+  }
+
+  function getEquippedItems() {
+    var items = Array();
+    var slots = CharacterScript.slots;
+    for(s in slots) {
+      for(i in slots[s]) {
+        if(slots[s][i].item)
+          items.push(slots[s][i].item);
+      }
+    }
+    return items;
+  }
 
   function getStat(stat) {
     //console.log(characterItem.name + " getStat " + stat + ": " + characterItem['current_' + stat]);
@@ -142,9 +168,11 @@ Item {
     return total;
   }
 
+  /*
   function getType() {
     return itemType;
   }
+  */
 
   // This function eqips an item if able, or returns false.  If item is equipped,
   // it returns the item that *was* equipped.
@@ -153,9 +181,10 @@ Item {
 
     //rpgx.dumpScriptObject(item);
 
-    if(CharacterScript.slots[item.getType()].length >= number) {
+    if(CharacterScript.slots[slot].length >= number) {
       oldItem = CharacterScript.slots[item.getType()][number].item;
-      CharacterScript.slots[item.getType()][number].item = item;
+      CharacterScript.slots[slot][number].item = item;
+      item.parent = this;
       updateStats();
 
       if(!oldItem) {
@@ -177,10 +206,73 @@ Item {
   }
 
   function getAbilities() {
+    var abilities = CharacterScript.abilities;
+    var currentAbilities = Array();
+    for(i in abilities) {
+      currentAbilities.push(allAbilities[abilities[i]]);
+    }
+    // TODO: get abilites from each slot and add to list
+    // deeper items should supercede earlier ones
+    var childAbilities = Array();
+    var items = getEquippedItems();
+    //console.log("Items: " + serialize(items));
+    for(item in items) {
+      console.log("Item: " + items[item].name);
+      var a = items[item].getAbilities();
+      for(i in a) {
+        currentAbilities.push(allAbilities[a[i]]);
+      }
+    }
+    return currentAbilities;
+  }
 
+  function getAbilityTree() {
+    var a = getAbilities();
+    var tree = new Object();
+    for(i in a) {
+      tree = addBranch(tree, a[i].menuPath, a[i]);
+    }
+
+    return tree;
   }
 
   function deleteObject() {
     this.destroy();
+  }
+
+  function setTypes(t) {
+    CharacterScript.types = new Object();
+    for(i in t) {
+      CharacterScript.types[t[i]] = 1;
+    }
+    typeChanged();
+  }
+
+  function setType(t) {
+    CharacterScript.types = new Object();
+    CharacterScript.types[t] = 1;
+    typeChanged();
+  }
+
+  function hasType(t) {
+    return CharacterScript.types[t] == 1;
+  }
+
+  function addType(t) {
+    CharacterScript.types[t] = 1;
+    typeChanged();
+  }
+
+  function removeType(t) {
+    CharacterScript.types[t] = 0;
+    typeChanged();
+  }
+
+  function getTypes() {
+    var t = Array();
+    for(i in CharacterScript.types) {
+      if(hasType(i)) t.push(i);
+    }
+    return t;
   }
 }

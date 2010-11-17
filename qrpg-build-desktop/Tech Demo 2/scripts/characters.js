@@ -37,6 +37,9 @@ characters['Lendrick'].equip(items['Dagger'].copy(), 'Weapon', 0);
 characters['Lendrick'].equip(items['Wizard Robe'].copy(), 'Armor', 0);
 characters['Lendrick'].equip(items['Wizard Hat'].copy(), 'Accessory', 0);
 
+characters['Lendrick'].addAbility('BarehandedFight');
+characters['Lendrick'].addAbility('Cure1');
+
 characters['Sithra'] = newCharacter('Sithra');
 
 characters['Sithra'].setStat('atk', 6);
@@ -63,6 +66,8 @@ characters['Sithra'].addSlots('Accessory', 2);
 
 characters['Sithra'].equip(items['Staff'].copy(), 'Weapon', 0);
 characters['Sithra'].equip(items['Leather Armor'].copy(), 'Armor', 0);
+
+characters['Sithra'].addAbility('BarehandedFight');
 
 characters['Sithra'].heal();
 
