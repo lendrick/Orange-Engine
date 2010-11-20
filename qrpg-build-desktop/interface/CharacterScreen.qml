@@ -135,6 +135,17 @@ Box {
       }
 
       SlotItem {
+        id: offHandSlot0
+        title: "OffHand"
+        bind: {
+          if(character && character.getSlot("OffHand", 0).item)
+            character.getSlot("OffHand", 0).item.name;
+          else
+            'none';
+        }
+      }
+
+      SlotItem {
         id: armorSlot0
         title: "Armor"
         bind: if(character && character.getSlot("Armor", 0).item) character.getSlot("Armor", 0).item.name; else 'none';

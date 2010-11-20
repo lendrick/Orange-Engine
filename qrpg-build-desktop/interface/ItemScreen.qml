@@ -32,14 +32,23 @@ Box {
 
   function updateInventory() {
     console.log("updateInventory");
+    dumpInventory();
     while(ItemScreenScript.invList.length > 0) {
       var x = ItemScreenScript.invList.pop();
+      x.item = null;
       x.destroy();
     }
 
     for(var i in inventory) {
       var item = ItemScreenScript.invItemComponent.createObject(inventoryListContainer.inv);
+
       item.item = inventory[i];
+
+      if(inventory[i] && !inventory[i].destroyed())
+        console.log(i + ": " + inventory[i].name);
+      else
+        console.log(i + ": null");
+
       item.x = (i % 2) * inventoryListContainer.inv.width / 2;
       item.y = Math.floor(i / 2) * item.height;
       ItemScreenScript.invList.push(item);

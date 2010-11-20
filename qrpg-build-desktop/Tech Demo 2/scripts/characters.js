@@ -22,10 +22,10 @@ characters['Lendrick'].slots['Shield'] = 1;
 characters['Lendrick'].slots['Accessory'] = 2;
 */
 
-characters['Lendrick'].addSlots('Armor', 1);
-characters['Lendrick'].addSlots('Weapon', 1);
-characters['Lendrick'].addSlots('Shield', 1);
-characters['Lendrick'].addSlots('Accessory', 2);
+characters['Lendrick'].addSlots('Armor', 1, Array('armor', 'cloth'));
+characters['Lendrick'].addSlots('Weapon', 1, Array('weapon', 'simple'));
+characters['Lendrick'].addSlots('OffHand', 1, Array('offhand', '!shield'));
+characters['Lendrick'].addSlots('Accessory', 2, Array('accessory', '!heavy'));
 
 characters['Lendrick'].heal();
 
@@ -59,10 +59,11 @@ characters['Sithra'].slots['Weapon'] = 1;
 characters['Sithra'].slots['Shield'] = 1;
 characters['Sithra'].slots['Accessory'] = 2;
 */
-characters['Sithra'].addSlots('Armor', 1);
-characters['Sithra'].addSlots('Weapon', 1);
-characters['Sithra'].addSlots('Shield', 1);
-characters['Sithra'].addSlots('Accessory', 2);
+
+characters['Sithra'].addSlots('Armor', 1, Array('armor', 'light'));
+characters['Sithra'].addSlots('Weapon', 1, Array('weapon', 'bludgeoning'));
+characters['Sithra'].addSlots('OffHand', 1, Array('offhand'));
+characters['Sithra'].addSlots('Accessory', 2, Array('accessory'));
 
 characters['Sithra'].equip(items['Staff'].copy(), 'Weapon', 0);
 characters['Sithra'].equip(items['Leather Armor'].copy(), 'Armor', 0);

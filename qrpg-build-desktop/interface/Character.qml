@@ -44,6 +44,7 @@ Item {
   property string portrait: ''
 
   property string useAbility: ''
+  property bool deleted: false
 
   Component.onCompleted: CharacterScript.startUp();
 
@@ -65,7 +66,7 @@ Item {
     c.cls = cls;
     c.level = level;
     //c.itemType = itemType;
-    c.setTypes(getTypes());
+    c.setTypes(getTypeArray());
     c.portrait = portrait;
     c.description = description;
     c.useAbility = useAbility;
@@ -85,12 +86,13 @@ Item {
     return x;
   }
 
-  function addSlots(name, count) {
+  function addSlots(name, count, allowed) {
     CharacterScript.slots[name] = Array();
     for(var i = 0; i < count; i++) {
       //console.log(characterItem.name + " adding slot " + name + " " + i);
       var slot = CharacterScript.CharacterItemSlotComponent.createObject(characterItem);
       slot.name = name;
+      slot.setAllowedTypes(allowed);
       CharacterScript.slots[name].push(slot);
       //console.log(characterItem.name + " slot " + name + " " + i + " added");
     }
@@ -104,7 +106,7 @@ Item {
     var items = Array();
     var slots = CharacterScript.slots;
     for(s in slots) {
-      for(i in slots[s]) {
+      for(var i in slots[s]) {
         if(slots[s][i].item)
           items.push(slots[s][i].item);
       }
@@ -177,20 +179,21 @@ Item {
   // This function eqips an item if able, or returns false.  If item is equipped,
   // it returns the item that *was* equipped.
   function equip(item, slot, number) {
-    console.log(characterItem.name + " equip " + item.getType() + " " + number);
+    console.log(characterItem.name + " equip " + slot + " " + number);
 
     //rpgx.dumpScriptObject(item);
 
     if(CharacterScript.slots[slot].length >= number) {
-      oldItem = CharacterScript.slots[item.getType()][number].item;
-      CharacterScript.slots[slot][number].item = item;
-      item.parent = this;
-      updateStats();
+      if(CharacterScript.slots[slot][number].canEquip(item)) {
+        oldItem = CharacterScript.slots[slot][number].item;
+        CharacterScript.slots[slot][number].item = item;
+        item.parent = this;
+        updateStats();
 
-      if(!oldItem) {
+        //if(oldItem) inventory.push(oldItem);
         return true;
       } else {
-        return oldItem;
+        return false;
       }
     }
 
@@ -208,7 +211,7 @@ Item {
   function getAbilities() {
     var abilities = CharacterScript.abilities;
     var currentAbilities = Array();
-    for(i in abilities) {
+    for(var i in abilities) {
       currentAbilities.push(allAbilities[abilities[i]]);
     }
     // TODO: get abilites from each slot and add to list
@@ -216,10 +219,10 @@ Item {
     var childAbilities = Array();
     var items = getEquippedItems();
     //console.log("Items: " + serialize(items));
-    for(item in items) {
-      console.log("Item: " + items[item].name);
+    for(var item in items) {
+      //console.log("Item: " + items[item].name);
       var a = items[item].getAbilities();
-      for(i in a) {
+      for(var i in a) {
         currentAbilities.push(allAbilities[a[i]]);
       }
     }
@@ -229,7 +232,7 @@ Item {
   function getAbilityTree() {
     var a = getAbilities();
     var tree = new Object();
-    for(i in a) {
+    for(var i in a) {
       tree = addBranch(tree, a[i].menuPath, a[i]);
     }
 
@@ -237,15 +240,21 @@ Item {
   }
 
   function deleteObject() {
-    this.destroy();
+    characterItem.destroy();
+    this = null;
   }
 
   function setTypes(t) {
     CharacterScript.types = new Object();
-    for(i in t) {
+    for(var i in t) {
+      //console.log("set type " + t + " " + i + " " + t[i]);
       CharacterScript.types[t[i]] = 1;
     }
     typeChanged();
+  }
+
+  function setTypeObject(t) {
+    CharacterScript.types = t;
   }
 
   function setType(t) {
@@ -264,15 +273,20 @@ Item {
   }
 
   function removeType(t) {
-    CharacterScript.types[t] = 0;
+    delete CharacterScript.types[t];
     typeChanged();
   }
 
-  function getTypes() {
+  function getTypeArray() {
     var t = Array();
-    for(i in CharacterScript.types) {
-      if(hasType(i)) t.push(i);
+    for(var i in CharacterScript.types) {
+      //console.log("Get Type: " + i);
+      t.push(i);
     }
     return t;
+  }
+
+  function getTypes() {
+    return CharacterScript.types;
   }
 }

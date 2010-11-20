@@ -1,4 +1,6 @@
 ui = createObject("../../interface/Ui.qml");
+var items = Array();
+var inventory = Array();
 
 function cprint(string) {
   rpgx.print(string);
@@ -41,7 +43,7 @@ function sizeof(obj) {
     return 0;
   }
   var count = 0;
-  for(i in obj) {
+  for(var i in obj) {
     //console.log("sizeof: " + i + " " + typeof(obj) + " " + obj[i]);
     count++;
   }
@@ -50,7 +52,7 @@ function sizeof(obj) {
 
 function merge(obj1, obj2) {
   if(sizeof(obj2) > 0) {
-    for(i in obj2)
+    for(var i in obj2)
       merge(obj1[i], obj2[i]);
   } else if(sizeof(obj1) == 0) {
     obj1 = obj2;
@@ -115,6 +117,29 @@ function newAbility(name) {
   }
 
   return o;
+}
+
+function addToInventory(item) {
+  var added = false;
+  for(var x = 0; x < inventory.length; x++) {
+    if(!inventory[x]) {
+      inventory[x] = item;
+      added = true;
+      //console.log(x + " " + empty);
+    } else {
+      //console.log(x + " " + inventory[x].name);
+    }
+  }
+  if(!added) inventory.push(item);
+}
+
+function dumpInventory() {
+  for(var i in inventory) {
+    if(inventory[i])
+      console.log(i + ": " + inventory[i].name);
+    else
+      console.log(i + ": null");
+  }
 }
 
 function JavaScriptStringEncode(sString) {

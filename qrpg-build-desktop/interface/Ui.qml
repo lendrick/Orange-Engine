@@ -16,7 +16,7 @@ Item {  //Item
   //anchors.fill: parent
 
   function newCharacter(name) {
-    var c = UiScript.CharacterComponent.createObject(this);
+    var c = UiScript.CharacterComponent.createObject(ui);
     c.name = name;
     return c;
   }

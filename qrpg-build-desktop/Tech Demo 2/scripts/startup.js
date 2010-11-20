@@ -15,7 +15,9 @@ ui.statusScreen.partyScreen.setCurrentPartyMember(0);
 ui.statusScreen.magicScreen.setCurrentPartyMember(0);
 
 function toggleUi() {
+  dumpInventory();
   ui.statusScreen.toggleVisible();
+  dumpInventory();
 }
 
 rpgx.menuKey.connect(toggleUi);
@@ -25,40 +27,18 @@ console.log("inv " + inventory.length);
 inventory.push(items['Staff'].copy());
 inventory.push(items['Potion'].copy());
 
-for(var i = 0; i < 15; i++)
-  inventory.push(items['Potion'].copy());
-
-for(var i = 0; i < 15; i++)
-  inventory.push(items['Green Tea'].copy());
-
-//console.log(inventory[1].name + " " + inventory[1].getUseAbility().name);
-
-//inventory[1].getUseAbility().setActivateFunction(toggleUi);
-
-//allAbilities['CurePotion'].setActivateFunction(toggleUi);
-//rpgx.dumpScriptObject(toggleUi);
+inventory.push(items['Potion'].copy());
 
 inventory[1].activateUseAbility(party[1], Array(party[0]));
 
-/*
-var test1 = Array('Fight');
-var test2 = Array('Magic', 'Fire');
-var test3 = Array('Magic', 'Cure');
-var test4 = Array('Run');
+rpgx.dumpScriptObject(inventory[1]);
 
-var test = new Object();
+for(var x = 0; x < 30; x++) {
+  inventory.push(items['Green Tea'].copy());
+}
 
-test = addBranch(test, test1, 'fight');
-test = addBranch(test, test2, 'fire');
-test = addBranch(test, test3, 'cure');
-test = addBranch(test, test4, 'run');
-console.log(serialize(test));
+for(var x = 0; x < 15; x++) {
+  addToInventory(items['Potion'].copy());
+}
 
-var x = new Object();
-x['a'] = 'foo';
-x['b'] = new Object();
-x['b']['c'] = 'yada';
-x['b']['d'] = 'blah';
-x['e'] = 'bar';
-*/
-console.log(serialize(party[0].getAbilityTree()));
+//dumpInventory();

@@ -11,7 +11,6 @@ Item {
 
   Component.onCompleted: CharacterItemSlotScript.startUp();
 
-  /*
   function setAllowedTypes(types) {
     CharacterItemSlotScript.allowedTypes = new Object();
     for(var i in types) {
@@ -19,15 +18,22 @@ Item {
     }
   }
 
+  /*
   function isAllowed(t) {
     return(CharacterItemSlotScript.allowedTypes[t] == 1);
   }
-
-  function canEquip(item) {
-    return(isAllowed(item.itemType));
-  }
   */
 
+  function canEquip(item) {
+    //return(isAllowed(item.itemType));
+    var equip = true;
+    for(var i in item.getTypes()) {
+      if(!CharacterItemSlotScript.allowedTypes[i]) equip = false;
+      if(CharacterItemSlotScript.allowedTypes['!' + i]) equip = false;
+    }
+  }
+
+  /*
   function canEquip(item) {
     return CharacterItemSlotScript.slotFilter(item);
   }
@@ -35,4 +41,5 @@ Item {
   function setFilter(filterName) {
     CharacterItemSlotScript.slotFilter = slotFilters['filterName'];
   }
+  */
 }
