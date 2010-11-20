@@ -44,8 +44,6 @@ Item {
   property string portrait: ''
 
   property string useAbility: ''
-  property bool deleted: false
-
   Component.onCompleted: CharacterScript.startUp();
 
   signal typeChanged();
@@ -241,7 +239,6 @@ Item {
 
   function deleteObject() {
     characterItem.destroy();
-    this = null;
   }
 
   function setTypes(t) {

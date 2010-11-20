@@ -40,18 +40,25 @@ Box {
     }
 
     for(var i in inventory) {
-      var item = ItemScreenScript.invItemComponent.createObject(inventoryListContainer.inv);
+      if(inventory[i]) {
+        var name;
+        try {
+          name = inventory[i].name;
+        } catch(e) {
+          name = '';
+        }
 
-      item.item = inventory[i];
-
-      if(inventory[i] && !inventory[i].destroyed())
-        console.log(i + ": " + inventory[i].name);
-      else
-        console.log(i + ": null");
-
-      item.x = (i % 2) * inventoryListContainer.inv.width / 2;
-      item.y = Math.floor(i / 2) * item.height;
-      ItemScreenScript.invList.push(item);
+        if(name) {
+          var item = ItemScreenScript.invItemComponent.createObject(inventoryListContainer.inv);
+          item.item = inventory[i];
+          console.log(typeof(item.item));
+          item.x = (i % 2) * inventoryListContainer.inv.width / 2;
+          item.y = Math.floor(i / 2) * item.height;
+          ItemScreenScript.invList.push(item);
+        } else {
+          inventory[i] = null;
+        }
+      }
     }
 
   }

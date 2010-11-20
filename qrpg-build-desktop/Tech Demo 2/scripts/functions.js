@@ -135,10 +135,19 @@ function addToInventory(item) {
 
 function dumpInventory() {
   for(var i in inventory) {
-    if(inventory[i])
-      console.log(i + ": " + inventory[i].name);
-    else
-      console.log(i + ": null");
+    var name;
+    if(inventory[i]) {
+      try {
+        name = inventory[i].name;
+      }
+      catch(e) {
+        name = '';
+      }
+    } else {
+      name = '';
+    }
+
+    console.log(i + ": " + name);
   }
 }
 
