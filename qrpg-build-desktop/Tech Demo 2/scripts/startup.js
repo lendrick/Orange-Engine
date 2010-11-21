@@ -15,9 +15,9 @@ ui.statusScreen.partyScreen.setCurrentPartyMember(0);
 ui.statusScreen.magicScreen.setCurrentPartyMember(0);
 
 function toggleUi() {
-  dumpInventory();
+  //dumpInventory();
   ui.statusScreen.toggleVisible();
-  dumpInventory();
+  //dumpInventory();
 }
 
 rpgx.menuKey.connect(toggleUi);
@@ -31,7 +31,7 @@ inventory.push(items['Potion'].copy());
 
 inventory[1].activateUseAbility(party[1], Array(party[0]));
 
-rpgx.dumpScriptObject(inventory[1]);
+//rpgx.dumpScriptObject(inventory[1]);
 
 for(var x = 0; x < 30; x++) {
   inventory.push(items['Green Tea'].copy());

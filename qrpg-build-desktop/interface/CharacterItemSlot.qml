@@ -26,11 +26,16 @@ Item {
 
   function canEquip(item) {
     //return(isAllowed(item.itemType));
-    var equip = true;
+    var equip = false;
+
     for(var i in item.getTypes()) {
-      if(!CharacterItemSlotScript.allowedTypes[i]) equip = false;
+      if(CharacterItemSlotScript.allowedTypes[i]) equip = true;
+    }
+
+    for(var i in item.getTypes()) {
       if(CharacterItemSlotScript.allowedTypes['!' + i]) equip = false;
     }
+    return equip;
   }
 
   /*

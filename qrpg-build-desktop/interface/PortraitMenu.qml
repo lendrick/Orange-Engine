@@ -7,11 +7,13 @@ Box {
   state: "Show"
   Component.onCompleted: PortraitMenuScript.startUp();
   property alias selectedIndex: portraitMenu.selectedIndex
+  property alias showRect: rect.visible
 
   Rectangle {
+    id: rect
     width: 50
     height: 50
-    visible: (PortraitMenuScript.menuItems.length > 0)
+    visible: false
     anchors.verticalCenter: characterSelect.verticalCenter
     border.width: 2
     border.color: '#ff2'
@@ -39,11 +41,13 @@ Box {
     property int selectedPos: getSelectedPos();
 
     function getSelectedPos() {
-      //if(PortraitMenuScript.menuItems[partyScreen.selectedIndex])
+      if(PortraitMenuScript.menuItems && PortraitMenuScript.menuItems[partyScreen.selectedIndex])
         return x + PortraitMenuScript.menuItems[characterSelect.selectedIndex].x +
           PortraitMenuScript.menuItems[characterSelect.selectedIndex].width/2;
       //else
         //return x;
+      else
+        return x;
     }
 
     function setOptions(options) {
@@ -75,6 +79,8 @@ Box {
       //for(var i in PortraitMenuScript.menuItems) {
         //console.log(PortraitMenuScript.menuItems[i].opacity);
       //}
+      if(PortraitMenuScript.menuItems.length > 0)
+        characterSelect.showRect = true;
     }
 
     function getItems() {

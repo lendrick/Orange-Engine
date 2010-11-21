@@ -44,6 +44,8 @@ Item {
   property string portrait: ''
 
   property string useAbility: ''
+  property string equipAbility: ''
+  property string unequipAbility: '';
   Component.onCompleted: CharacterScript.startUp();
 
   signal typeChanged();
@@ -68,6 +70,8 @@ Item {
     c.portrait = portrait;
     c.description = description;
     c.useAbility = useAbility;
+    c.equipAbility = equipAbility;
+    c.unequipAbility = unequipAbility;
 
     return c;
   }
@@ -177,20 +181,27 @@ Item {
   // This function eqips an item if able, or returns false.  If item is equipped,
   // it returns the item that *was* equipped.
   function equip(item, slot, number) {
-    console.log(characterItem.name + " equip " + slot + " " + number);
+    console.log(characterItem.name + " equip " + item.name + " in " + slot + " " + number);
 
     //rpgx.dumpScriptObject(item);
 
     if(CharacterScript.slots[slot].length >= number) {
       if(CharacterScript.slots[slot][number].canEquip(item)) {
         oldItem = CharacterScript.slots[slot][number].item;
-        CharacterScript.slots[slot][number].item = item;
-        item.parent = this;
-        updateStats();
+        if(oldItem) {
+          oldItem.activateUnequipAbility(oldItem, this);
+          oldItem.parent = null;
+        }
 
-        //if(oldItem) inventory.push(oldItem);
+        item.parent = this;
+        CharacterScript.slots[slot][number].item = item;
+        updateStats();
+        item.activateEquipAbility(item, this);
+
+        if(oldItem) inventory.push(oldItem);
         return true;
       } else {
+        console.log(characterItem.name + " can't equip " + item.name + " in " + slot + " " + number + "!");
         return false;
       }
     }
@@ -201,17 +212,30 @@ Item {
   //o.status = new Array();
   //o.items = new Array();
 
+  function activateEquipAbility(user, target) {
+    if(equipAbility)
+      allAbilities[equipAbility].activate.call(this, user, targets);
+  }
+
+  function activateUnequipAbility(user, target) {
+    if(unequipAbility)
+      allAbilities[unequipAbility].activate.call(this, user, targets);
+  }
+
   function activateUseAbility(user, targets) {
     //rpgx.dumpScriptObject(this);
-    allAbilities[useAbility].activate.call(this, user, targets);
+    if(useAbility)
+      allAbilities[useAbility].activate.call(this, user, targets);
   }
 
   function getAbilities() {
     var abilities = CharacterScript.abilities;
     var currentAbilities = Array();
     for(var i in abilities) {
+      //console.log("getAbilities: " + serialize(allAbilities[abilities[i]]));
       currentAbilities.push(allAbilities[abilities[i]]);
     }
+    /*
     // TODO: get abilites from each slot and add to list
     // deeper items should supercede earlier ones
     var childAbilities = Array();
@@ -224,13 +248,16 @@ Item {
         currentAbilities.push(allAbilities[a[i]]);
       }
     }
+    */
     return currentAbilities;
   }
 
   function getAbilityTree() {
-    var a = getAbilities();
+    var a = this.getAbilities();
+    //console.log("Ability list: " + serialize(a));
     var tree = new Object();
     for(var i in a) {
+      //console.log("MenuPath " + serialize(a[i].menuPath));
       tree = addBranch(tree, a[i].menuPath, a[i]);
     }
 

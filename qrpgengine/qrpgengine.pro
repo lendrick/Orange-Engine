@@ -157,4 +157,7 @@ OTHER_FILES += \
     ../qrpg-build-desktop/interface/CharacterItemSlot.qml \
     ../qrpg-build-desktop/interface/Character.js \
     ../qrpg-build-desktop/interface/Character.qml \
-    ../qrpg-build-desktop/interface/CharacterItemSlot.js
+    ../qrpg-build-desktop/interface/CharacterItemSlot.js \
+    ../qrpg-build-desktop/interface/CharacterMagicScreen.qml \
+    ../qrpg-build-desktop/interface/CharacterMagicScreen.js \
+    ../qrpg-build-desktop/interface/AbilityItem.qml

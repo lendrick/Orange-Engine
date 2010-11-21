@@ -10,6 +10,7 @@ var allAbilities = Array();
   ability.targetMultiple = false;
   ability.useInBattle = true;
   ability.useOutsideBattle = true;
+  ability.portrait = "../Tech Demo 2/images/icons/P_Red01.png";
 
   ability.activate = function(caster, targets) {
     console.log(caster.name + " uses " + this.name + " on " + targets[0].name);
@@ -33,7 +34,8 @@ var allAbilities = Array();
   ability.targetMultiple = false;
   ability.useInBattle = true;
   ability.useOutsideBattle = false;
-  ability.menuPath = Array('Fight');
+  ability.menuPath = new Array('Fight');
+  ability.portrait = "../Tech Demo 2/images/icons/W_Fist001.png";
 
   ability.activate = function(caster, targets) {
     console.log(caster.name + " attacks " + targets[0].name);
@@ -44,7 +46,29 @@ var allAbilities = Array();
     console.log(target.name + " takes " + damage + " damage");
   }
 
+
   allAbilities['BarehandedFight'] = ability;
+
+  ability = newAbility('Fire1');
+  ability.targetSelf = true;
+  ability.targetEnemies = true;
+  ability.targetFriends = true;
+  ability.targetMultiple = false;
+  ability.useInBattle = true;
+  ability.useOutsideBattle = false;
+  ability.menuPath = new Array('Magic', 'Fire1');
+  ability.portrait = "../Tech Demo 2/images/icons/S_Fire01.png";
+
+  ability.activate = function(caster, targets) {
+    console.log(caster.name + " casts Fire1 on " + targets[0].name);
+    target = targets[0];
+    damage = caster.atk - target.def;
+    if(damage < 1) damage = 1;
+    target.hp -= damage;
+    console.log(target.name + " takes " + damage + " damage");
+  }
+
+  allAbilities['Fire1'] = ability;
 
   ability = newAbility('Cure1');
 
@@ -54,7 +78,8 @@ var allAbilities = Array();
   ability.targetMultiple = true;
   ability.useInBattle = true;
   ability.useOutsideBattle = true;
-  ability.menuPath = Array('Magic', 'Cure');
+  ability.menuPath = new Array('Magic', 'Cure');
+  ability.portrait = "../Tech Demo 2/images/icons/S_Holy01.png";
 
   ability.activate = function(caster, targets) {
     console.log(caster.name + " casts " + this.name + " on " + targets[0].name);
@@ -68,6 +93,7 @@ var allAbilities = Array();
   //ability.setActivateFunction(activate);
 
   allAbilities['Cure1'] = ability;
+  console.log(serialize(allAbilities['Cure1']));
   console.log("Created ability " + ability.name);
 
 }

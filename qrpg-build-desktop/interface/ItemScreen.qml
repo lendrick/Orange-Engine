@@ -32,7 +32,8 @@ Box {
 
   function updateInventory() {
     console.log("updateInventory");
-    dumpInventory();
+    //dumpInventory();
+
     while(ItemScreenScript.invList.length > 0) {
       var x = ItemScreenScript.invList.pop();
       x.item = null;

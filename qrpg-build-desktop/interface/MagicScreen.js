@@ -3,7 +3,7 @@ var characterMagicScreens;
 
 function startUp() {
   rpgx.debug("CHARACTER SCREEN LOADING");
-  CharacterMagicScreenComponent = Qt.createComponent("CharacterScreen.qml");
+  CharacterMagicScreenComponent = Qt.createComponent("CharacterMagicScreen.qml");
   characterMagicScreens = Array();
   console.log("magic screen initialized");
 }

@@ -61,7 +61,13 @@ function merge(obj1, obj2) {
   // Do nothing if obj1 is an object and obj2 is not.
 }
 
-function addBranch(obj, arr, value) {
+function addBranch(obj, arr_orig, value) {
+
+  var arr = new Array();
+
+  for(var x = 0; x < arr_orig.length; x++) {
+    arr.push(arr_orig[x]);
+  }
 
   if(arr.length == 0) {
     return obj;
@@ -104,8 +110,9 @@ function newAbility(name) {
   o.usableOutsideBattle = false;
   o.mpcost = 0;
   o.description = '';
-  o.menuPath = Array();
+  o.menuPath = null;
   o.isAbility = true;
+  o.portrait = '';
 
   o.condition = function() {
     return true;
@@ -127,6 +134,18 @@ function addToInventory(item) {
       added = true;
       //console.log(x + " " + empty);
     } else {
+      var name;
+      try {
+        name=inventory[x].name;
+      } catch(e) {
+        name = null;
+      }
+
+      if(!name) {
+        inventory[x] = item;
+        added = true;
+      }
+
       //console.log(x + " " + inventory[x].name);
     }
   }
@@ -151,6 +170,11 @@ function dumpInventory() {
   }
 }
 
+function serialize(obj) {
+  return JSON.stringify(obj, null, '\t');
+}
+
+/*
 function JavaScriptStringEncode(sString) {
         return (sString+"").replace(/[\0-\x1F\"\\\x7F-\xA0\u0100-\uFFFF]/g, function (sChar) {
                 switch (sChar) {
@@ -213,3 +237,4 @@ function serialize(xValue) {
                         throw new Error("Objects of type " + typeof(xValue) + " cannot be serialized.");
         }
 }
+*/
