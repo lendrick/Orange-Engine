@@ -41,26 +41,29 @@ Box {
     //console.log("Magic list for " + character.name);
 
     var abilities = character.getAbilityTree();
-    var magic = abilities['Magic'];
-    //console.log("Abilities: " + serialize(abilities));
-    //console.log("Magic: " + serialize(magic));
 
-    while(CharacterMagicScreenScript.invList.length > 0) {
-      var x = CharacterMagicScreenScript.invList.pop();
-      x.destroy();
-    }
+    console.log("Abilities: " + serialize(abilities));
+    if(abilities['Magic']) {
+      var magic = abilities['Magic']['$value'];
+      //console.log("Magic: " + serialize(magic));
 
-    var count = 0;
-    for(var i in magic) {
-      //console.log("Adding magic: " + magic[i].name);
-      var item = CharacterMagicScreenScript.invItemComponent.createObject(inventoryListContainer.inv);
-      item.text = magic[i].name
-      item.portrait = magic[i].portrait
+      while(CharacterMagicScreenScript.invList.length > 0) {
+        var x = CharacterMagicScreenScript.invList.pop();
+        x.destroy();
+      }
 
-      item.x = (count % 2) * inventoryListContainer.inv.width / 2;
-      item.y = Math.floor(count / 2) * item.height;
-      CharacterMagicScreenScript.invList.push(item);
-      count++;
+      var count = 0;
+      for(var i in magic) {
+        //console.log("Adding magic: " + magic[i].name);
+        var item = CharacterMagicScreenScript.invItemComponent.createObject(inventoryListContainer.inv);
+        item.text = magic[i]['$value'].name
+        item.portrait = magic[i]['$value'].portrait
+
+        item.x = (count % 2) * inventoryListContainer.inv.width / 2;
+        item.y = Math.floor(count / 2) * item.height;
+        CharacterMagicScreenScript.invList.push(item);
+        count++;
+      }
     }
   }
 }

@@ -1,10 +1,12 @@
 var TalkBoxTextComponent;
 var textBoxArray;
 var CharacterComponent;
+var TreeMenuComponent;
 
 function startUp() {
   CharacterComponent = Qt.createComponent("Character.qml");
   TalkBoxTextComponent = Qt.createComponent("TalkBoxText.qml");
+  TreeMenuComponent = Qt.createComponent("TreeMenu.qml");
   textBoxArray = Array();
 }
 

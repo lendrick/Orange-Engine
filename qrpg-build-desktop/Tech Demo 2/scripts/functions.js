@@ -61,6 +61,16 @@ function merge(obj1, obj2) {
   // Do nothing if obj1 is an object and obj2 is not.
 }
 
+function flatTree(o) {
+  var tree = new Object();
+  for(var i in o) {
+    tree[i] = new Object();
+    tree[i]['$treetype'] = 'leaf';
+    tree[i]['$value'] = o[i];
+  }
+  return tree;
+}
+
 function addBranch(obj, arr_orig, value) {
 
   var arr = new Array();
@@ -73,13 +83,19 @@ function addBranch(obj, arr_orig, value) {
     return obj;
   } else if(arr.length == 1) {
     var key = arr.shift();
-    obj[key] = value;
+    obj[key] = new Object();
+    obj[key]['$treetype'] = 'leaf';
+    obj[key]['$value'] = value;
     //console.log("Leaf: " + obj);
   } else {
     var key = arr.shift();
     //console.log("Node: " + key);
-    if(sizeof(obj[key]) == 0) obj[key] = new Object();
-    obj[key] = addBranch(obj[key], arr, value);
+    if(sizeof(obj[key]) == 0) {
+      obj[key] = new Object();
+      obj[key]['$value'] = new Object();
+    }
+    obj[key]['$treetype'] = 'node';
+    obj[key]['$value'] = addBranch(obj[key]['$value'], arr, value);
   }
 
   return obj;

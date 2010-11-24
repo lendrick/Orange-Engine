@@ -160,4 +160,7 @@ OTHER_FILES += \
     ../qrpg-build-desktop/interface/CharacterItemSlot.js \
     ../qrpg-build-desktop/interface/CharacterMagicScreen.qml \
     ../qrpg-build-desktop/interface/CharacterMagicScreen.js \
-    ../qrpg-build-desktop/interface/AbilityItem.qml
+    ../qrpg-build-desktop/interface/AbilityItem.qml \
+    ../qrpg-build-desktop/interface/TreeMenuItem.qml \
+    ../qrpg-build-desktop/interface/TreeMenu.qml \
+    ../qrpg-build-desktop/interface/TreeMenu.js

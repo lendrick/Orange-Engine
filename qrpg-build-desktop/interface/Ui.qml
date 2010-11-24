@@ -15,6 +15,12 @@ Item {  //Item
 
   //anchors.fill: parent
 
+  function treeMenu(parent, tree) {
+    var menu = UiScript.TreeMenuComponent.createObject(popups);
+    menu.setOptions(tree);
+    return menu;
+  }
+
   function newCharacter(name) {
     var c = UiScript.CharacterComponent.createObject(ui);
     c.name = name;
@@ -195,5 +201,10 @@ Item {  //Item
       anchors.top:  parent.top
       anchors.bottom: parent.bottom
     }
+  }
+
+  Item {
+    id: popups
+    anchors.fill: parent
   }
 }
