@@ -1,5 +1,3 @@
-var allAbilities = Array();
-
 {
   var ability;
 
@@ -15,8 +13,9 @@ var allAbilities = Array();
   ability.activate = function(caster, targets) {
     console.log(caster.name + " uses " + this.name + " on " + targets[0].name);
     target = targets[0];
-    target.hp += 30;
+    target.addHp(30);
     //rpgx.dumpScriptObject(this);
+    sfx.jingle1.play();
     this.deleteObject();
     console.log("CurePotion done");
   }
@@ -26,6 +25,32 @@ var allAbilities = Array();
 
   allAbilities['CurePotion'] = ability;
   console.log("Created ability " + ability.name);
+
+  ability = newAbility('GreenTea');
+  ability.targetSelf = true;
+  ability.targetEnemies = true;
+  ability.targetFriends = true;
+  ability.targetMultiple = false;
+  ability.useInBattle = true;
+  ability.useOutsideBattle = true;
+  ability.portrait = "../Tech Demo 2/images/icons/P_Green01.png";
+
+  ability.activate = function(caster, targets) {
+    console.log(caster.name + " uses " + this.name + " on " + targets[0].name);
+    target = targets[0];
+    target.addMp(30);
+    sfx.jingle1.play();
+    //rpgx.dumpScriptObject(this);
+    this.deleteObject();
+    console.log("GreenTea done");
+  }
+
+  //rpgx.dumpScriptObject(activate);
+  //ability.setActivateFunction(activate);
+
+  allAbilities['GreenTea'] = ability;
+  console.log("Created ability " + ability.name);
+
 
   ability = newAbility('BarehandedFight');
   ability.targetSelf = true;
@@ -42,7 +67,7 @@ var allAbilities = Array();
     target = targets[0];
     damage = caster.atk - target.def;
     if(damage < 1) damage = 1;
-    target.hp -= damage;
+    target.addHp(-damage);
     console.log(target.name + " takes " + damage + " damage");
   }
 
@@ -58,13 +83,14 @@ var allAbilities = Array();
   ability.useOutsideBattle = false;
   ability.menuPath = new Array('Magic', 'Fire1');
   ability.portrait = "../Tech Demo 2/images/icons/S_Fire01.png";
+  ability.mpCost = 5;
 
   ability.activate = function(caster, targets) {
     console.log(caster.name + " casts Fire1 on " + targets[0].name);
     target = targets[0];
     damage = caster.atk - target.def;
     if(damage < 1) damage = 1;
-    target.hp -= damage;
+    target.addHp(-damage);
     console.log(target.name + " takes " + damage + " damage");
   }
 
@@ -80,11 +106,13 @@ var allAbilities = Array();
   ability.useOutsideBattle = true;
   ability.menuPath = new Array('Magic', 'Cure');
   ability.portrait = "../Tech Demo 2/images/icons/S_Holy01.png";
+  ability.mpCost = 4;
 
   ability.activate = function(caster, targets) {
     console.log(caster.name + " casts " + this.name + " on " + targets[0].name);
     target = targets[0];
-    target.hp += 15 + Math.floor(caster.matk / 8);
+    target.addHp(15 + Math.floor(caster.matk / 8));
+    sfx.cure1.play();
     //rpgx.dumpScriptObject(this);
     console.log("Cure1 done");
   }

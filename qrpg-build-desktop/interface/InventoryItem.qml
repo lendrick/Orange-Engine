@@ -1,13 +1,52 @@
 import Qt 4.7
+import "InventoryItem.js" as InventoryItemScript;
 
-Item {
+HideShowContainer {
   id: invItem
   property Item item
   height: 34
   property alias text: txt.text
+  property alias color: txt.color
   width: parent.width / 2
+  state: "Show"
+  property int invIndex
+  property bool usable
+  Component.onCompleted: InventoryItemScript.startUp();
 
-  onItemChanged: if(item) text = item.name;
+  onItemChanged: {
+    if(item) {
+      text = item.name;
+
+      if(!itemScreen.itemSlot) {
+        var useAbility = item.getUseAbility();
+        if(!itemScreen.inBattle) {
+          if(useAbility && useAbility.useOutsideBattle) {
+            color = '#fff';
+            usable = true;
+          } else {
+            color = '#999';
+            usable = false;
+          }
+        } else {
+          if(useAbility && useAbility.useInBattle) {
+            color = '#fff';
+            usable = true;
+          } else {
+            color = '#999';
+            usable = false;
+          }
+        }
+      } else {
+        if(itemScreen.itemSlot.canEquip(item)) {
+          color = '#fff';
+          usable = true;
+        } else {
+          color = '#999';
+          usable = false;
+        }
+      }
+    }
+  }
 
   Image {
     id: img
@@ -19,14 +58,36 @@ Item {
     anchors.left: img.right
     anchors.verticalCenter: img.verticalCenter
     width: parent.width / 2;
-    wrapMode: Text.NoWrap
+    wrapMode: Text.NoWrap;
   }
 
   MouseArea {
     id: mouseArea
     anchors.fill: parent;
-    onClicked: invItem.displayMenu(mouse);
+    onClicked: {
+      sfx.menublip.play();
+      if(!itemScreen.itemSlot) {
+        invItem.displayMenu(mouse);
+      } else {
+        itemScreen.itemSlot.equip(item);
+        itemScreen.hide();
+        modalItemScreen.destroy(500);
+      }
+    }
+
     z: 50
+    hoverEnabled: true;
+    visible: invItem.usable;
+
+    onEntered: {
+      console.log("hover enter " + invItem.text.color);
+      invItem.color = "#ff2";
+    }
+
+    onExited: {
+      console.log("hover exit");
+      invItem.color = "#fff";
+    }
   }
 
   function displayMenu(e) {
@@ -48,4 +109,11 @@ Item {
     itemScreen.updateInventory();
     //console.log(serialize(i));
   }
+
+  function deleteObject() {
+    state = "Hide";
+    invItem.destroy(300);
+  }
+
+
 }

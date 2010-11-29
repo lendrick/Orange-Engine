@@ -53,7 +53,7 @@ inventory.add = function(item) {
 
   item = newCharacter('Green Tea');
   item.setTypes(Array('consumable', 'mp+'));
-
+  item.useAbility = 'GreenTea';
   item.portrait = "../Tech Demo 2/images/icons/P_Green02.png";
   items['Green Tea'] = item;
 }

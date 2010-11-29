@@ -42,7 +42,7 @@ Box {
 
     var abilities = character.getAbilityTree();
 
-    console.log("Abilities: " + serialize(abilities));
+    //console.log("Abilities: " + serialize(abilities));
     if(abilities['Magic']) {
       var magic = abilities['Magic']['$value'];
       //console.log("Magic: " + serialize(magic));
@@ -61,6 +61,7 @@ Box {
 
         item.x = (count % 2) * inventoryListContainer.inv.width / 2;
         item.y = Math.floor(count / 2) * item.height;
+        item.ability = magic[i]['$value']['name'];
         CharacterMagicScreenScript.invList.push(item);
         count++;
       }

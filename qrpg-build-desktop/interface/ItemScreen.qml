@@ -7,6 +7,13 @@ Box {
   state: "Hide"
   //property alias inv: inventoryListContainer.inventoryList
   Component.onCompleted: ItemScreenScript.startUp();
+  property bool inBattle;
+  property Item itemSlot;
+  property string test: 'still testing';
+
+  function doTest() {
+    console.log("itemScreen testing");
+  }
 
   onStateChanged: {
     if(state == "Show")
@@ -34,11 +41,13 @@ Box {
     console.log("updateInventory");
     //dumpInventory();
 
+    /*
     while(ItemScreenScript.invList.length > 0) {
       var x = ItemScreenScript.invList.pop();
       x.item = null;
       x.destroy();
     }
+    */
 
     for(var i in inventory) {
       if(inventory[i]) {
@@ -48,19 +57,23 @@ Box {
         } catch(e) {
           name = '';
         }
-
-        if(name) {
-          var item = ItemScreenScript.invItemComponent.createObject(inventoryListContainer.inv);
-          item.item = inventory[i];
-          console.log(typeof(item.item));
-          item.x = (i % 2) * inventoryListContainer.inv.width / 2;
-          item.y = Math.floor(i / 2) * item.height;
-          ItemScreenScript.invList.push(item);
+        if(name && !inventory[i].deleted) {
+          if(!ItemScreenScript.invList[i] || !rpgx.same(ItemScreenScript.invList[i].item, inventory[i])) {
+            var item = ItemScreenScript.invItemComponent.createObject(inventoryListContainer.inv);
+            item.item = inventory[i];
+            //console.log(typeof(item.item));
+            item.x = (i % 2) * inventoryListContainer.inv.width / 2;
+            item.y = Math.floor(i / 2) * item.height;
+            item.invIndex = i;
+            ItemScreenScript.invList[i] = item;
+          }
         } else {
           inventory[i] = null;
+          if(ItemScreenScript.invList[i]) ItemScreenScript.invList[i].deleteObject();
+          ItemScreenScript.invList[i] = null;
         }
       }
     }
-
+    console.log("updateInventory finished");
   }
 }

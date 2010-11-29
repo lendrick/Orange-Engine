@@ -9,4 +9,10 @@ Text {
   font.bold: true
   wrapMode: Text.WordWrap
   opacity: 1
+
+  Behavior on color {
+    PropertyAnimation {
+      duration: 100
+    }
+  }
 }

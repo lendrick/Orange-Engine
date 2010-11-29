@@ -132,6 +132,7 @@ Box {
           else
             'none';
         }
+        slot: if(character) character.getSlot("Weapon", 0); else null;
       }
 
       SlotItem {
@@ -143,24 +144,28 @@ Box {
           else
             'none';
         }
+        slot: if(character) character.getSlot("OffHand", 0); else null;
       }
 
       SlotItem {
         id: armorSlot0
         title: "Armor"
         bind: if(character && character.getSlot("Armor", 0).item) character.getSlot("Armor", 0).item.name; else 'none';
+        slot: if(character) character.getSlot("Armor", 0); else null;
       }
 
       SlotItem {
         id: accessorySlot0
         title: "Accessory"
         bind: if(character && character.getSlot("Accessory", 0).item) character.getSlot("Accessory", 0).item.name; else 'none';
+        slot: if(character) character.getSlot("Accessory", 0); else null;
       }
 
       SlotItem {
         id: accessorySlot1
         title: "Accessory"
         bind: if(character && character.getSlot("Accessory", 1).item) character.getSlot("Accessory", 1).item.name; else 'none';
+        slot: if(character) character.getSlot("Accessory", 1); else null;
       }
     }
   }

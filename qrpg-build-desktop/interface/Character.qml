@@ -4,6 +4,8 @@ import "Character.js" as CharacterScript
 Item {
   visible: false
   id: characterItem
+  property int invIndex: -1
+
   property int atk: 0
   property int def: 0
   property int matk: 0
@@ -12,6 +14,7 @@ Item {
   property int maxMp: 0
   property int spd: 0
   property int dex: 0
+  property bool deleted: false
 
   onAtkChanged: updateStat('atk');
   onDefChanged: updateStat('def');
@@ -79,6 +82,10 @@ Item {
   function heal() {
     mp = current_maxMp;
     hp = current_maxHp;
+  }
+
+  function setInvIndex(x) {
+    invIndex = x;
   }
 
   function getAncestor() {
@@ -186,6 +193,7 @@ Item {
     //rpgx.dumpScriptObject(item);
 
     if(CharacterScript.slots[slot].length >= number) {
+      /*
       if(CharacterScript.slots[slot][number].canEquip(item)) {
         oldItem = CharacterScript.slots[slot][number].item;
         if(oldItem) {
@@ -198,12 +206,14 @@ Item {
         updateStats();
         item.activateEquipAbility(item, this);
 
-        if(oldItem) inventory.push(oldItem);
+        if(oldItem) addToInventory(oldItem);
         return true;
       } else {
         console.log(characterItem.name + " can't equip " + item.name + " in " + slot + " " + number + "!");
         return false;
       }
+      */
+      CharacterScript.slots[slot][number].equip(item);
     }
 
     return false;
@@ -226,6 +236,13 @@ Item {
     //rpgx.dumpScriptObject(this);
     if(useAbility)
       allAbilities[useAbility].activate.call(this, user, targets);
+  }
+
+  function getUseAbility() {
+    if(useAbility)
+      return allAbilities[useAbility];
+    else
+      return null;
   }
 
   function getAbilities() {
@@ -265,6 +282,8 @@ Item {
   }
 
   function deleteObject() {
+    deleted = true;
+    removeFromInventory(characterItem);
     characterItem.destroy();
   }
 
@@ -313,4 +332,21 @@ Item {
   function getTypes() {
     return CharacterScript.types;
   }
+
+  function addHp(val) {
+    hp += val;
+    if(hp > current_maxHp)
+      hp = current_maxHp;
+    else if(hp < 0)
+      hp = 0;
+  }
+
+  function addMp(val) {
+    mp += val;
+    if(mp > current_maxMp)
+      mp = current_maxMp;
+    else if(mp < 0)
+      mp = 0;
+  }
+
 }

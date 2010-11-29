@@ -163,4 +163,7 @@ OTHER_FILES += \
     ../qrpg-build-desktop/interface/AbilityItem.qml \
     ../qrpg-build-desktop/interface/TreeMenuItem.qml \
     ../qrpg-build-desktop/interface/TreeMenu.qml \
-    ../qrpg-build-desktop/interface/TreeMenu.js
+    ../qrpg-build-desktop/interface/TreeMenu.js \
+    ../qrpg-build-desktop/Tech Demo 2/scripts/sfx.js \
+    ../qrpg-build-desktop/interface/InventoryItem.js \
+    ../qrpg-build-desktop/interface/ModalItemScreen.qml

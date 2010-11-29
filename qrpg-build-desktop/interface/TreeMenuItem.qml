@@ -1,6 +1,6 @@
 import Qt 4.7
 
-MediumText {
+SmallText {
   id: treeMenuItem
   wrapMode: Text.NoWrap
   property int index
@@ -37,6 +37,8 @@ MediumText {
 
     onClicked: {
       //console.log("click");
+      if(treeMenuContainer.selectSound != '')
+        sfx[selectsound].play();
       parent.setSelected();
     }
   }
@@ -53,7 +55,7 @@ MediumText {
       name: "Normal"
       PropertyChanges {
         target: treeMenuItem
-        color: '#999'
+        color: '#fff'
       }
     },
 
@@ -69,7 +71,7 @@ MediumText {
       name: "Selected"
       PropertyChanges {
         target: treeMenuItem
-        color: '#fff'
+        color: '#ff2'
       }
     }
   ]

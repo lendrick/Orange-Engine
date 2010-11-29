@@ -226,6 +226,10 @@ void ScriptUtils::dumpScriptObject(QScriptValue objectValue) {
   }
 }
 
+bool ScriptUtils::same(QObject * a, QObject * b) {
+  return a == b;
+}
+
 void ScriptUtils::dumpObject(QObject * o) {
   qDebug() << o->dynamicPropertyNames();
 }

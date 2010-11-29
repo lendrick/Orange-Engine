@@ -7,6 +7,11 @@ HideShowContainer {
   Component.onCompleted: MagicScreenScript.startUp();
   property alias selectedIndex: characterSelect.selectedIndex
 
+  onStateChanged: {
+    if(state == "Show")
+      MagicScreenScript.characterMagicScreens[selectedIndex].updateMagicList();
+  }
+
   function selectedCharacter() {
     return MagicScreenScript.characterMagicScreens[selectedIndex].character;
   }

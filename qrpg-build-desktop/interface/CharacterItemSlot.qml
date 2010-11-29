@@ -3,11 +3,9 @@ import "CharacterItemSlot.js" as CharacterItemSlotScript
 
 Item {
   visible: false
+  id: characterItemSlot;
   property Item item
   property string name;
-  property string filter;
-
-  onFilterChanged: setFilter(filter);
 
   Component.onCompleted: CharacterItemSlotScript.startUp();
 
@@ -17,12 +15,6 @@ Item {
       CharacterItemSlotScript.allowedTypes[types[i]] = 1;
     }
   }
-
-  /*
-  function isAllowed(t) {
-    return(CharacterItemSlotScript.allowedTypes[t] == 1);
-  }
-  */
 
   function canEquip(item) {
     //return(isAllowed(item.itemType));
@@ -38,13 +30,42 @@ Item {
     return equip;
   }
 
-  /*
-  function canEquip(item) {
-    return CharacterItemSlotScript.slotFilter(item);
+  function itemScreenObject() {
+    var obj = CharacterItemSlotScript.itemScreenObject.createObject(ui);
+    /*obj.width = ui.width * 2/3;
+    obj.height = ui.height * .5;
+    obj.x = ui.width * 1/3;
+    obj.y = ui.height * .5; */
+    obj.itemScreen.itemSlot = characterItemSlot;
+    obj.itemScreen.inBattle = false;
+    obj.itemScreen.show();
+    return obj;
   }
 
-  function setFilter(filterName) {
-    CharacterItemSlotScript.slotFilter = slotFilters['filterName'];
+  function closeMenu() {
+
   }
-  */
+
+  function equip(i) {
+    if(canEquip(i)) {
+      oldItem = item;
+      if(oldItem) {
+        oldItem.activateUnequipAbility(oldItem, this);
+        oldItem.parent = null;
+      }
+
+      removeFromInventory(i);
+
+      i.parent = this;
+      item = i;
+      parent.updateStats();
+      item.activateEquipAbility(item, this);
+
+      if(oldItem) addToInventory(oldItem);
+      return true;
+    } else {
+      console.log(parent.name + " can't equip " + item.name + " in slot " + name);
+      return false;
+    }
+  }
 }

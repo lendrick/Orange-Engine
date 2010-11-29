@@ -1,6 +1,8 @@
 ui = createObject("../../interface/Ui.qml");
 var items = Array();
 var inventory = Array();
+var allAbilities = Array();
+
 
 function cprint(string) {
   rpgx.print(string);
@@ -124,7 +126,7 @@ function newAbility(name) {
   o.targetMultiple = false;
   o.usableInBattle = false;
   o.usableOutsideBattle = false;
-  o.mpcost = 0;
+  o.mpCost = 0;
   o.description = '';
   o.menuPath = null;
   o.isAbility = true;
@@ -144,28 +146,51 @@ function newAbility(name) {
 
 function addToInventory(item) {
   var added = false;
+  console.log("addToInventory: " + item.name);
   for(var x = 0; x < inventory.length; x++) {
     if(!inventory[x]) {
+      console.log("addToInventory: " + x + " is empty");
       inventory[x] = item;
+      console.log("setting invIndex");
+      item.setInvIndex(x);
+      console.log("setting added to true");
       added = true;
-      //console.log(x + " " + empty);
     } else {
+      console.log("addToInventory: " + x + " is occupied");
       var name;
       try {
-        name=inventory[x].name;
+        console.log("addToInventory: " + x + " has item");
+        name = inventory[x].name;
       } catch(e) {
+        console.log("addToInventory: " + x + " has deleted object");
         name = null;
       }
 
       if(!name) {
+        console.log("addToInventory: adding to slot " + x);
         inventory[x] = item;
         added = true;
       }
 
       //console.log(x + " " + inventory[x].name);
     }
+    if(added) x = inventory.length;
   }
-  if(!added) inventory.push(item);
+  if(!added) {
+    console.log("addToInventory: appending in slot " + inventory.length);
+    inventory.push(item);
+    item.setInvIndex(inventory.length - 1);
+  }
+
+  console.log("addToInventory done");
+}
+
+function removeFromInventory(item) {
+  console.log("removeFromInventory: " + item.name);
+  if(item.invIndex >= 0) {
+    inventory[item.invIndex] = null;
+    item.setInvIndex(-1);
+  }
 }
 
 function dumpInventory() {

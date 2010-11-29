@@ -38,6 +38,7 @@ Image {
 
     onClicked: {
       //console.log("click");
+      sfx.menublip.play();
       parent.setSelected();
     }
   }

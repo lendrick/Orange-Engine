@@ -3,8 +3,9 @@ import "TreeMenu.js" as TreeMenuScript
 
 MouseArea {
   anchors.fill: parent
-  id: mouseArea;
+  id: treeMenuContainer;
   onClicked: close();
+  property string selectSound;
 
   function show() {
     menuBox.show();
@@ -16,14 +17,13 @@ MouseArea {
 
   function close() {
     menuBox.hide();
-    mouseArea.destroy(300);
+    treeMenuContainer.destroy(300);
   }
 
   Box {
     id: menuBox
     height: treeMenu.height + 50
     width: treeMenu.width + 50
-    focus: true
     anchors.centerIn: parent
 
     Column {
@@ -44,7 +44,7 @@ MouseArea {
 
   function itemSelected(i) {
     if(popup) {
-      state = "Hide";
+      close();
     }
   }
 

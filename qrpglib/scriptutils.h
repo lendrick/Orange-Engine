@@ -36,6 +36,7 @@ public slots:
   void addQmlString(QString string);
   QScriptValue include(QString filename);
   void dumpScriptObject(QScriptValue objectValue);
+  bool same(QObject * a, QObject * b);
 
 signals:
   void menuKey();

@@ -5,6 +5,7 @@ Item {  //Item
   id: ui
   objectName: "ui"
   //color: Qt.rgba(0, 0, 0, .2);  //test only
+  property string test: "testing"
 
   Component.onCompleted: UiScript.startUp();
 

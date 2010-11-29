@@ -39,6 +39,7 @@ MediumText {
 
     onClicked: {
       //console.log("click");
+      sfx.menublip.play();
       parent.setSelected();
     }
   }
@@ -55,7 +56,7 @@ MediumText {
       name: "Normal"
       PropertyChanges {
         target: simpleMenuItem
-        color: '#999'
+        color: '#fff'
       }
     },
 
@@ -71,11 +72,12 @@ MediumText {
       name: "Selected"
       PropertyChanges {
         target: simpleMenuItem
-        color: '#fff'
+        color: '#ff2'
       }
     }
   ]
 
+  /*
   transitions: [
     Transition {
       PropertyAnimation {
@@ -84,4 +86,5 @@ MediumText {
       }
     }
   ]
+  */
 }
