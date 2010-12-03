@@ -166,4 +166,7 @@ OTHER_FILES += \
     ../qrpg-build-desktop/interface/TreeMenu.js \
     ../qrpg-build-desktop/Tech Demo 2/scripts/sfx.js \
     ../qrpg-build-desktop/interface/InventoryItem.js \
-    ../qrpg-build-desktop/interface/ModalItemScreen.qml
+    ../qrpg-build-desktop/interface/ModalItemScreen.qml \
+    ../qrpg-build-desktop/interface/BattleScreen.qml \
+    ../qrpg-build-desktop/interface/CharacterBox.qml \
+    ../qrpg-build-desktop/interface/BattleScreen.js

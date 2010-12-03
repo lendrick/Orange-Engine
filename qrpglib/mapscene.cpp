@@ -3,7 +3,7 @@
 #include "tileselect.h"
 #include "map.h"
 
-#include <qgl.h>
+#include <QtOpenGL>
 #include <QtGui>
 #include <qtimer.h>
 #include <iostream>
@@ -51,6 +51,9 @@ MapScene::MapScene(MapBox * m)
   mouseStartY = 0;
   selectBoxStartX = 0;
   selectBoxStartY = 0;
+
+  sceneBuffer = 0;
+ // bufferTexture = 0;
 
   //talkBoxTest = new TalkBox("Hello, world!\ntesting 1 2 3\nblah blah blah");
   //addItem(talkBoxTest);
@@ -106,6 +109,7 @@ MapScene::MapScene(MapBox * m)
 
 void MapScene::init(int w, int h)
 {
+  /*
   glViewport(0, 0, (GLdouble) w, (GLdouble) h);
 
   glMatrixMode(GL_PROJECTION);
@@ -115,6 +119,24 @@ void MapScene::init(int w, int h)
 
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
+  */
+}
+
+void MapScene::setSceneRect(const QRectF &rect) {
+  QGraphicsScene::setSceneRect(rect);
+
+  qDebug() << "Scene resize to " << rect;
+
+  if(sceneBuffer) {
+    //sceneBuffer->deleteTexture(bufferTexture);
+    delete sceneBuffer;
+    sceneBuffer = 0;
+    //bufferTexture = 0;
+  }
+
+  static_cast<QGLWidget *>(mapBox->viewport())->makeCurrent();
+  sceneBuffer = new QGLFramebufferObject(rect.size().toSize());
+  //bufferTexture = sceneBuffer->generateDynamicTexture();
 }
 
 void MapScene::drawBackground(QPainter *painter, const QRectF &) {
@@ -211,14 +233,17 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
   */
+
   glPushMatrix();
 
+  /*
   glViewport(0, 0, width(), height());
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   gluOrtho2D(0, width(), height(), 0);
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
+  */
 
   glDisable(GL_LIGHTING);
   glClearColor( 0.5, 0.5, 0.5, 1.0 );
@@ -251,6 +276,14 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
     yrange = yrange * th - thisHeight;
 
     painter->beginNativePainting();
+    sceneBuffer->bind();
+
+    /*
+    glPushMatrix();
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluOrtho2D(0, thisWidth, thisHeight, 0);
+    */
 
     for(i = 0; i < mapBox->map->getLayerCount(); i++) {
       //message("drawing layer " + QString::number(i));
@@ -294,6 +327,35 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
         mapBox->map->draw(i, x, y, opacity);
       }
     }
+    sceneBuffer->release();
+    //static_cast<QGLWidget *>(mapBox->viewport())->makeCurrent();
+    //glPopMatrix();
+
+    //sceneBuffer->toImage().save("/home/bart/testimg.png");
+    //sceneBuffer->updateDynamicTexture(sceneBuffer->texture());
+/*
+    glMatrixMode(GL_PROJECTION);
+    glPushMatrix();
+    glLoadIdentity();
+    gluOrtho2D(0, thisWidth, thisHeight, 0);
+*/
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, sceneBuffer->texture());
+    glEnable(GL_BLEND);   // Turn Blending On
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glColor4f(1.0, 1.0, 1.0, 1);
+
+    glBegin(GL_POLYGON);
+    glTexCoord2f(0, 1); glVertex3f(0, 0, 0);
+    glTexCoord2f(0, 0); glVertex3f(0, thisHeight, 0);
+    glTexCoord2f(1, 0); glVertex3f(thisWidth, thisHeight, 0);
+    glTexCoord2f(1, 1); glVertex3f(thisWidth, 0, 0);
+    glEnd();
+
+//    glPopMatrix();
+
+    glDisable(GL_TEXTURE_2D);
 
     painter->endNativePainting();
 
@@ -305,7 +367,7 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
       drawSelectBox(mapBox->layer, painter, tw, th);
     }
 
-    if(mapBox->mapEditorMode == MapEditorMode::Edit)
+    if(mapBox->mapEditorMode == MapEditorMode::Edit && !play)
       drawTileHighlight(painter, tw, th);
     //if(viewBoundingBoxes) drawEntityBoundingBoxes(mapBox->layer, painter);
   }
@@ -313,6 +375,7 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
   glPopMatrix();
   painter->restore();
   //mapBox->repaint();
+
 
 //#if QT_VERSION < 0x040600
   if(is_editor) QTimer::singleShot(20, this, SLOT(update()));
@@ -519,7 +582,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent * e) {
   e->accept();
 
   if(mapBox->mapEditorMode == MapEditorMode::Edit && mapBox->map && e->button() == Qt::LeftButton) {
-    if(paintMode == PaintMode::Draw) {
+    if(paintMode == PaintMode::Draw && !play) {
       mapBox->setTile(e);
     } else if(paintMode == PaintMode::SelectBox) {
       if(mouseInsideSelection(e)) {
@@ -616,7 +679,7 @@ void MapScene::mouseMoveEvent(QGraphicsSceneMouseEvent * e) {
     if(mapBox->mapEditorMode == MapEditorMode::Edit && mapBox->map && (e->buttons() & Qt::LeftButton) &&
        e->scenePos().x() > 0 && e->scenePos().y() > 0 &&
        e->scenePos().x() < this->width() && e->scenePos().y() < this->height()) {
-      if(paintMode == PaintMode::Draw) {
+      if(paintMode == PaintMode::Draw && !play) {
         mapBox->setTile(e);
       } else if(paintMode == PaintMode::SelectBox) {
         int w, h, x, y;

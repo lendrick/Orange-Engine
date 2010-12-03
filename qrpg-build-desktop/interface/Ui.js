@@ -18,3 +18,10 @@ function appendText(string) {
   //talkbox.textArray[0] = object;
   //console.log("text appended " + talkbox.textArray.length);
 }
+
+function appendScript(string, scriptString) {
+  var object = TalkBoxTextComponent.createObject(talkbox);
+  object.text = string;
+  object.script = scriptString;
+  textBoxArray.push(object);
+}

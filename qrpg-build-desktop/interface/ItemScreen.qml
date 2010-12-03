@@ -72,6 +72,9 @@ Box {
           if(ItemScreenScript.invList[i]) ItemScreenScript.invList[i].deleteObject();
           ItemScreenScript.invList[i] = null;
         }
+      } else if(ItemScreenScript.invList[i]) {
+        ItemScreenScript.invList[i].deleteObject();
+        ItemScreenScript.invList[i] = null;
       }
     }
     console.log("updateInventory finished");

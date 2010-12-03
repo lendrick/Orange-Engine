@@ -29,6 +29,7 @@
 #include "mapscene.h"
 #include "rpgengine.h"
 #include "propertyeditor.h"
+#include "mapbox.h"
 
 MainWindow::MainWindow() :
   QMainWindow() {
@@ -332,7 +333,11 @@ MainWindow::MainWindow() :
 
 MainWindow::~MainWindow() {
 }
-
+/*
+MapBox * MainWindow::mapBox() {
+  return mapwin->mapbox;
+}
+*/
 void MainWindow::resourceSelected() {
   Resource * item = static_cast<Resource *> (maplist->currentItem());
   currentresource = static_cast<Resource *> (maplist->currentItem());

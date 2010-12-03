@@ -98,7 +98,7 @@ void MapBox::resizeEvent(QResizeEvent *event) {
   }
   
   if (scene())
-    scene()->setSceneRect(QRect(QPoint(0, 0), event->size()));
+    (static_cast<MapScene *>(scene()))->setSceneRect(QRect(QPoint(0, 0), event->size()));
   QGraphicsView::resizeEvent(event);
 }
 

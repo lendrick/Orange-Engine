@@ -16,10 +16,16 @@ int main(int argc, char *argv[]) {
 //#endif
   play = false;
   QApplication mapedit(argc, argv);
-  initScriptEngine();
-  mainGLWidget = new QGLWidget;
+
   MainWindow mainwindow;
   mainWindow = &mainwindow;
+
+  //mapBox = mainwindow.mapBox();
+
+  declarativeEngine = mapBox->engine();
+  initScriptEngine();
+
+  mainGLWidget = new QGLWidget;
 
   //QMessageBox::warning(0, "...", QString::number(argc));
   

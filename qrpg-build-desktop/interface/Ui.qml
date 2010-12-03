@@ -38,6 +38,10 @@ Item {  //Item
     Screen.setPartyMember(i, character);
   }
 
+  function battle(enemyParty) {
+    battleScreen.show();
+  }
+
   Box {
     objectName: "talkbox"
     id: talkbox
@@ -70,6 +74,10 @@ Item {  //Item
       UiScript.appendText(textString);
     }
 
+    function appendScript(textString, script) {
+      UiScript.appendScript(textString, script);
+    }
+
     function show() {
       state = "Show";
       UiScript.textBoxArray[0].state = "Show";
@@ -88,6 +96,7 @@ Item {  //Item
       if(state == "Show" && !event.isAutoRepeat ) {
         var object = UiScript.textBoxArray.shift();
         object.state = "Hide";
+        if(object.script) eval(object.script);
         object.destroy(500);
 
         if(UiScript.textBoxArray.length > 0) {
@@ -96,6 +105,8 @@ Item {  //Item
           state = "Hide";
         }
 
+        event.accepted = true;
+      } else if(state == "Show") {
         event.accepted = true;
       }
     }
@@ -202,6 +213,11 @@ Item {  //Item
       anchors.top:  parent.top
       anchors.bottom: parent.bottom
     }
+  }
+
+  BattleScreen {
+    id: battleScreen
+    objectName: "battleScreen"
   }
 
   Item {

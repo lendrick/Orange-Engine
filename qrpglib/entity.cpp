@@ -121,6 +121,7 @@ void Entity::draw(double x_offset, double y_offset, double opacity, bool boundin
 
   // If we're drawing bounding boxes, or we're in the editor and there's no visible sprite, draw
   // a bounding box
+
   if(boundingbox || (!play && !sprite)) {
     int x1, y1, x2, y2;
     getBoundingBox(x1, y1, x2, y2);

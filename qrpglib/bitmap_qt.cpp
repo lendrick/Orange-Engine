@@ -139,7 +139,6 @@ void Bitmap::drawBoundingBox(int tile, float x, float y) {
   int h = height;
 
   if(x + w < 0 || y + h < 0 || x > screen_x || y > screen_y) return;
-
   glColor4f(1.0, 1.0, 0.5, 1);
       
   glBegin(GL_LINE_LOOP);

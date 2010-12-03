@@ -13,6 +13,7 @@ BigText {
   anchors.bottomMargin: 25
   anchors.leftMargin: 30
   anchors.rightMargin: 30
+  property string script
 
 
   id: bigText

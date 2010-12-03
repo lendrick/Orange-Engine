@@ -33,6 +33,11 @@ function say(string) {
   //alert(object.text1.text);
 }
 
+function sayScript(string, script) {
+  ui.talkbox.appendScript(string, script);
+  ui.talkbox.show();
+}
+
 function extend(obj1, obj2) {
   for (attrname in obj2) {
     obj1[attrname] = obj2[attrname];
@@ -186,7 +191,7 @@ function addToInventory(item) {
 }
 
 function removeFromInventory(item) {
-  console.log("removeFromInventory: " + item.name);
+  console.log("removeFromInventory: " + item.name + " " + item.invIndex);
   if(item.invIndex >= 0) {
     inventory[item.invIndex] = null;
     item.setInvIndex(-1);
@@ -213,6 +218,12 @@ function dumpInventory() {
 
 function serialize(obj) {
   return JSON.stringify(obj, null, '\t');
+}
+
+function battle(enemyParty) {
+  console.log("initiating battle: " + enemyParty);
+  var p = enemyParties[enemyParty];
+  ui.battle(p);
 }
 
 /*

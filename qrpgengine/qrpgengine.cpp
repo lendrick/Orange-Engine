@@ -23,7 +23,7 @@
 int main(int argc, char *argv[]) {
   is_editor = false;
 //#if QT_VERSION < 0x040600
-  //QGL::setPreferredPaintEngine(QPaintEngine::OpenGL);
+  QGL::setPreferredPaintEngine(QPaintEngine::OpenGL2);
 //#endif
   QApplication::setGraphicsSystem("opengl");
   QApplication mapedit(argc, argv);

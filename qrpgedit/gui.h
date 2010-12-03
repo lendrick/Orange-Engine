@@ -19,6 +19,7 @@
 class SpriteDialog;
 class MapWindow;
 class Entity;
+class MapBox;
 
 /* Note:  Change map list into general resource list, with maps,
    tilesets, sprites, scripts, etc each listed under their own
@@ -36,6 +37,7 @@ public:
   MainWindow();
   ~MainWindow();
   bool mapSelected();
+  //MapBox * mapBox();
 
 public slots:
   void showNewLayerDialog(int);

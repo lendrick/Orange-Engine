@@ -2,7 +2,7 @@
 #define MAPSCENE_H
 
 #include <QtCore>
-#include <qgl.h>
+#include <QtOpenGL>
 #include "map.h"
 #include "globals.h"
 #include "entity.h"
@@ -25,6 +25,7 @@ public:
   void drawTileHighlight(QPainter *painter, int tw, int th);
   void drawFloatingLayer(Map::Layer * layer, QRect rect, int xo, int yo, int tw, int th);
   void getMouseTileCoords(int &x, int &y);
+  void setSceneRect (const QRectF & rect);
 
   //void drawEntityBoundingBoxes(int layer, QPainter *painter);
   QLabel * fpsLabel;
@@ -45,6 +46,8 @@ public:
   QFont * entityFont;
 
   QRect selectBox;
+
+  QGLFramebufferObject * sceneBuffer;
 
 public slots:
   void newEntity();

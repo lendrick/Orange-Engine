@@ -1,6 +1,8 @@
-
-var characters = new Array();
+var enemies = new Object();
+var characters = new Object();
 var party = new Array();
+
+var enemyParties = new Object();
 
 characters['Lendrick'] = newCharacter('Lendrick');
 
@@ -80,3 +82,26 @@ characters['Sithra'].portrait = "../Tech Demo 2/images/sithra_portrait.png";
 
 party.push(characters['Lendrick']);
 party.push(characters['Sithra']);
+
+{
+  var enemy = newCharacter('Slime');
+  enemy.atk = 5;
+  enemy.def = 2;
+  enemy.matk = 0;
+  enemy.mdef = 0;
+  enemy.maxHp = 5;
+  enemy.maxMp = 0;
+  enemy.spd = 1;
+  enemy.dex = 1;
+  enemy.cls = "Slime";
+  enemy.level = 1;
+  enemy.addAbility('BarehandedFight');
+  enemy.heal();
+  enemy.portrait = "../Tech Demo 2/images/sithra_portrait.png";
+
+  enemies['Slime'] = enemy;
+}
+
+enemyParties['OneSlime'] = new Array('Slime');
+enemyParties['TwoSlimes'] = new Array('Slime', 'Slime');
+enemyParties['ThreeSlimes'] = new Array('Slime', 'Slime', 'Slime');
