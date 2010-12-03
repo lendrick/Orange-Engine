@@ -120,6 +120,7 @@ void MapScene::init(int w, int h)
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
   */
+
 }
 
 void MapScene::setSceneRect(const QRectF &rect) {
@@ -128,15 +129,28 @@ void MapScene::setSceneRect(const QRectF &rect) {
   qDebug() << "Scene resize to " << rect;
 
   if(sceneBuffer) {
-    //sceneBuffer->deleteTexture(bufferTexture);
     delete sceneBuffer;
     sceneBuffer = 0;
-    //bufferTexture = 0;
   }
 
   static_cast<QGLWidget *>(mapBox->viewport())->makeCurrent();
   sceneBuffer = new QGLFramebufferObject(rect.size().toSize());
   //bufferTexture = sceneBuffer->generateDynamicTexture();
+
+
+  blurShader = new QGLShaderProgram();
+  blurShader->addShaderFromSourceFile(QGLShader::Fragment, "shaders/blur_v.glsl");
+  qDebug() << "BLURSHADER ADD: " << blurShader->log();
+  //blurShader->setUniformValue("sceneTex", sceneBuffer->texture());
+  blurShader->link();
+  //int rt_w = blurShader->uniformLocation("rtw");
+  rt_h = blurShader->uniformLocation("rth");
+  //blurShader->setUniformValue(rt_w, (GLfloat) 640); //(GLint) rect.width());
+  blurShader->setUniformValue(rt_h, (GLfloat) 480); //(GLint) rect.height());
+
+
+  qDebug() << "BLURSHADER COMPILE: " << rt_h << " " << blurShader->log();
+
 }
 
 void MapScene::drawBackground(QPainter *painter, const QRectF &) {
@@ -346,12 +360,16 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glColor4f(1.0, 1.0, 1.0, 1);
 
+    blurShader->bind();
+    blurShader->setUniformValue(rt_h, (GLfloat) 480);
+
     glBegin(GL_POLYGON);
     glTexCoord2f(0, 1); glVertex3f(0, 0, 0);
     glTexCoord2f(0, 0); glVertex3f(0, thisHeight, 0);
     glTexCoord2f(1, 0); glVertex3f(thisWidth, thisHeight, 0);
     glTexCoord2f(1, 1); glVertex3f(thisWidth, 0, 0);
     glEnd();
+    blurShader->release();
 
 //    glPopMatrix();
 
