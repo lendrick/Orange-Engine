@@ -4,8 +4,28 @@ import "BattleScreen.js" as BattleScreenScript
 HideShowContainer {
   id: battleScreen
   anchors.fill: parent
-
   Component.onCompleted: BattleScreenScript.startUp();
+  property alias boxes: enemyBoxRow;
+
+
+
+
+  function setParty(p) {
+    /*
+    for(i in BattleScreenScript.enemyParty) {
+      var e = BattleScreenScript.enemyParty.shift();
+      e.destroy();
+    }
+    */
+
+    console.log("Setting enemy party.");
+
+    var party = enemyParties[p];
+    for(i in party) {
+      console.log("  enemy: " + party[i]);
+      BattleScreenScript.enemyParty.push(BattleScreenScript.newBattleEnemy(enemyBoxRow.boxes, party[i]));
+    }
+  }
 
   Keys.onPressed: {
     if(state == "Show") {
@@ -50,16 +70,20 @@ HideShowContainer {
   }
 
   Item {
+    id: enemyBoxRow
+    objectName: 'enemyBoxRow'
     anchors.top: parent.top
     anchors.bottom: parent.bottom
     anchors.right: parent.right
     anchors.left: partyBoxes.right
+    property alias boxes: enemyBoxes;
 
     Row {
       id: enemyBoxes
+      objectName: 'boxes'
       anchors.centerIn: parent
+      spacing: 32
     }
   }
-
 
 }

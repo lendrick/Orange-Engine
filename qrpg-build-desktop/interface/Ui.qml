@@ -39,6 +39,7 @@ Item {  //Item
   }
 
   function battle(enemyParty) {
+    battleScreen.setParty(enemyParty);
     battleScreen.show();
   }
 

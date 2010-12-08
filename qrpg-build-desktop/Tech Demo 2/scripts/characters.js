@@ -97,7 +97,7 @@ party.push(characters['Sithra']);
   enemy.level = 1;
   enemy.addAbility('BarehandedFight');
   enemy.heal();
-  enemy.portrait = "../Tech Demo 2/images/sithra_portrait.png";
+  enemy.portrait = "../Tech Demo 2/images/slime_blue.png";
 
   enemies['Slime'] = enemy;
 }

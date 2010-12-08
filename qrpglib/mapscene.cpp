@@ -139,13 +139,14 @@ void MapScene::setSceneRect(const QRectF &rect) {
 
 
   blurShader = new QGLShaderProgram();
-  blurShader->addShaderFromSourceFile(QGLShader::Fragment, "shaders/blur_v.glsl");
+  //blurShader->addShaderFromSourceFile(QGLShader::Fragment, "shaders/blur_v.glsl");
+  //blurShader->addShaderFromSourceFile(QGLShader::Fragment, "shaders/blur_h.glsl");
   qDebug() << "BLURSHADER ADD: " << blurShader->log();
   //blurShader->setUniformValue("sceneTex", sceneBuffer->texture());
   blurShader->link();
-  //int rt_w = blurShader->uniformLocation("rtw");
+  rt_w = blurShader->uniformLocation("rtw");
   rt_h = blurShader->uniformLocation("rth");
-  //blurShader->setUniformValue(rt_w, (GLfloat) 640); //(GLint) rect.width());
+  blurShader->setUniformValue(rt_w, (GLfloat) 640); //(GLint) rect.width());
   blurShader->setUniformValue(rt_h, (GLfloat) 480); //(GLint) rect.height());
 
 
@@ -362,6 +363,7 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
 
     blurShader->bind();
     blurShader->setUniformValue(rt_h, (GLfloat) 480);
+    blurShader->setUniformValue(rt_w, (GLfloat) 640);
 
     glBegin(GL_POLYGON);
     glTexCoord2f(0, 1); glVertex3f(0, 0, 0);

@@ -170,4 +170,6 @@ OTHER_FILES += \
     ../qrpg-build-desktop/interface/BattleScreen.qml \
     ../qrpg-build-desktop/interface/CharacterBox.qml \
     ../qrpg-build-desktop/interface/BattleScreen.js \
-    ../qrpg-build-desktop/Tech Demo 2/shaders/blur_v.glsl
+    ../qrpg-build-desktop/Tech Demo 2/shaders/blur_v.glsl \
+    ../qrpg-build-desktop/Tech Demo 2/shaders/blur_h.glsl \
+    ../qrpg-build-desktop/interface/BattleEnemy.qml

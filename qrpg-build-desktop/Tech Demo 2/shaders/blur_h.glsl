@@ -1,8 +1,8 @@
 #version 120
 uniform sampler2D sceneTex; // 0
 
-//uniform float rtw; // render target width
-uniform float rth; // render target height
+uniform float rtw; // render target width
+//uniform float rth; // render target height
 
 float offset[3] = float[]( 0.0, 1.3846153846, 3.2307692308 );
 float weight[3] = float[]( 0.2270270270, 0.3162162162, 0.0702702703 );
@@ -15,9 +15,9 @@ void main()
   tc = texture2D(sceneTex, uv).rgb * weight[0];
   for (int i=1; i<3; i++)
   {
-    tc += texture2D(sceneTex, uv + vec2(0.0, offset[i])/rth).rgb
+    tc += texture2D(sceneTex, uv + vec2(offset[i])/rtw, 0.0).rgb
             * weight[i];
-    tc += texture2D(sceneTex, uv - vec2(0.0, offset[i])/rth).rgb
+    tc += texture2D(sceneTex, uv - vec2(offset[i])/rtw, 0.0).rgb
            * weight[i];
   }
 

@@ -25,7 +25,12 @@ Box {
       height: 36
       width: 200
       Image {
-        source: if(character) character.portrait
+        source: {
+          if(character && character.portrait)
+            character.portrait;
+          else
+            '';
+        }
       }
 
       BindItem {

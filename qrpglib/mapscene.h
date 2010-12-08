@@ -102,7 +102,7 @@ private:
   int selectBoxStartY;
 
   QGLShaderProgram * blurShader;
-  int rt_h;
+  int rt_h, rt_w;
 };
 
 #endif // MAPSCENE_H
