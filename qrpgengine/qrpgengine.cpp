@@ -27,6 +27,7 @@ int main(int argc, char *argv[]) {
 //#endif
   QApplication::setGraphicsSystem("opengl");
   QApplication mapedit(argc, argv);
+  mainGLWidget = new QGLWidget();
   EngineWindow mainwindow;
 
   mapBox = mainwindow.mapBox;

@@ -7,9 +7,6 @@ HideShowContainer {
   Component.onCompleted: BattleScreenScript.startUp();
   property alias boxes: enemyBoxRow;
 
-
-
-
   function setParty(p) {
     /*
     for(i in BattleScreenScript.enemyParty) {
@@ -30,6 +27,7 @@ HideShowContainer {
   Keys.onPressed: {
     if(state == "Show") {
       event.accepted = true;
+      state = "Hide";
     }
   }
 
