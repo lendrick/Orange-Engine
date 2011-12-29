@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
 //#endif
   play = false;
   QApplication mapedit(argc, argv);
-
+  mainGLWidget = new QGLWidget(QGLFormat(QGL::SampleBuffers));
   MainWindow mainwindow;
   mainWindow = &mainwindow;
 
@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
   declarativeEngine = mapBox->engine();
   initScriptEngine();
 
-  mainGLWidget = new QGLWidget;
+
 
   //QMessageBox::warning(0, "...", QString::number(argc));
   

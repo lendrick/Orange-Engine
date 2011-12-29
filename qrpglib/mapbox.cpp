@@ -46,10 +46,9 @@ MapBox::MapBox(QWidget * parent) :
   this->setStyleSheet("border-style: none; padding: 0; margin: 0");
   this->setContentsMargins(0, 0, 0, 0);
 
-  QGLWidget * viewport = new QGLWidget(this, mainGLWidget);
+  QGLWidget * viewport = new QGLWidget(mainGLWidget->format(), this, mainGLWidget);
   viewport->setStyleSheet("border-style: none; padding: 0; margin: 0;");
   viewport->setContentsMargins(0, 0, 0, 0);
-  this->setViewport(new QGLWidget(QGLFormat(QGL::SampleBuffers), 0, mainGLWidget));
   this->setViewport(viewport);
   this->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
   this->setScene(mapScene);

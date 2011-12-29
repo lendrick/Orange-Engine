@@ -50,7 +50,7 @@ QTime fpstime;
 Project * currentProject = 0; 
 MainWindow * mainWindow = 0;
 Map * currentMap = 0;
-QGLWidget * mainGLWidget;
+QGLWidget * mainGLWidget = 0;
 MapBox * mapBox = 0;
 Player * playerEntity = 0;
 QRPGConsole * console = 0;
