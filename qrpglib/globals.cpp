@@ -101,6 +101,7 @@ void initScriptEngine()
   //scriptEngine = new QScriptEngine;
 
   scriptEngine = QDeclarativeDebugHelper::getScriptEngine(declarativeEngine);
+  declarativeEngine->setOutputWarningsToStandardError(true);
   //QDeclarativeExpression *expr = new QDeclarativeExpression(declarativeEngine->rootContext(), mapBox->rootObject(), "plasmoid.setEngine(plasmoid)");
   //expr->evaluate();
   //delete expr;

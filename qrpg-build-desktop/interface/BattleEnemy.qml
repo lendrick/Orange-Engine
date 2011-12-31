@@ -10,7 +10,41 @@ Image {
       '';
   }
 
+  onCharacterChanged: {
+    if(character) {
+      character.image = battleEnemy;
+    }
+  }
+
   Component.onCompleted: {
     console.log("created battle enemy: " + parent.foo );
+  }
+
+  MouseArea {
+    anchors.fill: parent;
+    onClicked: battleScreen.doTargetSelect(character);
+  }
+
+
+  SequentialAnimation {
+    id: deathAnimation
+    PropertyAnimation {
+      target: battleEnemy;
+      property: "opacity";
+      to: 0;
+      duration: 250
+    }
+    ScriptAction {
+      script: {
+        battleScreen.removeEnemy(battleEnemy);
+        battleEnemy.destroy(300);
+      }
+    }
+  }
+
+
+  function die() {
+    console.log(character.name + " is slain!")
+    deathAnimation.start();
   }
 }

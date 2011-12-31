@@ -42,6 +42,7 @@ characters['Lendrick'].equip(items['Wizard Hat'].copy(), 'Accessory', 0);
 characters['Lendrick'].addAbility('BarehandedFight');
 characters['Lendrick'].addAbility('Cure1');
 characters['Lendrick'].addAbility('Fire1');
+characters['Lendrick'].addAbility('Run');
 
 characters['Sithra'] = newCharacter('Sithra');
 
@@ -72,6 +73,7 @@ characters['Sithra'].equip(items['Staff'].copy(), 'Weapon', 0);
 characters['Sithra'].equip(items['Leather Armor'].copy(), 'Armor', 0);
 
 characters['Sithra'].addAbility('BarehandedFight');
+characters['Sithra'].addAbility('Run');
 
 characters['Sithra'].heal();
 

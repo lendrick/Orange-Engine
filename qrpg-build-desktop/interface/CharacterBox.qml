@@ -1,8 +1,11 @@
 import Qt 4.7
+import "CharacterBox.js" as CharacterBoxScript
 
 Box {
   id: characterBox
   property Item character
+  property TreeMenu treeMenu
+  property Item portrait
 
   //height: childrenRect.height
   //width: childrenRect.width
@@ -11,7 +14,27 @@ Box {
   height: 140
   width: 220
 
+  onCharacterChanged: {
+    portrait = c1.c2.characterPortrait
+  }
+
+  function showMenu() {
+    CharacterBoxScript.startUp();
+    treeMenu.show();
+    console.log("showmenu for " + character.name);
+  }
+
+  MouseArea {
+    anchors.fill: parent;
+    onClicked: {
+      console.log(characterBox.character.name + " clicked");
+      battleScreen.doTargetSelect(characterBox.character);
+    }
+  }
+
   Column {
+    id: c1
+    objectName: "c1"
     x: 25
     y: 25
     height: parent.height - 50
@@ -22,9 +45,13 @@ Box {
     */
 
     Item {
+      id: c2
+      objectName: "c2"
       height: 36
       width: 200
       Image {
+        objectName: "characterPortrait"
+        id: characterPortrait
         source: {
           if(character && character.portrait)
             character.portrait;
@@ -55,4 +82,5 @@ Box {
     }
 
   }
+
 }

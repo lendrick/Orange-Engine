@@ -124,4 +124,24 @@
   console.log(serialize(allAbilities['Cure1']));
   console.log("Created ability " + ability.name);
 
+  ability = newAbility('Run');
+
+  ability.targetSelf = false;
+  ability.targetEnemies = false;
+  ability.targetFriends = false;
+  ability.targetMultiple = false;
+  ability.useInBattle = true;
+  ability.useOutsideBattle = true;
+  ability.menuPath = new Array('Run');
+
+  ability.activate = function(caster, targets) {
+
+  }
+
+  //rpgx.dumpScriptObject(activate);
+  //ability.setActivateFunction(activate);
+
+  allAbilities['Run'] = ability;
+  console.log(serialize(allAbilities['Run']));
+  console.log("Created ability " + ability.name);
 }

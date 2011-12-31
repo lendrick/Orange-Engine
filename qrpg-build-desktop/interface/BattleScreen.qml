@@ -5,6 +5,7 @@ HideShowContainer {
   id: battleScreen
   anchors.fill: parent
   Component.onCompleted: BattleScreenScript.startUp();
+  property Item selectedTarget;
   property alias boxes: enemyBoxRow;
 
   function setParty(p) {
@@ -21,6 +22,35 @@ HideShowContainer {
     for(i in party) {
       console.log("  enemy: " + party[i]);
       BattleScreenScript.enemyParty.push(BattleScreenScript.newBattleEnemy(enemyBoxRow.boxes, party[i]));
+    }
+  }
+
+  function start() {
+    turn();
+  }
+
+  function next() {
+    BattleScreenScript.nextCombatant();
+    turn();
+  }
+
+  function turn() {
+    if(BattleScreenScript.enemyParty.length == 0) {
+      state = "Hide";
+    } else {
+      for(var i = BattleScreenScript.enemyParty.length - 1; i >= 0; i--) {
+        console.log(BattleScreenScript.enemyParty[i].character.name + " hp: " + BattleScreenScript.enemyParty[i].character.hp)
+        if(BattleScreenScript.enemyParty[i].character.hp == 0) {
+          BattleScreenScript.enemyParty[i].die();
+        }
+      }
+
+      if(BattleScreenScript.currentTurn == "Characters") {
+        console.log("showing menu for " + BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].character.name);
+        BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].showMenu();
+      } else {
+
+      }
     }
   }
 
@@ -84,4 +114,19 @@ HideShowContainer {
     }
   }
 
+  function removeEnemy(e) {
+    var idx = BattleScreenScript.enemyParty.indexOf(e);
+    console.log("removing index " + idx)
+    if(idx!=-1) {
+      BattleScreenScript.enemyParty.splice(idx, 1);
+    }
+  }
+
+  function doTargetSelect(target) {
+    console.log("doTargetSelect: " + target.name);
+    selectedTarget = target;
+    selectTarget();
+  }
+
+  signal selectTarget()
 }

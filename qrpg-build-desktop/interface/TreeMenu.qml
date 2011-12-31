@@ -88,7 +88,7 @@ MouseArea {
   }
 
   function getSelectedItem() {
-
+    return TreeMenuScript.menuItems[selectedIndex].object;
   }
 
   function setSelectedIndex(i) {

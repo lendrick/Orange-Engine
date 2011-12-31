@@ -48,7 +48,11 @@ Item {
 
   property string useAbility: ''
   property string equipAbility: ''
-  property string unequipAbility: '';
+  property string unequipAbility: ''
+
+  property bool alive: (hp > 0)
+  property Item image
+
   Component.onCompleted: CharacterScript.startUp();
 
   signal typeChanged();
@@ -339,6 +343,11 @@ Item {
       hp = current_maxHp;
     else if(hp < 0)
       hp = 0;
+
+    console.log(name + ".addHp(" + val + "): " + hp)
+    if(image) {
+      CharacterScript.DamageNumberComponent.createObject(image, { text: val })
+    }
   }
 
   function addMp(val) {

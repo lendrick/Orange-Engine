@@ -172,4 +172,8 @@ OTHER_FILES += \
     ../qrpg-build-desktop/interface/BattleScreen.js \
     ../qrpg-build-desktop/Tech Demo 2/shaders/blur_v.glsl \
     ../qrpg-build-desktop/Tech Demo 2/shaders/blur_h.glsl \
-    ../qrpg-build-desktop/interface/BattleEnemy.qml
+    ../qrpg-build-desktop/interface/BattleEnemy.qml \
+    ../qrpg-build-desktop/interface/AbilityMenu.qml \
+    ../qrpg-build-desktop/interface/AbilityMenuItem.qml \
+    ../qrpg-build-desktop/interface/CharacterBox.js \
+    ../qrpg-build-desktop/interface/DamageNumber.qml
