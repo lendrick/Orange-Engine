@@ -21,7 +21,7 @@ HideShowContainer {
     var party = enemyParties[p];
     for(i in party) {
       console.log("  enemy: " + party[i]);
-      BattleScreenScript.enemyParty.push(BattleScreenScript.newBattleEnemy(enemyBoxRow.boxes, party[i]));
+      BattleScreenScript.newBattleEnemy(enemyBoxRow.boxes, party[i]);
     }
   }
 
@@ -35,16 +35,20 @@ HideShowContainer {
   }
 
   function turn() {
+    // remove dead enemies
+    for(var i = BattleScreenScript.enemyParty.length - 1; i >= 0; i--) {
+      console.log("index: " + i);
+      console.log(BattleScreenScript.enemyParty[i].character.name + " hp: " + BattleScreenScript.enemyParty[i].character.hp)
+      if(BattleScreenScript.enemyParty[i].character.hp == 0) {
+        BattleScreenScript.enemyParty[i].die();
+      }
+    }
+
+    // hide the battle screen if all enemies are dead
     if(BattleScreenScript.enemyParty.length == 0) {
       state = "Hide";
     } else {
-      for(var i = BattleScreenScript.enemyParty.length - 1; i >= 0; i--) {
-        console.log(BattleScreenScript.enemyParty[i].character.name + " hp: " + BattleScreenScript.enemyParty[i].character.hp)
-        if(BattleScreenScript.enemyParty[i].character.hp == 0) {
-          BattleScreenScript.enemyParty[i].die();
-        }
-      }
-
+      // otherwise, run the current turn
       if(BattleScreenScript.currentTurn == "Characters") {
         console.log("showing menu for " + BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].character.name);
         BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].showMenu();

@@ -26,18 +26,19 @@ function newBattleEnemy(p, enemy) {
 }
 
 function nextCombatant() {
+  console.log("party index: " + currentIndex);
   currentIndex++;
   if(currentTurn == "Characters" && currentIndex >= party.length) {
     //currentTurn = "Enemies";
     currentIndex = 0;
-  } else if(currentIndex >= enemyParty.length) {
+  } else if(currentTurn == "Enemies" && currentIndex >= enemyParty.length) {
     currentTurn = "Characters";
     currentIndex = 0;
   }
 
   if(currentTurn == "Characters") {
-    console.log("Next combatant: " + party[currentIndex].name);
+    console.log("Next party combatant: " + party[currentIndex].name);
   } else {
-    console.log("Next combatant: " + enemyParty[currentIndex].name);
+    console.log("Next enemy combatant: " + enemyParty[currentIndex].name);
   }
 }
