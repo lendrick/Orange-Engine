@@ -4,7 +4,7 @@ import "CharacterBox.js" as CharacterBoxScript
 Box {
   id: characterBox
   property Item character
-  property TreeMenu treeMenu
+  property alias treeMenu: menuContainer.treeMenu
   property Item portrait
 
   //height: childrenRect.height
@@ -22,6 +22,16 @@ Box {
     CharacterBoxScript.startUp();
     treeMenu.show();
     console.log("showmenu for " + character.name);
+  }
+
+  Box {
+    id: menuContainer
+    width: 200
+    height: 200
+    objectName: "menuContainer"
+    anchors.left: parent.right
+    anchors.top: parent.top
+    property Item treeMenu
   }
 
   MouseArea {
@@ -80,7 +90,7 @@ Box {
       title: "MP"
       bind: if(character) character.mp + " / " + character.current_maxMp;
     }
-
   }
+
 
 }

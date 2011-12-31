@@ -347,6 +347,11 @@ Item {
     console.log(name + ".addHp(" + val + "): " + hp)
     if(image) {
       CharacterScript.DamageNumberComponent.createObject(image, { text: val })
+      if(val < 0) {
+        if(image.hit) {
+          image.hit();
+        }
+      }
     }
   }
 

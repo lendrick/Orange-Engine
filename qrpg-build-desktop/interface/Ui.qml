@@ -74,6 +74,7 @@ Item {  //Item
 
     function append(textString) {
       UiScript.appendText(textString);
+      console.log("textbox length: " + UiScript.textBoxArray.length);
     }
 
     function appendScript(textString, script) {
@@ -83,6 +84,7 @@ Item {  //Item
     function show() {
       state = "Show";
       UiScript.textBoxArray[0].state = "Show";
+      focus = true;
       //UiScript.textBoxArray[0].text += " " + parent.objectName;
     }
 

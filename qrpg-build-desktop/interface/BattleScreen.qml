@@ -45,8 +45,14 @@ HideShowContainer {
     }
 
     // hide the battle screen if all enemies are dead
-    if(BattleScreenScript.enemyParty.length == 0) {
-      state = "Hide";
+    var enemiesAlive = false;
+    for(i =  BattleScreenScript.enemyParty.length - 1; i >= 0; i--) {
+      if(BattleScreenScript.enemyParty[i].status != "dead") {
+        enemiesAlive = true;
+      }
+    }
+    if(!enemiesAlive) {
+      hideBattleScreen.start();
     } else {
       // otherwise, run the current turn
       if(BattleScreenScript.currentTurn == "Characters") {
@@ -115,6 +121,34 @@ HideShowContainer {
       objectName: 'boxes'
       anchors.centerIn: parent
       spacing: 32
+      move: Transition {
+          NumberAnimation {
+              properties: "x"
+              easing.type: Easing.InOutQuad
+          }
+      }
+    }
+  }
+
+
+  SequentialAnimation {
+    id: hideBattleScreen
+    PauseAnimation {
+      duration: 1000
+    }
+    ScriptAction {
+      script: {
+        console.log("hiding battle screen")
+        while(BattleScreenScript.enemyParty.length > 0) {
+          var enemy = BattleScreenScript.enemyParty.shift();
+          enemy.destroy();
+        }
+        while(BattleScreenScript.characterBoxes.length > 0) {
+          var box = BattleScreenScript.characterBoxes.shift();
+          box.destroy();
+        }
+        battleScreen.state = "Hide"
+      }
     }
   }
 
