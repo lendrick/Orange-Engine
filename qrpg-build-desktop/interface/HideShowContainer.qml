@@ -28,6 +28,7 @@ Item {
         target: container
         opacity: 0
         scale: .75
+        focus: false
       }
 
     },

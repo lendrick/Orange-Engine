@@ -22,17 +22,26 @@ Item {
   }
 
   MouseArea {
-    x: 0
-    y: 0
+    x: mapFromItem(ui, 0, 0).x
+    y: mapFromItem(ui, 0, 0).y
+    z: 999;
     width: ui.width
     height: ui.height
-    onClicked: { if(parent.canCancel) parent.close(); }
+    onClicked: {
+      console.log('click');
+      if(parent.canCancel) parent.close();
+    }
+    onPressed: {
+      console.log('click');
+      if(parent.canCancel) parent.close();
+    }
   }
 
   Box {
     id: menuBox
     height: treeMenu.height + 50
     width: treeMenu.width + 50
+    z: 1000
     //anchors.centerIn: parent
     //anchors.fill: parent
     Column {
