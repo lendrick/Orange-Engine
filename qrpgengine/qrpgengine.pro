@@ -176,4 +176,5 @@ OTHER_FILES += \
     ../qrpg-build-desktop/interface/AbilityMenu.qml \
     ../qrpg-build-desktop/interface/AbilityMenuItem.qml \
     ../qrpg-build-desktop/interface/CharacterBox.js \
-    ../qrpg-build-desktop/interface/DamageNumber.qml
+    ../qrpg-build-desktop/interface/DamageNumber.qml \
+    ../qrpg-build-desktop/interface/TreeMenuNode.qml

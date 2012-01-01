@@ -32,6 +32,7 @@ HideShowContainer {
   function next() {
     if(BattleScreenScript.currentTurn == "Characters") {
       BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].state = "Show";
+      BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].z = 0;
     }
 
     BattleScreenScript.nextCombatant();
@@ -62,6 +63,7 @@ HideShowContainer {
       if(BattleScreenScript.currentTurn == "Characters") {
         console.log("showing menu for " + BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].character.name);
         BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].state = "Highlight";
+        BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].z = 1;
         BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].showMenu();
       } else {
 

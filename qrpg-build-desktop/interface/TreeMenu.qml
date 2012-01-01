@@ -7,24 +7,31 @@ Item {
 
   property string selectSound;
   property bool canCancel: true
+  property string optionName: 'root'
+  property bool isSubMenu: false
 
   function show() {
     menuBox.show();
+    mouseArea.enabled = true;
   }
 
   function hide() {
     menuBox.hide();
+    mouseArea.enabled = false;
   }
 
   function close() {
     menuBox.hide();
+    console.log("closing tree menu: " + optionName);
     treeMenuContainer.destroy(300);
   }
 
   MouseArea {
+    id: mouseArea;
     x: mapFromItem(ui, 0, 0).x
     y: mapFromItem(ui, 0, 0).y
     z: 999;
+    enabled: false
     width: ui.width
     height: ui.height
     onClicked: {
@@ -49,6 +56,7 @@ Item {
       x: 25
       y: 25
     }
+
   }
 
   //color: '#444444'
@@ -76,7 +84,17 @@ Item {
   function addOption(option, object) {
     //console.log("adding menu option " + option)
     if(object['$treetype'] == 'node') {
-      // Add a child menu and call setOptions on it
+      var item = TreeMenuScript.TreeMenuNodeComponent.createObject(treeMenu);
+      item.subMenu = TreeMenuScript.TreeMenuComponent.createObject(item);
+      item.text = option;
+      item.opacity = 1;
+      item.subMenu.setOptions(object['$value']);
+      item.subMenu.optionName = option;
+      item.subMenu.isSubMenu = true;
+      item.subMenu.anchors.left = item.right;
+      item.subMenu.anchors.top = item.top;
+      console.log(option + ": " + item.subMenu);
+      addItem(item);
     } else {
       var item = TreeMenuScript.TreeMenuItemComponent.createObject(treeMenu);
 
@@ -106,7 +124,11 @@ Item {
   }
 
   function getSelectedItem() {
-    return TreeMenuScript.menuItems[selectedIndex].object;
+    if(TreeMenuScript.menuItems[selectedIndex].subMenu) {
+      return TreeMenuScript.menuItems[selectedIndex].subMenu.getSelectedItem();
+    } else {
+      return TreeMenuScript.menuItems[selectedIndex].object;
+    }
   }
 
   function setSelectedIndex(i) {
@@ -119,6 +141,9 @@ Item {
       callback.treeSelect(selectedItem);
     selected(i);
     close();
+    if(isSubMenu) {
+      parent.setSelected();
+    }
   }
 
   signal selected();
