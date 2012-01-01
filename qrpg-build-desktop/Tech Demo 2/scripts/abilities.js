@@ -88,9 +88,10 @@
   ability.activate = function(caster, targets) {
     console.log(caster.name + " casts Fire1 on " + targets[0].name);
     target = targets[0];
-    damage = caster.atk - target.def;
+    damage = caster.matk;
     if(damage < 1) damage = 1;
     target.addHp(-damage);
+    caster.addMp(-(this.mpCost));
     console.log(target.name + " takes " + damage + " damage");
   }
 
@@ -112,6 +113,7 @@
     console.log(caster.name + " casts " + this.name + " on " + targets[0].name);
     target = targets[0];
     target.addHp(15 + Math.floor(caster.matk / 8));
+    caster.addMp(-(this.mpCost));
     sfx.cure1.play();
     //rpgx.dumpScriptObject(this);
     console.log("Cure1 done");

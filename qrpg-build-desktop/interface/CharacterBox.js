@@ -22,7 +22,7 @@ function abilitySelected() {
 function targetSelected() {
   var target = battleScreen.selectedTarget;
   console.log("target selected: " + target.name);
-  allAbilities[currentAbility.name].activate(character, [target]);
+  allAbilities[currentAbility.name].activate(characterBox.character, [target]);
   battleScreen.selectTarget.disconnect(targetSelected);
   battleScreen.next();
 }

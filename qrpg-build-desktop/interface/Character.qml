@@ -361,6 +361,8 @@ Item {
       mp = current_maxMp;
     else if(mp < 0)
       mp = 0;
+
+    console.log(name + ".addMp(" + val + "): " + mp)
   }
 
 }

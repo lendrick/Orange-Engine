@@ -266,7 +266,7 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
-  if(mapBox->map) {
+  if(mapBox->map && mapBox->map->getLayerCount() > 0) {
     int tw, th;
     int xrange, yrange;
     int thisWidth, thisHeight;

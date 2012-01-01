@@ -358,6 +358,8 @@ QList < EntityPointer > MapBox::entitiesAt(int x, int y) {
 }
 
 Map::Layer * MapBox::getCurrentLayer() {
+  if(layer >= map->layers.count())
+    return 0;
   return map->layers[layer];
 }
 
