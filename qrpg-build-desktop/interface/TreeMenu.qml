@@ -1,11 +1,12 @@
 import Qt 4.7
 import "TreeMenu.js" as TreeMenuScript
 
-MouseArea {
-  anchors.fill: parent
+Item {
   id: treeMenuContainer;
-  onClicked: close();
+  property alias box: menuBox;
+
   property string selectSound;
+  property bool canCancel: true
 
   function show() {
     menuBox.show();
@@ -20,12 +21,20 @@ MouseArea {
     treeMenuContainer.destroy(300);
   }
 
+  MouseArea {
+    x: 0
+    y: 0
+    width: ui.width
+    height: ui.height
+    onClicked: { if(parent.canCancel) parent.close(); }
+  }
+
   Box {
     id: menuBox
     height: treeMenu.height + 50
     width: treeMenu.width + 50
-    anchors.centerIn: parent
-
+    //anchors.centerIn: parent
+    //anchors.fill: parent
     Column {
       id: treeMenu
       x: 25

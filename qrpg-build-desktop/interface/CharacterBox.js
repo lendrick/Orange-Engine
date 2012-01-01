@@ -32,6 +32,9 @@ function startUp() {
 
   TreeMenuComponent = Qt.createComponent("TreeMenu.qml");
   characterBox.treeMenu = TreeMenuComponent.createObject(characterBox);
+  characterBox.treeMenu.anchors.top = characterBox.treeMenu.parent.top;
+  characterBox.treeMenu.anchors.right = characterBox.treeMenu.parent.left;
+  characterBox.treeMenu.canCancel = false;
   characterBox.treeMenu.setOptions(characterBox.character.getAbilityTree());
   // = ui.treeMenu(characterBox, characterBox.character.getAbilityTree());
   characterBox.treeMenu.anchors.left = characterBox.treeMenu.parent.right;

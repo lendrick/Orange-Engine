@@ -30,6 +30,10 @@ HideShowContainer {
   }
 
   function next() {
+    if(BattleScreenScript.currentTurn == "Characters") {
+      BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].state = "Show";
+    }
+
     BattleScreenScript.nextCombatant();
     turn();
   }
@@ -57,6 +61,7 @@ HideShowContainer {
       // otherwise, run the current turn
       if(BattleScreenScript.currentTurn == "Characters") {
         console.log("showing menu for " + BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].character.name);
+        BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].state = "Highlight";
         BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].showMenu();
       } else {
 

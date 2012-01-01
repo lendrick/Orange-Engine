@@ -12,4 +12,11 @@ HideShowContainer {
     source: "box-highres.png"
     anchors.fill: parent
   }
+
+  states: [
+    State {
+      name: "Highlight"
+      PropertyChanges { target: box; source: "box-highres-highlighted.png"}
+    }
+  ]
 }

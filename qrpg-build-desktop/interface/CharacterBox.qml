@@ -24,13 +24,14 @@ Box {
     console.log("showmenu for " + character.name);
   }
 
-  Box {
+  Item {
     id: menuContainer
-    width: 200
-    height: 200
     objectName: "menuContainer"
+
+
     anchors.left: parent.right
     anchors.top: parent.top
+    state: "Show"
     property Item treeMenu
   }
 
