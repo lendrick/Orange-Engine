@@ -1,0 +1,9 @@
+<!DOCTYPE xtile>
+<tileset>
+  <name>Interior Tileset</name>
+  <image>tilesetformattedupdate1.png</image>
+  <width>32</width>
+  <height>32</height>
+  <xorigin>0</xorigin>
+  <yorigin>0</yorigin>
+</tileset>

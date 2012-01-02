@@ -12,10 +12,12 @@ rpgx.setMap("Town");
     <tileset>Warrior F.xtile</tileset>
     <tileset>Ranger M.xtile</tileset>
     <tileset>Ranger F.xtile</tileset>
+    <tileset>Interior Tileset.xtile</tileset>
   </tilesets>
   <maps>
     <map>Town.xmap</map>
     <map>Road.xmap</map>
+    <map>Lendrick's House.xmap</map>
   </maps>
   <sprites>
     <sprite>Female Warrior.xspr</sprite>

@@ -1,0 +1,62 @@
+<map>
+  <name>Lendrick's House</name>
+  <layers>2</layers>
+  <tileset>Interior Tileset</tileset>
+  <scripts>    <script condition='0'><![CDATA[map.reset();
+rpgx.setLayer(1);
+player.addToMap(1);
+player.setPos(300, 180);
+rpgx.setCamera(player);
+townTheme.setLoop(true);
+townTheme.play();]]></script>
+  </scripts>  <layer>
+    <width>15</width>
+    <height>15</height>
+    <tileset>Interior Tileset</tileset>
+    <name>Layer 1</name>
+    <layerdata>
+         0    0    0    0    0    0    0    0    0    0    0    0    0    0    0 
+         0    0    0    0    0    0    0    0    0    0    0    0    0    0    0 
+         0    0    0    0    0    0    0    0    0    0    0    0    0    0    0 
+         0    0    0    0    0    0    0    0    0    0    0    0    0    0    0 
+         0    0    7    7    7    7    7    7    7    7    7    7    0    0    0 
+         0    0    7    7    7    7    7    7    7    7    7    7    0    0    0 
+         0    0    7    7    7    7    7    7    7    7    7    7    0    0    0 
+         0    0    7    7    7    7    7    7    7    7    7    7    0    0    0 
+         0    0    7    7    7    7    7    7    7    7    7    7    0    0    0 
+         0    0    7    7    7    7    7    7    7    7    7    7    0    0    0 
+         0    0    7    7    7    7    7    7    7    7    7    7    0    0    0 
+         0    0    7    7    7    7    7    7    7    7    7    7    0    0    0 
+         0    0    7    7    7    7    7    7    7    7    7    7    0    0    0 
+         0    0    7    7    7    7    7    7    7    7    7    7    0    0    0 
+         0    0    7    7    7    7    7    7    7    7    7    7    0    0    0 
+    </layerdata>
+    <entities>
+    </entities>
+  </layer>
+  <layer>
+    <width>15</width>
+    <height>15</height>
+    <tileset>Interior Tileset</tileset>
+    <name>Layer 2</name>
+    <layerdata>
+         0    0    0    0    0    0    0    0    0    0    0    0    0    0    0 
+         0    0    0    0    0    0    0    0    0    0    0    0    0    0    0 
+         0    0    0    0    0    0    0    0    0    0    0    0    0    0    0 
+         0    0    0    0    0    0    0    0    0    0    0    0    0    0    0 
+         0    0   73   74   74   74   74   74   74   74   74   75    0    0    0 
+         0    0   91    0    0    0    0    0    0    0    0   93    0    0    0 
+         0    0   91    0    0    0    0    0    0    0    0   93    0    0    0 
+         0    0   91    0    0    0    0    0    0    0    0   93    0    0    0 
+         0    0   91    0    0    0    0    0    0    0    0   93    0    0    0 
+         0    0   91    0    0    0    0    0    0    0    0   93    0    0    0 
+         0    0   91    0    0    0    0    0    0    0    0   93    0    0    0 
+         0    0   91    0    0    0    0    0    0    0    0   93    0    0    0 
+         0    0   91    0    0    0    0    0    0    0    0   93    0    0    0 
+         0    0   91    0    0    0    0    0    0    0    0   93    0    0    0 
+         0    0  110  110  110  110  110    0  110  110  110  110    0    0    0 
+    </layerdata>
+    <entities>
+    </entities>
+  </layer>
+</map>

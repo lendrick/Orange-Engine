@@ -437,14 +437,8 @@ void MapScene::newEntity() {
     x++;
   }
 
-  EntityPointer e;
-
-  try {
-    e = EntityPointer(new Npc("Entity " + QString::number(x)));
-  } catch(QString ex) {
-    message(ex);
-    return;
-  }
+  Entity * ePtr = new Npc("Entity " + QString::number(x));
+  EntityPointer e = ePtr->getSharedPointer();
 
   /*
   if(sprites.size() > 0) {

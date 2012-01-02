@@ -134,6 +134,11 @@ sayScript("Furthermore, fight these slimes!", "battle('TwoSlimes');");
           <script condition='2'><![CDATA[rpgx.setMap("Road");]]></script>
         </scripts>
       </entity>
+      <entity name='Entity 6' state='-1' x='145' y='404' bx1='-16' by1='-16' bx2='16' by2='16' overrideboundingbox='1' solid = '1'>
+        <scripts>
+          <script condition='5'><![CDATA[rpgx.setMap("Lendrick's House");]]></script>
+        </scripts>
+      </entity>
     </entities>
   </layer>
   <layer>
