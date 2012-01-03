@@ -12,6 +12,11 @@ INCLUDEPATH = ../qrpglib
 LIBS += -lSDL -lSDL_mixer
 DESTDIR = ../qrpg-build-desktop
 
+win32 {
+    INCLUDEPATH +=../win32/include
+    LIBS += -L../win32/lib
+}
+
 SOURCES +=\
     rpgx_mapedit.cpp \
     gui.cpp \

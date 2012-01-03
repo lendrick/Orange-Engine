@@ -12,6 +12,11 @@ LIBS += -lSDL_mixer -lSDL
 DESTDIR = ../qrpg-build-desktop
 INCLUDEPATH = ../qrpglib
 
+win32 {
+    INCLUDEPATH +=../win32/include
+    LIBS += -L../win32/lib
+}
+
 SOURCES +=\
     qrpgengine.cpp \
     enginewindow.cpp \

@@ -5,7 +5,7 @@
 #include "polygon.h"
 #include <GL/gl.h>
 #include <iostream>
-#include <math.h>
+#include <cmath>
 #include <vector>
 #include <list>
 
@@ -26,7 +26,6 @@ bool operator!= (Vertex v1, Vertex v2) {
   return (v1.x != v2.x) || (v1.y != v2.y);
 }
 
-#ifndef WIN32
 int min(int a, int b) {
   if(a > b) return b;
   return a;
@@ -36,7 +35,6 @@ int max(int a, int b) {
   if(a > b) return a;
   return b;
 }
-#endif
 
 int len(int x1, int y1, int x2, int y2) {
   return (int) sqrt(pow((float) (x2 - x1), 2) + pow((float) (y2 - y1), 2));
