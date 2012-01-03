@@ -14,7 +14,7 @@ INCLUDEPATH = ../qrpglib
 
 win32 {
     INCLUDEPATH +=../win32/include
-    LIBS += -L../win32/lib
+    LIBS += -L../qrpg-build-desktop
 }
 
 SOURCES +=\
