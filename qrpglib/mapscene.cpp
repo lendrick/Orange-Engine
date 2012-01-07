@@ -292,6 +292,10 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
 
     painter->beginNativePainting();
     sceneBuffer->bind();
+    glDisable(GL_LIGHTING);
+    glClearColor( 0.5, 0.5, 0.5, 1.0 );
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     /*
     glPushMatrix();
@@ -361,17 +365,18 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glColor4f(1.0, 1.0, 1.0, 1);
 
+    /*
     blurShader->bind();
     blurShader->setUniformValue(rt_h, (GLfloat) 480);
     blurShader->setUniformValue(rt_w, (GLfloat) 640);
-
+*/
     glBegin(GL_POLYGON);
     glTexCoord2f(0, 1); glVertex3f(0, 0, 0);
     glTexCoord2f(0, 0); glVertex3f(0, thisHeight, 0);
     glTexCoord2f(1, 0); glVertex3f(thisWidth, thisHeight, 0);
     glTexCoord2f(1, 1); glVertex3f(thisWidth, 0, 0);
     glEnd();
-    blurShader->release();
+  //  blurShader->release();
 
 //    glPopMatrix();
 
