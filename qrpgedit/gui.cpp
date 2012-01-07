@@ -191,7 +191,7 @@ MainWindow::MainWindow() :
   mapEditAction->setCheckable(true);
   mapToolBar->addAction(mapEditAction);
 
-  mapEntityAction = mapActionGroup->addAction(*mapEntityIcon, "Edit Entities");
+  mapEntityAction = mapActionGroup->addAction(*mapEntityIcon, "Edit Entities.");
   mapEntityAction->setCheckable(true);
   mapToolBar->addAction(mapEntityAction);
   
@@ -300,10 +300,10 @@ MainWindow::MainWindow() :
   
   connect(layerPanel, SIGNAL(selectLayer(int)), mapwin->mapbox, SLOT(setLayer(int)));
 
-  connect(mapEditAction, SIGNAL(toggled()), mapBox, SLOT(setEditMode()));
+  connect(mapEditAction, SIGNAL(toggled(bool)), mapBox, SLOT(setEditMode()));
   connect(mapEditAction, SIGNAL(toggled(bool)), paintToolBar, SLOT(setEnabled(bool)));
 
-  connect(mapEntityAction, SIGNAL(toggled()), mapBox, SLOT(setEntityMode()));
+  connect(mapEntityAction, SIGNAL(toggled(bool)), mapBox, SLOT(setEntityMode()));
 
   connect(paintDrawAction, SIGNAL(toggled(bool)), this, SLOT(setPaintModeDraw(bool)));
   connect(paintFillAction, SIGNAL(toggled(bool)), this, SLOT(setPaintModeFill(bool)));

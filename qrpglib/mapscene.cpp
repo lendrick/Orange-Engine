@@ -433,11 +433,19 @@ void MapScene::editGlobalScripts() {
 
 void MapScene::newEntity() {
   int x = entities.size();
-  while(entityNames.contains("Entity " + QString::number(x))) {
+  while(staticEntityNames.contains("Entity " + QString::number(x))) {
     x++;
   }
 
-  Entity * ePtr = new Npc("Entity " + QString::number(x));
+  Entity * ePtr;
+
+  try {
+    ePtr = new Npc("Entity " + QString::number(x));
+  } catch(QString s) {
+    QMessageBox::warning(0, "Error", s);
+    return;
+  }
+
   EntityPointer e = ePtr->getSharedPointer();
 
   /*
