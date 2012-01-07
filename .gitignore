@@ -4,6 +4,9 @@ lib*.so*
 */qrpgengine
 */qrpgedit
 Makefile
+*/Makefile
 *.pro.user
 *.exe
 *_MinGW_*
+*.Debug
+*.Release
