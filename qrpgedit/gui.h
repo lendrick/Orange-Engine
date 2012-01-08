@@ -47,6 +47,8 @@ public slots:
   void showGlobalScriptDialog();
   void deleteLayer(int);
   void resourceSelected();
+  void resourceClicked(QTreeWidgetItem *, int);
+  void resourceDoubleClicked(QTreeWidgetItem *, int);
 
   void aboutQt();
   

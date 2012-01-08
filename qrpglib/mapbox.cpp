@@ -39,6 +39,7 @@ MapBox::MapBox(QWidget * parent) :
   currentTile = 0;
   mapScene = new MapScene(this);
   drawMode = LayerView::All;
+  resizeDirection = Direction::None;
   //camera = 0;
   mapEditorMode = MapEditorMode::Edit;
 
@@ -72,8 +73,6 @@ EntityPointer MapBox::getCamera() {
 void MapBox::addWidget(QWidget * w) {
   mapScene->addWidget(w);
 }
-
-
 
 void MapBox::resizeEvent(QResizeEvent *event) {
   int w, h, lw, lh, tw, th;
@@ -308,6 +307,26 @@ void MapBox::setMode(int mode) {
 
 int MapBox::getMode() {
   return mapEditorMode;
+}
+
+int MapBox::edgeAt(EntityPointer entity, int mouseX, int mouseY) {
+  int edge = Direction::None;
+  if(entity) {
+    double x1, y1, x2, y2;
+    entity->getRealSpriteBox(x1, y1, x2, y2);
+    if(mouseX >= x1 && mouseX <= x1 + 2) {
+      edge |= Direction::Left;
+    } else if(mouseX >= x2 - 2 && mouseX <= x2) {
+      edge |= Direction::Right;
+    }
+    if(mouseY >= y1 && mouseY <= y1 + 2) {
+      edge |= Direction::Up;
+    } else if(mouseY >= y2 - 2 && mouseY <= y2) {
+      edge |= Direction::Down;
+    }
+  }
+
+  return edge;
 }
 
 EntityPointer MapBox::entityAt(int x, int y) {

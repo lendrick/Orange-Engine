@@ -275,6 +275,10 @@ MainWindow::MainWindow() :
 
   connect(maplist, SIGNAL(itemSelectionChanged()),
 	  this, SLOT(resourceSelected()));
+  connect(maplist, SIGNAL(itemDoubleClicked(QTreeWidgetItem *, int)),
+          this, SLOT(resourceDoubleClicked(QTreeWidgetItem *, int)));
+  connect(maplist, SIGNAL(itemClicked(QTreeWidgetItem *, int)),
+          this, SLOT(resourceClicked(QTreeWidgetItem *, int)));
 
   layerPanel = new LayerPanel(this);
   this->addDockWidget(Qt::LeftDockWidgetArea, layerPanel, Qt::Vertical);
@@ -353,6 +357,19 @@ void MainWindow::resourceSelected() {
   } else if(item->type() == Resource::Folder) {
     emit setMap(-1);
     emit setTiles(-1);
+  }
+}
+
+void MainWindow::resourceClicked(QTreeWidgetItem * item, int column) {
+}
+
+void MainWindow::resourceDoubleClicked(QTreeWidgetItem * item, int column) {
+  Resource * r = static_cast<Resource *> (item);
+  if(r->type() == Resource::Entity) {
+    showEntityDialog(entities[r->getID()]);
+  } else if(r->type() == Resource::Sprite) {
+    spritedialog->show();
+    spritedialog->setCurrentSprite(r->text(0));
   }
 }
 

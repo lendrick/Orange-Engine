@@ -47,6 +47,7 @@ public slots:
 
 private:
   QScrollBar * scroll;
+  void wheelEvent(QWheelEvent * e);
 };
 
 #endif

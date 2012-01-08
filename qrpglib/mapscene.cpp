@@ -653,8 +653,31 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent * e) {
     //qDebug() << "  set tile";
   } else if(mapBox->mapEditorMode == MapEditorMode::Entity &&
     mapBox->map && e->button() == Qt::LeftButton) {
-    mapBox->dragEntity =
-      mapBox->entityAt(mouseStartX + mapBox->xo, mouseStartY + mapBox->yo);
+    int mouseX = mouseStartX + mapBox->xo;
+    int mouseY = mouseStartY + mapBox->yo;
+    mapBox->dragEntity = mapBox->entityAt(mouseX, mouseY);
+    if(mapBox->dragEntity) {
+      mapBox->resizeDirection = mapBox->edgeAt(mapBox->dragEntity, mouseX, mouseY);
+      /*
+      double x1, y1, x2, y2;
+      mapBox->dragEntity->getRealSpriteBox(x1, y1, x2, y2);
+      if(mouseX >= x1 && mouseX <= x1 + 2) {
+        mapBox->resizeDirection |= Direction::Left;
+      } else if(mouseX >= x2 - 2 && mouseX <= x2) {
+        mapBox->resizeDirection |= Direction::Right;
+      }
+      if(mouseY >= y1 && mouseY <= y1 + 2) {
+        mapBox->resizeDirection |= Direction::Up;
+      } else if(mouseY >= y2 - 2 && mouseY <= y2) {
+        mapBox->resizeDirection |= Direction::Down;
+      }
+      */
+      if(mapBox->resizeDirection != Direction::None) {
+        mapBox->dragMode = DragMode::Resize;
+      } else {
+        mapBox->dragMode = DragMode::Drag;
+      }
+    }
     //qDebug() << "  starting drag " << mapBox->dragEntity->getName().toAscii().data();
   } else if(mapBox->map && e->button() == Qt::MidButton) {
     mapBox->mouse_start_x = mouseStartX;
@@ -670,7 +693,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent * e) {
   } else if(mapBox->map && e->button() == Qt::RightButton) {
     EntityPointer x = mapBox->entityAt(mouseStartX + mapBox->xo, mouseStartY + mapBox->yo);
     mouseScreenPos = e->screenPos();
-    mouseScenePos = e->scenePos();
+    mouseScenePos = e->scenePos() + QPoint(mapBox->xo, mapBox->yo);
     if(x) {
       selectedEntity = x;
       entityPopupMenu->exec(e->screenPos());
@@ -737,11 +760,34 @@ void MapScene::mouseMoveEvent(QGraphicsSceneMouseEvent * e) {
       }
 
       //qDebug() << "  setTile";
-    } else if(mapBox->dragEntity && mapBox->mapEditorMode == MapEditorMode::Entity && mapBox->map &&
-              (e->buttons() & Qt::LeftButton)) {
-      QPointF move = e->scenePos() - e->lastScenePos();
-      //qDebug() << "  dragging " << move.x() << " " << move.y() << "\n";
-      mapBox->dragEntity->movePos(move.x(), move.y());
+    } else if(mapBox->mapEditorMode == MapEditorMode::Entity && mapBox->map) {
+      if(mapBox->dragEntity && mapBox->dragMode == DragMode::Drag && (e->buttons() & Qt::LeftButton)) {
+        QPointF move = e->scenePos() - e->lastScenePos();
+        //qDebug() << "  dragging " << move.x() << " " << move.y() << "\n";
+        mapBox->dragEntity->movePos(move.x(), move.y());
+      } else if((e->buttons() & Qt::LeftButton) && mapBox->dragMode == DragMode::Resize && mapBox->dragEntity) {
+        QPointF move = e->scenePos() - e->lastScenePos();
+        int x1, y1, x2, y2;
+        mapBox->dragEntity->getBoundingBox(x1, y1, x2, y2);
+
+        if(mapBox->resizeDirection & Direction::Up) {
+          y1 += move.y();
+        }
+
+        if(mapBox->resizeDirection & Direction::Down) {
+          y2 += move.y();
+        }
+
+        if(mapBox->resizeDirection & Direction::Left) {
+          x1 += move.x();
+        }
+
+        if(mapBox->resizeDirection & Direction::Right) {
+          x2 += move.x();
+        }
+
+        mapBox->dragEntity->setBoundingBox(x1, y1, x2, y2);
+      }
     } else if(mapBox->map && (e->buttons() & Qt::MidButton)) {
       emit mapBox->setXScroll(mapBox->xo - e->scenePos().x() + mapBox->mouse_start_x);
       emit mapBox->setYScroll(mapBox->yo - e->scenePos().y() + mapBox->mouse_start_y);
@@ -753,8 +799,37 @@ void MapScene::mouseMoveEvent(QGraphicsSceneMouseEvent * e) {
       e->ignore();
       return;
     }
+  } else if(mapBox->mapEditorMode == MapEditorMode::Entity) {
+    QCursor oc;
+    // Adjust the mouse cursor if hovering
+    int x = (mapBox->xo + e->scenePos().x());
+    int y = (mapBox->yo + e->scenePos().y());
+    EntityPointer p = mapBox->entityAt(x, y);
+    if(QApplication::overrideCursor())
+      QApplication::restoreOverrideCursor();
+    if(p) {
+      int edge = mapBox->edgeAt(p, x, y);
+      if(edge == Direction::Up) {
+        QApplication::setOverrideCursor(QCursor(Qt::SizeVerCursor));
+      } else if(edge == Direction::Down) {
+        QApplication::setOverrideCursor(QCursor(Qt::SizeVerCursor));
+      } else if(edge == Direction::Left) {
+        QApplication::setOverrideCursor(QCursor(Qt::SizeHorCursor));
+      } else if(edge == Direction::Right) {
+        QApplication::setOverrideCursor(QCursor(Qt::SizeHorCursor));
+      } else if(edge == Direction::UpLeft) {
+        QApplication::setOverrideCursor(QCursor(Qt::SizeFDiagCursor));
+      } else if(edge == Direction::DownLeft) {
+        QApplication::setOverrideCursor(QCursor(Qt::SizeBDiagCursor));
+      } else if(edge == Direction::UpRight) {
+        QApplication::setOverrideCursor(QCursor(Qt::SizeBDiagCursor));
+      } else if(edge == Direction::DownRight) {
+        QApplication::setOverrideCursor(QCursor(Qt::SizeFDiagCursor));
+      } else {
+        QApplication::setOverrideCursor(QCursor(Qt::PointingHandCursor));
+      }
+    }
   }
-
   //qDebug() << "  accepted";
 }
 /*

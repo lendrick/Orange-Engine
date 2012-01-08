@@ -43,6 +43,7 @@ public slots:
   void setCurrentTile(int);
   void addWidget(QWidget *);
   EntityPointer entityAt(int x, int y);
+  int edgeAt(EntityPointer entity, int x, int y);
   QList < EntityPointer > entitiesAt(int x, int y);
   Map::Layer * getCurrentLayer();
   
@@ -84,7 +85,9 @@ private:
   int xrange, yrange;
   EntityPointer camera;
   EntityPointer dragEntity;
+  int resizeDirection;
   int mapEditorMode;
+  int dragMode;
 };
 
 #endif

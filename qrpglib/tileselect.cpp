@@ -41,7 +41,8 @@ void TileBox::initializeGL() {
 }
 
 void TileBox::resizeGL(int w, int h) {
-	if(w > 0 && h > 0) {
+  qDebug() << "resizeGL: " << w << ", " << h;
+  if(w > 0 && h > 0) {
     //glPushMatrix();
     int vrows, rows, cols;
     int sw, sh;
@@ -53,18 +54,20 @@ void TileBox::resizeGL(int w, int h) {
 
     if(tileset) {
       tileset->getSize(sw, sh);
-      cols = (width() - 1) / (sw + tileSpacing);
-      rows = tileset->tileCount() / cols + 1;
+      tileset->getGridSize(cols, rows);
+      //cols = (width() - 1) / (sw + tileSpacing);
+      //rows = tileset->tileCount() / cols + 1;
       vrows = height() / (sh + tileSpacing) + 1;
       
       if(vrows < rows) {
-        emit setRange(0, rows-vrows+1);
+        emit setRange(0, rows-vrows+2);
       } else {
         emit setRange(0, 0);
       }
     } else {
       emit setRange(0, 0);
-    }    
+    }
+
     //glPopMatrix();
   }
 }
@@ -147,40 +150,49 @@ int TileBox::getSelected() {
 
 void TileBox::mousePressEvent(QMouseEvent * e) {
   if(tileset) {
-    int tx, ty, tile;
-    int w, h;
-    int gw, gh;
+    if(e->button() == Qt::LeftButton) {
+      int tx, ty, tile;
+      int w, h;
+      int gw, gh;
 
-    int mx = e->x();
-    int my = e->y() + scroll;
+      tileset->getSize(w, h);
+      tileset->getGridSize(gw, gh);
 
-    tileset->getSize(w, h);
-    tileset->getGridSize(gw, gh);
+      int mx = e->x();
+      int my = e->y() + scroll * (h + tileSpacing);
 
-    if(mx > (gw + tileSpacing) * w || my > (gh + tileSpacing + 1) * h) {
-      //qDebug() << "mouse press out of range";
-      return;
+      if(mx > (gw + tileSpacing) * w || my > (gh + tileSpacing + 1) * h) {
+        //qDebug() << "mouse press out of range";
+        return;
+      }
+
+      qDebug() << scroll << ": " << mx << ", " << my << "  " << gw << ", " << gh << " " << tileSpacing;
+
+      if(my < h + tileSpacing) {
+        selected = 0;
+      } else {
+        tx = mx / (w + tileSpacing);
+        ty = my / (h + tileSpacing);
+        ty -= 1;
+
+        qDebug() << mx << ", " << my;
+
+        tile = tx + ty * gw + 1;
+        if(tile < tileset->tileCount()) selected = tile;
+      }
+
+      makeCurrent();
+      updateGL();
+      qDebug() << "Selected tile " << selected << "\n";
+      emit tileChanged(selected);
+      //cout << "Selected tile " << selected << "\n";
     }
-
-    qDebug() << ":" << mx << ", " << my << "  " << gw << ", " << gh << " " << tileSpacing;
-
-    if(my < h + tileSpacing) {
-      selected = 0;
-    } else {
-      tx = e->x() / (w + tileSpacing);
-      ty = e->y() / (h + tileSpacing);
-      ty -= 1;
-
-      tile = tx + ty * gw + 1;
-      if(tile < tileset->tileCount()) selected = tile;
-    }
-
-    makeCurrent();
-    updateGL();
-    qDebug() << "Selected tile " << selected << "\n";
-    emit tileChanged(selected);
-    //cout << "Selected tile " << selected << "\n";
   }
+}
+
+void TileSelect::wheelEvent(QWheelEvent * e) {
+  int move = e->delta() / abs(e->delta());
+  scroll->setValue(scroll->value() - move * scroll->singleStep());
 }
 
 TileSelect::TileSelect(QWidget *parent) 

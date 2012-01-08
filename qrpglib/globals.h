@@ -35,6 +35,27 @@ struct PaintMode {
   };
 };
 
+struct Direction {
+  enum DirectionEnum {
+    None = 0,
+    Up = 1,
+    Down = 2,
+    Left = 4,
+    Right = 8,
+    UpLeft = 5,
+    DownLeft = 6,
+    UpRight = 9,
+    DownRight = 10
+  };
+};
+
+struct DragMode {
+  enum DragModeEnum {
+    Drag,
+    Resize
+  };
+};
+
 class Map;
 class MapBox;
 class Bitmap;
