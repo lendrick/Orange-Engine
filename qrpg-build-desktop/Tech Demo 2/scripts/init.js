@@ -5,5 +5,6 @@ rpgx.include('sfx.js');
 rpgx.include('functions.js');
 rpgx.include('abilities.js');
 rpgx.include('items.js');
+rpgx.include('enemy_ai.js');
 rpgx.include('characters.js');
 

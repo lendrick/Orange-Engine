@@ -100,6 +100,7 @@ party.push(characters['Sithra']);
   enemy.addAbility('BarehandedFight');
   enemy.heal();
   enemy.portrait = "../Tech Demo 2/images/slime_blue.png";
+  enemy.turnAI = 'random'
 
   enemies['Slime'] = enemy;
 }

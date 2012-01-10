@@ -29,7 +29,7 @@ function nextCombatant() {
   console.log("party index: " + currentIndex);
   currentIndex++;
   if(currentTurn == "Characters" && currentIndex >= party.length) {
-    //currentTurn = "Enemies";
+    currentTurn = "Enemies";
     currentIndex = 0;
   } else if(currentTurn == "Enemies" && currentIndex >= enemyParty.length) {
     currentTurn = "Characters";

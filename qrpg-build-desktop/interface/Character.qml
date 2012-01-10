@@ -50,6 +50,8 @@ Item {
   property string equipAbility: ''
   property string unequipAbility: ''
 
+  property string turnAI: ''
+
   property bool alive: (hp > 0)
   property Item image
 
@@ -79,6 +81,12 @@ Item {
     c.useAbility = useAbility;
     c.equipAbility = equipAbility;
     c.unequipAbility = unequipAbility;
+    c.turnAI = turnAI;
+
+    for(var i in CharacterScript.abilities) {
+      console.log("copy ability: " + CharacterScript.abilities[i])
+      c.addAbility(CharacterScript.abilities[i]);
+    }
 
     return c;
   }
@@ -113,6 +121,10 @@ Item {
 
   function addAbility(a) {
     CharacterScript.abilities.push(a);
+  }
+
+  function getAbilityNames() {
+    return CharacterScript.abilities;
   }
 
   function getEquippedItems() {

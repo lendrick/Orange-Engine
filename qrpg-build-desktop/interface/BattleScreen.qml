@@ -66,7 +66,16 @@ HideShowContainer {
         BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].z = 1;
         BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].showMenu();
       } else {
+        var enemy = BattleScreenScript.enemyParty[BattleScreenScript.currentIndex].character;
+        var aiFunc = enemy.turnAI;
+        console.log('enemy turn: ' + aiFunc);
+        var targets = Array();
+        for(i in BattleScreenScript.characterBoxes) {
+          targets.push(BattleScreenScript.characterBoxes.character);
+        }
 
+        var result = ai[aiFunc](enemy, targets);
+        console.log(result.ability + ' --> ' + result.target);
       }
     }
   }
