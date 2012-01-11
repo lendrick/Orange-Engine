@@ -6,6 +6,7 @@ HideShowContainer {
   anchors.fill: parent
   Component.onCompleted: BattleScreenScript.startUp();
   property Item selectedTarget;
+  property Item currentBattler;
   property alias boxes: enemyBoxRow;
 
   function setParty(p) {
@@ -71,11 +72,18 @@ HideShowContainer {
         console.log('enemy turn: ' + aiFunc);
         var targets = Array();
         for(i in BattleScreenScript.characterBoxes) {
-          targets.push(BattleScreenScript.characterBoxes.character);
+          targets.push(BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].character.name);
         }
 
-        var result = ai[aiFunc](enemy, targets);
+        var friends = new Array();
+        var result = ai[aiFunc](enemy, targets, friends);
         console.log(result.ability + ' --> ' + result.target);
+        var abilityTarget = Array();
+        for(i in result.target) {
+          abilityTarget.push(characters[result.target[i]]);
+        }
+
+        allAbilities[result.ability].activate(enemy, abilityTarget);
       }
     }
   }

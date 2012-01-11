@@ -87,7 +87,7 @@ Item {
       console.log("copy ability: " + CharacterScript.abilities[i])
       c.addAbility(CharacterScript.abilities[i]);
     }
-
+    console.log("Copied abilities:" + c.getAbilityNames().length);
     return c;
   }
 
@@ -357,14 +357,7 @@ Item {
       hp = 0;
 
     console.log(name + ".addHp(" + val + "): " + hp)
-    if(image) {
-      CharacterScript.DamageNumberComponent.createObject(image, { text: val })
-      if(val < 0) {
-        if(image.hit) {
-          image.hit();
-        }
-      }
-    }
+
   }
 
   function addMp(val) {
@@ -375,6 +368,17 @@ Item {
       mp = 0;
 
     console.log(name + ".addMp(" + val + "): " + mp)
+  }
+
+  function hitAnim(val, anim) {
+    if(image) {
+      CharacterScript.DamageNumberComponent.createObject(image, { text: val })
+      if(val < 0) {
+        if(image.hit) {
+          image.hit(anim);
+        }
+      }
+    }
   }
 
 }

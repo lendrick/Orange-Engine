@@ -11,21 +11,22 @@ var ai = new Object;
 /*
  * This function chooses an enemy ability at random and uses it.
  */
-ai.random = function(enemy, targets) {
-    console.log("enemy: " + enemy.name);
+ai.random = function(self, targets, friends) {
+    console.log("enemy: " + self.name);
     
-    var abilities = enemy.getAbilityNames();
-    serialize(abilities);
+    var abilities = self.getAbilityNames();
     var usable = new Array();
     for(var i in abilities) {
-        if(abilities[i].useInBattle && abilities[i].mpCost <= enemy.mp) {
+        console.log(abilities[i]);
+        if(allAbilities[abilities[i]].useInBattle && allAbilities[abilities[i]].mpCost <= self.mp) {
             usable.push(abilities[i]);
+            console.log("*usable");           
         }
     }
     var index = Math.floor(Math.random()*usable.length);
     var result = new Object();
     result.ability = usable[index];
-    result.target = targets[Math.floor(Math.random() * targets.length)];
+    result.target = [targets[Math.floor(Math.random() * targets.length)]];
     console.log('random: ' + result.ability);
     return result;
 }

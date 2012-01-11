@@ -61,6 +61,7 @@
   ability.useOutsideBattle = false;
   ability.menuPath = new Array('Fight');
   ability.portrait = "../Tech Demo 2/images/icons/W_Fist001.png";
+  ability.animation = "../Tech Demo 2/images/animations/slash2.gif";
 
   ability.activate = function(caster, targets) {
     console.log(caster.name + " attacks " + targets[0].name);
@@ -68,6 +69,7 @@
     damage = caster.atk - target.def;
     if(damage < 1) damage = 1;
     target.addHp(-damage);
+    target.hitAnim(-damage, this.animation);
     console.log(target.name + " takes " + damage + " damage");
   }
 

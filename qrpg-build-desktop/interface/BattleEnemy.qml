@@ -4,6 +4,8 @@ Image {
   id: battleEnemy;
   property Item character;
   property string status: "normal"
+  state: "Ready"
+
   source: {
     if(character && character.portrait)
       character.portrait;
@@ -28,6 +30,8 @@ Image {
 
   ParallelAnimation {
     id: deathAnimation
+    property Item callback;
+
     PropertyAnimation {
       target: battleEnemy
       property: "scale"
@@ -55,11 +59,17 @@ Image {
           battleEnemy.destroy(300);
         }
       }
+      ScriptAction {
+        script: {
+          battleScreen.next();
+        }
+      }
     }
   }
 
   SequentialAnimation {
     id: hitAnimation
+
     PropertyAnimation {
       target: battleEnemy
       property: "scale"
@@ -74,6 +84,18 @@ Image {
       easing.type: Easing.InQuart
       duration: 100
     }
+    ScriptAction {
+      script: {
+        //animImg.playing = false;
+        battleScreen.next();
+      }
+    }
+  }
+
+  AnimatedImage {
+    id: animImg
+    playing: false
+    anchors.centerIn: parent
   }
 
   function die() {
@@ -83,7 +105,12 @@ Image {
     deathAnimation.start();
   }
 
-  function hit() {
+  function hit(anim) {
+    if(anim) {
+      animImg.source = anim;
+      animImg.playing = true;
+    }
+
     hitAnimation.start();
   }
 }
