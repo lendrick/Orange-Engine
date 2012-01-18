@@ -180,4 +180,9 @@ OTHER_FILES += \
     ../qrpg-build-desktop/interface/BattleEnemy.qml \
     ../qrpg-build-desktop/interface/CharacterBox.js \
     ../qrpg-build-desktop/interface/DamageNumber.qml \
-    ../qrpg-build-desktop/interface/TreeMenuNode.qml
+    ../qrpg-build-desktop/interface/TreeMenuNode.qml \
+    ../qrpg-build-desktop/interface/BaseItem.qml \
+    ../qrpg-build-desktop/interface/BaseItem.js \
+    ../qrpg-build-desktop/interface/animations/Fire1.qml \
+    ../qrpg-build-desktop/interface/animations/Bludgeon1.qml \
+    ../qrpg-build-desktop/interface/MessageBox.qml

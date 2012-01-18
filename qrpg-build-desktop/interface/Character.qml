@@ -1,7 +1,7 @@
 import Qt 4.7
 import "Character.js" as CharacterScript
 
-Item {
+BaseItem {
   visible: false
   id: characterItem
   property int invIndex: -1
@@ -370,12 +370,12 @@ Item {
     console.log(name + ".addMp(" + val + "): " + mp)
   }
 
-  function hitAnim(val, anim) {
+  function hitAnim(val, anim, text) {
     if(image) {
-      CharacterScript.DamageNumberComponent.createObject(image, { text: val })
+
       if(val < 0) {
         if(image.hit) {
-          image.hit(anim);
+          image.hit(val, anim, text);
         }
       }
     }

@@ -4,7 +4,7 @@ Text {
   id: damageNumber
   color: "#ffffff"
   clip: true
-  font.pixelSize: 20
+  font.pixelSize: 35
   font.family: "Liberation Mono"
   smooth: true
   font.bold: true
@@ -21,7 +21,7 @@ Text {
         target: damageNumber;
         property: "opacity";
         to: 0;
-        duration: 250
+        duration: 900
       }
       ScriptAction {
         script: damageNumber.destroy(300);
@@ -29,10 +29,11 @@ Text {
     }
 
     PropertyAnimation {
-      target: damageNumber;
-      property: "font.pixelSize";
-      to: 35;
-      duration: 250
+      target: damageNumber
+      property: "anchors.verticalCenterOffset"
+      to: 50
+      easing.type: Easing.OutBounce;
+      duration: 900
     }
   }
 }

@@ -61,7 +61,7 @@
   ability.useOutsideBattle = false;
   ability.menuPath = new Array('Fight');
   ability.portrait = "../Tech Demo 2/images/icons/W_Fist001.png";
-  ability.animation = "../Tech Demo 2/images/animations/slash2.gif";
+  ability.animation = "Bludgeon1";
 
   ability.activate = function(caster, targets) {
     console.log(caster.name + " attacks " + targets[0].name);
@@ -69,7 +69,7 @@
     damage = caster.atk - target.def;
     if(damage < 1) damage = 1;
     target.addHp(-damage);
-    target.hitAnim(-damage, this.animation);
+    target.hitAnim(-damage, this.animation, caster.name + " attacks " + targets[0].name);
     console.log(target.name + " takes " + damage + " damage");
   }
 
@@ -86,6 +86,7 @@
   ability.menuPath = new Array('Magic', 'Fire1');
   ability.portrait = "../Tech Demo 2/images/icons/S_Fire01.png";
   ability.mpCost = 5;
+  ability.animation = "Fire1";
 
   ability.activate = function(caster, targets) {
     console.log(caster.name + " casts Fire1 on " + targets[0].name);
@@ -94,6 +95,7 @@
     if(damage < 1) damage = 1;
     target.addHp(-damage);
     caster.addMp(-(this.mpCost));
+    target.hitAnim(-damage, this.animation, caster.name + " casts Fire1 on " + targets[0].name);
     console.log(target.name + " takes " + damage + " damage");
   }
 

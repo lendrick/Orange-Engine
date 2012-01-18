@@ -27,10 +27,13 @@ HideShowContainer {
   }
 
   function start() {
+    BattleScreenScript.currentTurn = "Characters";
+    BattleScreenScript.currentIndex = 0;
     turn();
   }
 
   function next() {
+    console.log("NEXT");
     if(BattleScreenScript.currentTurn == "Characters") {
       BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].state = "Show";
       BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].z = 0;
@@ -91,7 +94,6 @@ HideShowContainer {
   Keys.onPressed: {
     if(state == "Show") {
       event.accepted = true;
-      state = "Hide";
     }
   }
 
@@ -110,9 +112,11 @@ HideShowContainer {
 
     if(state == "Hide") {
       focus = false;
-      for(i = 0; i < BattleScreenScript.characterBoxes.length; i++) {
-        var box = BattleScreenScript.characterBoxes.pop();
-        x.destroy(300);
+      if(BattleScreenScript && BattleScreenScript.characterBoxes) {
+        for(i = 0; i < BattleScreenScript.characterBoxes.length; i++) {
+          var box = BattleScreenScript.characterBoxes.pop();
+          x.destroy(300);
+        }
       }
     }
   }
@@ -128,7 +132,7 @@ HideShowContainer {
     anchors.left: parent.left
     anchors.top: parent.top
     anchors.bottom: parent.bottom
-    width: parent.width / 4
+    width: childrenRect.width
   }
 
   Item {
@@ -144,12 +148,20 @@ HideShowContainer {
       id: enemyBoxes
       objectName: 'boxes'
       anchors.centerIn: parent
+      //width: parent.width
+      transitions: Transition {
+        NumberAnimation {
+          properties: "width"
+          easing.type: Easing.InOutQuad
+        }
+      }
+
       spacing: 32
       move: Transition {
-          NumberAnimation {
-              properties: "x"
-              easing.type: Easing.InOutQuad
-          }
+        NumberAnimation {
+            properties: "x"
+          easing.type: Easing.InOutQuad
+        }
       }
     }
   }

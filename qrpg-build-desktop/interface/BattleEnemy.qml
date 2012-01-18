@@ -1,4 +1,5 @@
 import Qt 4.7
+import "animations"
 
 Image {
   id: battleEnemy;
@@ -59,16 +60,15 @@ Image {
           battleEnemy.destroy(300);
         }
       }
-      ScriptAction {
-        script: {
-          battleScreen.next();
-        }
-      }
     }
   }
 
   SequentialAnimation {
     id: hitAnimation
+
+    ScriptAction {
+      script: console.log("hitAnimation");
+    }
 
     PropertyAnimation {
       target: battleEnemy
@@ -87,7 +87,7 @@ Image {
     ScriptAction {
       script: {
         //animImg.playing = false;
-        battleScreen.next();
+        //battleScreen.next();
       }
     }
   }
@@ -105,12 +105,16 @@ Image {
     deathAnimation.start();
   }
 
-  function hit(anim) {
-    if(anim) {
-      animImg.source = anim;
-      animImg.playing = true;
+  function hit(val, anim, text) {
+    //CharacterScript.DamageNumberComponent.createObject(image, { text: val })
+    var animation = Qt.createQmlObject("import 'animations'; " + anim + " {}", battleEnemy);
+    var number = Qt.createQmlObject("DamageNumber { text: '" + val + "' }", battleEnemy);
+    if(text) {
+      var message = Qt.createQmlObject("MessageBox { text: '" + text + "' }", battleScreen);
+      message.Component.destruction.connect(battleScreen.next);
+    } else {
+      animation.Component.destruction.connect(battleScreen.next);
     }
-
     hitAnimation.start();
   }
 }

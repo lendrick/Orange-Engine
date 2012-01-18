@@ -5,7 +5,7 @@ Box {
   id: characterBox
   property Item character
   property alias treeMenu: menuContainer.treeMenu
-  property Item portrait
+  property Item image
 
   //height: childrenRect.height
   //width: childrenRect.width
@@ -15,7 +15,9 @@ Box {
   width: 220
 
   onCharacterChanged: {
-    portrait = c1.c2.characterPortrait
+    if(character) {
+      image = characterPortrait
+    }
   }
 
   function showMenu() {
@@ -68,6 +70,22 @@ Box {
             character.portrait;
           else
             '';
+        }
+
+        function hit(val, anim, text) {
+          //CharacterScript.DamageNumberComponent.createObject(image, { text: val })
+
+          if(text) {
+            var message = Qt.createQmlObject("MessageBox { text: '" + text + "' }", battleScreen);
+            message.Component.destruction.connect(battleScreen.next);
+          }
+          var animation = Qt.createQmlObject("import 'animations'; " + anim + " {}", characterPortrait);
+          var number = Qt.createQmlObject("DamageNumber { text: '" + val + "' }", characterPortrait);
+
+          if(!text) {
+            animation.Component.destruction.connect(battleScreen.next);
+          }
+          hitAnimation.start();
         }
       }
 

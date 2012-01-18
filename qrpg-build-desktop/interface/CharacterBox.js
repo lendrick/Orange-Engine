@@ -39,7 +39,7 @@ function startUp() {
   characterBox.treeMenu.anchors.left = characterBox.treeMenu.parent.right;
   characterBox.treeMenu.anchors.top = characterBox.treeMenu.parent.top;
   characterBox.treeMenu.selected.connect(abilitySelected);
-  characterBox.character.image = characterBox.portrait;
+  characterBox.character.image = characterBox.image;
   //characterBox.treeMenu.callback = abilitySelected;
 }
 

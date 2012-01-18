@@ -194,9 +194,9 @@ QScriptValue ScriptUtils::include(QString filename) {
 QScriptValue ScriptUtils::createComponent(QString filename) {
   QDeclarativeComponent * c = new QDeclarativeComponent(mapBox->engine(), filename);
   if(c->status() == QDeclarativeComponent::Error) {
-    //qDebug() << c->errors();
+      qDebug() << "COMPONENT ERROR: " << c->errors();
   }
-  qDebug() << c->errors();
+
   QObject * item = c->create();
   QGraphicsItem * o = qobject_cast<QGraphicsObject *>(item);
   mapBox->mapScene->addItem(o);

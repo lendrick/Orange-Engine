@@ -22,7 +22,7 @@ function toggleUi() {
 
 rpgx.menuKey.connect(toggleUi);
 
-console.log("inv " + inventory.length);
+//console.log("inv " + inventory.length);
 
 addToInventory(items['Staff'].copy());
 addToInventory(items['Potion'].copy());
