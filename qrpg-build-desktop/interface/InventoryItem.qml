@@ -93,7 +93,7 @@ HideShowContainer {
   function displayMenu(e) {
     var options = new Object();
     var tree = flatTree(characters);
-    console.log(serialize(tree));
+    //console.log(serialize(tree));
     var menu = ui.treeMenu(ui.popups, tree);
     menu.x = x + e.x;
     menu.y = y + e.y;

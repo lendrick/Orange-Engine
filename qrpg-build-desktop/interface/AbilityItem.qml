@@ -76,7 +76,7 @@ Item {
   function displayMenu(e) {
     var options = new Object();
     var tree = flatTree(characters);
-    console.log(serialize(tree));
+    //console.log(serialize(tree));
     var menu = ui.treeMenu(ui.popups, tree);
     menu.x = x + e.x;
     menu.y = y + e.y;
@@ -92,7 +92,7 @@ Item {
     if(character.mp >= allAbilities[ability].mpCost) {
       character.mp -= allAbilities[ability].mpCost;
       allAbilities[ability].activate(character, Array(i));
-      updateAbility();
+      updateAbility();      
     }
   }
 }

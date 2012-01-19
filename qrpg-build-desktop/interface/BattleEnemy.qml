@@ -57,7 +57,8 @@ Image {
       ScriptAction {
         script: {
           battleScreen.removeEnemy(battleEnemy);
-          battleEnemy.destroy(300);
+          battleEnemy.destroy(300);          
+          battleScreen.next();
         }
       }
     }

@@ -185,4 +185,13 @@ OTHER_FILES += \
     ../qrpg-build-desktop/interface/BaseItem.js \
     ../qrpg-build-desktop/interface/animations/Fire1.qml \
     ../qrpg-build-desktop/interface/animations/Bludgeon1.qml \
-    ../qrpg-build-desktop/interface/MessageBox.qml
+    ../qrpg-build-desktop/interface/MessageBox.qml \
+    ../qrpg-build-desktop/Tech Demo 2/scripts/startup.js \
+    ../qrpg-build-desktop/Tech Demo 2/scripts/sfx.js \
+    ../qrpg-build-desktop/Tech Demo 2/scripts/json2.js \
+    ../qrpg-build-desktop/Tech Demo 2/scripts/items.js \
+    ../qrpg-build-desktop/Tech Demo 2/scripts/init.js \
+    ../qrpg-build-desktop/Tech Demo 2/scripts/functions.js \
+    ../qrpg-build-desktop/Tech Demo 2/scripts/enemy_ai.js \
+    ../qrpg-build-desktop/Tech Demo 2/scripts/characters.js \
+    ../qrpg-build-desktop/Tech Demo 2/scripts/abilities.js

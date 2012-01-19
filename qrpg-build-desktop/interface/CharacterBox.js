@@ -3,7 +3,7 @@ var currentAbility;
 
 function abilitySelected() {
   currentAbility = characterBox.treeMenu.getSelectedItem();
-  console.log(characterBox.character.name + " selected: " + serialize(currentAbility));
+  //console.log(characterBox.character.name + " selected: " + serialize(currentAbility));
 
   if(currentAbility.targetEnemies && currentAbility.targetFriends) {
 
@@ -34,6 +34,7 @@ function startUp() {
   characterBox.treeMenu.anchors.top = characterBox.treeMenu.parent.top;
   characterBox.treeMenu.anchors.right = characterBox.treeMenu.parent.left;
   characterBox.treeMenu.canCancel = false;
+  characterBox.treeMenu.selectSound = 'menublip';
   characterBox.treeMenu.setOptions(characterBox.character.getAbilityTree());
   // = ui.treeMenu(characterBox, characterBox.character.getAbilityTree());
   characterBox.treeMenu.anchors.left = characterBox.treeMenu.parent.right;

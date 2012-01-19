@@ -68,6 +68,7 @@
     target = targets[0];
     damage = caster.atk - target.def;
     if(damage < 1) damage = 1;
+    sfx.swing.play();
     target.addHp(-damage);
     target.hitAnim(-damage, this.animation, caster.name + " attacks " + targets[0].name);
     console.log(target.name + " takes " + damage + " damage");
@@ -127,7 +128,7 @@
   //ability.setActivateFunction(activate);
 
   allAbilities['Cure1'] = ability;
-  console.log(serialize(allAbilities['Cure1']));
+  //console.log(serialize(allAbilities['Cure1']));
   console.log("Created ability " + ability.name);
 
   ability = newAbility('Run');
@@ -148,6 +149,6 @@
   //ability.setActivateFunction(activate);
 
   allAbilities['Run'] = ability;
-  console.log(serialize(allAbilities['Run']));
+  //console.log(serialize(allAbilities['Run']));
   console.log("Created ability " + ability.name);
 }

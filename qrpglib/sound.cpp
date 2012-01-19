@@ -10,6 +10,7 @@ Sound::Sound(QObject *parent) :
 {
   chunk = 0;
   loop = false;
+  playing = false;
 }
 
 Sound::Sound(QString filename, QObject * parent) : QObject(parent)
@@ -19,6 +20,7 @@ Sound::Sound(QString filename, QObject * parent) : QObject(parent)
   channel = 0;
   volume = 100;
   load(filename);
+  playing = false;
 }
 
 void Sound::play()
@@ -30,6 +32,7 @@ void Sound::play()
 
     channel = Mix_PlayChannel(-1, chunk, loops);
     Mix_Volume(channel, volume);
+    playing = true;
   }
 }
 
@@ -37,6 +40,11 @@ void Sound::stop()
 {
   cprint("Stopping sound '" + name + "'");
   Mix_HaltChannel(channel);
+  playing = false;
+}
+
+bool Sound::isPlaying() {
+  return playing;
 }
 
 void Sound::setLoop(bool l)
@@ -51,12 +59,12 @@ void Sound::setVolume(int v)
 
 void Sound::load(QString filename)
 {
-  cprint("Loading sound '" + filename + "'");
+  qDebug() << "Loading sound '" + filename + "'";
   name = filename;
   if(chunk) Mix_FreeChunk(chunk);
   chunk = Mix_LoadWAV(filename.toAscii());
   if(!chunk) {
-    throw QString(sprintf("Mix_LoadWAV: %s\n", Mix_GetError()));
+    qDebug() << QString(sprintf("Mix_LoadWAV: %s\n", Mix_GetError()));
   }
 }
 

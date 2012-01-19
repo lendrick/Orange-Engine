@@ -37,6 +37,10 @@ Box {
     property Item treeMenu
   }
 
+  SequentialAnimation {
+    id: hitAnimation
+  }
+
   MouseArea {
     anchors.fill: parent;
     onClicked: {

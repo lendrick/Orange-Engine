@@ -21,8 +21,10 @@ public slots:
   void setLoop(bool);
   void setVolume(int);
   void load(QString filename);
+  bool isPlaying();
 
 protected:
+  bool playing;
   bool loop;
   Mix_Chunk * chunk;
   int channel;

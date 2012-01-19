@@ -372,7 +372,6 @@ BaseItem {
 
   function hitAnim(val, anim, text) {
     if(image) {
-
       if(val < 0) {
         if(image.hit) {
           image.hit(val, anim, text);

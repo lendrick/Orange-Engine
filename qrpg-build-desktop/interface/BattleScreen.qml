@@ -33,61 +33,79 @@ HideShowContainer {
   }
 
   function next() {
+    // remove dead enemies
+    if(BattleScreenScript.enemyParty.length > 0) {
+      var death = false;
+      for(var i = BattleScreenScript.enemyParty.length - 1; i >= 0; i--) {
+        console.log("index: " + i);
+        console.log(BattleScreenScript.enemyParty[i].character.name + " hp: " + BattleScreenScript.enemyParty[i].character.hp)
+        if(BattleScreenScript.enemyParty[i].character.hp == 0) {
+          BattleScreenScript.enemyParty[i].die();
+          death = true;
+        }
+      }
+
+      if(!enemiesAlive()) {
+        hideBattleScreen.start();
+      }
+
+      if(death) {
+        return;
+      }
+    }
+
+    if(!enemiesAlive()) {
+      hideBattleScreen.start();
+      return;
+    }
+
     console.log("NEXT");
     if(BattleScreenScript.currentTurn == "Characters") {
       BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].state = "Show";
       BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].z = 0;
     }
 
-    BattleScreenScript.nextCombatant();
+    BattleScreenScript.nextCombatant();    
+
     turn();
   }
 
-  function turn() {
-    // remove dead enemies
-    for(var i = BattleScreenScript.enemyParty.length - 1; i >= 0; i--) {
-      console.log("index: " + i);
-      console.log(BattleScreenScript.enemyParty[i].character.name + " hp: " + BattleScreenScript.enemyParty[i].character.hp)
-      if(BattleScreenScript.enemyParty[i].character.hp == 0) {
-        BattleScreenScript.enemyParty[i].die();
-      }
-    }
-
-    // hide the battle screen if all enemies are dead
+  function enemiesAlive() {
     var enemiesAlive = false;
-    for(i =  BattleScreenScript.enemyParty.length - 1; i >= 0; i--) {
+    for(i = BattleScreenScript.enemyParty.length - 1; i >= 0; i--) {
       if(BattleScreenScript.enemyParty[i].status != "dead") {
         enemiesAlive = true;
       }
     }
-    if(!enemiesAlive) {
-      hideBattleScreen.start();
+
+    return enemiesAlive;
+  }
+
+  function turn() {
+    // run the current turn
+    if(BattleScreenScript.currentTurn == "Characters") {
+      console.log("showing menu for " + BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].character.name);
+      BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].state = "Highlight";
+      BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].z = 1;
+      BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].showMenu();
     } else {
-      // otherwise, run the current turn
-      if(BattleScreenScript.currentTurn == "Characters") {
-        console.log("showing menu for " + BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].character.name);
-        BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].state = "Highlight";
-        BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].z = 1;
-        BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].showMenu();
-      } else {
-        var enemy = BattleScreenScript.enemyParty[BattleScreenScript.currentIndex].character;
-        var aiFunc = enemy.turnAI;
-        console.log('enemy turn: ' + aiFunc);
-        var targets = Array();
-        for(i in BattleScreenScript.characterBoxes) {
-          targets.push(BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].character.name);
-        }
-
-        var friends = new Array();
-        var result = ai[aiFunc](enemy, targets, friends);
-        console.log(result.ability + ' --> ' + result.target);
-        var abilityTarget = Array();
-        for(i in result.target) {
-          abilityTarget.push(characters[result.target[i]]);
-        }
-
-        allAbilities[result.ability].activate(enemy, abilityTarget);
+      var enemy = BattleScreenScript.enemyParty[BattleScreenScript.currentIndex].character;
+      var aiFunc = enemy.turnAI;
+      console.log('enemy turn: ' + aiFunc);
+      var targets = Array();
+      for(i in BattleScreenScript.characterBoxes) {
+        targets.push(BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].character.name);
       }
+
+      var friends = new Array();
+      var result = ai[aiFunc](enemy, targets, friends);
+      console.log(result.ability + ' --> ' + result.target);
+      var abilityTarget = Array();
+      for(i in result.target) {
+        abilityTarget.push(characters[result.target[i]]);
+      }
+
+      allAbilities[result.ability].activate(enemy, abilityTarget);
     }
   }
 
@@ -100,6 +118,8 @@ HideShowContainer {
   onStateChanged: {
     if(state == "Show") {
       focus = true;
+      rpgx.pause();
+      pushBGM("battleTheme");
       console.log("showing battle screen");
       for(i = 0; i < party.length; i++) {
         console.log("creating box for " + party[i].name);
@@ -111,6 +131,8 @@ HideShowContainer {
     }
 
     if(state == "Hide") {
+      popBGM();
+      rpgx.unPause();
       focus = false;
       if(BattleScreenScript && BattleScreenScript.characterBoxes) {
         for(i = 0; i < BattleScreenScript.characterBoxes.length; i++) {
@@ -203,4 +225,5 @@ HideShowContainer {
   }
 
   signal selectTarget()
+
 }

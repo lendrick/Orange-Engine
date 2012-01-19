@@ -93,6 +93,14 @@ void ScriptUtils::debug(QString s) {
   qDebug() << s;
 }
 
+void ScriptUtils::pause() {
+  paused = true;
+}
+
+void ScriptUtils::unPause() {
+  paused = false;
+}
+
 QScriptValue ScriptUtils::getEntity(QString s) {
   EntityPointer e = entities[mapentitynames[s]];
   return e->getScriptObject();

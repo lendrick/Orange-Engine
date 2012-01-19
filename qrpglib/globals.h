@@ -108,6 +108,7 @@ extern QmlUtils * qmlUtils;
 extern ScriptUtils * scriptUtils;
 
 extern bool play;
+extern bool paused;
 
 extern int screen_x;
 extern int screen_y;
@@ -128,8 +129,8 @@ extern bool viewTilePos;
 extern bool viewEntityNames;
 extern bool viewGrid;
 extern bool viewBoundingBoxes;
-
 extern bool rpgEngineStarting;
+
 
 extern int paintMode;
 

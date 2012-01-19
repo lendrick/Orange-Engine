@@ -7,6 +7,7 @@ SmallText {
   property bool selected: false
   property variant object;
   property Item subMenu;
+  property string selectSound: treeMenuContainer.selectSound
 
   state: "Normal"
 
@@ -40,7 +41,7 @@ SmallText {
     onClicked: {
       //console.log("click");
       if(treeMenuContainer.selectSound != '')
-        sfx[selectsound].play();
+        sfx[selectSound].play();
       console.log("submenu: " + treeMenuItem.subMenu);
       treeMenuItem.subMenu.show();
     }

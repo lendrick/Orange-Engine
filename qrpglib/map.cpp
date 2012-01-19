@@ -173,7 +173,7 @@ void Map::Layer::resize(int w, int h, int fill) {
   height = h;
 
   //message("layer resized");
-  dump();
+  //dump();
 }
 
 void Map::Layer::dump() {
@@ -239,12 +239,14 @@ void Map::update() {
   }
 
   // update entities
-  if(playerEntity->isActivated()) qDebug() << "player activated";
-  for(int i = 0; i < layers.size(); i++) {
-    for(int j = 0; j < layers[i]->entities.size(); j++) {
+  if(!paused) {
+    if(playerEntity->isActivated()) qDebug() << "player activated";
+    for(int i = 0; i < layers.size(); i++) {
+      for(int j = 0; j < layers[i]->entities.size(); j++) {
 
-      if(playerEntity->isActivated()) qDebug() << i << " " << j << ": " << layers[i]->entities[j]->getName();
-      layers[i]->entities[j]->update();
+        if(playerEntity->isActivated()) qDebug() << i << " " << j << ": " << layers[i]->entities[j]->getName();
+        layers[i]->entities[j]->update();
+      }
     }
   }
 

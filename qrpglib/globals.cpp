@@ -79,6 +79,7 @@ bool viewTilePos = false;
 bool viewEntityNames = false;
 bool viewGrid = false;
 bool viewBoundingBoxes = false;
+bool paused = false;
 
 void message(QString s)
 {

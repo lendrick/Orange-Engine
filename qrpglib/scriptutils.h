@@ -24,6 +24,8 @@ public slots:
   void alert(QString s);
   void print(QString s);
   void debug(QString s);
+  void pause();
+  void unPause();
   QScriptValue getEntity(QString s);
   QScriptValue teleport(QString, int, int);
   QScriptValue createComponent(QString filename);

@@ -7,8 +7,7 @@ rpgx.setLayer(1);
 player.addToMap(1);
 player.setPos(920, 270);
 rpgx.setCamera(player);
-adventureTheme.play();]]></script>
-    <script condition='1'><![CDATA[adventureTheme.stop();]]></script>
+playBGM('adventureTheme');]]></script>
   </scripts>  <layer>
     <width>30</width>
     <height>15</height>

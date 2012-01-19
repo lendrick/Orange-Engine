@@ -4,9 +4,9 @@ Box {
   objectName: "messageBox"
   id: messageBox
 
-  anchors.left: parent.left
-  anchors.right: parent.right
-  anchors.bottom: parent.bottom
+  anchors.left: if(parent) parent.left
+  anchors.right: if(parent) parent.right
+  anchors.bottom: if(parent) parent.bottom
   height: 168
 
   focus: true

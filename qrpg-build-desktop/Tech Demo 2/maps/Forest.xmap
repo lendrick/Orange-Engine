@@ -8,8 +8,7 @@ player.setSprite("Male Ranger");
 player.addToMap(1);
 player.setPos(64, 600);
 rpgx.setCamera(player);
-townTheme.setLoop(true);
-townTheme.play();]]></script>
+playBGM('townTheme');]]></script>
   </scripts>  <layer>
     <width>30</width>
     <height>30</height>

@@ -38,7 +38,7 @@ SmallText {
     onClicked: {
       //console.log("click");
       if(treeMenuContainer.selectSound != '')
-        sfx[selectsound].play();
+        sfx[selectSound].play();
       parent.setSelected();
     }
   }

@@ -2,7 +2,68 @@ ui = createObject("../../interface/Ui.qml");
 var items = Array();
 var inventory = Array();
 var allAbilities = Array();
+var currentBGM;
+var BGMStack = Array();
 
+function playBGM(name) {
+    console.log("playBGM: " + name);
+    var bgm = allSounds[name];
+    if(bgm) {
+        BGMStack = Array();
+        if(bgm && bgm.isPlaying()) {
+            return;
+        }
+        
+        _playBGM(name);
+    } else {
+        console.log("No music named " + name);
+    }
+}
+
+function _playBGM(name) {
+    if(allSounds[currentBGM]) {
+        allSounds[currentBGM].stop();
+    }
+    currentBGM = name;
+    allSounds[currentBGM].setLoop(true);
+    allSounds[currentBGM].play();
+}
+
+function pushBGM(name) {
+    console.log("pushBGM: " + name);
+    var bgm = allSounds[name];
+    if(bgm) {
+        if(allSounds[currentBGM] && allSounds[currentBGM].isPlaying) {
+            console.log("Pushing BGM " + currentBGM + " onto stack");
+            BGMStack.push(currentBGM);
+        }
+        _playBGM(name);
+    } else {
+        console.log("No music named " + name);
+    }
+}
+
+function popBGM() {
+    console.log("popBGM");
+    if(BGMStack.length > 0) {
+        var name = BGMStack[0];
+        BGMStack.pop();    
+        console.log("Popped BGM " + name);
+        _playBGM(name);
+    } else {
+        console.log("BGM stack is empty");
+        allSounds[currentBGM].stop();
+    }
+}
+
+function playSound(name) {
+    var sound = allSounds[name];
+    if(sound) {
+        sound.play();
+    } else {
+        console.log("No sound named " + sound);
+    }
+}
 
 function cprint(string) {
   rpgx.print(string);

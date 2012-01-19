@@ -1090,7 +1090,7 @@ void MapScene::updateSelection() {
                         selectBox.width(), selectBox.height());
   currentLayer->fillArea(selectBox.x(), selectBox.y(),
                          selectBox.width(), selectBox.height(), 0);
-  selection->dump();
+  //selection->dump();
 }
 
 void MapScene::getMouseTileCoords(int &x, int &y) {

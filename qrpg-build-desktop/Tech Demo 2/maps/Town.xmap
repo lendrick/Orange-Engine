@@ -8,9 +8,7 @@ player.setSprite("Male Ranger");
 player.addToMap(1);
 player.setPos(375, 250);
 rpgx.setCamera(player);
-townTheme.setLoop(true);
-townTheme.play();]]></script>
-    <script condition='1'><![CDATA[townTheme.stop();]]></script>
+playBGM('townTheme');]]></script>
     <script condition='1'><![CDATA[
 //characters["Lendrick"].atk++;
 //ui.setPartyMember(0, characters["Lendrick"]);

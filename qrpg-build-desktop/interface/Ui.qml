@@ -147,6 +147,14 @@ Item {  //Item
 
     state: "Hide"
 
+    onStateChanged: {
+      if(state == "Hide") {
+        rpgx.unPause();
+      } else if(state == "Show") {
+        rpgx.pause();
+      }
+    }
+
     /*
     function show() {
       state = "Show";
