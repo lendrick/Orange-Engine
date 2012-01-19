@@ -6,6 +6,7 @@ allSounds['townTheme'] = new Sound("sounds/town.ogg");
 allSounds['adventureTheme'] = new Sound("sounds/adventure.ogg");
 allSounds['battleTheme'] = new Sound("sounds/rnbg4.ogg");
 rpgx.setMap("Town");
+player.setPos(375, 250);
 ]]></script>
   </scripts>
   <tilesets>

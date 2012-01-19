@@ -31,6 +31,12 @@ playBGM('townTheme');]]></script>
          0    0    7    7    7    7    7    7    7    7    7    7    0    0    0 
     </layerdata>
     <entities>
+      <entity name='Entity 9' state='-1' x='224' y='463' bx1='0' by1='0' bx2='32' by2='32' overrideboundingbox='1'>
+        <scripts>
+          <script condition='2'><![CDATA[rpgx.setMap("Town");
+player.setPos(143, 436);]]></script>
+        </scripts>
+      </entity>
     </entities>
   </layer>
   <layer>

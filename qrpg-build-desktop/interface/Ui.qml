@@ -69,7 +69,7 @@ Item {  //Item
     anchors.bottom: parent.bottom
     height: 168
 
-    focus: true
+                focus: true
     property list<Item> textArray
 
     function append(textString) {

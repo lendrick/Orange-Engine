@@ -24,11 +24,10 @@ rpgx.menuKey.connect(toggleUi);
 
 //console.log("inv " + inventory.length);
 
-addToInventory(items['Staff'].copy());
-addToInventory(items['Potion'].copy());
-
-addToInventory(items['Potion'].copy());
-addToInventory(items['Green Tea'].copy());
+addNewItem('Staff');
+addNewItem('Potion');
+addNewItem('Potion');
+addNewItem('Green Tea');
 
 inventory[1].activateUseAbility(party[1], Array(party[0]));
 

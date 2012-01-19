@@ -301,6 +301,7 @@ MainWindow::MainWindow() :
   connect(layerPanel, SIGNAL(setDrawMode(LayerView::LayerViewMode)),
           mapwin, SIGNAL(setDrawMode(LayerView::LayerViewMode)));
   connect(tiles->tilebox, SIGNAL(tileChanged(int)), mapwin->mapbox, SLOT(setCurrentTile(int)));
+  connect(mapBox->mapScene, SIGNAL(statusMessage(QString)), this, SLOT(statusMessage(QString)));
   
   connect(layerPanel, SIGNAL(selectLayer(int)), mapwin->mapbox, SLOT(setLayer(int)));
 
@@ -593,6 +594,10 @@ void MainWindow::setPaintModeSelectBox(bool b) {
 
 void MainWindow::setPaintModeFill(bool b) {
   if(b) paintMode = PaintMode::Fill;
+}
+
+void MainWindow::statusMessage(QString s) {
+  statusBar()->showMessage(s);
 }
 
 /*

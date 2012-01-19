@@ -31,8 +31,6 @@ MapWindow::MapWindow(QWidget *parent)
 				    QSizePolicy::Expanding);
   VScroll->setSizePolicy(*p);
 
-  status = new QStatusBar(this);
-
   connect(mapbox, SIGNAL(setXRange(int, int)),
 	  HScroll, SLOT(setRange(int, int)));
   connect(mapbox, SIGNAL(setYRange(int, int)),
@@ -53,11 +51,10 @@ MapWindow::MapWindow(QWidget *parent)
   Grid->addWidget(mapbox, 0, 0);
   Grid->addWidget(VScroll, 0, 1);
   Grid->addWidget(HScroll, 1, 0);
-  Grid->addWidget(status, 2, 0, 1, 2);
 }
 
 void MapWindow::updateStatus(QString s) {
-  status->showMessage(s);
+  emit updateMapStatus(s);
 }
 
 /*

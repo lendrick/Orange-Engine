@@ -718,7 +718,15 @@ void MapScene::mouseMoveEvent(QGraphicsSceneMouseEvent * e) {
     mapBox->map->getTileSize(tx, ty);
     //emit mapBox->mousePos(e->scenePos().x(), e->scenePos().y(),
     //  e->scenePos().x() / tx, e->scenePos().y() / ty);
+    if(!play) {
+      int x = (mapBox->xo + e->scenePos().x());
+      int y = (mapBox->yo + e->scenePos().y());
+      emit statusMessage(QString::number(x / tx) + ", " + QString::number(y / ty) +
+                         "  (" + QString::number(x) + ", " + QString::number(y) + ")");
+    }
   }
+
+
 
 
   QGraphicsScene::mouseMoveEvent(e);

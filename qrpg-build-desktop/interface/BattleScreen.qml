@@ -134,6 +134,7 @@ HideShowContainer {
       popBGM();
       rpgx.unPause();
       focus = false;
+      ui.focus = true;
       if(BattleScreenScript && BattleScreenScript.characterBoxes) {
         for(i = 0; i < BattleScreenScript.characterBoxes.length; i++) {
           var box = BattleScreenScript.characterBoxes.pop();

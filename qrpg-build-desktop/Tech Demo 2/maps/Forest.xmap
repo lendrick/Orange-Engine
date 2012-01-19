@@ -6,7 +6,6 @@
 rpgx.setLayer(1);
 player.setSprite("Male Ranger");
 player.addToMap(1);
-player.setPos(64, 600);
 rpgx.setCamera(player);
 playBGM('townTheme');]]></script>
   </scripts>  <layer>
@@ -89,7 +88,8 @@ playBGM('townTheme');]]></script>
     <entities>
       <entity name='Exit to Town' state='-1' x='14' y='547' bx1='-16' by1='-400' bx2='16' by2='128' overrideboundingbox='1'>
         <scripts>
-          <script condition='2'><![CDATA[rpgx.setMap("Town");]]></script>
+          <script condition='2'><![CDATA[rpgx.setMap("Town");
+player.setPos(1224, 285);]]></script>
         </scripts>
       </entity>
     </entities>

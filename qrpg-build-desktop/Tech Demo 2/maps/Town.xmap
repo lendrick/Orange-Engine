@@ -6,7 +6,6 @@
 rpgx.setLayer(1);
 player.setSprite("Male Ranger");
 player.addToMap(1);
-player.setPos(375, 250);
 rpgx.setCamera(player);
 playBGM('townTheme');]]></script>
     <script condition='1'><![CDATA[
@@ -127,19 +126,50 @@ sayScript("Furthermore, fight these slimes!", "battle('TwoSlimes');");
           <script condition='2'><![CDATA[say("You can't go in there.");]]></script>
         </scripts>
       </entity>
-      <entity name='Exit to Forest' state='-1' x='1271' y='286' bx1='-16' by1='-64' bx2='16' by2='64' overrideboundingbox='1'>
+      <entity name='Well' state='-1' x='412' y='217' bx1='0' by1='0' bx2='40' by2='40' overrideboundingbox='1'>
         <scripts>
-          <script condition='2'><![CDATA[rpgx.setMap("Forest");]]></script>
+          <script condition='4'><![CDATA[if(!flags.well) {
+	flags.well = 1;
+}
+
+if(flags.well == 1) {
+	say("This is just a well.");
+	say("You may think there's something interesting about it,");
+	say("but in fact it's an ordinary well.");
+} else if(flags.well == 2) {
+	say("Yup.  Just a well.");
+} else if(flags.well == 3) {
+	say("Still just a well.");
+} else if(flags.well == 4) {
+	say("Seriously dude.  It's a well.  Give it a rest.");
+} else if(flags.well == 5) {
+	say("Fine, here's a potion.  Now bugger off.");
+	sfx.jingle1.play();
+	addNewItem('Potion');
+} 
+
+if(flags.well <= 5) {
+	flags.well++;
+}
+]]></script>
+        </scripts>
+      </entity>
+      <entity name='Exit to Forest' state='-1' x='1278' y='287' bx1='-16' by1='-64' bx2='16' by2='64' overrideboundingbox='1'>
+        <scripts>
+          <script condition='2'><![CDATA[rpgx.setMap("Forest");
+player.setPos(64, 600);]]></script>
         </scripts>
       </entity>
       <entity name='Road Warp' state='-1' x='-2' y='301' bx1='-16' by1='-100' bx2='16' by2='100' overrideboundingbox='1'>
         <scripts>
-          <script condition='2'><![CDATA[rpgx.setMap("Road");]]></script>
+          <script condition='2'><![CDATA[rpgx.setMap("Road");
+player.setPos(913, 240);]]></script>
         </scripts>
       </entity>
-      <entity name='Entity 6' state='-1' x='145' y='404' bx1='-16' by1='-16' bx2='16' by2='16' overrideboundingbox='1' solid = '1'>
+      <entity name='Entity 6' state='-1' x='143' y='397' bx1='-16' by1='-16' bx2='16' by2='16' overrideboundingbox='1'>
         <scripts>
-          <script condition='5'><![CDATA[rpgx.setMap("Lendrick's House");]]></script>
+          <script condition='2'><![CDATA[rpgx.setMap("Lendrick's House");
+player.setPos(240, 430);]]></script>
         </scripts>
       </entity>
     </entities>

@@ -86,6 +86,8 @@ public slots:
   void setPaintModeFill(bool);
   void setPaintModeSelectBox(bool);
 
+  void statusMessage(QString);
+
 signals:
   void setMap(int);
   void setTiles(int);

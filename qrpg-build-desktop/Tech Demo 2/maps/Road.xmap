@@ -5,7 +5,6 @@
   <scripts>    <script condition='0'><![CDATA[map.reset();
 rpgx.setLayer(1);
 player.addToMap(1);
-player.setPos(920, 270);
 rpgx.setCamera(player);
 playBGM('adventureTheme');]]></script>
   </scripts>  <layer>
@@ -62,12 +61,20 @@ playBGM('adventureTheme');]]></script>
     <entities>
       <entity name='Chest' state='-1' x='495' y='178' bx1='-20' by1='-20' bx2='20' by2='20' overrideboundingbox='1'>
         <scripts>
-          <script condition='4'><![CDATA[this.say("Received a potion!");]]></script>
+          <script condition='4'><![CDATA[if(!flags.potion) {
+	say("Received a potion!");
+	flags.potion = true;
+	addNewItem('Potion');
+	sfx.jingle1.play();
+} else {
+	say("It's empty...");	
+}]]></script>
         </scripts>
       </entity>
       <entity name='Town Warp' state='-1' x='957' y='239' bx1='-16' by1='-100' bx2='16' by2='100' overrideboundingbox='1'>
         <scripts>
-          <script condition='2'><![CDATA[rpgx.setMap("Town");]]></script>
+          <script condition='2'><![CDATA[rpgx.setMap("Town");
+player.setPos(45, 305);]]></script>
         </scripts>
       </entity>
     </entities>

@@ -4,6 +4,7 @@ var inventory = Array();
 var allAbilities = Array();
 var currentBGM;
 var BGMStack = Array();
+var flags = new Object();
 
 function playBGM(name) {
     console.log("playBGM: " + name);
@@ -210,30 +211,38 @@ function newAbility(name) {
   return o;
 }
 
+function addNewItem(name) {
+  if(!items[name]) {
+    console.log("No item named " + name);
+    return;
+  }
+  addToInventory(items[name].copy());
+}
+
 function addToInventory(item) {
   var added = false;
   console.log("addToInventory: " + item.name);
   for(var x = 0; x < inventory.length; x++) {
     if(!inventory[x]) {
-      console.log("addToInventory: " + x + " is empty");
+      //console.log("addToInventory: " + x + " is empty");
       inventory[x] = item;
-      console.log("setting invIndex");
+      //console.log("setting invIndex");
       item.setInvIndex(x);
-      console.log("setting added to true");
+      //console.log("setting added to true");
       added = true;
     } else {
-      console.log("addToInventory: " + x + " is occupied");
+      //console.log("addToInventory: " + x + " is occupied");
       var name;
       try {
-        console.log("addToInventory: " + x + " has item");
+        //console.log("addToInventory: " + x + " has item");
         name = inventory[x].name;
       } catch(e) {
-        console.log("addToInventory: " + x + " has deleted object");
+        //console.log("addToInventory: " + x + " has deleted object");
         name = null;
       }
 
       if(!name) {
-        console.log("addToInventory: adding to slot " + x);
+        //console.log("addToInventory: adding to slot " + x);
         inventory[x] = item;
         added = true;
       }
@@ -243,12 +252,12 @@ function addToInventory(item) {
     if(added) x = inventory.length;
   }
   if(!added) {
-    console.log("addToInventory: appending in slot " + inventory.length);
+    //console.log("addToInventory: appending in slot " + inventory.length);
     inventory.push(item);
     item.setInvIndex(inventory.length - 1);
   }
 
-  console.log("addToInventory done");
+  //console.log("addToInventory done");
 }
 
 function removeFromInventory(item) {

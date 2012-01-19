@@ -72,6 +72,7 @@ signals:
   void showMapScriptDialog(Map *);
   void showGlobalScriptDialog();
   void menuKey();
+  void statusMessage(QString);
 
 private:
   void mousePressEvent(QGraphicsSceneMouseEvent * e);

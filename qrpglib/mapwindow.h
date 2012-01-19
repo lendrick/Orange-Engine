@@ -24,6 +24,7 @@ private:
   //bool event(QEvent *event);
 signals:
   void setDrawMode(LayerView::LayerViewMode);
+  void updateMapStatus(QString s);
 public slots:
   void updateStatus(QString s);
 };
