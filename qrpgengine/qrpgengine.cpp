@@ -34,7 +34,6 @@ int main(int argc, char *argv[]) {
   declarativeEngine = mapBox->engine();
   initScriptEngine();
 
-
   RPGEngine::init();
   //mainGLWidget = new QGLWidget;
   play = true;
@@ -60,7 +59,6 @@ int main(int argc, char *argv[]) {
   loadedProject = projectReader.read("Tech Demo 2.xproj");
 
   mainwindow.resize(640, 480);
-  //mainwindow.resize(400, 400);
   mainwindow.show();
   mapBox->setDrawMode(LayerView::AllOpaque);
 

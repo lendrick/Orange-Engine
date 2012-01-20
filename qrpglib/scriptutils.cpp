@@ -214,6 +214,7 @@ QScriptValue ScriptUtils::createComponent(QString filename) {
   //dumpScriptObject(scriptObject);
   //qDebug() << "Object children:";
   //qDebug() << item->children();
+  delete c;
   return scriptObject;
 }
 
@@ -222,7 +223,9 @@ QScriptValue ScriptUtils::createComponent(QString filename, QObject * parent) {
   if(c->status() == QDeclarativeComponent::Error) {
     qDebug() << c->errors();
   }
-  return scriptEngine->newQObject(c->create(), QScriptEngine::ScriptOwnership);
+  QObject * item = c->create();
+  delete c;
+  return scriptEngine->newQObject(item, QScriptEngine::ScriptOwnership);
 }
 
 void ScriptUtils::dumpScriptObject(QScriptValue objectValue) {
