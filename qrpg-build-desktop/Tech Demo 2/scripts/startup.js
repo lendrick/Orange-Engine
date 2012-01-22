@@ -11,17 +11,48 @@ for(var i in party) {
   ui.addPartyMember(party[i]);
 }
 
-ui.statusScreen.partyScreen.setCurrentPartyMember(0);
-ui.statusScreen.magicScreen.setCurrentPartyMember(0);
+
+// var foo = new Object();
+// foo.test = function() {
+//     console.log("FOO TEST");
+// }
+// foo.blah = "blah";
+// console.log("blah: " + foo.balqobh);
+// ui.testMe(foo);
+/*
+console.log("****************UI DUMP");
+rpgx.dumpScriptObject(ui);
+
+var foo = new Object();
+foo.test = function() {
+    console.log("FOO TEST");
+}
+foo.blah = "blah";
+console.log("blah: " + foo.blah);
+ui.testMe(foo);
+ui.self().testMe(foo);
+var rt = ui.testMe;
+console.log("type ui: " + typeof ui);
+console.log("type ui.self(): " + typeof ui.self());
+console.log("type rt: " + typeof rt);
+rt(foo);
+*/
+
+ui.statusscreen.partyscreen.setCurrentPartyMember(0);
+ui.statusscreen.magicscreen.setCurrentPartyMember(0);
+ui.callbackTest(function() {
+    console.log("************************** PLEASE WORK *******************************");
+});
 
 function toggleUi() {
   //dumpInventory();
-  ui.statusScreen.toggleVisible();
+  //ui.statusscreen.toggleVisible();
+  console.log("toggleUi");
+  ui.toggleStatusScreen();
   //dumpInventory();
 }
 
 rpgx.menuKey.connect(toggleUi);
-
 //console.log("inv " + inventory.length);
 
 addNewItem('Staff');

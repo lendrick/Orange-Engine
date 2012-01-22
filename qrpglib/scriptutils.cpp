@@ -76,6 +76,10 @@ void ScriptUtils::init() {
   scriptEngine->globalObject().setProperty("Sound", metaObject);
   qScriptRegisterMetaType(scriptEngine, entityPointerToScriptValue, entityPointerFromScriptValue);
 
+  scriptEngine->globalObject().setProperty("global", scriptEngine->globalObject());
+  scriptEngine->globalObject().setProperty("mapBox", scriptEngine->newQObject(mapBox));
+  scriptEngine->globalObject().setProperty("mapScene", scriptEngine->newQObject(mapBox->mapScene));
+
   qDebug() << "connecting signal";
   connect(mapBox->mapScene, SIGNAL(menuKey()), this, SIGNAL(menuKey()));
 }
@@ -200,21 +204,21 @@ QScriptValue ScriptUtils::include(QString filename) {
 // Ideally, the components should be loaded at start time instad of when created.
 // This is mostly just to make sure it works.
 QScriptValue ScriptUtils::createComponent(QString filename) {
-  QDeclarativeComponent * c = new QDeclarativeComponent(mapBox->engine(), filename);
+  QDeclarativeComponent * c = new QDeclarativeComponent(mapBox->engine(), filename, mapBox->engine());
   if(c->status() == QDeclarativeComponent::Error) {
       qDebug() << "COMPONENT ERROR: " << c->errors();
   }
 
-  QObject * item = c->create();
-  QGraphicsItem * o = qobject_cast<QGraphicsObject *>(item);
-  mapBox->mapScene->addItem(o);
+  //QObject * item = c->create();
+  //QGraphicsItem * o = qobject_cast<QGraphicsObject *>(item);
+  //mapBox->mapScene->addItem(o);
 
-  QScriptValue scriptObject = scriptEngine->newQObject(item, QScriptEngine::ScriptOwnership);
+  QScriptValue scriptObject = scriptEngine->newQObject(c, QScriptEngine::ScriptOwnership);
   //qDebug() << "ScriptObject values:";
   //dumpScriptObject(scriptObject);
   //qDebug() << "Object children:";
   //qDebug() << item->children();
-  delete c;
+  //delete c;
   return scriptObject;
 }
 
@@ -223,9 +227,11 @@ QScriptValue ScriptUtils::createComponent(QString filename, QObject * parent) {
   if(c->status() == QDeclarativeComponent::Error) {
     qDebug() << c->errors();
   }
-  QObject * item = c->create();
-  delete c;
-  return scriptEngine->newQObject(item, QScriptEngine::ScriptOwnership);
+  //QObject * item = c->create();
+  //QGraphicsItem * o = qobject_cast<QGraphicsObject *>(item);
+  //mapBox->mapScene->addItem(o);
+  //delete c;
+  return scriptEngine->newQObject(c, QScriptEngine::ScriptOwnership);
 }
 
 void ScriptUtils::dumpScriptObject(QScriptValue objectValue) {
@@ -245,3 +251,4 @@ bool ScriptUtils::same(QObject * a, QObject * b) {
 void ScriptUtils::dumpObject(QObject * o) {
   qDebug() << o->dynamicPropertyNames();
 }
+

@@ -1,4 +1,6 @@
-ui = createObject("../../interface/Ui.qml");
+var uiComponent = createObject("../../interface/Ui.qml");
+ui = uiComponent.createObject(mapBox);
+mapScene.addItem(ui);
 var items = Array();
 var inventory = Array();
 var allAbilities = Array();

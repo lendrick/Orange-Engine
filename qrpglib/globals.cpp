@@ -100,7 +100,7 @@ void escapeCData(QString & s) {
 void initScriptEngine()
 {
   //scriptEngine = new QScriptEngine;
-
+  qmlRegisterInterface<QScriptValue>("QScriptValue");
   scriptEngine = QDeclarativeDebugHelper::getScriptEngine(declarativeEngine);
   declarativeEngine->setOutputWarningsToStandardError(true);
   //QDeclarativeExpression *expr = new QDeclarativeExpression(declarativeEngine->rootContext(), mapBox->rootObject(), "plasmoid.setEngine(plasmoid)");

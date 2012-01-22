@@ -31,3 +31,13 @@ void QmlUtils::debugObject(QVariant o) {
     }
   }
 }
+
+
+ScriptObjectWrapper::ScriptObjectWrapper(QObject * object) : QObject(object->parent()) {
+  thisObject = object;
+}
+
+bool ScriptObjectWrapper::invoke(const char * methodName, QGenericReturnArgument returnValue, QGenericArgument val0, QGenericArgument val1, QGenericArgument val2, QGenericArgument val3, QGenericArgument val4, QGenericArgument val5, QGenericArgument val6, QGenericArgument val7, QGenericArgument val8, QGenericArgument val9) const {
+  int i = thisObject->metaObject()->indexOfMethod(methodName);
+  return thisObject->metaObject()->method(i).invoke(thisObject, returnValue, val0, val1, val2, val3, val4, val5, val6, val7, val8, val9);
+}

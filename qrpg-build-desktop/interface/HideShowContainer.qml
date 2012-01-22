@@ -68,6 +68,9 @@ Item {
         duration: 350
         easing.type: Easing.OutBack
       }
+      ScriptAction {
+        script: console.log("SHOW");
+      }
     }
 
   ]

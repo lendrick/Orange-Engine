@@ -10,6 +10,7 @@
 //Q_DECLARE_METATYPE(QDeclarativeListProperty<QGraphicsObject>);
 //Q_SCRIPT_DECLARE_QMETAOBJECT(QDeclarativeListProperty<QDeclarativeItem>, QObject *);
 
+
 class Entity;
 
 class ScriptUtils : public QObject, public QScriptable {
@@ -43,6 +44,8 @@ public slots:
 signals:
   void menuKey();
 };
+
+Q_DECLARE_METATYPE(QScriptValue);
 
 
 #endif

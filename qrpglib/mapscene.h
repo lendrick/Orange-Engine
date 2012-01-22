@@ -63,6 +63,7 @@ public slots:
   void copySelection();
   void selectAll();
   void selectNone();
+  void addItem(QGraphicsItem *item);
 
   void fill(int layer, int x, int y, int tile, int firstTile = -1);
 

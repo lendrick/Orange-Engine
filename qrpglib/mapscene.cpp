@@ -1131,3 +1131,7 @@ bool MapScene::eventFilter(QObject * watched, QEvent * event) {
   return QGraphicsScene::eventFilter(watched, event);
 }
 */
+
+void MapScene::addItem(QGraphicsItem *item) {
+  QGraphicsScene::addItem(item);
+}

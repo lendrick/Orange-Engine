@@ -6,6 +6,8 @@ Item {  //Item
   objectName: "ui"
   //color: Qt.rgba(0, 0, 0, .2);  //test only
   property string test: "testing"
+  property alias statusscreen: statusScreen
+  property alias talkbox: talkBox
 
   Component.onCompleted: UiScript.startUp();
 
@@ -15,6 +17,47 @@ Item {  //Item
   height: 480
 
   //anchors.fill: parent
+
+  function callbackTest(func) {
+    func();
+  }
+
+  function toggleStatusScreen() {
+    console.log("ui.toggleStatusScreen()");
+    statusScreen.toggleVisible();
+  }
+
+  function script() {
+    return UiScript;
+  }
+
+  function self() {
+    return this;
+  }
+
+  function runTest() {
+    var foo = new Object();
+    foo.test = function() {
+        console.log("FOO TEST");
+    }
+    foo.blah = "blah";
+    console.log("blah: " + foo.blah);
+    ui.testMe(foo);
+  }
+
+  function testMe(foo) {
+    console.log("*******************");
+    rpgx.dumpScriptObject(foo);
+    for(var x in foo) {
+      console.log(x + ": " + foo[x]);
+    }
+
+    try {
+      foo.test();
+    } catch(e) {
+      console.log("FAILED");
+    }
+  }
 
   function treeMenu(parent, tree) {
     var menu = UiScript.TreeMenuComponent.createObject(popups);
@@ -45,8 +88,8 @@ Item {  //Item
   }
 
   Box {
-    objectName: "talkbox"
-    id: talkbox
+    objectName: "talkBox"
+    id: talkBox
 
     /*
     width: 640
@@ -136,6 +179,9 @@ Item {  //Item
     objectName: "statusScreen"
     id: statusScreen
 
+    property alias partyscreen: partyScreen
+    property alias itemscreen: itemScreen
+    property alias magicscreen: magicScreen
 /*
     x: 0
     y: 0
