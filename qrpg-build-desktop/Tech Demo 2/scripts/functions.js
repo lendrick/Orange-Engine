@@ -23,6 +23,13 @@ function playBGM(name) {
     }
 }
 
+function menu(options, callback) {
+    var m = ui.treeMenu(ui.popups, flatTree(options))
+    m.setCallback(callback);
+    m.center();
+    m.show();
+}
+
 function _playBGM(name) {
     if(allSounds[currentBGM]) {
         allSounds[currentBGM].stop();
@@ -296,6 +303,12 @@ function battle(enemyParty) {
   console.log("initiating battle: " + enemyParty);
   var p = enemyParties[enemyParty];
   ui.battle(p);
+}
+
+function healAll() {
+    for(var c in characters) {
+        characters[c].heal();
+    }
 }
 
 /*

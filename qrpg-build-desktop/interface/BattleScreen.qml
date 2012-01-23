@@ -17,12 +17,12 @@ HideShowContainer {
     }
     */
 
-    console.log("Setting enemy party.");
+    console.log("Setting enemy party: " + p);
 
-    var party = enemyParties[p];
-    for(i in party) {
-      console.log("  enemy: " + party[i]);
-      BattleScreenScript.newBattleEnemy(enemyBoxRow.boxes, party[i]);
+    //var party = enemyParties[p];
+    for(i in p) {
+      console.log("  enemy: " + p[i]);
+      BattleScreenScript.newBattleEnemy(enemyBoxRow.boxes, p[i]);
     }
   }
 

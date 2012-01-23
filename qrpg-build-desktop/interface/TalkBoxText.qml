@@ -1,4 +1,5 @@
 import Qt 4.7
+import "TalkBoxText.js" as Script
 
 BigText {
   /*
@@ -7,14 +8,24 @@ BigText {
   width: 580
   height: 118
   */
+  property bool hasCallback: false;
 
   anchors.fill: parent
   anchors.topMargin: 25
   anchors.bottomMargin: 25
   anchors.leftMargin: 30
   anchors.rightMargin: 30
-  property string script
 
+  function setCallback(func) {
+    Script.callback = func;
+    hasCallback = true;
+  }
+
+  function runCallback() {
+    if(hasCallback) {
+      Script.callback();
+    }
+  }
 
   id: bigText
   state: "Hide"

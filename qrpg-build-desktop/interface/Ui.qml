@@ -8,6 +8,7 @@ Item {  //Item
   property string test: "testing"
   property alias statusscreen: statusScreen
   property alias talkbox: talkBox
+  property alias battlescreen: battleScreen;
 
   Component.onCompleted: UiScript.startUp();
 
@@ -59,9 +60,10 @@ Item {  //Item
     }
   }
 
-  function treeMenu(parent, tree) {
+  function treeMenu(parent, tree, cb) {
     var menu = UiScript.TreeMenuComponent.createObject(popups);
     menu.setOptions(tree);
+    menu.callback = cb;
     return menu;
   }
 
@@ -82,9 +84,9 @@ Item {  //Item
   }
 
   function battle(enemyParty) {
-    battleScreen.setParty(enemyParty);
-    battleScreen.show();
-    battleScreen.start();
+    battlescreen.setParty(enemyParty);
+    battlescreen.show();
+    battlescreen.start();
   }
 
   Box {
@@ -143,7 +145,12 @@ Item {  //Item
       if(state == "Show" && !event.isAutoRepeat ) {
         var object = UiScript.textBoxArray.shift();
         object.state = "Hide";
-        if(object.script) eval(object.script);
+
+        if(object.hasCallback) {
+          console.log("running script");
+          object.runCallback();
+        }
+
         object.destroy(500);
 
         if(UiScript.textBoxArray.length > 0) {

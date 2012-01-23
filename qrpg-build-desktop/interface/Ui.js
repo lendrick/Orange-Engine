@@ -11,6 +11,7 @@ function startUp() {
 }
 
 function appendText(string) {
+  console.log("adding dialog");
   var object = TalkBoxTextComponent.createObject(talkbox);
   object.text = string;
   //console.log("object created");
@@ -19,9 +20,10 @@ function appendText(string) {
   //console.log("text appended " + talkbox.textArray.length);
 }
 
-function appendScript(string, scriptString) {
+function appendScript(string, script) {
+  console.log("adding dialog w/ script");
   var object = TalkBoxTextComponent.createObject(talkbox);
   object.text = string;
-  object.script = scriptString;
+  object.setCallback(script);
   textBoxArray.push(object);
 }

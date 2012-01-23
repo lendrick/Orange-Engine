@@ -20,6 +20,10 @@ Item {
       state = "Show";
   }
 
+  function center() {
+    anchors.centerIn = parent;
+  }
+
   states: [
     State {
       name: "Hide"

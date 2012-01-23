@@ -93,12 +93,9 @@ HideShowContainer {
   function displayMenu(e) {
     var options = new Object();
     var tree = flatTree(characters);
-    //console.log(serialize(tree));
-    var menu = ui.treeMenu(ui.popups, tree);
+    var menu = ui.treeMenu(ui.popups, tree, invItem);
     menu.x = x + e.x;
     menu.y = y + e.y;
-    //menu.z = 200;
-    menu.callback = invItem;
     console.log("show menu");
     menu.show();
   }

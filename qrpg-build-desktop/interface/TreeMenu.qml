@@ -15,6 +15,10 @@ Item {
     mouseArea.enabled = true;
   }
 
+  function center() {
+    anchors.centerIn = parent;
+  }
+
   function hide() {
     menuBox.hide();
     mouseArea.enabled = false;
@@ -72,6 +76,10 @@ Item {
     if(popup) {
       close();
     }
+  }
+
+  function setCallback(callbackFunc) {
+    TreeMenuScript.callbackFunc = callbackFunc;
   }
 
   function setOptions(options) {
@@ -139,6 +147,9 @@ Item {
     selectedItem = TreeMenuScript.menuItems[i].object;
     if(callback && callback.treeSelect)
       callback.treeSelect(selectedItem);
+    else if(TreeMenuScript.callbackFunc)
+      TreeMenuScript.callbackFunc(selectedItem);
+
     selected(i);
     close();
     if(isSubMenu) {

@@ -113,17 +113,27 @@ playBGM('townTheme');]]></script>
     <entities>
       <entity name='Entity 1' state='0' x='378' y='200' bx1='-10' by1='-10' bx2='8' by2='4' sprite='Female Warrior' overrideboundingbox='1' solid = '1'>
         <scripts>
-          <script condition='4'><![CDATA[
-say("Rats have infested the town sewer!");
+          <script condition='4'><![CDATA[say("Rats have infested the town sewer!");
 say("If you could, say, go in there and take care of it, that would be awesome.");
-sayScript("Furthermore, fight these slimes!", "battle('TwoSlimes');");
-]]></script>
+sayScript("Furthermore, fight these slimes!",function() {
+   battle('TwoSlimes'); 
+});]]></script>
           <script condition='0'><![CDATA[]]></script>
         </scripts>
       </entity>
       <entity name='Entity 2' state='-1' x='208' y='204' bx1='-16' by1='-16' bx2='16' by2='16' overrideboundingbox='1'>
         <scripts>
-          <script condition='2'><![CDATA[say("You can't go in there.");]]></script>
+          <script condition='2'><![CDATA[rpgx.pause();
+sayScript("Stay the night (10g)?", function() {
+    menu({"Yes":"Yes", "No":"No"}, function(answer) {
+        console.log("Inn: " + answer);
+        if(answer == "Yes") {
+            sfx.jingle1.play();
+            healAll();
+        }
+        rpgx.unPause();
+    });
+});]]></script>
         </scripts>
       </entity>
       <entity name='Well' state='-1' x='412' y='217' bx1='0' by1='0' bx2='40' by2='40' overrideboundingbox='1'>
