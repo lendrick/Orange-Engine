@@ -37,6 +37,7 @@ MainWindow::MainWindow() :
   appTitle = "QRPG Editor";
 
   setWindowTitle(appTitle);
+  setWindowIcon(QIcon("pixmaps/orange.png"));
 
   mapwin = new MapWindow(0);
   mapBox = mapwin->mapbox;

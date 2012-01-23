@@ -17,6 +17,7 @@ EngineWindow::EngineWindow() : QDialog() {
   mapBox->addWidget(console);
   console->hide();
   console->setGeometry(0, height() - 200, width(), 200);
+  setWindowIcon(QIcon("pixmaps/orange.png"));
 }
 
 void EngineWindow::resizeEvent(QResizeEvent * event) {
