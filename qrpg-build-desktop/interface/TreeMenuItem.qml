@@ -8,6 +8,7 @@ SmallText {
   property variant object;
   state: "Normal"
 
+
   function setSelected() {
     parent.parent.parent.setSelectedIndex(index);
   }

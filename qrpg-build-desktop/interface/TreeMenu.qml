@@ -8,7 +8,10 @@ Item {
   property string selectSound;
   property bool canCancel: true
   property string optionName: 'root'
+  property string caption
   property bool isSubMenu: false
+  height: childrenRect.height
+  width: childrenRect.width
 
   function show() {
     menuBox.show();
@@ -29,6 +32,8 @@ Item {
     console.log("closing tree menu: " + optionName);
     treeMenuContainer.destroy(300);
   }
+
+
 
   MouseArea {
     id: mouseArea;
@@ -59,6 +64,10 @@ Item {
       id: treeMenu
       x: 25
       y: 25
+
+      MediumText {
+        text: treeMenuContainer.caption
+      }
     }
 
   }

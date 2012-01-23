@@ -23,9 +23,10 @@ function playBGM(name) {
     }
 }
 
-function menu(options, callback) {
+function menu(caption, options, callback) {
     var m = ui.treeMenu(ui.popups, flatTree(options))
     m.setCallback(callback);
+    m.caption = caption;
     m.center();
     m.show();
 }
