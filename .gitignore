@@ -11,3 +11,5 @@ Makefile
 *.Debug
 *.Release
 *.pdb
+*.ilk
+
