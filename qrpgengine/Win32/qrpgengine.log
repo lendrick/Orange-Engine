@@ -1,106 +1,14 @@
-﻿Build started 1/24/2012 3:08:47 AM.
+﻿Build started 1/24/2012 3:43:43 AM.
      1>Project "C:\orange\orange-engine\qrpgengine\qrpgengine.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Win32\qrpgengine.unsuccessfulbuild" because "AlwaysCreate" was specified.
        CustomBuild:
          All outputs are up-to-date.
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /IC:\Qt\4.8.0\include\QtCore /IC:\Qt\4.8.0\include\QtGui /IC:\Qt\4.8.0\include\QtOpenGL /IC:\Qt\4.8.0\include\QtXml /IC:\Qt\4.8.0\include\QtScript /IC:\Qt\4.8.0\include\QtDeclarative /IC:\Qt\4.8.0\include /I.\..\qrpglib /I.\..\win32\include /IC:\Qt\4.8.0\include\ActiveQt /I.\debug /I.\..\..\..\Qt\4.8.0\mkspecs\default /I.\GeneratedFiles /Zi /nologo /W3 /WX- /O2 /Oy- /D _WINDOWS /D UNICODE /D WIN32 /D QT_LARGEFILE_SUPPORT /D QT_DLL /D QT_DECLARATIVE_LIB /D QT_SCRIPT_LIB /D QT_XML_LIB /D QT_OPENGL_LIB /D QT_GUI_LIB /D QT_CORE_LIB /D QT_HAVE_MMX /D QT_HAVE_3DNOW /D QT_HAVE_SSE /D QT_HAVE_MMXEXT /D QT_HAVE_SSE2 /D QT_THREAD_SUPPORT /Gm- /EHsc /MDd /GS- /fp:precise /Zc:wchar_t- /Zc:forScope /GR /Fo"Win32\\" /Fd"Win32\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\qrpglib\mapscene.cpp -Zm200 -w34100 -w34189 
-         mapscene.cpp
-     1>..\qrpglib\mapscene.cpp(113): warning C4100: 'h' : unreferenced formal parameter
-     1>..\qrpglib\mapscene.cpp(113): warning C4100: 'w' : unreferenced formal parameter
-     1>..\qrpglib\mapscene.cpp(475): warning C4100: 'layer' : unreferenced formal parameter
-     1>..\qrpglib\mapscene.cpp(484): warning C4100: 'layer' : unreferenced formal parameter
+         All outputs are up-to-date.
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\qrpg-build-desktop\\orange.exe" /NOLOGO /LIBPATH:C:\Qt\4.8.0\lib /LIBPATH:c:\Qt\4.8.0\lib /LIBPATH:"../qrpg-build-desktop" glu32.lib opengl32.lib gdi32.lib user32.lib C:\Qt\4.8.0\lib\qtmaind.lib SDL_mixer.lib SDL.lib C:\Qt\4.8.0\lib\QtDeclaratived4.lib C:\Qt\4.8.0\lib\QtScriptd4.lib C:\Qt\4.8.0\lib\QtXmld4.lib C:\Qt\4.8.0\lib\QtOpenGLd4.lib C:\Qt\4.8.0\lib\QtGuid4.lib C:\Qt\4.8.0\lib\QtCored4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Win32\orange.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\orange\orange-engine\qrpg-build-desktop\orange.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /MACHINE:X86 Win32\bitmap_qt.obj
-         Win32\boundswidget.obj
-         Win32\collisiontester.obj
-         Win32\coordinatewidget.obj
-         Win32\moc_boundswidget.obj
-         Win32\moc_coordinatewidget.obj
-         Win32\moc_entity.obj
-         Win32\moc_entitydialog.obj
-         Win32\moc_entityscripttab.obj
-         Win32\moc_filebrowser.obj
-         Win32\moc_globalscriptdialog.obj
-         Win32\moc_imageframe.obj
-         Win32\moc_jshighlighter.obj
-         Win32\moc_layerdialog.obj
-         Win32\moc_layerpanel.obj
-         Win32\moc_map.obj
-         Win32\moc_mapbox.obj
-         Win32\moc_mapscene.obj
-         Win32\moc_mapscriptdialog.obj
-         Win32\moc_mapwindow.obj
-         Win32\moc_newbitmapdialog.obj
-         Win32\moc_newlayerdialog.obj
-         Win32\moc_newmapdialog.obj
-         Win32\moc_newprojectdialog.obj
-         Win32\moc_npc.obj
-         Win32\moc_outlinestyle.obj
-         Win32\moc_player.obj
-         Win32\moc_project.obj
-         Win32\moc_qmlutils.obj
-         Win32\moc_qrpgconsole.obj
-         Win32\moc_scriptdialog.obj
-         Win32\moc_scripttab.obj
-         Win32\moc_scriptutils.obj
-         Win32\moc_scrollbar.obj
-         Win32\moc_sound.obj
-         Win32\moc_spritedialog.obj
-         Win32\moc_spritewidget.obj
-         Win32\moc_talkbox.obj
-         Win32\moc_tileselect.obj
-         Win32\enginewindow.obj
-         Win32\entity.obj
-         Win32\entitydialog.obj
-         Win32\entityscript.obj
-         Win32\entityscripttab.obj
-         Win32\filebrowser.obj
-         Win32\globals.obj
-         Win32\globalscriptdialog.obj
-         Win32\icons.obj
-         Win32\imageframe.obj
-         Win32\input.obj
-         Win32\jshighlighter.obj
-         Win32\layerdialog.obj
-         Win32\layerpanel.obj
-         Win32\map.obj
-         Win32\mapbox.obj
-         Win32\mapreader.obj
-         Win32\mapscene.obj
-         Win32\mapscriptdialog.obj
-         Win32\mapwindow.obj
-         Win32\newbitmapdialog.obj
-         Win32\newlayerdialog.obj
-         Win32\newmapdialog.obj
-         Win32\newprojectdialog.obj
-         Win32\npc.obj
-         Win32\outlinestyle.obj
-         Win32\player.obj
-         Win32\polygon.obj
-         Win32\project.obj
-         Win32\projectreader.obj
-         Win32\qmlutils.obj
-         Win32\qrpgconsole.obj
-         Win32\qrpgengine.obj
-         Win32\resource.obj
-         Win32\rpgengine.obj
-         Win32\rpgscript.obj
-         Win32\scriptdialog.obj
-         Win32\scripttab.obj
-         Win32\scriptutils.obj
-         Win32\scrollbar.obj
-         Win32\sound.obj
-         Win32\sprite.obj
-         Win32\spritedialog.obj
-         Win32\spritewidget.obj
-         Win32\talkbox.obj
-         Win32\tileselect.obj "/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'" 
-         LINK : ..\qrpg-build-desktop\\orange.exe not found or not built by the last incremental link; performing full link
+         All outputs are up-to-date.
          qrpgengine.vcxproj -> C:\orange\orange-engine\qrpgengine\..\qrpg-build-desktop\orange.exe
-       Manifest:
-         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"..\qrpg-build-desktop\\orange.exe;#1" /manifest Win32\orange.exe.intermediate.manifest
        FinalizeBuildStatus:
          Deleting file "Win32\qrpgengine.unsuccessfulbuild".
          Touching "Win32\qrpgengine.lastbuildstate".
@@ -108,4 +16,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:05.12
+Time Elapsed 00:00:00.31

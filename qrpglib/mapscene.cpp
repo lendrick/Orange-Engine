@@ -29,8 +29,6 @@ using std::cout;
 MapScene::MapScene(MapBox * m)
 {
   mapBox = m;
-  fpsLabel = new QLabel();
-  addWidget(fpsLabel);
   /*
   OutlineStyle * outlineStyle = new OutlineStyle();
   outlineStyle->setOutlineWidth(2);

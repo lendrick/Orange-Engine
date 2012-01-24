@@ -28,7 +28,7 @@ public:
   void setSceneRect (const QRectF & rect);
 
   //void drawEntityBoundingBoxes(int layer, QPainter *painter);
-  QLabel * fpsLabel;
+  //QLabel * fpsLabel;
   QMenu * mapPopupMenu;
   QMenu * entityPopupMenu;
 
