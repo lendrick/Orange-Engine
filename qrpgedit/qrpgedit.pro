@@ -6,7 +6,7 @@
 
 QT       += core gui script opengl xml declarative
 
-TARGET = qrpgedit
+TARGET = orange-editor
 TEMPLATE = app
 INCLUDEPATH = ../qrpglib
 LIBS += -lSDL -lSDL_mixer

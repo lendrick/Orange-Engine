@@ -6,7 +6,7 @@
 
 QT       += core gui script opengl xml declarative
 
-TARGET = qrpgengine
+TARGET = orange
 TEMPLATE = app
 LIBS += -lSDL_mixer -lSDL
 DESTDIR = ../qrpg-build-desktop
