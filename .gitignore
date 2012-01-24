@@ -10,3 +10,4 @@ Makefile
 *_MinGW_*
 *.Debug
 *.Release
+*.pdb
