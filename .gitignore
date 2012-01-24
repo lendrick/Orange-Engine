@@ -14,3 +14,7 @@ Makefile
 *.ilk
 *.vcxproj.user
 *.opensdf
+*.obj
+*.tlog
+*.rtlog
+
