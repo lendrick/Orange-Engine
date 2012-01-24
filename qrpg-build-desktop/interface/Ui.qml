@@ -10,14 +10,23 @@ Item {  //Item
   property alias talkbox: talkBox
   property alias battlescreen: battleScreen;
 
-  Component.onCompleted: UiScript.startUp();
+  Component.onCompleted: {
+    mapBox.resized.connect(resize);
+    UiScript.startUp();
+  }
 
   x: 0
   y: 0
-  width: 640
-  height: 480
+  width: mapBox.width
+  height: mapBox.height
 
   //anchors.fill: parent
+
+  function resize(w, h) {
+    ui.width = w;
+    ui.height = h;
+    console.log("Resize gui: " + w + " " + h);
+  }
 
   function callbackTest(func) {
     func();

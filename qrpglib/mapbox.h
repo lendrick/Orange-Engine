@@ -15,6 +15,8 @@ class Map;
 
 class MapBox : public QDeclarativeView {
   Q_OBJECT
+  Q_PROPERTY(int width READ width)
+  Q_PROPERTY(int height READ height)
   
   friend class MapScene;
 
@@ -53,6 +55,7 @@ public slots:
   void setBrushMode();
   void setMode(int mode);
   int getMode();
+
 signals:
   void setXRange(int, int);
   void setYRange(int, int);
@@ -60,7 +63,8 @@ signals:
   void setYScroll(int);
   void setLayerRange(int, int);
   void modeChanged(int);
-  void mousePos(int, int, int, int);
+  void mousePos(int, int, int, int);  
+  void resized(int, int);
 
 private:
   void setTile(QMouseEvent * e);

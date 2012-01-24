@@ -5,7 +5,6 @@
   <scripts>    <script condition='0'><![CDATA[map.reset();
 rpgx.setLayer(1);
 player.addToMap(1);
-player.setPos(300, 180);
 rpgx.setCamera(player);
 playBGM('townTheme');]]></script>
   </scripts>  <layer>

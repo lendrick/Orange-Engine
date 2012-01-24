@@ -16,6 +16,10 @@ Q_DECLARE_METATYPE(EntityPointer);
 
 class Entity : public QObject, public QScriptable {
   Q_OBJECT
+  Q_PROPERTY( double x READ getX WRITE setX )
+  Q_PROPERTY( double y READ getY WRITE setY )
+  Q_PROPERTY( QString name READ getName WRITE setName )
+  Q_PROPERTY( int layer READ getLayer WRITE setLayer )
 public:
   Entity(QString newName, bool dynamic = false);
   Entity(const Entity & e);

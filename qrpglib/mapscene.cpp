@@ -724,7 +724,7 @@ void MapScene::mouseMoveEvent(QGraphicsSceneMouseEvent * e) {
       int x = (mapBox->xo + e->scenePos().x());
       int y = (mapBox->yo + e->scenePos().y());
       emit statusMessage(QString::number(x / tx) + ", " + QString::number(y / ty) +
-                         "  (" + QString::number(x) + ", " + QString::number(y) + ")");
+                         "  (" + QString::number(x) + ", " + QString::number(y) + ") " + QString::number(mapBox->xo) + ", " + QString::number(mapBox->yo));
     }
   }
 
