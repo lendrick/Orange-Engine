@@ -55,7 +55,7 @@ void SpriteWidget::resizeGL(int w, int h) {
   glViewport(0, 0, w, h);
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  gluOrtho2D(0, w, h, 0);
+  glOrtho(0, w, h, 0, -1, 1);
 }
 
 void SpriteWidget::paintGL() {

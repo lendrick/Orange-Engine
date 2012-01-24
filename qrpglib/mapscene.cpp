@@ -29,7 +29,9 @@ using std::cout;
 MapScene::MapScene(MapBox * m)
 {
   mapBox = m;
-
+  fpsLabel = new QLabel();
+  addWidget(fpsLabel);
+  /*
   OutlineStyle * outlineStyle = new OutlineStyle();
   outlineStyle->setOutlineWidth(2);
   fpsLabel = new QLabel("                                          ");
@@ -41,6 +43,7 @@ MapScene::MapScene(MapBox * m)
   fpsLabel->move(5, 5);
   fpsLabel->setStyle(outlineStyle);
   addWidget(fpsLabel);
+  */
 
   selection = 0;
   clipboard = 0;
@@ -235,7 +238,7 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
       framesThisSecond = 0;
       fpstime.restart();
     }
-    fpsLabel->repaint();
+    //fpsLabel->repaint();
     input->action = false;
   }
 
@@ -403,7 +406,8 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
 
 
 //#if QT_VERSION < 0x040600
-  if(is_editor) QTimer::singleShot(20, this, SLOT(update()));
+  //if(is_editor) QTimer::singleShot(20, this, SLOT(update()));
+  update(this->sceneRect());
 //#endif
 }
 

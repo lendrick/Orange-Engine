@@ -20,7 +20,20 @@
 // for testing
 #include <cstdlib>
 
+/*
+#ifdef _MSC_VER
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+#endif
+*/
+
 int main(int argc, char *argv[]) {
+#if defined(_MSC_VER) && defined(_DEBUG)
+  //_CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
+  //_CrtSetBreakAlloc(201852);
+#endif
+
   is_editor = false;
 //#if QT_VERSION < 0x040600
   QGL::setPreferredPaintEngine(QPaintEngine::OpenGL2);
@@ -105,6 +118,10 @@ int main(int argc, char *argv[]) {
   timeLastFrame = apptime.elapsed();
 
   mapedit.exec();
+
+#ifdef _MSC_VER
+  //_CrtDumpMemoryLeaks();
+#endif
 
   return 0;
 }

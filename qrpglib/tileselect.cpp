@@ -79,7 +79,7 @@ void TileBox::paintGL() {
   glViewport(0, 0, width(), height());
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  gluOrtho2D(0, width(), height(), 0);
+  glOrtho(0, width(), height(), 0, -1, 1);
   if(tileset) {
     int w, h;
     int pw, ph;

@@ -1,0 +1,195 @@
+﻿Build started 1/24/2012 3:09:30 AM.
+     1>Project "C:\orange\orange-engine\qrpgedit\qrpgedit.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Touching "Win32\qrpgedit.unsuccessfulbuild".
+       CustomBuild:
+         All outputs are up-to-date.
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /IC:\Qt\4.8.0\include\QtCore /IC:\Qt\4.8.0\include\QtGui /IC:\Qt\4.8.0\include\QtOpenGL /IC:\Qt\4.8.0\include\QtXml /IC:\Qt\4.8.0\include\QtScript /IC:\Qt\4.8.0\include\QtDeclarative /IC:\Qt\4.8.0\include /I.\..\qrpglib /I.\..\win32\include /IC:\Qt\4.8.0\include\ActiveQt /I.\debug /I.\..\..\..\Qt\4.8.0\mkspecs\default /I.\GeneratedFiles /Zi /nologo /W3 /WX- /O2 /Oy- /D _WINDOWS /D UNICODE /D WIN32 /D QT_LARGEFILE_SUPPORT /D QT_DLL /D QT_DECLARATIVE_LIB /D QT_SCRIPT_LIB /D QT_XML_LIB /D QT_OPENGL_LIB /D QT_GUI_LIB /D QT_CORE_LIB /D QT_HAVE_MMX /D QT_HAVE_3DNOW /D QT_HAVE_SSE /D QT_HAVE_MMXEXT /D QT_HAVE_SSE2 /D QT_THREAD_SUPPORT /Gm- /EHsc /MDd /GS- /fp:precise /Zc:wchar_t- /Zc:forScope /GR /Fo"Win32\\" /Fd"Win32\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\qrpglib\bitmap_qt.cpp ..\qrpglib\collisiontester.cpp ..\qrpglib\entity.cpp ..\qrpglib\entityscripttab.cpp ..\qrpglib\globals.cpp ..\qrpglib\globalscriptdialog.cpp ..\qrpglib\layerdialog.cpp ..\qrpglib\layerpanel.cpp ..\qrpglib\map.cpp ..\qrpglib\mapbox.cpp ..\qrpglib\mapreader.cpp ..\qrpglib\mapscene.cpp ..\qrpglib\mapscriptdialog.cpp ..\qrpglib\mapwindow.cpp ..\qrpglib\newbitmapdialog.cpp ..\qrpglib\newlayerdialog.cpp ..\qrpglib\newmapdialog.cpp ..\qrpglib\newprojectdialog.cpp ..\qrpglib\npc.cpp ..\qrpglib\player.cpp ..\qrpglib\project.cpp ..\qrpglib\projectreader.cpp ..\qrpglib\propertyeditor.cpp ..\qrpglib\qrpgconsole.cpp ..\qrpglib\rpgengine.cpp ..\qrpglib\rpgscript.cpp ..\qrpglib\scripttab.cpp ..\qrpglib\scriptutils.cpp ..\qrpglib\sound.cpp ..\qrpglib\sprite.cpp ..\qrpglib\spritedialog.cpp ..\qrpglib\spritewidget.cpp ..\qrpglib\talkbox.cpp ..\qrpglib\tileselect.cpp Debug\moc_entity.cpp Debug\moc_entitydialog.cpp Debug\moc_gui.cpp Debug\moc_layerdialog.cpp Debug\moc_layerpanel.cpp Debug\moc_map.cpp Debug\moc_mapbox.cpp Debug\moc_mapscene.cpp Debug\moc_mapwindow.cpp Debug\moc_npc.cpp Debug\moc_player.cpp Debug\moc_propertyeditor.cpp Debug\moc_scriptutils.cpp Debug\moc_spritedialog.cpp Debug\moc_spritewidget.cpp Debug\moc_tileselect.cpp gui.cpp rpgx_mapedit.cpp -Zm200 -w34100 -w34189 
+         bitmap_qt.cpp
+     1>..\qrpglib\bitmap_qt.cpp(136): warning C4100: 'tile' : unreferenced formal parameter
+         collisiontester.cpp
+         entity.cpp
+     1>..\qrpglib\entity.cpp(128): warning C4305: 'argument' : truncation from 'double' to 'GLfloat'
+     1>..\qrpglib\entity.cpp(128): warning C4305: 'argument' : truncation from 'double' to 'GLfloat'
+     1>..\qrpglib\entity.cpp(128): warning C4305: 'argument' : truncation from 'double' to 'GLfloat'
+     1>..\qrpglib\entity.cpp(438): warning C4189: 't' : local variable is initialized but not referenced
+     1>..\qrpglib\entity.cpp(533): warning C4100: 'engine' : unreferenced formal parameter
+         entityscripttab.cpp
+         globals.cpp
+         globalscriptdialog.cpp
+         layerdialog.cpp
+         layerpanel.cpp
+         map.cpp
+         mapbox.cpp
+         mapreader.cpp
+         mapscene.cpp
+     1>..\qrpglib\mapscene.cpp(113): warning C4100: 'h' : unreferenced formal parameter
+     1>..\qrpglib\mapscene.cpp(113): warning C4100: 'w' : unreferenced formal parameter
+     1>..\qrpglib\mapscene.cpp(475): warning C4100: 'layer' : unreferenced formal parameter
+     1>..\qrpglib\mapscene.cpp(484): warning C4100: 'layer' : unreferenced formal parameter
+         mapscriptdialog.cpp
+         mapwindow.cpp
+         newbitmapdialog.cpp
+         newlayerdialog.cpp
+         newmapdialog.cpp
+         newprojectdialog.cpp
+         npc.cpp
+         player.cpp
+         Generating Code...
+         Compiling...
+         project.cpp
+         projectreader.cpp
+         propertyeditor.cpp
+         qrpgconsole.cpp
+         rpgengine.cpp
+         rpgscript.cpp
+         scripttab.cpp
+         scriptutils.cpp
+     1>..\qrpglib\scriptutils.cpp(16): warning C4100: 'e' : unreferenced formal parameter
+     1>..\qrpglib\scriptutils.cpp(113): warning C4100: 'y' : unreferenced formal parameter
+     1>..\qrpglib\scriptutils.cpp(113): warning C4100: 'x' : unreferenced formal parameter
+         sound.cpp
+     1>..\qrpglib\sound.cpp(67): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
+         sprite.cpp
+         spritedialog.cpp
+         spritewidget.cpp
+     1>..\qrpglib\spritewidget.cpp(90): warning C4305: 'argument' : truncation from 'double' to 'GLfloat'
+     1>..\qrpglib\spritewidget.cpp(90): warning C4305: 'argument' : truncation from 'double' to 'GLfloat'
+     1>..\qrpglib\spritewidget.cpp(90): warning C4305: 'argument' : truncation from 'double' to 'GLfloat'
+         talkbox.cpp
+     1>..\qrpglib\talkbox.cpp(46): warning C4100: 'e' : unreferenced formal parameter
+     1>..\qrpglib\talkbox.cpp(57): warning C4100: 'e' : unreferenced formal parameter
+     1>..\qrpglib\talkbox.cpp(61): warning C4100: 'e' : unreferenced formal parameter
+     1>..\qrpglib\talkbox.cpp(65): warning C4100: 'e' : unreferenced formal parameter
+     1>..\qrpglib\talkbox.cpp(68): warning C4100: 'e' : unreferenced formal parameter
+     1>..\qrpglib\talkbox.cpp(72): warning C4100: 'e' : unreferenced formal parameter
+     1>..\qrpglib\talkbox.cpp(76): warning C4100: 'e' : unreferenced formal parameter
+         tileselect.cpp
+     1>..\qrpglib\tileselect.cpp(118): warning C4305: 'argument' : truncation from 'double' to 'GLfloat'
+     1>..\qrpglib\tileselect.cpp(118): warning C4305: 'argument' : truncation from 'double' to 'GLfloat'
+     1>..\qrpglib\tileselect.cpp(118): warning C4305: 'argument' : truncation from 'double' to 'GLfloat'
+         moc_entity.cpp
+         moc_entitydialog.cpp
+         moc_gui.cpp
+         moc_layerdialog.cpp
+         moc_layerpanel.cpp
+         moc_map.cpp
+         Generating Code...
+         Compiling...
+         moc_mapbox.cpp
+         moc_mapscene.cpp
+         moc_mapwindow.cpp
+         moc_npc.cpp
+         moc_player.cpp
+         moc_propertyeditor.cpp
+         moc_scriptutils.cpp
+         moc_spritedialog.cpp
+         moc_spritewidget.cpp
+         moc_tileselect.cpp
+         gui.cpp
+     1>gui.cpp(365): warning C4100: 'column' : unreferenced formal parameter
+     1>gui.cpp(365): warning C4100: 'item' : unreferenced formal parameter
+     1>gui.cpp(368): warning C4100: 'column' : unreferenced formal parameter
+         rpgx_mapedit.cpp
+         Generating Code...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\qrpg-build-desktop\\orange-editor.exe" /NOLOGO /LIBPATH:C:\Qt\4.8.0\lib /LIBPATH:c:\Qt\4.8.0\lib /LIBPATH:"../qrpg-build-desktop" glu32.lib opengl32.lib gdi32.lib user32.lib C:\Qt\4.8.0\lib\qtmaind.lib SDL.lib SDL_mixer.lib C:\Qt\4.8.0\lib\QtDeclaratived4.lib C:\Qt\4.8.0\lib\QtScriptd4.lib C:\Qt\4.8.0\lib\QtXmld4.lib C:\Qt\4.8.0\lib\QtOpenGLd4.lib C:\Qt\4.8.0\lib\QtGuid4.lib C:\Qt\4.8.0\lib\QtCored4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Win32\orange-editor.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\orange\orange-engine\qrpg-build-desktop\orange-editor.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /MACHINE:X86 Win32\bitmap_qt.obj
+         Win32\boundswidget.obj
+         Win32\collisiontester.obj
+         Win32\coordinatewidget.obj
+         Win32\entity.obj
+         Win32\entitydialog.obj
+         Win32\entityscript.obj
+         Win32\entityscripttab.obj
+         Win32\filebrowser.obj
+         Win32\globals.obj
+         Win32\globalscriptdialog.obj
+         Win32\moc_boundswidget.obj
+         Win32\moc_coordinatewidget.obj
+         Win32\moc_entity.obj
+         Win32\moc_entitydialog.obj
+         Win32\moc_entityscripttab.obj
+         Win32\moc_filebrowser.obj
+         Win32\moc_globalscriptdialog.obj
+         Win32\moc_gui.obj
+         Win32\moc_imageframe.obj
+         Win32\moc_jshighlighter.obj
+         Win32\moc_layerdialog.obj
+         Win32\moc_layerpanel.obj
+         Win32\moc_map.obj
+         Win32\moc_mapbox.obj
+         Win32\moc_mapscene.obj
+         Win32\moc_mapscriptdialog.obj
+         Win32\moc_mapwindow.obj
+         Win32\moc_newbitmapdialog.obj
+         Win32\moc_newlayerdialog.obj
+         Win32\moc_newmapdialog.obj
+         Win32\moc_newprojectdialog.obj
+         Win32\moc_npc.obj
+         Win32\moc_outlinestyle.obj
+         Win32\moc_player.obj
+         Win32\moc_project.obj
+         Win32\moc_propertyeditor.obj
+         Win32\moc_qrpgconsole.obj
+         Win32\moc_scriptdialog.obj
+         Win32\moc_scripttab.obj
+         Win32\moc_scriptutils.obj
+         Win32\moc_scrollbar.obj
+         Win32\moc_sound.obj
+         Win32\moc_spritedialog.obj
+         Win32\moc_spritewidget.obj
+         Win32\moc_talkbox.obj
+         Win32\moc_tileselect.obj
+         Win32\gui.obj
+         Win32\icons.obj
+         Win32\imageframe.obj
+         Win32\input.obj
+         Win32\jshighlighter.obj
+         Win32\layerdialog.obj
+         Win32\layerpanel.obj
+         Win32\map.obj
+         Win32\mapbox.obj
+         Win32\mapreader.obj
+         Win32\mapscene.obj
+         Win32\mapscriptdialog.obj
+         Win32\mapwindow.obj
+         Win32\newbitmapdialog.obj
+         Win32\newlayerdialog.obj
+         Win32\newmapdialog.obj
+         Win32\newprojectdialog.obj
+         Win32\npc.obj
+         Win32\outlinestyle.obj
+         Win32\player.obj
+         Win32\polygon.obj
+         Win32\project.obj
+         Win32\projectreader.obj
+         Win32\propertyeditor.obj
+         Win32\qrpgconsole.obj
+         Win32\resource.obj
+         Win32\rpgengine.obj
+         Win32\rpgscript.obj
+         Win32\rpgx_mapedit.obj
+         Win32\scriptdialog.obj
+         Win32\scripttab.obj
+         Win32\scriptutils.obj
+         Win32\scrollbar.obj
+         Win32\sound.obj
+         Win32\sprite.obj
+         Win32\spritedialog.obj
+         Win32\spritewidget.obj
+         Win32\talkbox.obj
+         Win32\tileselect.obj "/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'" 
+         LINK : ..\qrpg-build-desktop\\orange-editor.exe not found or not built by the last incremental link; performing full link
+         qrpgedit.vcxproj -> C:\orange\orange-engine\qrpgedit\..\qrpg-build-desktop\orange-editor.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"..\qrpg-build-desktop\\orange-editor.exe;#1" /manifest "Win32\orange-editor.exe.intermediate.manifest"
+       FinalizeBuildStatus:
+         Deleting file "Win32\qrpgedit.unsuccessfulbuild".
+         Touching "Win32\qrpgedit.lastbuildstate".
+     1>Done Building Project "C:\orange\orange-engine\qrpgedit\qrpgedit.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:02:04.02

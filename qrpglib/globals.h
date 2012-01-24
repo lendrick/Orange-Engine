@@ -1,6 +1,7 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H 1
 
+
 #include <QtCore>
 #include <QtGui>
 #include <QtScript>

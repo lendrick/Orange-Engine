@@ -19,6 +19,7 @@ PropertyEditor::PropertyEditor(ObjectPointer o, QWidget *parent) :
 }
 
 int PropertyEditor::exec() {
+	return QDialog::Accepted;
 }
 
 void PropertyEditor::submit() {

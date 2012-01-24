@@ -46,9 +46,12 @@ void LayerDialog::submit() {
 }
 
 int LayerDialog::exec() {
+
   if(QDialog::exec()) {
-    layer->resize(xspin->value(), yspin->value(), 0);
-    layer->wrap = wrapcheck->isChecked();
-    layer->name = layername->text();
+	layer->resize(xspin->value(), yspin->value(), 0);
+	layer->wrap = wrapcheck->isChecked();
+	layer->name = layername->text();
+	return QDialog::Accepted;
   }
+  return QDialog::Rejected;
 }
