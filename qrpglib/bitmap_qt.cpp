@@ -123,7 +123,7 @@ void Bitmap::draw(int tile, float x, float y, float opacity, float scale) {
   glColor4f(1.0, 1.0, 1.0, opacity);
   glBindTexture(GL_TEXTURE_2D, gl_texture);
       
-  glBegin(GL_POLYGON);
+  glBegin(GL_QUADS);
   glTexCoord2f(tiles[tile]->x1, tiles[tile]->y1); glVertex3f(x, y + h, 0);
   glTexCoord2f(tiles[tile]->x1, tiles[tile]->y2); glVertex3f(x, y, 0);
   glTexCoord2f(tiles[tile]->x2, tiles[tile]->y2); glVertex3f(x + w, y, 0);

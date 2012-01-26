@@ -89,7 +89,7 @@ void SpriteWidget::paintGL() {
 
       glColor4f(0.4, 0.4, 0.8, 0.5);
       //qDebug() << x1 << " " << y1 << " " << x2 << " " << y2;
-      glBegin(GL_POLYGON);
+      glBegin(GL_QUADS);
       glVertex3f(x + x1, y + y1, 0);
       glVertex3f(x + x2, y + y1, 0);
       glVertex3f(x + x2, y + y2, 0);

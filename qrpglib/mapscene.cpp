@@ -106,6 +106,9 @@ MapScene::MapScene(MapBox * m)
   selectedEntity = EntityPointer();
 
   mapBox->rootContext()->setContextProperty("scene", this);
+
+
+
 }
 
 void MapScene::init(int w, int h)
@@ -136,22 +139,34 @@ void MapScene::setSceneRect(const QRectF &rect) {
 
   static_cast<QGLWidget *>(mapBox->viewport())->makeCurrent();
   sceneBuffer = new QGLFramebufferObject(rect.size().toSize());
-  //bufferTexture = sceneBuffer->generateDynamicTexture();
-
-
   blurShader = new QGLShaderProgram();
-  //blurShader->addShaderFromSourceFile(QGLShader::Fragment, "shaders/blur_v.glsl");
-  //blurShader->addShaderFromSourceFile(QGLShader::Fragment, "shaders/blur_h.glsl");
+
+  qDebug() << "shaders: " << blurShader->shaders().length();
+  if(!blurShader->addShaderFromSourceFile(QGLShader::Fragment, "shaders/mix.glsl")) {
+    qDebug() << "Could not add shader: " << blurShader->log();
+  }
+
+  /*
+  if(!blurShader->addShaderFromSourceFile(QGLShader::Fragment, "shaders/blur_h.glsl")) {
+    qDebug() << "Could not add shader: " << blurShader->log();
+  }
+  */
+  qDebug() << "shaders: " << blurShader->shaders().length();
+
+  //rt_w = blurShader->uniformLocation("rtw");
+  //rt_h = blurShader->uniformLocation("rth");
+  //blurShader->setUniformValue(rt_w, (GLint) rect.width());
+  //blurShader->setUniformValue(rt_h, (GLint) rect.height());
+
   qDebug() << "BLURSHADER ADD: " << blurShader->log();
-  //blurShader->setUniformValue("sceneTex", sceneBuffer->texture());
-  blurShader->link();
-  rt_w = blurShader->uniformLocation("rtw");
-  rt_h = blurShader->uniformLocation("rth");
-  blurShader->setUniformValue(rt_w, (GLfloat) 640); //(GLint) rect.width());
-  blurShader->setUniformValue(rt_h, (GLfloat) 480); //(GLint) rect.height());
 
+  if(!blurShader->link()) {
+    qDebug() << "Could not link shader: " << blurShader->log();
+  }
 
-  qDebug() << "BLURSHADER COMPILE: " << rt_h << " " << blurShader->log();
+  blurShader->setUniformValue("source", sceneBuffer->texture());
+  blurShader->setUniformValue("ratio", (GLfloat) 0.5);
+
 
 }
 
@@ -359,19 +374,28 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
     glLoadIdentity();
     gluOrtho2D(0, thisWidth, thisHeight, 0);
 */
+   // glEnable(GL_FRAGMENT_PROGRAM_ARB);
+
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, sceneBuffer->texture());
     glEnable(GL_BLEND);   // Turn Blending On
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    //glBlendFunc(GL_ONE, GL_ZERO);
     glColor4f(1.0, 1.0, 1.0, 1);
 
-    /*
+
+    //blurShader->setUniformValue("ratio", (GLfloat) 0.5);
+    //blurShader->setUniformValue("source", (GLfloat) sceneBuffer->texture());
+
     blurShader->bind();
-    blurShader->setUniformValue(rt_h, (GLfloat) 480);
-    blurShader->setUniformValue(rt_w, (GLfloat) 640);
-*/
-    glBegin(GL_POLYGON);
+    //blurShader->setUniformValue(rt_h, (GLfloat) 480);
+    //blurShader->setUniformValue(rt_w, (GLfloat) 640);
+    blurShader->setUniformValue("ratio", (GLfloat) 1);
+    blurShader->setUniformValue("source", (GLfloat) sceneBuffer->texture());
+
+
+    glBegin(GL_QUADS);
     glTexCoord2f(0, 1); glVertex3f(0, 0, 0);
     glTexCoord2f(0, 0); glVertex3f(0, thisHeight, 0);
     glTexCoord2f(1, 0); glVertex3f(thisWidth, thisHeight, 0);
@@ -382,6 +406,7 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
 //    glPopMatrix();
 
     glDisable(GL_TEXTURE_2D);
+    blurShader->release();
 
     painter->endNativePainting();
 

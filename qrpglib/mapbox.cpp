@@ -54,6 +54,7 @@ MapBox::MapBox(QWidget * parent) :
   this->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
   this->setScene(mapScene);
   this->setMouseTracking(true);
+
   setDragMode(QGraphicsView::RubberBandDrag);
 }
 

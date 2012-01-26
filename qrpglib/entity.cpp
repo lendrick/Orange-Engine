@@ -126,7 +126,7 @@ void Entity::draw(double x_offset, double y_offset, double opacity, bool boundin
     int x1, y1, x2, y2;
     getBoundingBox(x1, y1, x2, y2);
     glColor4f(0.4, 0.4, 0.8, 0.5);
-    glBegin(GL_POLYGON);
+    glBegin(GL_QUADS);
     glVertex3f(x + x1 - x_offset, y + y1 - y_offset, 0);
     glVertex3f(x + x2 - x_offset, y + y1 - y_offset, 0);
     glVertex3f(x + x2 - x_offset, y + y2 - y_offset, 0);
