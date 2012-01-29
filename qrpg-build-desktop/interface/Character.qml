@@ -229,7 +229,9 @@ BaseItem {
         return false;
       }
       */
+      console.log('equipping');
       CharacterScript.slots[slot][number].equip(item);
+      console.log('done');
     }
 
     return false;

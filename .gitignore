@@ -3,6 +3,10 @@ moc_*
 lib*.so*
 */qrpgengine
 */qrpgedit
+*/orange
+*/orange-editor
+*/orange.exe
+*/orange-editor.exe
 Makefile
 */Makefile
 *.pro.user

@@ -4,6 +4,9 @@ var party = new Array();
 
 var enemyParties = new Object();
 
+var gold = 0;
+
+
 characters['Lendrick'] = newCharacter('Lendrick');
 
 characters['Lendrick'].atk = 4;
@@ -34,8 +37,8 @@ characters['Lendrick'].heal();
 //characters['Lendrick'].currentHp = characters['Lendrick'].hp;
 //characters['Lendrick'].currentMp = characters['Lendrick'].mp;
 
-characters['Lendrick'].portrait = "../Tech Demo 2/images/lendrick_portrait.png";
-characters['Lendrick'].equip(items['Dagger'].copy(), 'Weapon', 0);
+characters['Lendrick'].portrait = rpgx.projectDir() + "/images/lendrick_portrait.png";
+characters['Lendrick'].equip(items['Iron Dagger'].copy(), 'Weapon', 0);
 characters['Lendrick'].equip(items['Wizard Robe'].copy(), 'Armor', 0);
 characters['Lendrick'].equip(items['Wizard Hat'].copy(), 'Accessory', 0);
 
@@ -69,7 +72,7 @@ characters['Sithra'].addSlots('Weapon', 1, Array('weapon', 'bludgeoning'));
 characters['Sithra'].addSlots('OffHand', 1, Array('offhand'));
 characters['Sithra'].addSlots('Accessory', 2, Array('accessory'));
 
-characters['Sithra'].equip(items['Staff'].copy(), 'Weapon', 0);
+characters['Sithra'].equip(items['Wooden Staff'].copy(), 'Weapon', 0);
 characters['Sithra'].equip(items['Leather Armor'].copy(), 'Armor', 0);
 
 characters['Sithra'].addAbility('BarehandedFight');
@@ -80,7 +83,7 @@ characters['Sithra'].heal();
 //characters['Sithra'].currentHp = characters['Sithra'].hp;
 //characters['Sithra'].currentMp = characters['Sithra'].mp;
 
-characters['Sithra'].portrait = "../Tech Demo 2/images/sithra_portrait.png";
+characters['Sithra'].portrait = rpgx.projectDir() + "/images/sithra_portrait.png";
 
 party.push(characters['Lendrick']);
 party.push(characters['Sithra']);
@@ -99,7 +102,7 @@ party.push(characters['Sithra']);
   enemy.level = 1;
   enemy.addAbility('BarehandedFight');
   enemy.heal();
-  enemy.portrait = "../Tech Demo 2/images/slime_blue.png";
+  enemy.portrait = rpgx.projectDir() + "/images/slime_blue.png";
   enemy.turnAI = 'random'
 
   enemies['Slime'] = enemy;

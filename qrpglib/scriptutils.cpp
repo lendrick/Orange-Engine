@@ -143,6 +143,10 @@ void ScriptUtils::setLayer(int l) {
   mapBox->setLayer(l);
 }
 
+bool ScriptUtils::chdir(QString dir) {
+  return QDir::setCurrent(dir);
+}
+
 void ScriptUtils::addQml(QString filename) {
   QDeclarativeComponent component(declarativeEngine, filename);
   QGraphicsObject * c = qobject_cast<QGraphicsObject *>(component.create());
@@ -154,6 +158,19 @@ void ScriptUtils::addQmlString(QString string) {
   component.setData(string.toAscii(), QUrl());
   QGraphicsObject * c = qobject_cast<QGraphicsObject *>(component.create());
   mapBox->mapScene->addItem(c);
+}
+
+QString ScriptUtils::load(QString filename) {
+  QFile f(filename);
+  f.open(QIODevice::ReadOnly);
+
+  if(!f.exists()) {
+    message("File '" + filename +"' not found");
+    return QString();
+  }
+
+  QTextStream in(&f);
+  return in.readAll();
 }
 
 QScriptValue ScriptUtils::include(QString filename) {
@@ -181,14 +198,60 @@ QScriptValue ScriptUtils::include(QString filename) {
   // Change to the directory of the script before running it.
   QFileInfo fileInfo(filename);
   QDir currentDir = QDir::current();
-  QDir::setCurrent(fileInfo.absolutePath());
+  //QDir::setCurrent(fileInfo.absolutePath());
   //qDebug() << "DIR:" << QDir::currentPath();
 
   // Run the script
   QScriptValue r = scriptEngine->evaluate(program, filename);
 
   // Change back to the original directory when finished.
-  QDir::setCurrent(currentDir.absolutePath());
+  //QDir::setCurrent(currentDir.absolutePath());
+
+  if(scriptEngine->hasUncaughtException()) {
+    cprint(filename + ": " + QString::number(scriptEngine->uncaughtExceptionLineNumber()) + ": " +
+            scriptEngine->uncaughtException().toString());
+    qDebug() << filename << ": " << QString::number(scriptEngine->uncaughtExceptionLineNumber()) << ": " <<
+                scriptEngine->uncaughtException().toString();
+    scriptEngine->clearExceptions();
+  }
+
+  return r;
+}
+
+QScriptValue ScriptUtils::loadJSON(QString filename) {
+  cprint("evaluating file '" + filename + "'");
+  QFile f(filename);
+  f.open(QIODevice::ReadOnly);
+
+  if(!f.exists()) {
+    message("File '" + filename +"' not found");
+    return QScriptValue();
+  }
+
+  QTextStream in(&f);
+  QString program(in.readAll());
+  f.close();
+  program = '(' + program + ')';
+
+  QScriptContext *context = scriptEngine->currentContext();
+  QScriptContext *parent = context->parentContext();
+  if(parent!=0)
+  {
+    context->setActivationObject(context->parentContext()->activationObject());
+    context->setThisObject(context->parentContext()->thisObject());
+  }
+
+  // Change to the directory of the script before running it.
+  QFileInfo fileInfo(filename);
+  QDir currentDir = QDir::current();
+  //QDir::setCurrent(fileInfo.absolutePath());
+  //qDebug() << "DIR:" << QDir::currentPath();
+
+  // Run the script
+  QScriptValue r = scriptEngine->evaluate(program, filename, 1);
+
+  // Change back to the original directory when finished.
+  //QDir::setCurrent(currentDir.absolutePath());
 
   if(scriptEngine->hasUncaughtException()) {
     cprint(filename + ": " + QString::number(scriptEngine->uncaughtExceptionLineNumber()) + ": " +
@@ -250,5 +313,13 @@ bool ScriptUtils::same(QObject * a, QObject * b) {
 
 void ScriptUtils::dumpObject(QObject * o) {
   qDebug() << o->dynamicPropertyNames();
+}
+
+QString ScriptUtils::projectDir() {
+  return projDir;
+}
+
+QString ScriptUtils::currentDir() {
+  return QDir::currentPath();
 }
 

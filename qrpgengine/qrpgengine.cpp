@@ -70,7 +70,11 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
+  QString currentDir = QDir::currentPath();
+
   loadedProject = projectReader.read("Tech Demo 2.xproj");
+
+  QDir::setCurrent(currentDir);
 
   mainwindow.resize(1024, 768);
   mainwindow.show();

@@ -20,7 +20,7 @@ void ProjectReader::tokenDebug()
 
 Project * ProjectReader::read(QIODevice * device)
 {
-
+  projDir = QDir::currentPath();
   setDevice(device);
   project = 0;
 

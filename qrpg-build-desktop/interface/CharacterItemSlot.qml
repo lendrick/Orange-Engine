@@ -21,6 +21,7 @@ Item {
     var equip = false;
 
     for(var i in item.getTypes()) {
+      console.log("type: " + CharacterItemSlotScript.allowedTypes[i]);
       if(CharacterItemSlotScript.allowedTypes[i]) equip = true;
     }
 
@@ -64,7 +65,7 @@ Item {
       if(oldItem) addToInventory(oldItem);
       return true;
     } else {
-      console.log(parent.name + " can't equip " + item.name + " in slot " + name);
+      console.log(parent.name + " can't equip " + i.name + " in slot " + name);
       return false;
     }
   }

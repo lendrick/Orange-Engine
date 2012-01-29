@@ -53,6 +53,7 @@ Map * currentMap = 0;
 QGLWidget * mainGLWidget = 0;
 MapBox * mapBox = 0;
 Player * playerEntity = 0;
+QString projDir;
 QRPGConsole * console = 0;
 int paintMode = PaintMode::Draw;
 

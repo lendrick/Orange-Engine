@@ -1,10 +1,10 @@
 var ui;
 
-rpgx.include('json2.js');
-rpgx.include('sfx.js');
-rpgx.include('functions.js');
-rpgx.include('abilities.js');
-rpgx.include('items.js');
-rpgx.include('enemy_ai.js');
-rpgx.include('characters.js');
+rpgx.include('scripts/json2.js');
+rpgx.include('scripts/sfx.js');
+rpgx.include('scripts/functions.js');
+rpgx.include('scripts/abilities.js');
+rpgx.include('scripts/items.js');
+rpgx.include('scripts/enemy_ai.js');
+rpgx.include('scripts/characters.js');
 

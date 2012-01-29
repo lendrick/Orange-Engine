@@ -55,7 +55,7 @@ function toggleUi() {
 rpgx.menuKey.connect(toggleUi);
 //console.log("inv " + inventory.length);
 
-addNewItem('Staff');
+addNewItem('Wooden Staff');
 addNewItem('Potion');
 addNewItem('Potion');
 addNewItem('Green Tea');

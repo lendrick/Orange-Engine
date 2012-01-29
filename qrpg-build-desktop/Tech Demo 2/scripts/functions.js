@@ -1,4 +1,4 @@
-var uiComponent = createObject("../../interface/Ui.qml");
+var uiComponent = createObject("../interface/Ui.qml");
 ui = uiComponent.createObject(mapBox);
 mapScene.addItem(ui);
 var items = Array();
@@ -310,6 +310,42 @@ function healAll() {
     for(var c in characters) {
         characters[c].heal();
     }
+}
+
+function loadItems(file) {
+    console.log("Loading items from " + file);
+    var data = rpgx.loadJSON(file).rows;
+    console.log(serialize(data));
+    for(var i in data) {
+        var itemData = data[i];
+        var name = itemData.name;
+        
+        console.log("loading item: " + name);
+        console.log(serialize(types));
+        
+        var item = newCharacter(name);
+
+        delete itemData.name;
+        
+        if(itemData.types !== null) {
+            var types = itemData.types.split(" ");
+            item.setTypes(types);            
+            delete itemData.types;
+        }
+        
+        if(itemData.portrait !== null) {
+            itemData.portrait = rpgx.projectDir() + "/" + itemData.portrait;
+        }
+        
+        for(var prop in itemData) {
+            if(itemData[prop] !== null) {
+                item[prop] = itemData[prop];
+                console.log("  " + prop + ": " + item[prop]);
+            }
+        }
+        items[name] = item;
+    }
+    console.log("Items loaded!");
 }
 
 /*

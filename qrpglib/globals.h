@@ -118,7 +118,7 @@ extern int timeLastFrame;
 extern int timeSinceLastFrame;
 extern int frames;
 extern int framesThisSecond;
-
+extern QString projDir;
 
 extern MapBox * mapBox;
 extern Player * playerEntity;

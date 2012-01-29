@@ -32,6 +32,11 @@ public slots:
   QScriptValue createComponent(QString filename);
   QScriptValue createComponent(QString filename, QObject * parent);
   QScriptValue copy(QScriptValue v);
+  bool chdir(QString dir);
+  QString projectDir();
+  QString currentDir();
+  QString load(QString filename);
+  QScriptValue loadJSON(QString filename);
   void setCamera(EntityPointer e);
   void setMap(QString m);
   void setLayer(int l);
