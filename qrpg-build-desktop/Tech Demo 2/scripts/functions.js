@@ -315,7 +315,7 @@ function healAll() {
 function loadItems(file) {
     console.log("Loading items from " + file);
     var data = rpgx.loadJSON(file).rows;
-    console.log(serialize(data));
+    //console.log(serialize(data));
     for(var i in data) {
         var itemData = data[i];
         var name = itemData.name;
@@ -346,6 +346,22 @@ function loadItems(file) {
         items[name] = item;
     }
     console.log("Items loaded!");
+}
+
+function loadLevels(character, file) {
+    console.log("Loading level file for " + character);
+    var data = rpgx.loadJSON(file).rows;
+    var levels = new Object();
+    for(i in data) {
+        var level = data[i].level;
+        delete data[i].level;
+        levels[level] = data[i];
+    }
+        
+    characters[character].levels = levels;
+}
+
+function shop(items) {
 }
 
 /*

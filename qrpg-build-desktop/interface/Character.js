@@ -5,6 +5,7 @@ var slots;
 var abilities;
 var useAbility;
 var types;
+var levels;
 
 function startUp() {
   CharacterItemSlotComponent = Qt.createComponent("CharacterItemSlot.qml");
@@ -13,6 +14,7 @@ function startUp() {
   slots = Array();
   abilities = Array();
   types = new Object();
+  levels = Array();
 }
 
 function showDamage() {

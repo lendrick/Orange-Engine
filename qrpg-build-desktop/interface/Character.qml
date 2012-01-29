@@ -14,6 +14,7 @@ BaseItem {
   property int maxMp: 0
   property int spd: 0
   property int dex: 0
+  property int exp: 0
   property bool deleted: false
 
   onAtkChanged: updateStat('atk');
@@ -38,6 +39,7 @@ BaseItem {
   property int mp: 0
   property string cls: ''
   property int level: 0
+  property int cost: 0
 
   //property string itemType: ''
   property string name: ''
@@ -51,6 +53,9 @@ BaseItem {
   property string unequipAbility: ''
 
   property string turnAI: ''
+
+  property variant levels
+
 
   property bool alive: (hp > 0)
   property Item image
@@ -74,6 +79,12 @@ BaseItem {
     c.mp = mp;
     c.cls = cls;
     c.level = level;
+
+    // NOTE: Change this to deep copy
+    c.levels = levels;
+
+    c.exp = exp;
+    c.cost = cost;
     //c.itemType = itemType;
     c.setTypes(getTypeArray());
     c.portrait = portrait;
@@ -382,4 +393,36 @@ BaseItem {
     }
   }
 
+  function addExp(e) {
+    console.log(characterItem.name + " received " + e + " exp");
+    var l = 1;
+    var done = false;
+    characterItem.exp += e;
+    while(!done && characterItem.levels[l] !== undefined) {
+      if(characterItem.exp > characterItem.levels[l].exp) {
+        setLevel(l);
+      } else {
+        done = true;
+      }
+
+      l++;
+    }
+
+  }
+
+
+  function setLevel(l) {
+    console.log("Setting " + characterItem.name + " level to " + l);
+    characterItem.level = l;
+    //console.log(serialize(characterItem.levels));
+    if(characterItem.levels[characterItem.level]) {
+      for(stat in characterItem.levels[characterItem.level]) {
+        if(stat != 'exp') {
+          characterItem[stat] = characterItem.levels[characterItem.level][stat];
+        }
+      }
+      updateStats();
+      heal();
+    }
+  }
 }

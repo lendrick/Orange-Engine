@@ -111,3 +111,6 @@ party.push(characters['Sithra']);
 enemyParties['OneSlime'] = new Array('Slime');
 enemyParties['TwoSlimes'] = new Array('Slime', 'Slime');
 enemyParties['ThreeSlimes'] = new Array('Slime', 'Slime', 'Slime');
+
+loadLevels('Lendrick', 'data/lendrick-levels.json');
+characters['Lendrick'].addExp(6000);
