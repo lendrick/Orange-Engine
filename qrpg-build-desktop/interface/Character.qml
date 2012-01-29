@@ -15,6 +15,7 @@ BaseItem {
   property int spd: 0
   property int dex: 0
   property int exp: 0
+  property int nextExp: 0
   property bool deleted: false
 
   onAtkChanged: updateStat('atk');
@@ -84,6 +85,7 @@ BaseItem {
     c.levels = levels;
 
     c.exp = exp;
+    c.nextExp = exp;
     c.cost = cost;
     //c.itemType = itemType;
     c.setTypes(getTypeArray());
@@ -423,6 +425,12 @@ BaseItem {
       }
       updateStats();
       heal();
+    }
+
+    if(characterItem.levels[characterItem.level + 1]) {
+      characterItem.nextExp = characterItem.levels[characterItem.level + 1].exp;
+    } else {
+      characterItem.nextExp = 0;
     }
   }
 }

@@ -11,6 +11,7 @@ Item {
   property alias statValueItem: statValue
   property alias statTitleItem: statTitle
 
+  property bool newline: false
   SmallText {
     id: statTitle
   }
@@ -18,6 +19,7 @@ Item {
   SmallText {
     id: statValue
     x: parent.width - width
+    y: if(newline) { statTitleItem.height } else { 0 }
   }
 
   Binding {

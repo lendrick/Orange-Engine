@@ -58,6 +58,20 @@ Box {
       }
 
       StatItem {
+        id: expDisplay
+        title: "Experience"
+        bind: if(character) character.exp + " / " + character.nextExp;
+        //statValueItem.y: statTitleItem.height;
+        newline: true;
+      }
+
+      Item {
+        id: statSpacer4
+        height: 20
+        width: 1
+      }
+
+      StatItem {
         id: hpDisplay
         title: "HP"
         bind: if(character) character.hp + " / " + character.current_maxHp;
