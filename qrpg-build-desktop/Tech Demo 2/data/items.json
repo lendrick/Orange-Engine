@@ -49,10 +49,10 @@
       "useAbility" : null,
       "equipAbility" : null,
       "unequipAbility" : null,
-      "portrait" : null
+      "portrait" : "images/icons/W_Sword001.png"
     },
     {
-      "name" : "Iron Bow",
+      "name" : "Wooden Bow",
       "description" : "Some damage from the back row, as they say.",
       "types" : "weapon non-metal ranged",
       "atk" : 12,
@@ -66,7 +66,7 @@
       "useAbility" : null,
       "equipAbility" : null,
       "unequipAbility" : null,
-      "portrait" : null
+      "portrait" : "images/icons/W_Bow02.png"
     },
     {
       "name" : "Leather Armor",
@@ -100,7 +100,7 @@
       "useAbility" : null,
       "equipAbility" : null,
       "unequipAbility" : null,
-      "portrait" : null
+      "portrait" : "images/icons/C_Elm01.png"
     },
     {
       "name" : "Wizard Robe",
@@ -151,7 +151,7 @@
       "useAbility" : null,
       "equipAbility" : null,
       "unequipAbility" : null,
-      "portrait" : null
+      "portrait" : "images/icons/C_Wood01.png"
     },
     {
       "name" : "Wooden Shield",
@@ -168,7 +168,7 @@
       "useAbility" : null,
       "equipAbility" : null,
       "unequipAbility" : null,
-      "portrait" : null
+      "portrait" : "images/icons/C_Wood02.png"
     },
     {
       "name" : "Iron Armor",
@@ -185,7 +185,7 @@
       "useAbility" : null,
       "equipAbility" : null,
       "unequipAbility" : null,
-      "portrait" : null
+      "portrait" : "images/icons/A_Armour02.png"
     },
     {
       "name" : "Iron Helm",
@@ -202,7 +202,7 @@
       "useAbility" : null,
       "equipAbility" : null,
       "unequipAbility" : null,
-      "portrait" : null
+      "portrait" : "images/icons/C_Elm02.png"
     },
     {
       "name" : "Potion",
