@@ -1,0 +1,62 @@
+<map>
+  <name>Shop</name>
+  <layers>3</layers>
+  <tileset>Interior Tileset</tileset>
+  <scripts>  </scripts>  <layer>
+    <width>13</width>
+    <height>9</height>
+    <tileset>Interior Tileset</tileset>
+    <name>Floor</name>
+    <layerdata>
+         0    0    0    0    0    0    0    0    0    0    0    0    0 
+         0    0    0    0    0    0    0    0    0    0    0    0    0 
+         7    7    7    7    7    7    7    7    7    7    7    7    7 
+         7    7    7    7    7    7    7    7    7    7    7    7    7 
+         7    7    7    7    7    7    7    7    7    7    7    7    7 
+         7    7    7    7    7    7    7    7    7    7    7    7    7 
+         7    7    7    7    7    7    7    7    7    7    7    7    7 
+         7    7    7    7    7    7    7    7    7    7    7    7    7 
+         7    7    7    7    7    7    7    7    7    7    7    7    7 
+    </layerdata>
+    <entities>
+    </entities>
+  </layer>
+  <layer>
+    <width>13</width>
+    <height>9</height>
+    <tileset>Interior Tileset</tileset>
+    <name>Walls</name>
+    <layerdata>
+         8    0   14   14   14    8   17   14   14   14   14   14   18 
+        26    0   32   32   32   26   35   32   32   32   32   32   36 
+        44    0  214  130  131   45    0    0    0    0    0    0   72 
+        44    0    0    0    0   63  200  200  200  200  200  200   72 
+        44    0    0    0    0    0    0    0    0    0    0    0   72 
+        44    0  193  195    0    0    0    0    0    0    0    0   72 
+        44    0  211  213    0    0    0    0    0    0    0  215   72 
+        80   83   83   83   86   84    0   88   83   83   83   90   90 
+       104  104  104  104  104  102    0  103  104  104  104  104  104 
+    </layerdata>
+    <entities>
+    </entities>
+  </layer>
+  <layer>
+    <width>13</width>
+    <height>9</height>
+    <tileset>Interior Tileset</tileset>
+    <name>Props</name>
+    <layerdata>
+         0   89    0    0    0    0    0    0    0   53   76   76    0 
+         0  107  196  112  113    0    0  128  127   71   94   94    0 
+         0    0  214  130  131  145    0    0    0    0    0    0  149 
+         0    0    0    0    0  199  200  201  200  201  202  201  203 
+         0    0    0    0   39    0    0    1    2    2    3    0    0 
+         0   40  193  195   57    0    0   19   20   20   21  197  198 
+         0   58  211  213    0    0    0    0    0    0    0  215  216 
+         0    0    0    0    0    0    0    0    0    0    0    0    0 
+         0    0    0    0    0    0    0    0    0    0    0    0    0 
+    </layerdata>
+    <entities>
+    </entities>
+  </layer>
+</map>

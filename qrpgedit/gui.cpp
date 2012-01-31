@@ -25,6 +25,7 @@
 #include "mapscriptdialog.h"
 #include "globalscriptdialog.h"
 #include "mapreader.h"
+#include "mapreadertiled.h"
 #include "projectreader.h"
 #include "mapscene.h"
 #include "rpgengine.h"
@@ -34,7 +35,7 @@
 MainWindow::MainWindow() :
   QMainWindow() {
   initIcons();
-  appTitle = "QRPG Editor";
+  appTitle = "Orange Editor";
 
   setWindowTitle(appTitle);
   setWindowIcon(QIcon("pixmaps/orange.png"));
@@ -89,6 +90,7 @@ MainWindow::MainWindow() :
   fileMenu->addAction(saveprojectAction);
 
   fileMenu->addSeparator();
+
   quitAction = new QAction("Exit", 0);
   connect(quitAction, SIGNAL(triggered()), this, SLOT(close()));
   fileMenu->addAction(quitAction);
@@ -461,14 +463,26 @@ void MainWindow::newMap() {
 }
 
 void MainWindow::loadMap() {
-  MapReader mapReader;
-  Map * m = mapReader.read(QFileDialog::getOpenFileName(
-    this, 
+  QString filename = QFileDialog::getOpenFileName(
+    this,
     "Choose a file",
     ".",
-    "Maps (*.xmap)"
-  ));
-  maplist->setCurrentItem(m->getThisMap());
+    "Maps (*.xmap *.tmx)"
+  );
+
+  Map * m = 0;
+
+  if(filename.toLower().endsWith(".tmx")) {
+    MapReaderTiled mapReader;
+    m = mapReader.read(filename);
+  } else {
+    MapReader mapReader;
+    m = mapReader.read(filename);
+  }
+
+  if(m) {
+    maplist->setCurrentItem(m->getThisMap());
+  }
 }
 
 void MainWindow::saveMap() {

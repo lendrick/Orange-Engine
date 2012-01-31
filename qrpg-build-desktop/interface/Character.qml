@@ -16,6 +16,7 @@ BaseItem {
   property int dex: 0
   property int exp: 0
   property int nextExp: 0
+  property int expValue: 0
   property bool deleted: false
 
   onAtkChanged: updateStat('atk');
@@ -95,6 +96,7 @@ BaseItem {
     c.equipAbility = equipAbility;
     c.unequipAbility = unequipAbility;
     c.turnAI = turnAI;
+    c.expValue = expValue;
 
     for(var i in CharacterScript.abilities) {
       console.log("copy ability: " + CharacterScript.abilities[i])

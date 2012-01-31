@@ -67,7 +67,8 @@ SOURCES +=\
     ../qrpglib/boundswidget.cpp \
     ../qrpglib/bitmap_qt.cpp \
     ../qrpglib/propertyeditor.cpp \
-    ../qrpglib/layerdialog.cpp
+    ../qrpglib/layerdialog.cpp \
+    ../qrpglib/mapreadertiled.cpp
 
 HEADERS  += \
     resource.h \
@@ -119,6 +120,7 @@ HEADERS  += \
     ../qrpglib/boundswidget.h \
     ../qrpglib/bitmap.h \
     ../qrpglib/propertyeditor.h \
-    ../qrpglib/layerdialog.h
+    ../qrpglib/layerdialog.h \
+    ../qrpglib/mapreadertiled.h
 
 FORMS    +=

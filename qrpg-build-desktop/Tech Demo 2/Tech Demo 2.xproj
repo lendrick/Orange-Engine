@@ -23,6 +23,8 @@ player.setPos(375, 250);
     <map>Road.xmap</map>
     <map>Lendrick's House.xmap</map>
     <map>Forest.xmap</map>
+    <map>Shop.xmap</map>
+    <map>Forest 2.xmap</map>
   </maps>
   <sprites>
     <sprite>Female Warrior.xspr</sprite>
