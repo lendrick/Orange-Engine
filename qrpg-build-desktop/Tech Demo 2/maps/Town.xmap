@@ -113,7 +113,9 @@ playBGM('townTheme');]]></script>
     <entities>
       <entity name='Shop' state='-1' x='640' y='158' bx1='0' by1='0' bx2='32' by2='32' overrideboundingbox='1'>
         <scripts>
-          <script condition='2'><![CDATA[shop(['Iron Dagger', 'Iron Sword', 'Wooden Bow', 'Leather Hat', 'Iron Helmet', 'Buckler', 'Wooden Shield', 'Potion', 'Green Tea']);]]></script>
+          <script condition='2'><![CDATA[rpgx.setMap("Shop");
+player.setPos(208, 240);
+]]></script>
         </scripts>
       </entity>
       <entity name='Entity 1' state='0' x='378' y='200' bx1='-10' by1='-10' bx2='8' by2='4' sprite='Female Warrior' overrideboundingbox='1' solid = '1'>

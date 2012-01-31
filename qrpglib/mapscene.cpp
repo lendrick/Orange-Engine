@@ -384,16 +384,10 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
     //glBlendFunc(GL_ONE, GL_ZERO);
     glColor4f(1.0, 1.0, 1.0, 1);
 
-
-    //blurShader->setUniformValue("ratio", (GLfloat) 0.5);
+    //NOTE:  THIS WORKS!
+    //blurShader->bind();
+    //blurShader->setUniformValue("ratio", (GLfloat) 1);
     //blurShader->setUniformValue("source", (GLfloat) sceneBuffer->texture());
-
-    blurShader->bind();
-    //blurShader->setUniformValue(rt_h, (GLfloat) 480);
-    //blurShader->setUniformValue(rt_w, (GLfloat) 640);
-    blurShader->setUniformValue("ratio", (GLfloat) 1);
-    blurShader->setUniformValue("source", (GLfloat) sceneBuffer->texture());
-
 
     glBegin(GL_QUADS);
     glTexCoord2f(0, 1); glVertex3f(0, 0, 0);
@@ -401,12 +395,9 @@ void MapScene::drawBackground(QPainter *painter, const QRectF &) {
     glTexCoord2f(1, 0); glVertex3f(thisWidth, thisHeight, 0);
     glTexCoord2f(1, 1); glVertex3f(thisWidth, 0, 0);
     glEnd();
-  //  blurShader->release();
-
-//    glPopMatrix();
 
     glDisable(GL_TEXTURE_2D);
-    blurShader->release();
+    //blurShader->release();
 
     painter->endNativePainting();
 

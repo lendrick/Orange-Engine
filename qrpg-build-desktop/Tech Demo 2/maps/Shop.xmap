@@ -1,8 +1,13 @@
 <map>
   <name>Shop</name>
-  <layers>3</layers>
+  <layers>4</layers>
   <tileset>Interior Tileset</tileset>
-  <scripts>  </scripts>  <layer>
+  <scripts>    <script condition='0'><![CDATA[map.reset();
+rpgx.setLayer(2);
+player.addToMap(2);
+rpgx.setCamera(player);
+playBGM('townTheme');]]></script>
+  </scripts>  <layer>
     <width>13</width>
     <height>9</height>
     <tileset>Interior Tileset</tileset>
@@ -25,10 +30,29 @@
     <width>13</width>
     <height>9</height>
     <tileset>Interior Tileset</tileset>
+    <name>Below Player</name>
+    <layerdata>
+         0    0    0    0    0    0    0    0    0    0    0    0    0 
+         0    0    0    0    0    0    0    0    0    0    0    0    0 
+         0    0    0    0    0  145    0    0    0    0    0    0  149 
+         0    0    0    0    0  199    0    0    0    0    0    0  203 
+         0    0    0    0   39    0    0    1    2    2    3    0    0 
+         0   40    0    0   57    0    0   19   20   20   21    0    0 
+         0   58    0    0    0    0    0    0    0    0    0    0    0 
+         0    0    0    0    0    0    0    0    0    0    0    0    0 
+         0    0    0    0    0    0    0    0    0    0    0    0    0 
+    </layerdata>
+    <entities>
+    </entities>
+  </layer>
+  <layer>
+    <width>13</width>
+    <height>9</height>
+    <tileset>Interior Tileset</tileset>
     <name>Walls</name>
     <layerdata>
-         8    0   14   14   14    8   17   14   14   14   14   14   18 
-        26    0   32   32   32   26   35   32   32   32   32   32   36 
+         8   17   14   14   14    8   17   14   14   14   14   14   18 
+        26   35   32   32   32   26   35   32   32   32   32   32   36 
         44    0  214  130  131   45    0    0    0    0    0    0   72 
         44    0    0    0    0   63  200  200  200  200  200  200   72 
         44    0    0    0    0    0    0    0    0    0    0    0   72 
@@ -38,6 +62,22 @@
        104  104  104  104  104  102    0  103  104  104  104  104  104 
     </layerdata>
     <entities>
+      <entity name='Entity 13' state='0' x='289' y='94' bx1='-8' by1='-8' bx2='8' by2='3' sprite='Female Ranger' solid = '1'>
+        <scripts>
+        </scripts>
+      </entity>
+      <entity name='Entity 14' state='-1' x='273' y='104' bx1='0' by1='0' bx2='32' by2='32' overrideboundingbox='1'>
+        <scripts>
+          <script condition='4'><![CDATA[say("Hello!");
+shop(['Iron Dagger', 'Iron Sword', 'Wooden Bow', 'Leather Hat', 'Iron Helmet', 'Buckler', 'Wooden Shield', 'Potion', 'Green Tea']);]]></script>
+        </scripts>
+      </entity>
+      <entity name='Shop Exit' state='-1' x='192' y='270' bx1='0' by1='0' bx2='32' by2='32' overrideboundingbox='1'>
+        <scripts>
+          <script condition='2'><![CDATA[rpgx.setMap("Town");
+player.setPos(658, 211);]]></script>
+        </scripts>
+      </entity>
     </entities>
   </layer>
   <layer>
@@ -46,13 +86,13 @@
     <tileset>Interior Tileset</tileset>
     <name>Props</name>
     <layerdata>
-         0   89    0    0    0    0    0    0    0   53   76   76    0 
-         0  107  196  112  113    0    0  128  127   71   94   94    0 
-         0    0  214  130  131  145    0    0    0    0    0    0  149 
-         0    0    0    0    0  199  200  201  200  201  202  201  203 
-         0    0    0    0   39    0    0    1    2    2    3    0    0 
-         0   40  193  195   57    0    0   19   20   20   21  197  198 
-         0   58  211  213    0    0    0    0    0    0    0  215  216 
+         0    0    0    0    0    0    0    0    0   53   76   76    0 
+         0    0  196  112  113    0    0  128  127   71   94   94    0 
+         0    0    0    0    0    0    0    0    0    0    0    0    0 
+         0    0    0    0    0    0    0    0    0    0    0    0    0 
+         0    0    0    0    0    0    0    0    0    0    0    0    0 
+         0    0  193  195    0    0    0    0    0    0    0  197  198 
+         0    0  211  213    0    0    0    0    0    0    0  215  216 
          0    0    0    0    0    0    0    0    0    0    0    0    0 
          0    0    0    0    0    0    0    0    0    0    0    0    0 
     </layerdata>
