@@ -26,8 +26,10 @@ player.setPos(375, 250);
     <map>Shop.xmap</map>
     <map>Forest 2.xmap</map>
   </maps>
-  <sprites>
+  <sprites>  
     <sprite>Female Warrior.xspr</sprite>
+    <sprite>Male Warrior.xspr</sprite>
+    <sprite>Female Ranger.xspr</sprite>
     <sprite>Male Ranger.xspr</sprite>
   </sprites>
 </project>
