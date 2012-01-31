@@ -1,7 +1,7 @@
 <!DOCTYPE xtile>
 <tileset>
   <name>Town Tileset</name>
-  <image>town_tiles.png</image>
+  <image>town_forest_tiles.png</image>
   <width>32</width>
   <height>32</height>
   <xorigin>0</xorigin>
