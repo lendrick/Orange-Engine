@@ -81,6 +81,7 @@ void Npc::update() {
         currentMove = 0;
       }
     } else if(currentMove->type == WaitItem) {
+      //qDebug() << "Waiting " << currentMove->wait;
       currentMove->wait -= timeSinceLastFrame;
       if(currentMove->wait <= 0) {
         delete currentMove;
@@ -94,6 +95,11 @@ void Npc::update() {
       if(scriptEngine->hasUncaughtException()) 
         message(scriptEngine->uncaughtException().toString());
       scriptEngine->popContext();
+      delete currentMove;
+      currentMove = 0;
+    } else if(currentMove->type == FunctionItem) {
+      //qDebug() << "Evaluating function";
+      currentMove->function.call(scriptObject);
       delete currentMove;
       currentMove = 0;
     } else if(currentMove->type == WaitConditionItem) {
@@ -123,11 +129,12 @@ void Npc::queueMove(double x, double y, double speed) {
   moveQueue.push_back(new MoveQueueItem(x, y, speed / 1000.0));
 }
 
-void Npc::queueWait(int w) {
+void Npc::queueWait(double w) {
   moveQueue.push_back(new MoveQueueItem(w * 1000));
 }
 
-void Npc::queueScript(QString s) {
+void Npc::queueScript(QScriptValue s) {
+  //qDebug() << "queueing NPC script";
   moveQueue.push_back(new MoveQueueItem(s));
 }
 
@@ -160,6 +167,12 @@ Npc::MoveQueueItem::MoveQueueItem(int w) {
   init();
   type = WaitItem;
   wait = w;
+}
+
+Npc::MoveQueueItem::MoveQueueItem(QScriptValue s) {
+  init();
+  type = FunctionItem;
+  function = s;
 }
 
 Npc::MoveQueueItem::MoveQueueItem(QString s, bool waitForCondition) {

@@ -15,8 +15,9 @@ public:
 public slots:
   void queueMove(double x, double y, double speed = 0);
   void queueMoveTo(double x, double y, double speed = 0);
-  void queueWait(int w);
-  void queueScript(QString s);
+  void queueWait(double w);
+  //void queueScript(QString s);
+  void queueScript(QScriptValue s);
   void queueWaitCondition(QString s);
   void clearQueue();
   EntityPointer clone();
@@ -27,13 +28,15 @@ protected:
     MoveItem,
     WaitItem,
     ScriptItem,
-    WaitConditionItem
+    WaitConditionItem,
+    FunctionItem
   };
   
   struct MoveQueueItem {
     MoveQueueItem(double x, double y, double s);
     MoveQueueItem(int w);
     MoveQueueItem(QString s, bool waitForCondition = false);
+    MoveQueueItem(QScriptValue function);
     MoveQueueItem(const MoveQueueItem & m);
     QueueItemType type;
     void init();
@@ -44,6 +47,7 @@ protected:
     int wait;
     bool condition;
     QString script;
+    QScriptValue function;
   };
 
   MoveQueueItem * currentMove;

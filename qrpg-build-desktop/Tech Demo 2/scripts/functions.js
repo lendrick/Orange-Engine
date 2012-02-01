@@ -362,7 +362,25 @@ function loadLevels(character, file) {
     characters[character].levels = levels;
 }
 
+function random(max) {
+    return Math.floor(Math.random() * max);
+}
+
 function shop(items) {
+}
+
+function wander(npc) {
+    var distance = random(100) + 50;
+    if(random(2) == 0) {
+        distance = -distance;
+    }
+    if(random(2) == 0) {
+        npc.queueMove(0, distance, 20);
+    } else {
+        npc.queueMove(distance, 0, 20);
+    }
+    npc.queueWait(1);
+    npc.queueScript(function() { wander(this) });
 }
 
 /*
