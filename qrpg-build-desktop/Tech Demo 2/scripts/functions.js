@@ -7,6 +7,7 @@ var allAbilities = Array();
 var currentBGM;
 var BGMStack = Array();
 var flags = new Object();
+ui.gold = 500;
 
 function playBGM(name) {
     console.log("playBGM: " + name);

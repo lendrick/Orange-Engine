@@ -232,10 +232,30 @@ player.setPos(64, 600);]]></script>
 player.setPos(913, 240);]]></script>
         </scripts>
       </entity>
+      <entity name='Entity 19' state='2' x='709' y='356' bx1='0' by1='0' bx2='0' by2='0' sprite='Female Mage' solid = '1'>
+        <scripts>
+        </scripts>
+      </entity>
+      <entity name='Entity 18' state='3' x='674' y='357' bx1='0' by1='0' bx2='0' by2='0' sprite='Female Healer' solid = '1'>
+        <scripts>
+        </scripts>
+      </entity>
       <entity name='Entity 6' state='-1' x='143' y='397' bx1='-16' by1='-16' bx2='16' by2='16' overrideboundingbox='1'>
         <scripts>
           <script condition='2'><![CDATA[rpgx.setMap("Lendrick's House");
 player.setPos(240, 430);]]></script>
+        </scripts>
+      </entity>
+      <entity name='Entity 17' state='0' x='1040' y='486' bx1='0' by1='0' bx2='0' by2='0' sprite='Male Ninja' solid = '1'>
+        <scripts>
+        </scripts>
+      </entity>
+      <entity name='Entity 15' state='2' x='732' y='587' bx1='0' by1='0' bx2='0' by2='0' sprite='Female Townfolk 1' solid = '1'>
+        <scripts>
+        </scripts>
+      </entity>
+      <entity name='Entity 16' state='1' x='468' y='784' bx1='0' by1='0' bx2='0' by2='0' sprite='Male Healer' solid = '1'>
+        <scripts>
         </scripts>
       </entity>
     </entities>

@@ -1,0 +1,9 @@
+<!DOCTYPE xtile>
+<tileset>
+  <name>Healer M</name>
+  <image>healer_m.png</image>
+  <width>32</width>
+  <height>36</height>
+  <xorigin>0</xorigin>
+  <yorigin>0</yorigin>
+</tileset>

@@ -4,8 +4,6 @@ var party = new Array();
 
 var enemyParties = new Object();
 
-var gold = 0;
-
 
 characters['Lendrick'] = newCharacter('Lendrick');
 

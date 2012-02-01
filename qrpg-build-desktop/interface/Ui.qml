@@ -9,6 +9,7 @@ Item {  //Item
   property alias statusscreen: statusScreen
   property alias talkbox: talkBox
   property alias battlescreen: battleScreen;
+  property int gold: 0
 
   Component.onCompleted: {
     mapBox.resized.connect(resize);
@@ -232,7 +233,7 @@ Item {  //Item
       x: 0
       y: 0
       width: parent.width / 3
-      height: parent.height
+      height: parent.height * .8
       state: "Show"
 
       SimpleMenu {
@@ -255,6 +256,26 @@ Item {  //Item
           addOption("Magic", magicScreen);
           setSelectedIndex(0);
         }
+      }
+    }
+
+    Box {
+      objectName: "goldBox"
+      id: goldBox
+      x: 0
+      y: parent.height * .8;
+      width:  parent.width / 3
+      height:  parent.height * .2
+      state: "Show"
+
+      StatItem {
+        width: parent.width - 50
+        height: parent.height - 50
+        x: 25
+        y: 25
+        newline: true
+        title: "Gold"
+        value: ui.gold
       }
     }
 

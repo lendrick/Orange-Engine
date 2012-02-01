@@ -15,6 +15,14 @@ player.setPos(375, 250);
     <tileset>Warrior F.xtile</tileset>
     <tileset>Ranger M.xtile</tileset>
     <tileset>Ranger F.xtile</tileset>
+    <tileset>Mage M.xtile</tileset>
+    <tileset>Mage F.xtile</tileset>
+    <tileset>Ninja M.xtile</tileset>
+    <tileset>Ninja F.xtile</tileset>
+    <tileset>Townfolk1 M.xtile</tileset>
+    <tileset>Townfolk1 F.xtile</tileset>
+    <tileset>Healer M.xtile</tileset>
+    <tileset>Healer F.xtile</tileset>
     <tileset>Interior Tileset.xtile</tileset>
     <tileset>Forest Tileset.xtile</tileset>
   </tilesets>
@@ -31,5 +39,13 @@ player.setPos(375, 250);
     <sprite>Male Warrior.xspr</sprite>
     <sprite>Female Ranger.xspr</sprite>
     <sprite>Male Ranger.xspr</sprite>
+    <sprite>Female Ninja.xspr</sprite>
+    <sprite>Male Ninja.xspr</sprite>
+    <sprite>Female Healer.xspr</sprite>
+    <sprite>Male Healer.xspr</sprite>
+    <sprite>Female Mage.xspr</sprite>
+    <sprite>Male Mage.xspr</sprite>
+    <sprite>Female Townfolk 1.xspr</sprite>
+    <sprite>Male Townfolk 1.xspr</sprite>
   </sprites>
 </project>
