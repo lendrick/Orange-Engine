@@ -1,0 +1,9 @@
+<!DOCTYPE xtile>
+<tileset>
+  <name>Sewer Tileset</name>
+  <image>/home/bart/qrpg-gitorious/qrpg-build-desktop/Tech Demo 2/tilesets/sewer_1.png</image>
+  <width>32</width>
+  <height>32</height>
+  <xorigin>0</xorigin>
+  <yorigin>0</yorigin>
+</tileset>

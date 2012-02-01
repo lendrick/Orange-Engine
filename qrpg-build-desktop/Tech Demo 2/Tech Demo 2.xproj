@@ -25,6 +25,12 @@ player.setPos(375, 250);
     <tileset>Healer F.xtile</tileset>
     <tileset>Interior Tileset.xtile</tileset>
     <tileset>Forest Tileset.xtile</tileset>
+    <tileset>Snow Town TIleset.xtile</tileset>
+    <tileset>Sewer Tileset.xtile</tileset>
+    <tileset>Cave Tileset.xtile</tileset>
+    <tileset>Temple Tileset.xtile</tileset>
+    <tileset>Overworld Tileset.xtile</tileset>
+    <tileset>Desert Tileset.xtile</tileset>
   </tilesets>
   <maps>
     <map>Town.xmap</map>
