@@ -3,6 +3,7 @@
 
 #include <QtCore>
 #include <QtGui>
+#include <QTreeWidget>
 
 class Resource : public QTreeWidgetItem {
 public:

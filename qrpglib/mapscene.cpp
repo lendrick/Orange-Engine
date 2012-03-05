@@ -18,7 +18,6 @@
 #include "entity.h"
 #include "player.h"
 #include "qrpgconsole.h"
-#include "talkbox.h"
 #include "rpgengine.h"
 #include "rpgscript.h"
 #include "mapscene.h"

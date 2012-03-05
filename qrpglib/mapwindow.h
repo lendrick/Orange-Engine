@@ -5,6 +5,7 @@
 #include <windows.h>
 #endif
 #include <QtGui>
+#include <QStatusBar>
 #include <qgl.h>
 #include "map.h"
 #include "globals.h"

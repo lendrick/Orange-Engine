@@ -84,7 +84,6 @@ public slots:
   bool usesDefaultBounds(int) const;
   void getScriptBoundingBox(int, int &, int &, int &, int &) const;
   void getRealScriptBoundingBox(int, double &, double &, double &, double &) const;
-  void say(QString s);
   QScriptValue & getScriptObject();
   bool getOverrideBoundingBox();
   bool isInvisible();

@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui script opengl xml declarative
+QT       += core gui script opengl xml declarative qtquick1 quick
 
 TARGET = orange
 TEMPLATE = app
@@ -21,7 +21,6 @@ SOURCES +=\
     qrpgengine.cpp \
     enginewindow.cpp \
     ../qrpglib/tileselect.cpp \
-    ../qrpglib/talkbox.cpp \
     ../qrpglib/spritewidget.cpp \
     ../qrpglib/spritedialog.cpp \
     ../qrpglib/sprite.cpp \
@@ -61,7 +60,6 @@ SOURCES +=\
     ../qrpglib/entity.cpp \
     ../qrpglib/coordinatewidget.cpp \
     ../qrpglib/input.cpp \
-    ../qrpglib/imageframe.cpp \
     ../qrpglib/icons.cpp \
     ../qrpglib/collisiontester.cpp \
     ../qrpglib/boundswidget.cpp \
@@ -71,7 +69,6 @@ SOURCES +=\
 
 HEADERS  += \
     enginewindow.h \
-    ../qrpglib/talkbox.h \
     ../qrpglib/spritewidget.h \
     ../qrpglib/spritedialog.h \
     ../qrpglib/sprite.h \
@@ -113,7 +110,6 @@ HEADERS  += \
     ../qrpglib/entity.h \
     ../qrpglib/coordinatewidget.h \
     ../qrpglib/input.h \
-    ../qrpglib/imageframe.h \
     ../qrpglib/icons.h \
     ../qrpglib/collisiontester.h \
     ../qrpglib/boundswidget.h \
@@ -196,3 +192,5 @@ OTHER_FILES += \
     ../qrpg-build-desktop/Tech Demo 2/scripts/characters.js \
     ../qrpg-build-desktop/Tech Demo 2/scripts/abilities.js \
     ../qrpg-build-desktop/interface/TalkBoxText.js
+
+

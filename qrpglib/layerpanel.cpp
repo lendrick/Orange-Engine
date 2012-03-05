@@ -1,4 +1,10 @@
 #include <QtGui>
+#include <QMenu>
+#include <QApplication>
+#include <QVBoxLayout>
+#include <QFormLayout>
+#include <QAbstractItemView>
+
 #include "layerpanel.h"
 #include "icons.h"
 #include "globals.h"

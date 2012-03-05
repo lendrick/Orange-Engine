@@ -6,6 +6,12 @@
 #endif
 #include <QtGui>
 #include <QGLWidget>
+#include <QDialog>
+#include <QComboBox>
+#include <QListWidget>
+#include <QTableWidget>
+#include <QGroupBox>
+#include <QSpinBox>
 #include "spritewidget.h"
 #include "tileselect.h"
 

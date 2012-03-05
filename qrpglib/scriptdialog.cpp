@@ -1,5 +1,9 @@
+#include <QPushButton>
+#include <QMessageBox>
+
 #include "scriptdialog.h"
 #include "scripttab.h"
+
 
 ScriptDialog::ScriptDialog() : QDialog(0) {
   layout = new QVBoxLayout();

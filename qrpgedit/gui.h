@@ -3,6 +3,9 @@
 
 #include <QGLWidget>
 #include <QtCore>
+#include <QToolBar>
+#include <QDockWidget>
+#include <QMainWindow>
 
 #include "filebrowser.h"
 #include "map.h"

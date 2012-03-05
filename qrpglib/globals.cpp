@@ -1,6 +1,7 @@
 #include <QtCore>
 #include <QtScript>
 #include <QtDeclarative>
+#include <QMessageBox>
 //#include <QtScriptTools/QScriptEngineDebugger>
 #include "globals.h"
 #include "map.h"
@@ -12,7 +13,6 @@
 #include "entity.h"
 #include "mapbox.h"
 #include "qrpgconsole.h"
-#include "talkbox.h"
 #include "qmlutils.h"
 #include "rpgscript.h"
 #include "qdeclarativedebughelper_p.h"

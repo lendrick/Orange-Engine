@@ -1,6 +1,7 @@
 #include "propertyeditor.h"
 #include "entity.h"
 #include <QtGui>
+#include <QVBoxLayout>
 
 PropertyEditor::PropertyEditor(ObjectPointer o, QWidget *parent) :
     QDialog(parent)

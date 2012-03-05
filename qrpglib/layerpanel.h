@@ -1,6 +1,10 @@
 #ifndef LAYERPANEL_H
 #define LAYERPANEL_H 1
 #include <QtGui>
+#include <QToolBar>
+#include <QTableWidget>
+#include <QDockWidget>
+#include <QComboBox>
 #include "globals.h"
 
 class LayerTable : public QTableWidget {

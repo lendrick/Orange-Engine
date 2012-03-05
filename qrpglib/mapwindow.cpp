@@ -13,6 +13,7 @@
 #include <iostream>
 #include <vector>
 #include <QTime>
+#include <QGridLayout>
 
 #include "globals.h"
 #include "scrollbar.h"

@@ -4,8 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui script opengl xml declarative
-
+QT       += core gui script opengl xml declarative qtquick1 quick
 TARGET = orange-editor
 TEMPLATE = app
 INCLUDEPATH = ../qrpglib
@@ -21,7 +20,6 @@ SOURCES +=\
     rpgx_mapedit.cpp \
     gui.cpp \
     ../qrpglib/tileselect.cpp \
-    ../qrpglib/talkbox.cpp \
     ../qrpglib/spritewidget.cpp \
     ../qrpglib/spritedialog.cpp \
     ../qrpglib/sprite.cpp \
@@ -61,7 +59,6 @@ SOURCES +=\
     ../qrpglib/entity.cpp \
     ../qrpglib/coordinatewidget.cpp \
     ../qrpglib/input.cpp \
-    ../qrpglib/imageframe.cpp \
     ../qrpglib/icons.cpp \
     ../qrpglib/collisiontester.cpp \
     ../qrpglib/boundswidget.cpp \
@@ -71,9 +68,8 @@ SOURCES +=\
     ../qrpglib/mapreadertiled.cpp
 
 HEADERS  += \
-    resource.h \
     gui.h \
-    ../qrpglib/talkbox.h \
+    ../qrpglib/resource.h \
     ../qrpglib/spritewidget.h \
     ../qrpglib/spritedialog.h \
     ../qrpglib/sprite.h \
@@ -114,7 +110,6 @@ HEADERS  += \
     ../qrpglib/entity.h \
     ../qrpglib/coordinatewidget.h \
     ../qrpglib/input.h \
-    ../qrpglib/imageframe.h \
     ../qrpglib/icons.h \
     ../qrpglib/collisiontester.h \
     ../qrpglib/boundswidget.h \

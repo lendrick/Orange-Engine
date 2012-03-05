@@ -2,6 +2,8 @@
 #define BOUNDSWIDGET_H
 
 #include <QFrame>
+#include <QFormLayout>
+#include <QGroupBox>
 #include "coordinatewidget.h"
 
 class BoundsWidget : public QGroupBox

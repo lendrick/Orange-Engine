@@ -1,4 +1,9 @@
 #include <QtGui>
+#include <QVBoxLayout>
+#include <QFormLayout>
+#include <QDialogButtonBox>
+#include <QMessageBox>
+
 #include "newmapdialog.h"
 #include "globals.h"
 #include "bitmap.h"

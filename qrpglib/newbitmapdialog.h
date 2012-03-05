@@ -2,6 +2,8 @@
 #define NEWBITMAPDIALOG_H 1
 
 #include <QtGui>
+#include <QDialog>
+#include <QSpinBox>
 #include "filebrowser.h"
 
 class NewBitmapDialog : public QDialog {

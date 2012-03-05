@@ -5,6 +5,8 @@
 #include <windows.h>
 #endif
 #include <QtGui>
+#include <QGraphicsSceneMouseEvent>
+#include <QDeclarativeView>
 #include <qgl.h>
 #include "map.h"
 #include "globals.h"
@@ -12,6 +14,11 @@
 
 class MapScene;
 class Map;
+
+/* Note: To do this in QtQuick 2, I need to paint to a QQuickView, which isn't a widget.
+   Fortunately it can render to a framebuffer, which can be set with
+   QQuickCanvas::setRenderTarget()
+*/
 
 class MapBox : public QDeclarativeView {
   Q_OBJECT

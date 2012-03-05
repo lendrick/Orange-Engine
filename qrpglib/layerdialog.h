@@ -2,6 +2,10 @@
 #define LAYERDIALOG_H
 
 #include <QtGui>
+#include <QDialog>
+#include <QSpinBox>
+#include <QCheckBox>
+#include <QLineEdit>
 #include "map.h"
 
 class LayerDialog : public QDialog {

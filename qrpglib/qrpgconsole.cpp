@@ -2,6 +2,8 @@
 #include "qrpgconsole.h"
 #include "outlinestyle.h"
 #include "globals.h"
+#include <QVBoxLayout>
+
 
 QRPGConsole::QRPGConsole(QWidget * parent) : QFrame(parent) {
   OutlineStyle * outlineStyle = new OutlineStyle();

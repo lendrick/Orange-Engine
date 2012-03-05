@@ -1,4 +1,5 @@
 #include <QtGui>
+#include <QFileDialog>
 #include "filebrowser.h"
 
 FileBrowser::FileBrowser(QString filter, QWidget * parent) : QFrame(parent) {

@@ -7,7 +7,6 @@
 #include "player.h"
 #include "collisiontester.h"
 #include "npc.h"
-#include "talkbox.h"
 #include "scripttab.h"
 #include "rpgscript.h"
 
@@ -431,11 +430,6 @@ void Entity::setLayer(int l) {
 bool Entity::entity_y_order(EntityPointer a, EntityPointer b) {
   if(a->getY() < b->getY()) return true;
   return false;
-}
-
-void Entity::say(QString s) {
-  //cprint("Saying: " + s + "\n");
-  TalkBoxProxy * t = new TalkBoxProxy(s);
 }
 
 bool Entity::getOverrideBoundingBox() {

@@ -1,4 +1,9 @@
 #include <QtGui>
+#include <QVBoxLayout>
+#include <QFormLayout>
+#include <QDialogButtonBox>
+#include <QMessageBox>
+
 #include "newprojectdialog.h"
 #include "globals.h"
 

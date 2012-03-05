@@ -2,6 +2,9 @@
 #define QRPGCONSOLE_H 1
 
 #include <QtGui>
+#include <QTextEdit>
+#include <QLineEdit>
+#include <QFrame>
 
 class QRPGConsole : public QFrame {
   Q_OBJECT

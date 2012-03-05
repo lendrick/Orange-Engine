@@ -2,6 +2,8 @@
 #define COORDINATEWIDGET_H
 
 #include <QtGui>
+#include <QFrame>
+#include <QSpinBox>
 
 class CoordinateWidget : public QFrame {
   Q_OBJECT

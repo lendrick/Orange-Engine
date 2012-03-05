@@ -1,4 +1,12 @@
 #include <QtCore>
+#include <QVBoxLayout>
+#include <QToolBar>
+#include <QLabel>
+#include <QFormLayout>
+#include <QSplitter>
+#include <QAction>
+#include <QMessageBox>
+#include <QDialogButtonBox>
 #include "spritedialog.h"
 #include "spritewidget.h"
 #include "tileselect.h"

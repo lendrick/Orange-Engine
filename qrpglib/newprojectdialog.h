@@ -2,6 +2,8 @@
 #define NEWPROJECTDIALOG_H 1
 
 #include <QtGui>
+#include <QDialog>
+#include <QLineEdit>
 
 class NewProjectDialog : public QDialog {
   Q_OBJECT

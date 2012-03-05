@@ -2,6 +2,9 @@
 #define NEWMAPDIALOG_H 1
 
 #include <QtGui>
+#include <QDialog>
+#include <QComboBox>
+#include <QLineEdit>
 
 class NewMapDialog : public QDialog {
   Q_OBJECT

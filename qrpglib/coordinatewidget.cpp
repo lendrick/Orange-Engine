@@ -1,6 +1,8 @@
 #include "coordinatewidget.h"
 
 #include <QtGui>
+#include <QHBoxLayout>
+#include <QLabel>
 
 CoordinateWidget::CoordinateWidget(QWidget * parent, int nx, int ny) : QFrame(parent) {
   QHBoxLayout * layout = new QHBoxLayout;

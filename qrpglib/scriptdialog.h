@@ -2,6 +2,11 @@
 #define SCRIPTDIALOG_H
 
 #include <QtGui>
+#include <QFormLayout>
+#include <QDialogButtonBox>
+#include <QDialog>
+#include <QTabWidget>
+#include <QGroupBox>
 #include "jshighlighter.h"
 
 class Map;

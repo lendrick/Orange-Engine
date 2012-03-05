@@ -2,6 +2,11 @@
 #define SCRIPTTAB_H
 
 #include <QtGui>
+#include <QFrame>
+#include <QComboBox>
+#include <QTextEdit>
+#include <QVBoxLayout>
+#include <QFormLayout>
 
 class JsHighlighter;
 

@@ -2,6 +2,8 @@
 #define ENTITYDIALOG_H 1
 
 #include <QtGui>
+#include <QComboBox>
+#include <QCheckBox>
 #include "jshighlighter.h"
 #include "scriptdialog.h"
 #include "boundswidget.h"

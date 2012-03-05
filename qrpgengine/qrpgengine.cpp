@@ -13,7 +13,6 @@
 #include "npc.h"
 #include "rpgengine.h"
 #include "projectreader.h"
-#include "talkbox.h"
 #include "scriptutils.h"
 #include "qmlutils.h"
 

@@ -7,6 +7,9 @@
 #include <QtScript>
 #include <QtDeclarative>
 #include <QGLWidget>
+#include <QTreeWidget>
+#include <QLineEdit>
+#include <QPushButton>
 //#include <QtScriptTools/QScriptEngineDebugger>
 
 struct LayerView {

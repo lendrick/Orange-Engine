@@ -2,6 +2,10 @@
 #define FILEBROWSER_H 1
 
 #include <QtGui>
+#include <QHBoxLayout>
+#include <QFrame>
+#include <QLineEdit>
+#include <QPushButton>
 
 class FileBrowser : public QFrame {
   Q_OBJECT

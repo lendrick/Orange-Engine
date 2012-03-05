@@ -1,4 +1,10 @@
 #include <QtGui>
+#include <QVBoxLayout>
+#include <QGroupBox>
+#include <QFormLayout>
+#include <QDialogButtonBox>
+#include <QMessageBox>
+
 #include "globals.h"
 #include "newlayerdialog.h"
 #include "resource.h"

@@ -2,6 +2,7 @@
 #define ENTITYSCRIPTTAB_H
 
 #include "scripttab.h"
+#include <QCheckBox>
 class EntityDialog;
 class CoordinateWidget;
 

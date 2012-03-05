@@ -1,4 +1,5 @@
 #include <QtGui>
+#include <QIcon>
 #include "icons.h"
 
 QIcon * newprojectIcon;

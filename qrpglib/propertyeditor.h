@@ -2,6 +2,8 @@
 #define PROPERTYEDITOR_H
 
 #include <QtGui>
+#include <QDialog>
+#include <QTableWidget>
 #include "entity.h"
 
 class PropertyEditor : public QDialog

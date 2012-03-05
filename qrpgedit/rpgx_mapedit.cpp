@@ -4,6 +4,7 @@
 
 #include <QtCore>
 #include <QtGui>
+#include <QApplication>
 
 #include "globals.h"
 #include "gui.h"
@@ -12,7 +13,7 @@
 int main(int argc, char *argv[]) {
   is_editor = true;
 //#if QT_VERSION >= 0x040600
-  QGL::setPreferredPaintEngine(QPaintEngine::OpenGL2);
+//  QGL::setPreferredPaintEngine(QPaintEngine::OpenGL2);
 //#endif
   play = false;
   QApplication mapedit(argc, argv);
