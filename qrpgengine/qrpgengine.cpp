@@ -35,9 +35,9 @@ int main(int argc, char *argv[]) {
   qputenv("QML_ENABLE_TEXT_IMAGE_CACHE", "true");
 
   is_editor = false;
-//#if QT_VERSION < 0x040600
+#if QT_VERSION < 0x050000
   QGL::setPreferredPaintEngine(QPaintEngine::OpenGL2);
-//#endif
+#endif
   QApplication::setGraphicsSystem("opengl");
   QApplication mapedit(argc, argv);
   mainGLWidget = new QGLWidget();

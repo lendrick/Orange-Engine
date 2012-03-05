@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui script opengl xml declarative qtquick1 quick
+QT       += core gui script opengl xml declarative quick1
 
 TARGET = orange
 TEMPLATE = app

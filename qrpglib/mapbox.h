@@ -4,10 +4,13 @@
 #ifdef WIN32
 #include <windows.h>
 #endif
+#define Q_QUICK1_EXPORT
+
+#include <QtOpenGL>
+#include <QDeclarativeView>
+#include <QDeclarativeEngine>
 #include <QtGui>
 #include <QGraphicsSceneMouseEvent>
-#include <QDeclarativeView>
-#include <qgl.h>
 #include "map.h"
 #include "globals.h"
 #include "entity.h"
