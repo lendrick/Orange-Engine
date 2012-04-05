@@ -27,4 +27,11 @@ Rectangle {
     text: current + "/" + total
     anchors.centerIn: parent
   }
+
+  Behavior on current {
+    NumberAnimation {
+      easing.type: Easing.InOutQuad
+      duration: 500
+    }
+  }
 }
