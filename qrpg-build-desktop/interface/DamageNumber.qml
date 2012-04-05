@@ -1,8 +1,10 @@
 import QtQuick 1.0
 
 Text {
+  property int amount: 0
   id: damageNumber
-  color: "#ffffff"
+  text: amount;
+  color: if(amount <= 0) { '#ffffff' } else { '#44ff44' }
   clip: true
   font.pixelSize: 35
   font.family: "Liberation Mono"

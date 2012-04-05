@@ -109,7 +109,7 @@ Image {
   function hit(val, anim, text) {
     //CharacterScript.DamageNumberComponent.createObject(image, { text: val })
     var animation = Qt.createQmlObject("import 'animations'; " + anim + " {}", battleEnemy);
-    var number = Qt.createQmlObject("DamageNumber { text: '" + val + "' }", battleEnemy);
+    var number = Qt.createQmlObject("DamageNumber { amount: " + val + " }", battleEnemy);
     if(text) {
       var message = Qt.createQmlObject("MessageBox { text: '" + text + "' }", battleScreen);
       message.Component.destruction.connect(battleScreen.next);

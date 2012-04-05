@@ -12,7 +12,8 @@ function abilitySelected() {
   } else if(currentAbility.targetFriends) {
 
   } else {
-
+    allAbilities[currentAbility.name].activate(characterBox.character);
+    return;
   }
 
   characterBox.treeMenu.hide();

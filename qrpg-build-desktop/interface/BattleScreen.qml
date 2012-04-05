@@ -32,6 +32,10 @@ HideShowContainer {
     turn();
   }
 
+  function end() {
+    hideBattleScreen.start();
+  }
+
   function next() {
     console.log("Next turn");
     // remove dead enemies

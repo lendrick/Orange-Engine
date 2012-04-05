@@ -94,7 +94,7 @@ Box {
             message.Component.destruction.connect(battleScreen.next);
           }
           var animation = Qt.createQmlObject("import 'animations'; " + anim + " {}", characterPortrait);
-          var number = Qt.createQmlObject("DamageNumber { text: '" + val + "' }", characterPortrait);
+          var number = Qt.createQmlObject("DamageNumber { amount: " + val + " }", characterPortrait);
 
           if(!text) {
             animation.Component.destruction.connect(battleScreen.next);

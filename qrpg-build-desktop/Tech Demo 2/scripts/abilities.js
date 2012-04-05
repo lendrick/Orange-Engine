@@ -90,7 +90,7 @@
   ability.animation = "Fire1";
 
   ability.activate = function(caster, targets) {
-    console.log(caster.name + " casts Fire1 on " + targets[0].name);
+    console.log(caster.name + " casts " + this.name + " on " + targets[0].name);
     target = targets[0];
     damage = caster.matk;
     if(damage < 1) damage = 1;
@@ -140,11 +140,11 @@
   ability.targetFriends = false;
   ability.targetMultiple = false;
   ability.useInBattle = true;
-  ability.useOutsideBattle = true;
+  ability.useOutsideBattle = false;
   ability.menuPath = new Array('Run');
 
   ability.activate = function(caster, targets) {
-
+    ui.battlescreen.end();
   }
 
   //rpgx.dumpScriptObject(activate);
