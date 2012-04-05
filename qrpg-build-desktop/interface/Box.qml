@@ -12,8 +12,6 @@ HideShowContainer {
   }
 
   BorderImage {
-
-
     rotation: 0
     id: box
     border.bottom: 28

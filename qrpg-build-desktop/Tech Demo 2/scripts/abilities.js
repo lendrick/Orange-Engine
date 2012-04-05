@@ -113,14 +113,16 @@
   ability.menuPath = new Array('Magic', 'Cure');
   ability.portrait = "../Tech Demo 2/images/icons/S_Holy01.png";
   ability.mpCost = 4;
+  ability.animation = "Bludgeon1";
 
   ability.activate = function(caster, targets) {
     console.log(caster.name + " casts " + this.name + " on " + targets[0].name);
     target = targets[0];
-    target.addHp(15 + Math.floor(caster.matk / 8));
+    var damage = 15 + Math.floor(caster.matk / 8);
+    target.addHp(damage);
     caster.addMp(-(this.mpCost));
     sfx.cure1.play();
-    //rpgx.dumpScriptObject(this);
+    target.hitAnim(damage, this.animation, caster.name + " casts Cure on " + targets[0].name);
     console.log("Cure1 done");
   }
 

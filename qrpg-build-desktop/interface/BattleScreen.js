@@ -20,12 +20,13 @@ function newBattleEnemy(p, enemy) {
   console.log("about to create enemy: " + p.foo);
   var b = battleEnemyComponent.createObject(p);
   b.character = enemies[enemy].copy();
-  console.log("enemy portait: " + b.source);
+  console.log("enemy portrait: " + b.source);
   enemyParty.push(b);
   return b;
 }
 
 function nextCombatant() {
+  console.log("Next combatant");
   console.log("party index: " + currentIndex);
   currentIndex++;
   if(currentTurn == "Characters" && currentIndex >= party.length) {

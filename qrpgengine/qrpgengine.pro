@@ -200,7 +200,9 @@ OTHER_FILES += \
     ../qrpg-build-desktop/Tech Demo 2/scripts/functions.js \
     ../qrpg-build-desktop/Tech Demo 2/scripts/enemy_ai.js \
     ../qrpg-build-desktop/Tech Demo 2/scripts/characters.js \
-    ../qrpg-build-desktop/Tech Demo 2/scripts/abilities.js
+    ../qrpg-build-desktop/Tech Demo 2/scripts/abilities.js \
+    ../qrpg-build-desktop/interface/ProgressBar.qml
+
 
 
 

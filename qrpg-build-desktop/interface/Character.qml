@@ -401,6 +401,8 @@ BaseItem {
       if(val < 0) {
         if(image.hit) {
           image.hit(val, anim, text);
+        } else {
+          console.log("hitAnim: no character image");
         }
       }
     }

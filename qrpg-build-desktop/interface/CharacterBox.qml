@@ -11,7 +11,7 @@ Box {
   //width: childrenRect.width
 
   state: "Show"
-  height: 140
+  height: 190
   width: 220
 
   onCharacterChanged: {
@@ -26,19 +26,28 @@ Box {
     console.log("showmenu for " + character.name);
   }
 
-  Item {
+  Rectangle {
     id: menuContainer
     objectName: "menuContainer"
 
-
-    anchors.left: parent.right
-    anchors.top: parent.top
+    anchors.right: parent.right
+    anchors.top: parent.bottom
     state: "Show"
     property Item treeMenu
   }
 
   SequentialAnimation {
     id: hitAnimation
+    ScriptAction {
+      script: console.log("character hitAnimation")
+    }
+
+    ScriptAction {
+      script: {
+        //animImg.playing = false;
+        //battleScreen.next();
+      }
+    }
   }
 
   MouseArea {
@@ -54,17 +63,18 @@ Box {
     objectName: "c1"
     x: 25
     y: 25
-    height: parent.height - 50
-    width: parent.width - 50
-    /*
+    //height: parent.height - 50
+    //width: parent.width - 50
+    spacing: 10
+
     height: childrenRect.height
-    width: childrenRect.width
-    */
+    width: parent.width - 50
+
 
     Item {
       id: c2
       objectName: "c2"
-      height: 36
+      height: 56
       width: 200
       Image {
         objectName: "characterPortrait"
@@ -89,6 +99,7 @@ Box {
           if(!text) {
             animation.Component.destruction.connect(battleScreen.next);
           }
+          console.log("character hit()");
           hitAnimation.start();
         }
       }
@@ -102,6 +113,7 @@ Box {
       }
     }
 
+    /*
     StatItem {
       id: hpDisplay
       title: "HP"
@@ -112,6 +124,38 @@ Box {
       id: mpDisplay
       title: "MP"
       bind: if(character) character.mp + " / " + character.current_maxMp;
+    }
+    */
+
+    ProgressBar {
+      id: hpDisplay
+      current: if(character) {character.hp} else {0}
+      total: if(character) {character.current_maxHp} else {0}
+      fgSource: "shinybar-green.png"
+      bgSource: "bar-grey.png"
+      anchors.left: parent.left
+      anchors.right: parent.right
+      text.color: 'white'
+      text.font.pixelSize: 25
+      text.font.family: "Liberation Mono"
+      text.smooth: true
+
+      height: 30
+    }
+
+    ProgressBar {
+      id: mpDisplay
+      current: if(character) {character.mp} else {0}
+      total: if(character) {character.current_maxMp} else {0}
+      fgSource: "shinybar-blue.png"
+      bgSource: "bar-grey.png"
+      anchors.left: parent.left
+      anchors.right: parent.right
+      text.color: 'white'
+      text.font.pixelSize: 25
+      text.font.family: "Liberation Mono"
+      text.smooth: true
+      height: 30
     }
   }
 

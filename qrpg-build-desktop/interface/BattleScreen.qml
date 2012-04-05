@@ -33,6 +33,7 @@ HideShowContainer {
   }
 
   function next() {
+    console.log("Next turn");
     // remove dead enemies
     if(BattleScreenScript.enemyParty.length > 0) {
       var death = false;
@@ -65,9 +66,13 @@ HideShowContainer {
       BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].z = 0;
     }
 
-    BattleScreenScript.nextCombatant();    
+    nextCombatant();
 
     turn();
+  }
+
+  function nextCombatant() {
+    BattleScreenScript.nextCombatant();
   }
 
   function enemiesAlive() {
@@ -107,6 +112,7 @@ HideShowContainer {
 
       allAbilities[result.ability].activate(enemy, abilityTarget);
     }
+    console.log("End turn")
   }
 
   Keys.onPressed: {
@@ -148,9 +154,14 @@ HideShowContainer {
     anchors.fill: parent
     color: '#000'
     opacity: .5
+  }  
+
+  Image {
+    source: rpgx.projectDir() + "/images/backgrounds/meadow.jpg"
+    anchors.centerIn: parent
   }
 
-  Column {
+  Row {
     id: partyBoxes
     anchors.left: parent.left
     anchors.top: parent.top
@@ -161,10 +172,10 @@ HideShowContainer {
   Item {
     id: enemyBoxRow
     objectName: 'enemyBoxRow'
-    anchors.top: parent.top
+    height: parent.height / 2
     anchors.bottom: parent.bottom
     anchors.right: parent.right
-    anchors.left: partyBoxes.right
+    anchors.left: parent.left
     property alias boxes: enemyBoxes;
 
     Row {

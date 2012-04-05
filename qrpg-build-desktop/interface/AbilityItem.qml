@@ -92,7 +92,8 @@ Item {
     if(character.mp >= allAbilities[ability].mpCost) {
       character.mp -= allAbilities[ability].mpCost;
       allAbilities[ability].activate(character, Array(i));
-      updateAbility();      
+      updateAbility();
+      console.log("treeSelect(): used " + ability);
     }
   }
 }
