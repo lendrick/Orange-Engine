@@ -1,5 +1,5 @@
 import Qt 4.7
-import Qt.labs.shaders 1.0
+//import Qt.labs.shaders 1.0
 
 HideShowContainer {
   id: container
@@ -36,7 +36,7 @@ HideShowContainer {
     }
   ]
 
-
+  /*
   ShaderEffectItem  {
       property variant source: ShaderEffectSource  { sourceItem: rect; hideSource: true }
       //property variant box: ShaderEffectSource  { sourceItem: box; hideSource: false }
@@ -56,5 +56,5 @@ HideShowContainer {
       }
       "
   }
-
+  */
 }
