@@ -46,7 +46,7 @@ Item {
     id: txt
     anchors.left: img.right
     anchors.verticalCenter: img.verticalCenter
-    text: item.name
+    //text: if(item) { item.name }
     width: parent.width / 2;
     wrapMode: Text.NoWrap
   }

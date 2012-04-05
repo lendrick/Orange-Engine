@@ -17,6 +17,7 @@ BaseItem {
   property int exp: 0
   property int nextExp: 0
   property int expValue: 0
+  property int gold: 0
   property bool deleted: false
 
   onAtkChanged: updateStat('atk');
@@ -81,6 +82,7 @@ BaseItem {
     c.mp = mp;
     c.cls = cls;
     c.level = level;
+    c.gold = gold;
 
     // NOTE: Change this to deep copy
     c.levels = levels;
@@ -135,7 +137,14 @@ BaseItem {
   }
 
   function addAbility(a) {
+    console.log("Add ability " + a);
     CharacterScript.abilities.push(a);
+  }
+
+  function addAbilities(a) {
+    for(i in a) {
+      addAbility(a[i]);
+    }
   }
 
   function getAbilityNames() {
@@ -421,10 +430,11 @@ BaseItem {
     //console.log(serialize(characterItem.levels));
     if(characterItem.levels[characterItem.level]) {
       for(stat in characterItem.levels[characterItem.level]) {
-        if(stat != 'exp') {
+        if(stat != 'exp' && stat != 'abilities') {
           characterItem[stat] = characterItem.levels[characterItem.level][stat];
         }
       }
+      addAbilities(characterItem.levels[characterItem.level].abilities);
       updateStats();
       heal();
     }

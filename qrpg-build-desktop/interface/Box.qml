@@ -22,14 +22,17 @@ HideShowContainer {
     border.left: 28
     border.objectName: "Border"
     //source: "box-highres.png"
-    source: "box-dark.png"
+    source: "box-highres.png"
     anchors.fill: parent
   }
 
   states: [
     State {
       name: "Highlight"
-      PropertyChanges { target: box; source: "box-dark-highlighted.png"}
+      PropertyChanges {
+        target: box;
+        source: "box-highres-highlighted.png"
+      }
     }
   ]
 

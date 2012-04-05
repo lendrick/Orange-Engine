@@ -1,0 +1,2 @@
+Note to self:  to scale these images, use
+mogrify -sample 200% image.png

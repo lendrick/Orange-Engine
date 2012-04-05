@@ -191,6 +191,16 @@ OTHER_FILES += \
     ../qrpg-build-desktop/Tech Demo 2/scripts/enemy_ai.js \
     ../qrpg-build-desktop/Tech Demo 2/scripts/characters.js \
     ../qrpg-build-desktop/Tech Demo 2/scripts/abilities.js \
-    ../qrpg-build-desktop/interface/TalkBoxText.js
+    ../qrpg-build-desktop/interface/TalkBoxText.js \
+    ../qrpg-build-desktop/Tech Demo 2/scripts/startup.js \
+    ../qrpg-build-desktop/Tech Demo 2/scripts/sfx.js \
+    ../qrpg-build-desktop/Tech Demo 2/scripts/json2.js \
+    ../qrpg-build-desktop/Tech Demo 2/scripts/items.js \
+    ../qrpg-build-desktop/Tech Demo 2/scripts/init.js \
+    ../qrpg-build-desktop/Tech Demo 2/scripts/functions.js \
+    ../qrpg-build-desktop/Tech Demo 2/scripts/enemy_ai.js \
+    ../qrpg-build-desktop/Tech Demo 2/scripts/characters.js \
+    ../qrpg-build-desktop/Tech Demo 2/scripts/abilities.js
+
 
 

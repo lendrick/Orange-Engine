@@ -1,0 +1,22 @@
+{
+  "rows" : [
+    {
+      "name" : "Lendrick",
+      "start_exp" : 3000,
+      "cls" : "Wizard",
+      "portrait" : "images/portraits/lendrick_portrait.png",
+      "levels" : "data/lendrick-levels.json",
+      "slots" : "1 Armor: armor light\n1 Weapon: weapon simple\n1 OffHand: offhand !shield\n2 Accessory: accessory !heavy",
+      "equipment" : "Armor: Wizard Robe\nWeapon: Iron Dagger\nAccessory: Wizard Hat"
+    },
+    {
+      "name" : "Sithra",
+      "start_exp" : 3000,
+      "cls" : "Priest",
+      "portrait" : "images/portraits/sithra_portrait.png",
+      "levels" : "data/sithra-levels.json",
+      "slots" : "1 Armor: armor light\n1 Weapon: weapon bludgeoning\n1 OffHand: offhand\n2 Accessory: accessory",
+      "equipment" : "Armor: Leather Armor\nWeapon: Wooden Staff"
+    }
+  ]
+}

@@ -173,7 +173,7 @@ player.setPos(208, 240);
           <script condition='4'><![CDATA[say("Rats have infested the town sewer!");
 say("If you could, say, go in there and take care of it, that would be awesome.");
 sayScript("Furthermore, fight these slimes!",function() {
-   battle('TwoSlimes'); 
+   battle('ThreeSlimes'); 
 });]]></script>
           <script condition='0'><![CDATA[]]></script>
         </scripts>

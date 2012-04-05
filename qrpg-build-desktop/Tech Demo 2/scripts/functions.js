@@ -349,13 +349,123 @@ function loadItems(file) {
     console.log("Items loaded!");
 }
 
+function loadEnemies(file) {
+    console.log("Loading enemies from " + file);
+    var data = rpgx.loadJSON(file).rows;
+    //console.log(serialize(data));
+    for(var i in data) {
+        var itemData = data[i];
+        var name = itemData.name;
+        
+        console.log("loading enemy: " + name);
+        
+        var item = newCharacter(name);
+        
+        delete itemData.name;
+
+        if(itemData.abilities !== null) {
+            var abilities = itemData.abilities.split(" ");
+            item.addAbilities(abilities);
+            delete itemData.abilities;
+        }
+        
+        if(itemData.portrait !== null) {
+            itemData.portrait = rpgx.projectDir() + "/" + itemData.portrait;
+        }
+        
+        for(var prop in itemData) {
+            if(itemData[prop] !== null) {
+                item[prop] = itemData[prop];
+                console.log("  " + prop + ": " + item[prop]);
+            }
+        }
+        
+        item.heal();
+        enemies[name] = item;
+    }
+    console.log("Enemies loaded!");
+}
+
+function loadCharacters(file) {
+    console.log("Loading characters from " + file);
+    var data = rpgx.loadJSON(file).rows;
+    //console.log(serialize(data));
+    for(var i in data) {
+        var itemData = data[i];
+        var name = itemData.name;
+        var start_exp = 0;
+        var levels;
+        
+        console.log("loading character: " + name);
+        
+        var character = newCharacter(name);
+        
+        delete itemData.name;
+        
+        if(itemData.portrait !== null) {
+            itemData.portrait = rpgx.projectDir() + "/" + itemData.portrait;
+        }
+
+        if(itemData.start_exp !== null) {
+            start_exp = itemData.start_exp;
+            delete itemData.start_exp;
+        }
+        
+        if(itemData.levels !== null) {
+            levels = itemData.levels;
+            delete itemData.levels;
+        }
+
+        if(itemData.slots !== null) {
+            var slots = itemData.slots.split(/\s*\n\s*/);
+            for(i in slots) {
+                var slot = slots[i].split(/:\s*/);
+                var slotData = slot[0].split(/\s+/);
+                var num = slotData[0];
+                var slotName = slotData[1];
+                var slotTypes = slot[1].split(/\s+/);
+                character.addSlots(slotName, num, slotTypes);
+            }
+            delete itemData.slots;
+        }
+
+        if(itemData.equipment !== null) {
+            var equipment = itemData.equipment.split(/\s*\n\s*/);
+            for(i in equipment) {
+                var thing = equipment[i].split(/:\s*/);
+                var itemSlot = thing[0];
+                var itemName = thing[1];
+                character.equip(items[itemName].copy(), itemSlot, 0);
+            }
+            delete itemData.equipment;
+        }
+        
+        for(var prop in itemData) {
+            if(itemData[prop] !== null) {
+                character[prop] = itemData[prop];
+                console.log("  " + prop + ": " + character[prop]);
+            }
+        }
+        
+        characters[name] = character;        
+        loadLevels(name, levels);
+        characters[name].addExp(start_exp);
+    }
+    console.log("Characters loaded!");
+}
+
 function loadLevels(character, file) {
     console.log("Loading level file for " + character);
     var data = rpgx.loadJSON(file).rows;
     var levels = new Object();
+    
     for(i in data) {
         var level = data[i].level;
         delete data[i].level;
+
+        if(data[i].abilities !== null) {
+            data[i].abilities = data[i].abilities.split(" ");
+        }
         levels[level] = data[i];
     }
         

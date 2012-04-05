@@ -14,6 +14,7 @@ typedef QSharedPointer<Entity> EntityPointer;
 class Map : public QObject, public QScriptable {
   Q_OBJECT
   friend class MapBox;
+  friend class QmlMapWidget;
 public:
   struct Tile {
     int bitmap;
