@@ -17,7 +17,7 @@ function startUp() {
 }
 
 function newBattleEnemy(p, enemy) {
-  console.log("about to create enemy: " + p.foo);
+  console.log("about to create enemy: " + enemy);
   var b = battleEnemyComponent.createObject(p);
   b.character = enemies[enemy].copy();
   console.log("enemy portrait: " + b.source);
@@ -27,8 +27,9 @@ function newBattleEnemy(p, enemy) {
 
 function nextCombatant() {
   console.log("Next combatant");
-  console.log("party index: " + currentIndex);
   currentIndex++;
+
+  console.log("party index: " + currentIndex);
   if(currentTurn == "Characters" && currentIndex >= party.length) {
     currentTurn = "Enemies";
     currentIndex = 0;

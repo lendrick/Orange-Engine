@@ -12,7 +12,7 @@ var ai = new Object;
  * This function chooses an enemy ability at random and uses it.
  */
 ai.random = function(self, targets, friends) {
-    console.log("enemy: " + self.name);
+    console.log("enemy AI random: " + self.name);
     
     var abilities = self.getAbilityNames();
     var usable = new Array();

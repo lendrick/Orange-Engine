@@ -27,7 +27,13 @@ function targetSelected() {
   battleScreen.selectTarget.disconnect(targetSelected);
 }
 
-function startUp() {
+function setImage() {
+  console.log("setImage for: " + characterBox.character.name);
+  characterBox.character.image = characterBox.image;
+}
+
+
+function initMenu() {
   console.log("CharacterBox: character changed");
 
   TreeMenuComponent = Qt.createComponent("TreeMenu.qml");
@@ -40,7 +46,7 @@ function startUp() {
   characterBox.treeMenu.anchors.left = characterBox.treeMenu.parent.left;
   characterBox.treeMenu.anchors.top = characterBox.treeMenu.parent.bottom;
   characterBox.treeMenu.selected.connect(abilitySelected);
-  characterBox.character.image = characterBox.image;
+
   //characterBox.treeMenu.callback = abilitySelected;
 }
 

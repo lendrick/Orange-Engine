@@ -102,10 +102,13 @@ HideShowContainer {
       var aiFunc = enemy.turnAI;
       console.log('enemy turn: ' + aiFunc);
       var targets = Array();
+      console.log('targets: ' + BattleScreenScript.characterBoxes.length)
       for(i in BattleScreenScript.characterBoxes) {
-        targets.push(BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].character.name);
+        console.log("target #: " + i);
+        console.log("adding target: " + BattleScreenScript.characterBoxes[i].character.name)
+        targets.push(BattleScreenScript.characterBoxes[i].character.name);
       }
-
+      console.log('added targets');
       var friends = new Array();
       var result = ai[aiFunc](enemy, targets, friends);
       console.log(result.ability + ' --> ' + result.target);

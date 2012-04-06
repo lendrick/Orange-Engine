@@ -399,10 +399,13 @@ BaseItem {
   function hitAnim(val, anim, text) {
     if(image) {
       if(image.hit) {
+        console.log("calling hit...");
         image.hit(val, anim, text);
       } else {
-        console.log("hitAnim: no character image");
+        console.log("hitAnim: no hit function");
       }
+    } else {
+      console.log("hitAnim: no character image");
     }
   }
 

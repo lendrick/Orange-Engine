@@ -16,12 +16,13 @@ Box {
 
   onCharacterChanged: {
     if(character) {
-      image = characterPortrait
+      image = characterPortrait;
+      CharacterBoxScript.setImage();
     }
   }
 
   function showMenu() {
-    CharacterBoxScript.startUp();
+    CharacterBoxScript.initMenu();
     treeMenu.show();
     console.log("showmenu for " + character.name);
   }
