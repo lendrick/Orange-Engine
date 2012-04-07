@@ -104,6 +104,7 @@ BaseItem {
       console.log("copy ability: " + CharacterScript.abilities[i])
       c.addAbility(CharacterScript.abilities[i]);
     }
+
     console.log("Copied abilities:" + c.getAbilityNames().length);
     return c;
   }
@@ -161,11 +162,36 @@ BaseItem {
       }
     }
     return items;
-  }
+  }  
 
   function getStat(stat) {
     //console.log(characterItem.name + " getStat " + stat + ": " + characterItem['current_' + stat]);
     return characterItem['current_' + stat];
+  }
+
+  function setStatus(statusName, value) {
+    CharacterScript.status[statusName] = value;
+    if(value) {
+      console.log(name + " -> set status: " + statusName);
+    } else {
+      console.log(name + " -> removed status: " + statusName);
+    }
+  }
+
+  function getStatus(statusName) {
+    if(CharacterScript.status[statusName] !== null) {
+      return CharacterScript.status[statusName];
+    } else {
+      return false;
+    }
+  }
+
+  function getStatusList() {
+    var list;
+    for(i in CharacterScript.status) {
+      list[i] = CharacterScript.status[i];
+    }
+    return list;
   }
 
   function updateStat(stat) {
@@ -377,13 +403,15 @@ BaseItem {
 
   function addHp(val) {
     hp += val;
-    if(hp > current_maxHp)
+    if(hp > current_maxHp) {
       hp = current_maxHp;
-    else if(hp < 0)
+    } else if(hp < 0) {
       hp = 0;
-
+    }
+    if(hp == 0) {
+      setStatus('KO', true);
+    }
     console.log(name + ".addHp(" + val + "): " + hp)
-
   }
 
   function addMp(val) {

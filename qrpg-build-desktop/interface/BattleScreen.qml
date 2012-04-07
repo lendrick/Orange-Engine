@@ -44,7 +44,7 @@ HideShowContainer {
       for(var i = BattleScreenScript.enemyParty.length - 1; i >= 0; i--) {
         console.log("index: " + i);
         console.log(BattleScreenScript.enemyParty[i].character.name + " hp: " + BattleScreenScript.enemyParty[i].character.hp)
-        if(BattleScreenScript.enemyParty[i].character.hp == 0) {
+        if(BattleScreenScript.enemyParty[i].character.getStatus('KO')) {
           BattleScreenScript.enemyParty[i].die();
           death = true;
         }
@@ -59,7 +59,7 @@ HideShowContainer {
       }
     }
 
-    if(!enemiesAlive()) {
+    if(!enemiesAlive() || !partyAlive()) {
       hideBattleScreen.start();
       return;
     }
@@ -82,12 +82,23 @@ HideShowContainer {
   function enemiesAlive() {
     var enemiesAlive = false;
     for(i = BattleScreenScript.enemyParty.length - 1; i >= 0; i--) {
-      if(BattleScreenScript.enemyParty[i].status != "dead") {
+      if(!BattleScreenScript.enemyParty[i].character.getStatus('KO')) {
         enemiesAlive = true;
       }
     }
 
     return enemiesAlive;
+  }
+
+  function partyAlive() {
+    var partyAlive = false;
+    for(i = party.length - 1; i >= 0; i--) {
+      if(!BattleScreenScript.characterBoxes[i].character.getStatus('KO')) {
+        partyAlive = true;
+      }
+    }
+
+    return partyAlive;
   }
 
   function turn() {
@@ -106,7 +117,9 @@ HideShowContainer {
       for(i in BattleScreenScript.characterBoxes) {
         console.log("target #: " + i);
         console.log("adding target: " + BattleScreenScript.characterBoxes[i].character.name)
-        targets.push(BattleScreenScript.characterBoxes[i].character.name);
+        if(!BattleScreenScript.characterBoxes[i].character.getStatus('KO')) {
+          targets.push(BattleScreenScript.characterBoxes[i].character.name);
+        }
       }
       console.log('added targets');
       var friends = new Array();

@@ -4,7 +4,6 @@ import "animations"
 Image {
   id: battleEnemy;
   property Item character;
-  property string status: "normal"
   state: "Ready"
 
   source: {
@@ -100,7 +99,6 @@ Image {
   }
 
   function die() {
-    status = "dead";
     console.log(character.name + " is slain!")
     hitAnimation.stop();
     deathAnimation.start();

@@ -40,6 +40,10 @@ function nextCombatant() {
 
   if(currentTurn == "Characters") {
     console.log("Next party combatant: " + party[currentIndex].name);
+    if(party[currentIndex].getStatus('KO')) {
+      console.log(party[currentIndex].name + " is unconscious");
+      nextCombatant();
+    }
   } else {
     console.log("Next enemy combatant: " + enemyParty[currentIndex].name);
   }
