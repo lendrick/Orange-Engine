@@ -45,6 +45,10 @@ function nextCombatant() {
       nextCombatant();
     }
   } else {
-    console.log("Next enemy combatant: " + enemyParty[currentIndex].name);
+    if(enemyParty[currentIndex]) {
+      console.log("Next enemy combatant: " + enemyParty[currentIndex].name);
+    } else {
+      console.log("No more enemies");
+    }
   }
 }

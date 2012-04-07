@@ -8,6 +8,8 @@ HideShowContainer {
   property Item selectedTarget;
   property Item currentBattler;
   property alias boxes: enemyBoxRow;
+  property int experience: 0;
+  property int gold: 0;
 
   function setParty(p) {
     /*
@@ -20,9 +22,17 @@ HideShowContainer {
     console.log("Setting enemy party: " + p);
 
     //var party = enemyParties[p];
+    experience = 0;
+    gold = 0;
+
     for(i in p) {
-      console.log("  enemy: " + p[i]);
+      console.log("  enemy: " + p[i] + " " + p[i].exp + " " + p[i].gold);
       BattleScreenScript.newBattleEnemy(enemyBoxRow.boxes, p[i]);
+    }
+
+    for(i in BattleScreenScript.enemyParty) {
+      experience += BattleScreenScript.enemyParty[i].character.exp;
+      gold += BattleScreenScript.enemyParty[i].character.gold;
     }
   }
 
@@ -50,18 +60,23 @@ HideShowContainer {
         }
       }
 
+      /*
       if(!enemiesAlive()) {
-        hideBattleScreen.start();
+        console.log("end1");
+        endBattle();
       }
-
+      */
       if(death) {
         return;
       }
-    }
-
-    if(!enemiesAlive() || !partyAlive()) {
-      hideBattleScreen.start();
-      return;
+    } else {
+      if(!enemiesAlive()) {
+        console.log("end2");
+        endBattle();
+      } else if(!partyAlive()) {
+        hideBattleScreen.start();
+        return;
+      }
     }
 
     console.log("NEXT");
@@ -108,7 +123,7 @@ HideShowContainer {
       BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].state = "Highlight";
       BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].z = 1;
       BattleScreenScript.characterBoxes[BattleScreenScript.currentIndex].showMenu();
-    } else {
+    } else if(BattleScreenScript.enemyParty[BattleScreenScript.currentIndex]) {
       var enemy = BattleScreenScript.enemyParty[BattleScreenScript.currentIndex].character;
       var aiFunc = enemy.turnAI;
       console.log('enemy turn: ' + aiFunc);
@@ -133,6 +148,18 @@ HideShowContainer {
       allAbilities[result.ability].activate(enemy, abilityTarget);
     }
     console.log("End turn")
+  }
+
+  function endBattle() {
+    var text = "You received " + experience + " experience points and " + gold + " gold!";
+    var message = Qt.createQmlObject("MessageBox { text: '" + text + "' }", battleScreen);
+    for(i in BattleScreenScript.characterBoxes) {
+      if(!BattleScreenScript.characterBoxes[i].character.getStatus('KO')) {
+        BattleScreenScript.characterBoxes[i].character.addExp(experience);
+      }
+    }
+    ui.gold += gold;
+    message.Component.destruction.connect(hideBattleScreen.start);
   }
 
   Keys.onPressed: {
